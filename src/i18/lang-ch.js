@@ -38,6 +38,8 @@ export default {
     ad_btn: "開始交易",
     finance: "理財",
     news: "新聞",
+    simulatedTradingTitle: "領取模擬金",
+    simulatedTradingButton: "模擬交易",
   },
   login: {
     login: "登錄",

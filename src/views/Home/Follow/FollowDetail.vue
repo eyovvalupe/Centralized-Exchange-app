@@ -303,7 +303,7 @@ import Top from "@/components/Top.vue";
 import { getStaticImgUrl } from "@/utils/index.js"
 import { computed, ref, watch } from "vue"
 import NoData from "@/components/NoData"
-import { Tab, Tabs, Button } from "vant";
+import { Tab, Tabs, Button, showToast } from "vant";
 import { _copyGet, _copyOrders, _copyUsers } from "@/api/api"
 import SparkLine from "@/components/SparkLine.vue";
 import { useRoute } from "vue-router"
@@ -315,7 +315,7 @@ import store from "@/store";
 import { getPoints } from "@/utils/index.js"
 import follow from "@/store/follow";
 const points = getPoints('id-123456', 100)
-
+const token = computed(() => store.state.token)
 const { t } = useI18n()
 const route = useRoute()
 const active = ref(3)
@@ -323,6 +323,10 @@ const activeRatio = ref(0)
 // 跟单
 const showPlus = ref(false)
 const plus = () => {
+    if (!token.value) {
+        showToast('请先登录一下')
+        return;
+    }
     showPlus.value = true
 }
 

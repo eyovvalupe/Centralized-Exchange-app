@@ -3,11 +3,15 @@
     <div class="page page_finance">
         <!-- 头部 -->
         <HeaderTabs v-model:active="activeTab" :tabs="[
+            t('copy.title'),
             t('finance.defi_borrow'),
             t('finance.portfolio_title'),
         ]" @change="changeActiveTab(activeTab, true)" />
 
         <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe" @change="swipeChange">
+            <SwipeItem>
+                <Follow :from="'finance'"/>
+            </SwipeItem>
             <SwipeItem>
                 <Pledge />
             </SwipeItem>
@@ -27,6 +31,7 @@ import HeaderTabs from "@/components/HeaderTabs.vue";
 import { useI18n } from "vue-i18n";
 import Stake from "./Stake.vue";
 import Pledge from './Pledge.vue';
+import Follow from '../Home/Follow/Index.vue'
 const { t } = useI18n();
 
 const route = useRoute();
@@ -36,6 +41,7 @@ const initialSwipe = ref(activeTab.value);
 const loadedTab = ref([activeTab.value]);
 const swipe = ref(null);
 const changeActiveTab = (val, slideSwipe = false) => {
+    console.log(val)
     activeTab.value = val;
     if (loadedTab.value.indexOf(val) == -1) {
         loadedTab.value.push(val);

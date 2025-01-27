@@ -1,7 +1,7 @@
 <!-- 跟单广场 -->
 <template>
-    <div class="page-follow">
-        <Top :title="$t('copy.copy_ground')"></Top>
+    <div class="page-follow pb-[0.32rem] px-[0.32rem]" :class="from != 'finance' ? 'pt-[1.28rem]' :''">
+        <Top :title="$t('copy.copy_ground')" v-if="from != 'finance'"></Top>
 
         <!-- Tab -->
         <div class="tabs">
@@ -55,7 +55,7 @@
                 <div class="list-i" v-if="myFollowList.length" v-for="(item, i) in myFollowList" :key="i">
                     <MyFollowItem @openInfo="openInfo" :item="item" :showDetail="false" />
                 </div>
-                <NoData v-if="!myFollowList.length"/>
+                <NoData v-if="!myFollowList.length" />
             </template>
         </div>
     </div>
@@ -79,6 +79,12 @@ import { Popup, Tabs, Tab } from "vant"
 import FollowInfo from "../Follow/FollowInfo.vue"
 import { isEmpty } from "@/utils/isEmpty";
 
+const props = defineProps ({
+    from: {
+        type: String,
+        default: ''
+    }
+})
 const listDom = ref()
 const active = ref(1) // 1-跟单  2-订单
 const changeTab = val => {
@@ -93,7 +99,7 @@ const typeChange = ref('option')
 const onChange = () => {
 
 }
-
+const token = computed(() => store.state.token)
 // 我的跟单统计
 const followList = computed(() => store.state.followList)
 const myFollowList = computed(() => store.state.myCopy)
@@ -117,8 +123,10 @@ const scrolHandle = () => {
 }
 
 onMounted(() => {
-    store.dispatch('updateFollowList')
-    store.dispatch('updateMyFollowList')
+    if (token.value) {
+        store.dispatch('updateFollowList')
+        store.dispatch('updateMyFollowList')
+    }
     setTimeout(() => {
         try {
             moreDom = document.querySelector('.loading_more')
@@ -142,7 +150,6 @@ const openInfo = item => {
 
 <style lang="less" scoped>
 .page-follow {
-    padding: 1.28rem 0.32rem 0.32rem 0.32rem;
     height: 100%;
     display: flex;
     flex-direction: column;

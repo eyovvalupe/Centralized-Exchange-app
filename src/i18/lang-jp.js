@@ -302,6 +302,9 @@ export default {
     ad_con: "富を築く道",
     ad_btn: "取引を始める",
     finance: "ファイナンス",
+    news: "ニュース",
+    simulatedTradingTitle: "模擬ゴールドの獲得",
+    simulatedTradingButton: "模擬取引",
   },
   assets: {
     recharge: "入金",
