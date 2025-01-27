@@ -36,17 +36,16 @@
                     </div>
                 </div>
             </div>
-            <div class="info-box">
+            <!-- <div class="info-box">
                 <div class="info-item">
                     <div class="name">{{ $t('copy.copy_order_daily_profit') }}</div>
                     <div class="val up">{{ props.item.today || '--' }}</div>
                 </div>
-            </div>
-
+            </div> -->
             <div class="info-box" v-if="props.showDetail" style="margin-top: 0.12rem;">
                 <div class="info-item">
                     <div class="name">{{ $t('copy.copy_order_detail_duration') }}</div>
-                    <div class="val up">--</div>
+                    <div class="val up">{{ item.date || '--' }}</div>
                 </div>
             </div>
 
@@ -56,62 +55,7 @@
             </div>
         </div>
         <div v-if="showDetail">
-            <Tabs type="custom-line-small" @change="onChange" v-model="activeTab" :swipeable="false" animated>
-                <Tab :title="$t('copy.copy_order_detail_tab1')" :name="'0'">
-                    <div class="px-[0.1rem] w-full pt-[0.28rem] flex flex-col">
-                        <div class="w-full h-[1.5rem] rounded-[0.32rem] mb-[0.2rem] items-center px-[0.4rem] flex justify-between"
-                            v-for="(item, i) in [1, 2]" style="background-color: var(--ex-bg-white);">
-                            <div class="flex items-center">
-                                <div class="w-[0.8rem] h-[0.8rem] mr-[0.2rem]">
-                                    <img v-lazy="getStaticImgUrl('static/img/follow/bot.svg')" alt="" />
-                                </div>
-                                <div class="flex flex-col">
-                                    <div class="text-[0.3rem] font-semibold text-color">BTC/USDT</div>
-                                    <div class="text-[0.28rem] text-color2">asdfasdf</div>
-                                </div>
-                            </div>
-                            <div class="flex">
-                                <div
-                                    class="w-[0.6rem] h-[0.6rem] rounded-[0.12rem] bg-time-red border-[0.02rem] flex items-center justify-center pt-[0.02rem] status-count">
-                                    <span class="text-[0.32rem] font-semibold">14</span>
-                                </div>
-                                <div class="h-[0.6rem] flex items-center pt-[0.02rem] text-[0.32rem] font-semibold" style="color: var(--ex-status-color9);">
-                                    &nbsp;:&nbsp;</div>
-                                <div
-                                    class="w-[0.6rem] h-[0.6rem] rounded-[0.12rem] bg-time-red border-[0.02rem] flex items-center justify-center pt-[0.02rem] status-count">
-                                    <span class="text-[0.32rem] font-semibold">30</span>
-                                </div>
-                                <div class="h-[0.6rem] flex items-center pt-[0.02rem] text-[0.32rem] font-semibold" style="color: var(--ex-status-color9);">
-                                    &nbsp;:&nbsp;</div>
-                                <div
-                                    class="w-[0.6rem] h-[0.6rem] rounded-[0.12rem] bg-time-red border-[0.02rem] flex items-center justify-center pt-[0.02rem] status-count">
-                                    <span class="text-[0.32rem] font-semibold">20</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </Tab>
-                <Tab :title="$t('copy.copy_order_detail_tab2')" :name="'1'">
-                    <div class="px-[0.1rem] w-full pt-[0.28rem] flex flex-col">
-                        <div class="w-full h-[1.5rem] rounded-[0.32rem] mb-[0.2rem] items-center px-[0.4rem] flex justify-between"
-                            v-for="(item, i) in [1, 2]" style="background-color: var(--ex-bg-white);">
-                            <div class="flex items-center">
-                                <div class="w-[0.8rem] h-[0.8rem] mr-[0.2rem]">
-                                    <img v-lazy="getStaticImgUrl('static/img/follow/bot.svg')" alt="" />
-                                </div>
-                                <div class="flex flex-col">
-                                    <div class="text-[0.3rem] font-semibold text-color">BTC/USDT</div>
-                                    <div class="text-[0.28rem] text-color2">asdfasdf</div>
-                                </div>
-                            </div>
-                            <div class="flex flex-col justify-center">
-                               <div class="text-[0.32rem] font-semibold text-end" :class="true ? 'text-up' : 'text-down'">+8888</div>
-                               <div class="text-[0.28rem] text-color2 text-end">06-03 00:58:26</div>
-                            </div>
-                        </div>
-                    </div>
-                </Tab>
-            </Tabs>
+            <AiBlock :customType="'custom-line-small'"/>
         </div>
     </div>
 
@@ -153,6 +97,7 @@ import SafePassword from "@/components/SafePassword.vue";
 import FollowSubmit from "./FollowSubmit.vue"
 import { isEmpty } from "@/utils/isEmpty";
 import { computed } from "vue";
+import AiBlock from "@/views/Trade2/pages/AiBlock"
 
 const emits = defineEmits(['openInfo', 'plus', 'cancel'])
 const myFollowList = computed(() => store.state.myCopy)

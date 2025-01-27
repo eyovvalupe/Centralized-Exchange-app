@@ -1,7 +1,7 @@
 <!-- ai -->
 <template>
   <div class="ai-block">
-    <Tabs type="custom-tab"  animated v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
+    <Tabs :type="customType"  animated v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
       @change="onChange">
       <!-- <Tab :title="t('trade.stock_open')" name="0">
         <div class="ai-block-content" style="padding-top: 0.4rem">
@@ -44,6 +44,10 @@ const props = defineProps({
   activeTab: {
     type: [String, Number],
     default: ''
+  },
+  customType: {
+    type: String,
+    default: 'custom-tab'
   }
 })
 

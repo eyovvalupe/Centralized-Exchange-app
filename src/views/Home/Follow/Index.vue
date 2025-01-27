@@ -33,12 +33,12 @@
                             </div>
                         </div>
                     </div>
-                    <div class="info-box">
+                    <!-- <div class="info-box">
                         <div class="info-item">
                             <div class="name">{{ $t('copy.copy_order_daily_profit') }}</div>
                             <div class="val up">{{ myCopyData.today || '--' }}</div>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 <div class="flex gap-[0.12rem] mb-[0.32rem]">
                     <div class="w-max px-[0.4rem] h-[0.78rem] rounded-[1rem] text-[0.3rem] font-semibold flex items-center justify-center"
@@ -192,7 +192,7 @@ const openInfo = item => {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                margin: 0.16rem 0 0.32rem 0;
+                margin: 0.16rem 0;
 
                 .info-item {
                     text-align: left;

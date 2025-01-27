@@ -123,7 +123,6 @@
                             <div class="text-[0.28rem] text-color2">{{ t('finance.defi_daily_interest') }}</div>
                             <div class="text-[0.28rem]">{{ Math.round(order.interest * 1000) / 10 }}%</div>
                         </div>
-                        {{console.log(order)}}
                         <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                             <div class="text-[0.28rem] text-color2">{{ t('finance.defi_borrowed_day') }}</div>
                             <div class="text-[0.28rem]">3{{ t('finance.portfolio_day_multi') }}</div>
