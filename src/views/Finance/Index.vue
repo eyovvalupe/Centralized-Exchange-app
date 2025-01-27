@@ -8,7 +8,7 @@
             t('finance.portfolio_title'),
         ]" @change="changeActiveTab(activeTab, true)" />
 
-        <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe" @change="swipeChange">
+        <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" :touchable="true" :loop="false" :duration="300" ref="swipe" @change="swipeChange">
             <SwipeItem>
                 <Follow :from="'finance'"/>
             </SwipeItem>
@@ -41,14 +41,18 @@ const initialSwipe = ref(activeTab.value);
 const loadedTab = ref([activeTab.value]);
 const swipe = ref(null);
 const changeActiveTab = (val, slideSwipe = false) => {
-    console.log(val)
-    activeTab.value = val;
-    if (loadedTab.value.indexOf(val) == -1) {
-        loadedTab.value.push(val);
+    let normalizedVal = val;
+    // Normalize the value for circular navigation
+    if (val >= 3) normalizedVal = 0;
+    if (val < 0) normalizedVal = 2;
+    
+    activeTab.value = normalizedVal;
+    if (loadedTab.value.indexOf(normalizedVal) == -1) {
+        loadedTab.value.push(normalizedVal);
     }
-    localStorage.setItem('financeActiveTab', val)
+    localStorage.setItem('financeActiveTab', normalizedVal)
     if (slideSwipe && swipe.value) {
-        swipe.value.swipeTo(val);
+        swipe.value.swipeTo(normalizedVal);
     }
 };
 const swipeChange = (val) => {
