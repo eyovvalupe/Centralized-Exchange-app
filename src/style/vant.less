@@ -702,6 +702,7 @@ body .van-dialog {
             height: 1rem;
             background-color: var(--ex-bg-color);
             position: relative;
+            border-bottom: 0.02rem solid var(--ex-bg-white2);
     
             .van-tabs__nav {
                 margin: 0 !important;
@@ -722,10 +723,21 @@ body .van-dialog {
                 }
     
                 .van-tab--active {
-                    color: var(--ex-white);
+                    color: var(--ex-primary-color);
                     position: relative;
                     font-size: 0.36rem;
                     font-weight: bold;
+                    &::after {
+                        content: "";
+                        width: 0.48rem;
+                        height: 0.06rem;
+                        border-radius: 0.3rem;
+                        position: absolute;
+                        bottom: -0.2rem;
+                        left: 50%;
+                        transform: translateX(-50%);
+                        background-color: var(--ex-primary-color);
+                    }
                 }
             }
     

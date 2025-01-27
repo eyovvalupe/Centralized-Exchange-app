@@ -34,7 +34,7 @@
         </div>
 
         <div class="lists">
-          <StockTable :showIcon="true" theme="classic" :handleClick="goInfo" :loading="searchLoading"
+          <StockTable :from="'trade'" :showIcon="true" theme="classic" :handleClick="goInfo" :loading="searchLoading"
             :key="'search'" :list="marketSearchList" />
         </div>
       </div>
@@ -178,7 +178,9 @@ setTimeout(() => {
 
 
 .page-trade3 {
-    width: 100%;height: 100%;padding: 1.32rem 0.32rem 1.4rem 0.32rem;overflow-y: auto;
+    width: 100%;height: 100%;
+    padding: 1.32rem 0 1.4rem 0;
+    overflow-y: auto;
     position: relative;
     .search-bg {
         position: fixed;

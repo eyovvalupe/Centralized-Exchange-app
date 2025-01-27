@@ -2,9 +2,6 @@
 <template>
     <div class="page-home2">
         <!-- 背景 -->
-        <video class="video-bg" autoplay playsinline loop muted>
-            <source src="https://videos.mocortech.com/%E9%A6%96%E9%A1%B5%E8%A7%86%E9%A2%911080_1.mp4" type="video/mp4">
-        </video>
 
         <!-- 内容 -->
         <div class="home2-content">
@@ -23,19 +20,6 @@
                 </div>
             </div>
 
-            <!-- 欢迎 -->
-            <div class="welcome">
-                <div class="name mb-[0.36rem]">安全 | 边界 | 严格</div>
-                <div class="title mb-[0.16rem]"><span style="color:#F19009;margin-right: 0.04rem;">千万用户</span>都在用的</div>
-                <div class="title mb-[0.36rem]">交易所</div>
-                <div class="name">体验无限可能</div>
-
-                <div class="btns mt-[0.72rem]" v-if="!token">
-                    <div class="btn ripple-primary" @click="goLogin">登录</div>
-                    <div class="btn btn2 ripple-btn" @click="goRegister">注册</div>
-                </div>
-            </div>
-
 
             <!-- banner -->
             <view  class="banners wow fadeInUp" data-wow-duration="1s">
@@ -49,49 +33,60 @@
                 </Swipe>
             </view>
 
-            <!-- 理财 -->
+            <!-- 质押挖矿 -->
             <div class="recommend-title">
-                <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">理财</div>
-                <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">更多</span>
+                <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">{{ t('finance.portfolio_title')
+                    }}</div>
                 <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s"
-                    @click="fActive == 1 ? jump('finance', true, 1) : jump('follow', false)">
-                    <img v-lazy="getStaticImgUrl('/static/img/user/right_gray.svg')" alt="">
+                    @click="jump('finance', true, 1)">
+                    <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
-            <div class="f-tabs">
-                <div class="f-tab" :class="{'f-tab-active': fActive == 1}" @click="fActive = 1">{{ t('finance.portfolio_title') }}</div>
-                <div class="f-tab" :class="{'f-tab-active': fActive == 2}" @click="fActive = 2">{{ t('copy.title') }}</div>
-            </div>
-            <!-- 质押挖矿 -->
-            <div class="scroll-box" v-show="fActive == 1">
+
+            <div class="scroll-box">
                 <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
                     <MiningItem class="mining-home-item" v-for="i in 10" :key="i" />
                 </div>
             </div>
+
+            <div class="sub-banner wow fadeInUp" data-wow-duration="0.6s">
+                <img v-lazy="getStaticImgUrl('/static/home2/subBanner.png')" alt="">
+
+                <div class="sub-box">
+                    <div class="title">领取模拟金</div>
+                    <div class="amount">$100000</div>
+                    <div class="btn ripple-primary">模拟交易</div>
+                </div>
+            </div>
             <!-- 跟单 -->
-            <div class="scroll-box" v-show="fActive == 2">
+            <div class="recommend-title" @click="jump('follow', false)">
+                <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">{{ t('copy.title') }}</div>
+                <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s">
+                    <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
+                </div>
+            </div>
+            <!-- <div>
+                <div class="follow-btn wow slideInLeft">{{ t('copy.copy_option') }}</div>
+            </div> -->
+            <div class="scroll-box">
                 <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
                     <div class="scroll-item-follow" v-for="(item, i) in followList" :key="i">
                         <FollowItem class="follow-home-item" :item="item" />
                     </div>
                 </div>
             </div>
-            
 
             <!-- 市场推荐 -->
             <div class="recommend-title">
                 <div class="wow slideInLeft" style="flex: 1;" data-wow-duration="0.6s">{{ t('home.market_trend') }}
                 </div>
-                <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">更多</span>
                 <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s">
-                    <img v-lazy="getStaticImgUrl('/static/img/user/right_gray.svg')" alt="">
+                    <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
                 </div>
             </div>
 
             <!-- Tabs -->
-            <div style="width: calc(100% + 0.48rem);position: relative;left: -0.24rem;">
-                <Recommend :from="'home'" :activated="activated" />
-            </div>
+            <Recommend :from="'home'" :activated="activated" />
 
 
             <!-- ad -->
@@ -178,16 +173,6 @@ import { useRoute } from "vue-router";
 import Recommend from "./Recommend"
 
 const route = useRoute();
-const fActive = ref(1)
-
-const goLogin = () => {
-    store.commit("setIsLoginOpen", true);
-}
-const goRegister = () => {
-    router.push({
-        name: 'register'
-    })
-}
 
 // 安装
 const install = () => {
@@ -438,17 +423,6 @@ const followList = computed(() => store.state.followList || [])
     position: relative;
     overflow: hidden;
 
-    .video-bg {
-      -o-object-fit: cover;
-      object-fit: cover;
-      -o-object-position: center center;
-      object-position: center center;
-      position: absolute;
-        width: 100%;
-        height: calc(var(--vh) * 100);
-        z-index: 0;
-    }
-
 
     .home2-bg1 {
         position: absolute;
@@ -481,38 +455,6 @@ const followList = computed(() => store.state.followList || [])
         display: flex;
         flex-direction: column;
 
-        .welcome {
-            color: var(--ex-white);
-            padding: 1rem  0.2rem 0.4rem 0.2rem;
-            .name {
-                font-size: 0.32rem;
-            }
-            .title {
-                font-size: 0.64rem;
-                font-weight: bold;
-            }
-            .btns {
-                display: flex;
-                align-items: center;
-                justify-content: space-between;
-                margin-bottom: 0.4rem;
-                .btn {
-                    width: 3.2rem;
-                    height: 0.88rem;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    background-color: var(--ex-white);
-                    border-radius: 1rem;
-                    color: var(--ex-bg-color);
-                    font-size: 0.32rem;
-                }
-                .btn2 {
-                    background-color: var(--ex-primary-color);
-                    color: var(--ex-white);
-                }
-            }
-        }
 
         .home2-header {
             display: flex;
@@ -533,7 +475,7 @@ const followList = computed(() => store.state.followList || [])
         }
 
         .banners {
-            margin: 0.24rem 0 0 0;
+            margin: 0.24rem 0 0.28rem 0;
 
             .swipers {
                 width: 100%;
@@ -609,32 +551,10 @@ const followList = computed(() => store.state.followList || [])
             }
         }
 
-        .f-tabs {
-            display: flex;
-            align-items: center;
-            justify-content: flex-start;
-            margin-bottom: 0.24rem;
-            .f-tab {    
-                height: 0.68rem;
-                border-radius: 1rem;
-                margin-right: 0.12rem;
-                padding: 0 0.32rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: var(--ex-bg-white1);
-                color: rgba(255,255,255,0.7);
-                font-size: 0.28rem;
-            }
-            .f-tab-active {
-                background-color: var(--ex-primary-color);
-                color: var(--ex-white);
-            }
-        }
         .scroll-box {
             width: calc(100% + 0.32rem);
             overflow-x: auto;
-            margin-bottom: 0;
+            margin-bottom: 0.28rem;
             padding-right: 0.24rem;
 
             .mining-home-item {
@@ -680,8 +600,7 @@ const followList = computed(() => store.state.followList || [])
             color: var(--ex-white);
             font-size: 0.36rem;
             font-weight: 500;
-            margin: 0.36rem 0;
-            padding-left: 0.06rem;
+            margin-bottom: 0.24rem;
 
             .point {
                 width: 0.28rem;
@@ -689,14 +608,11 @@ const followList = computed(() => store.state.followList || [])
                 margin-right: 0.2rem;
             }
 
-            .recommend-more {
-                font-size: 0.24rem;
-                color: var(--ex-text-color5);
-            }
             .recommend-icon {
-                width: 0.24rem;
-                height: 0.24rem;
-                margin-left: 0.04rem;
+                width: 0.48rem;
+                height: 0.48rem;
+                position: relative;
+                top: 0.02rem;
             }
         }
 
