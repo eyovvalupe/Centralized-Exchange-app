@@ -12,6 +12,9 @@
     :root {
       --app-height: 100%;
     }
+    html, body {
+      background-color: #0e0f18;
+    }
 
     @keyframes preloading {
       0% {
@@ -30,10 +33,9 @@
     .preloading_box {
       position: fixed;
       left: 50%;
-      top: 40%;
+      top: 45%;
       transform: translateX(-50%) translateY(-50%);
-      width: 108px;
-      height: 62px;
+      height: 48px;
       animation: preloading 3s ease-out infinite;
     }
   </style>
