@@ -303,6 +303,9 @@ export default {
     ad_con: "부의 길을 창조하세요",
     ad_btn: "거래 시작",
     finance: "재테크",
+    news: "뉴스",
+    simulatedTradingTitle: "가상 금 획득",
+    simulatedTradingButton: "가상 거래",
   },
   assets: {
     recharge: "충전",

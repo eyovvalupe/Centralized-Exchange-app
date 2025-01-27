@@ -302,6 +302,8 @@ export default {
     ad_btn: "开始交易",
     finance: "理财",
     news: "新闻",
+    simulatedTradingTitle: "领取模拟金",
+    simulatedTradingButton: "模拟交易",
   },
   assets: {
     recharge: "充值",

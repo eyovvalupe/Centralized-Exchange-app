@@ -498,6 +498,8 @@ export default {
     ad_btn: "Start Trade",
     finance: "Finance",
     news: "News",
+    simulatedTradingTitle: "Claim Mock Gold",
+    simulatedTradingButton: "Mock Trading",
   },
   trade: {
     header_stock: "Stocks",

@@ -53,9 +53,9 @@
                 <img v-lazy="getStaticImgUrl('/static/home2/subBanner.png')" alt="">
 
                 <div class="sub-box">
-                    <div class="title">领取模拟金</div>
+                    <div class="title">{{ $t('home.simulatedTradingTitle') }}</div>
                     <div class="amount">$100000</div>
-                    <div class="btn ripple-primary">模拟交易</div>
+                    <div class="btn ripple-primary">{{ $t('home.simulatedTradingButton') }}</div>
                 </div>
             </div>
             <!-- 跟单 -->
