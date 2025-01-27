@@ -48,7 +48,7 @@
 
 
                             <div class="bar-box">
-                                <div class="up-box" style="width: calc(100% * 10 /11);"></div>
+                                <div class="up-box" :style="{width: winratePercentage}"></div>
                             </div>
 
                             <div class="navs">
@@ -76,16 +76,7 @@
                                     <div class="text-[0.28rem] text-color">{{ info.profitlossratio }}:1</div>
                                 </div>
                             </div>
-
-                            <!-- <div class="line">
-                                <SparkLine v-if="points" :points="points" :ratio="1" />
-                            </div> -->
                         </div>
-
-                        <!-- <div class="per-box">
-                            <div class="name">{{ $t('copy.copy_belong_sharing_ratio') }}</div>
-                            <div class="val">{{ info.profitratio }}%</div>
-                        </div> -->
                     </div>
                     <div class="rounded-[0.32rem] p-[0.28rem] mb-[0.24rem] mx-[0.32rem]"
                         style="background-color: var(--ex-bg-white);">
@@ -337,7 +328,14 @@ const plus = () => {
 
 const percentageAxios = ['100.00', '80.00', '60.00', '40.00', '20.00', '0.00', '-20.00', '-40.00']
 const dateAxios = ['07/22','09/06','10/22','12/07','01/22']
+const winratePercentage = computed(() => {
+    const winDays = Number(info.value.windays) || 0;
+    const lossDays = Number(info.value.lossdays) || 0;
+    const total = winDays + lossDays;
 
+    if (total == 0) return '0%'
+    return `${(winDays / total * 100).toFixed(2)}%`
+})
 // 跟单详情
 const copyItem = computed(() => store.state.copyItem || {})
 const info = ref({})
