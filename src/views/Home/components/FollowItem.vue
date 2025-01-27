@@ -58,7 +58,7 @@ import { getStaticImgUrl, getPoints } from "@/utils/index.js"
 import SparkLine from "@/components/SparkLine.vue";
 import router from "@/router";
 import store from "@/store";
-const points = getPoints('id-123456', 100)
+const points = ref(getPoints('id-123456', 100))
 const props = defineProps({
     showDetail: { // 是否显示详细信息
         type: Boolean,

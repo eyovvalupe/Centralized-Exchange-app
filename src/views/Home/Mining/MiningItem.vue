@@ -20,7 +20,7 @@
                 </div>
             </div>
             <div class="line-box">
-                <SparkLine  :points="getPoints('mining_13213', 80)" :ratio="1" />
+                <SparkLine v-if="loaded" :points="points" :ratio="1" />
             </div>
         </div>
         <div class="btn ripple-btn">{{ t('finance.portfolio_participate') }}</div>
@@ -29,10 +29,17 @@
 
 <script setup>
 import { useI18n } from 'vue-i18n';
-import { getStaticImgUrl, getPoints } from "@/utils/index.js"
+import { getPoints } from "@/utils/index.js"
 import SparkLine from "@/components/SparkLine.vue";
+import { ref, onMounted } from "vue"
 
+const points = ref(getPoints('id-123', 80))
 const { t } = useI18n();
+
+const loaded = ref(false) // 模拟异步
+onMounted(() => {
+    loaded.value = true
+}, 200)
 </script>
 
 <style lang="less">
@@ -46,7 +53,7 @@ const { t } = useI18n();
 
     .name {
         padding-left: 0.16rem;
-        font-size: 0.36rem;
+        font-size: 0.32rem;
         font-weight: 600;
         line-height: 1;
         margin-bottom: 0.18rem;
@@ -57,7 +64,7 @@ const { t } = useI18n();
         align-items: center;
         color: var(--ex-text-color2);
         font-weight: 400;
-        font-size: 0.28rem;
+        font-size: 0.24rem;
         line-height: 1;
         margin-bottom: 0.3rem;
         padding-left: 0.16rem;
@@ -90,7 +97,7 @@ const { t } = useI18n();
                 line-height: 0.4rem;
 
                 b {
-                    font-size: 0.32rem;
+                    font-size: 0.3rem;
                     font-weight: 600;
                 }
             }
