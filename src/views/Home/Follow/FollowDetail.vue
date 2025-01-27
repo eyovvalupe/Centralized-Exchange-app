@@ -65,7 +65,6 @@
                                     </div>
                                 </div>
                             </div>
-                            {{ console.log(info) }}
                             <div class="mx-[0.12rem] h-[1.8rem] rounded-[0.32rem] px-[0.28rem] py-[0.42rem] flex flex-col justify-between"
                                 style="background-color: var(--ex-bg-white2);">
                                 <div class="w-full flex justify-between">
@@ -125,21 +124,23 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-full flex h-[1.12rem] rounded-[0.32rem] flex items-center px-[0.28rem] justify-between" style="background-color: var(--ex-bg-white2);">
+                            <div class="w-full flex h-[1.12rem] rounded-[0.32rem] flex items-center px-[0.28rem] justify-between"
+                                style="background-color: var(--ex-bg-white2);">
                                 <div class="text-[0.28rem] text-color2 text-center">{{
                                     $t('copy.copy_profit_divide_ratio') }}</div>
                                 <div class="text-[0.4rem] font-semibold text-center">{{ info.profitratio * 100 }}%</div>
                             </div>
                         </div>
                     </div>
-                    <!-- <div class="h-[7.9rem] rounded-[0.32rem] mb-[0.24rem] p-[0.28rem] mx-[0.32rem]"
+                    <div class="h-[7.9rem] rounded-[0.32rem] mb-[0.24rem] p-[0.28rem] mx-[0.32rem]"
                         style="background-color: var(--ex-bg-white);">
                         <div class="flex justify-between items-center mb-[0.4rem]">
                             <div class="flex items-center">
                                 <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                     <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
                                 </div>
-                                <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_belong_profit_rate') }}</div>
+                                <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_belong_profit_rate') }}
+                                </div>
                             </div>
                             <div class="flex">
                                 <div class="w-[1.6rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center text-[0.32rem]  mr-[0.12rem]"
@@ -158,19 +159,33 @@
                         </div>
                         <div class="flex items-center justify-between mb-[0.36rem]">
                             <div class="text-[0.6rem] font-semibold" :class="true ? 'text-up' : 'text-down'">
-                                +67.5%
+                                {{ info.returnrate > 0 ? '+' + info.returnrate : info.returnrate }}%
                             </div>
                             <div class="flex items-center">
-                                <div class="text-[0.24rem] text-color mr-[0.1rem]">{{ $t('copy.copy_order_time1') }}</div>
+                                <div class="text-[0.24rem] text-color mr-[0.1rem]">{{ $t('copy.copy_order_time1') }}
+                                </div>
                                 <div class="w-[0.32rem] h-[0.32rem]">
                                     <img v-lazy="getStaticImgUrl('static/img/common/down.svg')" alt="" />
                                 </div>
                             </div>
                         </div>
-                        <div class="line">
-                            <SparkLine v-if="points" :points="points" :ratio="1" />
+                        <div class="flex flex-col">
+                            <div class="flex w-full">
+                                <div class="flex flex-col mt-[0.2rem] mr-[0.2rem]">
+                                    <div class="w-[1rem] text-[0.24rem] text-color2 mb-[0.38rem]"
+                                        v-for="(item, i) in percentageAxios">
+                                        {{ item + '%' }}
+                                    </div>
+                                </div>
+                                <div class="flex-1">
+                                    <img v-lazy="getStaticImgUrl('static/img/follow/chart.svg')" alt="" />
+                                </div>
+                            </div>
+                            <div class="flex pl-[1.2rem] justify-between">
+                                <div class="text-[0.24rem] text-color2" v-for="(item, i) in dateAxios">{{ item }}</div>
+                            </div>
                         </div>
-                    </div> -->
+                    </div>
                     <div class="rounded-[0.32rem] mb-[0.4rem] p-[0.28rem] mx-[0.32rem]"
                         style="background-color: var(--ex-bg-white);">
                         <div class="flex justify-between items-center mb-[0.4rem] mb-[0.4rem]">
@@ -181,7 +196,7 @@
                                 <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_belong_tab3') }}
                                 </div>
                             </div>
-                            <div class="w-[0.48rem] h-[0.48rem] rounded-[0.1rem] mask-btn" @click="active = 3">
+                            <div class="w-[0.48rem] h-[0.48rem] rounded-[0.1rem] mask-btn" @click="active = '2'">
                                 <img v-lazy="getStaticImgUrl('static/img/common/next.svg')" alt="" />
                             </div>
                         </div>
@@ -320,6 +335,8 @@ const plus = () => {
     showPlus.value = true
 }
 
+const percentageAxios = ['100.00', '80.00', '60.00', '40.00', '20.00', '0.00', '-20.00', '-40.00']
+const dateAxios = ['07/22','09/06','10/22','12/07','01/22']
 
 // 跟单详情
 const copyItem = computed(() => store.state.copyItem || {})
