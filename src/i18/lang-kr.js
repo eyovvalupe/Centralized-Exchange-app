@@ -13,6 +13,9 @@ export default {
     no_wallet: "수금 계좌 없음",
     spot: "현물",
     option: "옵션",
+    second: "초",
+    hour: "시간",
+
   },
   login: {
     login: "로그인",

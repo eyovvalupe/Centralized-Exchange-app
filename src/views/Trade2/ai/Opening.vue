@@ -129,9 +129,9 @@
       </div>
 
       <div class="account-box" v-if="token">
-        <div class="title">合约账户</div>
+        <div class="title">{{ t('assets.wallet_header_contract') }}</div>
         <div class="info">
-          <div>可用余额</div>
+          <div>{{ t('market.market_faster_available') }}</div>
           <div>
             <span style="font-size: 0.32rem;color:var(--ex-primary-color)">{{ usdt.amount || '--' }}</span>
             <span style="color:var(--ex-white)">USDT</span>
@@ -139,8 +139,8 @@
         </div>
 
         <div class="btns">
-          <div class="btn ripple-primary" @click="jump('topUpCrypto')">充值</div>
-          <div class="btn ripple-primary" style="margin-left: 0.28rem;" @click="jump('transfer')">划转</div>
+          <div class="btn ripple-primary" @click="jump('topUpCrypto')">{{ t('assets.recharge') }}</div>
+          <div class="btn ripple-primary" style="margin-left: 0.28rem;" @click="jump('transfer')">{{ t('assets.transfer') }}</div>
         </div>
       </div>
      

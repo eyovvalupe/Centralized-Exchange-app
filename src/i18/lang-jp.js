@@ -13,6 +13,9 @@ export default {
     no_wallet: "受取アカウントがありません",
     spot: "現物",
     option: "オプション",
+    second: "秒",
+    hour: "小时",
+
   },
   login: {
     login: "ログイン",

@@ -13,6 +13,9 @@ export default {
     no_wallet: "No Payment Account Available",
     spot: "Spot",
     option: "Option",
+    second: "sec",
+    hour: "hours",
+
   },
   login: {
     login: "Log In",

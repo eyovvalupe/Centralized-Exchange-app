@@ -13,6 +13,9 @@ export default {
     no_wallet: "暫無收款賬戶",
     spot: "現貨",
     option: "期貨",
+    second: "秒",
+    hour: "小時",
+
   },
   home: {
     login: "登录",

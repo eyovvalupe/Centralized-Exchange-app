@@ -51,10 +51,10 @@ export const _networkMapList = {
 
 // 时间单位
 export const _dateUnitMap = {
-  s: "秒",
-  m: "分钟",
-  h: "小时",
-  d: "天",
+  s: t('common.second'),
+  m: t('market.market_buy_optional_duaration'),
+  h: t('common.hour'),
+  d: t('finance.portfolio_day_multi'),
 };
 
 export const _langMap = [

@@ -13,6 +13,8 @@ export default {
     no_wallet: "暂无收款账户",
     spot: "现货",
     option: "期权",
+    second: "秒",
+    hour: "小时",
   },
   login: {
     login: "登录",
