@@ -97,7 +97,9 @@ const onChange = () => {
 // 我的跟单统计
 const followList = computed(() => store.state.followList)
 const myFollowList = computed(() => store.state.myCopy)
+console.log('my followlist', myFollowList.value)
 const myCopyData = computed(() => store.state.myCopyData)
+console.log('my copy data ======> ', myCopyData.value)
 
 const loading = ref(false)
 
