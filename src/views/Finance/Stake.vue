@@ -28,7 +28,7 @@ const { t } = useI18n();
 const token = computed(() => store.state.token);
 
 
-const activeTab = ref(1)
+const activeTab = ref(0)
 
 const onChange = (val) => {
     activeTab.value = val

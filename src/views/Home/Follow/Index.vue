@@ -126,16 +126,16 @@ const props = defineProps({
 })
 const listDom = ref()
 const active = ref(1) // 1-跟单  2-订单
-const changeTab = val => {
-    active.value = val
-    setTimeout(() => {
-        if (listDom.value) {
-            listDom.value.scrollTop = 0
-        }
-    }, 100)
-}
+// const changeTab = val => {
+//     active.value = val
+//     setTimeout(() => {
+//         if (listDom.value) {
+//             listDom.value.scrollTop = 0
+//         }
+//     }, 100)
+// }
 const typeChange = ref('option')
-const activeTab = ref(1)
+const activeTab = ref(0)
 
 const onChange = (val) => {
     activeTab.value = val

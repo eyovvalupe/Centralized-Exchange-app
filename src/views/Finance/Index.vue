@@ -17,7 +17,7 @@
             </SwipeItem>
             <SwipeItem>
                 <!-- 质押挖矿 -->
-                <Stake v-if="loadedTab.indexOf(1) > -1" />
+                <Stake />
             </SwipeItem>
         </Swipe>
     </div>
