@@ -22,7 +22,7 @@
 
 
             <!-- banner -->
-            <view @click="install" class="banners wow fadeInUp" data-wow-duration="1s">
+            <view  class="banners wow fadeInUp" data-wow-duration="1s">
                 <Swipe class="swipers" :autoplay="3000" indicator-color="white">
                     <SwipeItem class="swiper-item">
                         <img v-lazy="getStaticImgUrl('/static/home2/banner1.png')" alt="">
@@ -176,6 +176,7 @@ const route = useRoute();
 
 // 安装
 const install = () => {
+    if (!deferredPrompt || !deferredPrompt.prompt) return
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((choiceResult) => {
         if (choiceResult.outcome === 'accepted') {

@@ -282,12 +282,16 @@ const setCurrData = (item) => {
 .chat_area_box {
     width: 100%;
     height: 100%;
+    flex: 1;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 
     .chat_area {
         width: 100%;
         height: 100%;
+        flex: 1;
     }
 
     .more_loading {
@@ -306,7 +310,7 @@ const setCurrData = (item) => {
         position: absolute;
         width: 100%;
         height: 100%;
-        background-color: var(--ex-bg-color);
+        background-color: var(--ex-none);
         display: flex;
         align-items: center;
         justify-content: space-around;

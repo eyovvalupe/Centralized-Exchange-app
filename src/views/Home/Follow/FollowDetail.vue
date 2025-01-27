@@ -34,7 +34,8 @@
                                     <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                         <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
                                     </div>
-                                    <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_order_status') }}</div>
+                                    <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_order_status') }}
+                                    </div>
                                 </div>
                                 <div class="w-[2.4rem] h-[0.6rem] rounded-[0.32rem] flex items-center justify-between px-[0.28rem] mr-[0.28rem] mt-[0.28rem] mask-btn"
                                     style="background-color: var(--ex-bg-white2);">
@@ -64,16 +65,16 @@
                                     </div>
                                 </div>
                             </div>
-
+                            {{ console.log(info) }}
                             <div class="mx-[0.12rem] h-[1.8rem] rounded-[0.32rem] px-[0.28rem] py-[0.42rem] flex flex-col justify-between"
                                 style="background-color: var(--ex-bg-white2);">
                                 <div class="w-full flex justify-between">
                                     <div class="text-[0.28rem] text-color2">{{ $t('copy.copy_profit_rate') }}</div>
-                                    <div class="text-[0.28rem] text-color">50%</div>
+                                    <div class="text-[0.28rem] text-color">{{ info.winrate }} %</div>
                                 </div>
                                 <div class="w-full flex justify-between">
                                     <div class="text-[0.28rem] text-color2">{{ $t('copy.copy_belong_pl_rate') }}</div>
-                                    <div class="text-[0.28rem] text-color">1.36:1</div>
+                                    <div class="text-[0.28rem] text-color">{{ info.profitlossratio }}:1</div>
                                 </div>
                             </div>
 
@@ -87,7 +88,7 @@
                             <div class="val">{{ info.profitratio }}%</div>
                         </div> -->
                     </div>
-                    <div class="h-[6rem] rounded-[0.32rem] p-[0.28rem] mb-[0.24rem] mx-[0.32rem]"
+                    <div class="rounded-[0.32rem] p-[0.28rem] mb-[0.24rem] mx-[0.32rem]"
                         style="background-color: var(--ex-bg-white);">
                         <div class="flex items-center">
                             <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
@@ -95,40 +96,43 @@
                             </div>
                             <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_leader_overview') }}</div>
                         </div>
-                        <div class="w-full h-full py-[0.6rem] flex flex-col justify-between">
-                            <div class="w-full flex">
-                                <div class="flex-1 flex flex-col">
-                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{ $t('copy.copy_belong_days') }}</div>
-                                    <div class="text-[0.4rem] font-semibold text-center">360</div>
+                        <div class="w-full pt-[0.6rem] flex flex-col">
+                            <div class="h-[2.4rem] flex flex-col justify-between mb-[0.6rem]">
+                                <div class="w-full flex">
+                                    <div class="flex-1 flex flex-col">
+                                        <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{
+                                            $t('copy.copy_belong_days') }}</div>
+                                        <div class="text-[0.4rem] font-semibold text-center">{{ info.days }}</div>
+                                    </div>
+                                    <div class="flex-1 flex flex-col">
+                                        <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{
+                                            $t('copy.copy_leader_order_size') }}</div>
+                                        <div class="text-[0.4rem] font-semibold text-center">{{ info.amount }}</div>
+                                    </div>
                                 </div>
-                                <div class="flex-1 flex flex-col">
-                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{ $t('copy.copy_leader_order_amount') }}</div>
-                                    <div class="text-[0.4rem] font-semibold text-center">1111111</div>
+                                <div class="w-full flex">
+
+                                    <div class="flex-1 flex flex-col">
+                                        <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{
+                                            $t('copy.copy_leader_followers_profit') }}</div>
+                                        <div class="text-[0.4rem] font-semibold text-center">{{ info.returnamount }}
+                                        </div>
+                                    </div>
+                                    <div class="flex-1 flex flex-col">
+                                        <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{
+                                            $t('copy.copy_leader_followers_num') }}</div>
+                                        <div class="text-[0.4rem] font-semibold text-center">{{ info.followers }}</div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="w-full flex">
-                                <div class="flex-1 flex flex-col">
-                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{ $t('copy.copy_leader_order_size') }}</div>
-                                    <div class="text-[0.4rem] font-semibold text-center">8989</div>
-                                </div>
-                                <div class="flex-1 flex flex-col">
-                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{ $t('copy.copy_leader_followers_profit') }}</div>
-                                    <div class="text-[0.4rem] font-semibold text-center">1111111</div>
-                                </div>
-                            </div>
-                            <div class="w-full flex">
-                                <div class="flex-1 flex flex-col">
-                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{ $t('copy.copy_leader_followers_num') }}</div>
-                                    <div class="text-[0.4rem] font-semibold text-center">28/50</div>
-                                </div>
-                                <div class="flex-1 flex flex-col">
-                                    <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{ $t('copy.copy_profit_divide_ratio') }}</div>
-                                    <div class="text-[0.4rem] font-semibold text-center">10%</div>
-                                </div>
+                            <div class="w-full flex h-[1.12rem] rounded-[0.32rem] flex items-center px-[0.28rem] justify-between" style="background-color: var(--ex-bg-white2);">
+                                <div class="text-[0.28rem] text-color2 text-center">{{
+                                    $t('copy.copy_profit_divide_ratio') }}</div>
+                                <div class="text-[0.4rem] font-semibold text-center">{{ info.profitratio * 100 }}%</div>
                             </div>
                         </div>
                     </div>
-                    <div class="h-[7.9rem] rounded-[0.32rem] mb-[0.24rem] p-[0.28rem] mx-[0.32rem]"
+                    <!-- <div class="h-[7.9rem] rounded-[0.32rem] mb-[0.24rem] p-[0.28rem] mx-[0.32rem]"
                         style="background-color: var(--ex-bg-white);">
                         <div class="flex justify-between items-center mb-[0.4rem]">
                             <div class="flex items-center">
@@ -166,7 +170,7 @@
                         <div class="line">
                             <SparkLine v-if="points" :points="points" :ratio="1" />
                         </div>
-                    </div>
+                    </div> -->
                     <div class="rounded-[0.32rem] mb-[0.4rem] p-[0.28rem] mx-[0.32rem]"
                         style="background-color: var(--ex-bg-white);">
                         <div class="flex justify-between items-center mb-[0.4rem] mb-[0.4rem]">
@@ -174,16 +178,18 @@
                                 <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                     <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
                                 </div>
-                                <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_belong_profit_rate') }}</div>
+                                <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_belong_tab3') }}
+                                </div>
                             </div>
-                            <div class="w-[0.48rem] h-[0.48rem] rounded-[0.1rem] mask-btn">
+                            <div class="w-[0.48rem] h-[0.48rem] rounded-[0.1rem] mask-btn" @click="active = 3">
                                 <img v-lazy="getStaticImgUrl('static/img/common/next.svg')" alt="" />
                             </div>
                         </div>
                         <div class="rounded-[0.32rem] h-[1.72rem] flex items-center justify-center mb-[0.24rem]"
                             style="background-color: var(--ex-bg-white2);">
                             <div class="flex flex-col items-center">
-                                <div class="text-[0.28rem] text-color2 mb-[0.24rem]">{{ $t('copy.copy_follower_amount') }}</div>
+                                <div class="text-[0.28rem] text-color2 mb-[0.24rem]">{{ $t('copy.copy_follower_amount')
+                                    }}</div>
                                 <div class="text-[0.4rem] font-semibold">{{ follows.length }}</div>
                             </div>
                         </div>
@@ -194,10 +200,11 @@
                                 <div class="w-[0.4rem] h-[0.4rem] rounded-[0.2rem] overflow-hidden mr-[0.16rem]">
                                     <img v-lazy="getStaticImgUrl('static/avatar/1.png')" alt="" />
                                 </div>
-                                <div class="text-[0.28rem]">{{ 'asfasdf@gmail.com' }}</div>
+                                <div class="text-[0.28rem]">{{ item.name }}</div>
                             </div>
-                            <div class="text-[0.28rem] font-semibold" :class="true ? 'text-up' : 'text-down'">+234234
-                            </div>
+                            <div class="text-[0.28rem] font-semibold"
+                                :class="item.returnamount >= 0 ? 'text-up' : 'text-down'">{{ item.returnamount > 0 ? '+'
+                                    + item.returnamount : item.returnamount }}</div>
                         </div>
                         <div v-if="!follows.length">
                             <NoData />
@@ -213,21 +220,32 @@
             </Tab>
             <Tab :title="$t('copy.copy_belong_tab2')" name="1">
                 <div class="follow-box">
+                    <div class="flex h-[0.6rem] mx-[0.32rem] border-b-[0.02rem]">
+                        <div class="w-1/4 text-[0.22rem] text-[0.24rem] text-color2">{{ $t('copy.copy_belong_subtitle1')
+                            }}</div>
+                        <div class="w-1/4 text-[0.22rem] text-[0.24rem] text-color2">{{ $t('copy.copy_belong_subtitle2')
+                            }}</div>
+                        <div class="w-1/4 text-[0.22rem] text-[0.24rem] text-color2">{{ $t('copy.copy_belong_subtitle3')
+                            }}</div>
+                        <div class="flex-1 text-end text-[0.22rem] text-[0.24rem] text-color2">{{
+                            $t('copy.copy_belong_subtitle4') }}</div>
+
+                    </div>
                     <div class="table">
-                        <div class="tr mask-btn" v-if="orders.length" v-for="(item, i) in orders" :key="i">
-                            <div class="td td-s">
-                                <div class="name">{{ item.symbol }}</div>
-                                <div class="fever">{{ item.lever }}X</div>
+                        <div class="w-full flex mask-btn" v-if="orders.length" v-for="(item, i) in orders" :key="i">
+                            <div class="w-1/4">
+                                <div class="name">{{ item.name }}</div>
+                                <div class="fever">{{ item.lever }}</div>
                             </div>
-                            <div class="td">
-                                <div class="fever tag bg-up up" v-if="item.offset == 'long'">{{
-                                    $t('copy.copy_belong_open1') }}</div>
-                                <div class="fever tag bg-down down" v-if="item.offset == 'short'">{{
-                                    $t('copy.copy_belong_open2') }}</div>
-                                <div>{{ item.time }}{{ item.unit }}</div>
+                            <div class="w-1/4 flex flex-col">
+                                <div class="w-[0.7rem] h-[0.36rem] rounded-[0.12rem] status-up flex items-center justify-center text-[0.24rem]"
+                                    v-if="true">{{ $t('copy.copy_belong_open1') }}</div>
+                                <div class="w-[0.7rem] h-[0.36rem] rounded-[0.12rem] status-down items-center justify-center text-[0.24rem]"
+                                    v-if="false">{{ $t('copy.copy_belong_open2') }}</div>
+                                <div class="">{{ item.time }}{{ item.unit }}</div>
                             </div>
-                            <div class="td">{{ item.amount }}</div>
-                            <div class="td td2 td-l">{{ item.amountreturn }}</div>
+                            <div class="w-1/4">{{ item.amount }}</div>
+                            <div class="w-1/4 text-end">{{ item.amountreturn }}</div>
                         </div>
                         <NoData v-if="!orders.length" />
                     </div>
@@ -294,7 +312,7 @@ const points = getPoints('id-123456', 100)
 
 const { t } = useI18n()
 const route = useRoute()
-const active = ref(1)
+const active = ref(3)
 const activeRatio = ref(0)
 // 跟单
 const showPlus = ref(false)

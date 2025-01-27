@@ -295,7 +295,7 @@ defineExpose({
         left: 0;
         width: 100%;
         height: 100%;
-        background-color: var(--ex-bg-color);
+        background-color: var(--ex-none);
 
         z-index: 99;
         // border-right: 1px solid var(--ex-info-color);

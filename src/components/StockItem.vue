@@ -279,9 +279,10 @@ const removeStock = (item) => {
   height: 1.62rem;
   padding: 0 0.3rem;
   position: relative;
-  background-color: var(--ex-bg-white2);
-  border-radius: 0.4rem;
+  // background-color: var(--ex-bg-white2);
+  // border-radius: 0.4rem;
   margin-top: 0.2rem;
+  border-bottom: 1px solid var(--ex-bg-white2);
 
   .td5 {
     flex-shrink: 0;
@@ -353,7 +354,7 @@ const removeStock = (item) => {
 }
 
 .stock_item_home {
-  background-color: var(--ex-bg-color2);
+  // background-color: var(--ex-bg-color2);
 }
 
 .stock_item_crypto {

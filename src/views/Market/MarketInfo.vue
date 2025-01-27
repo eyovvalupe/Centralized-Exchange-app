@@ -7,6 +7,7 @@
         <div v-if="!props.innerPage" class="back" @click="backFunc">
           <Icon name="arrow-left" />
         </div>
+
         <!-- 标题 -->
         <div class="title" v-if="route.query.type == 'stock'">
           <div class="title_name">{{ item.symbol || "--" }} </div>
@@ -30,114 +31,123 @@
         </div>
 
       </div>
-      <div class="flex items-center justify-center gap-[0.2rem]">
 
-        <div class="w-[2.6rem] flex-shrink-0">
-          <h1 class="flex items-center" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
-            <span class="text-[0.4rem] font-[600]" v-if="item.price || item.close">
-              {{ item.price || item.close }}
-            </span>
-            <span class="text-[0.4rem] font-[600]" v-else>--</span>
-            <span class="w-[0.24rem] h-[0.26rem] ml-[0.06rem] mt-[0.06rem]">
-              <img v-lazy="getStaticImgUrl('/static/img/market/up_icon.svg')" v-if="updown > 0" />
-              <img v-lazy="getStaticImgUrl('/static/img/market/down_icon.svg')" v-else-if="updown < 0" />
-            </span>
-          </h1>
-          <div class="flex mt-[0.2rem]" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
-            <div class="text-[0.24rem]" v-if="item.price * (item.ratio || 0)">
-              {{ updown === 0 ? "" : updown > 0 ? "+" : "" }}
-              {{ item.change ? item.change : '--' }}
+      <div style="background-color: var(--ex-bg-color3);border-radius: 0.32rem;padding: 0.28rem">
+
+        <div class="flex items-center justify-center gap-[0.2rem]">
+
+          <div class="w-[2.6rem] flex-shrink-0">
+            <h1 class="flex items-center" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
+              <span class="text-[0.4rem] font-[600]" v-if="item.price || item.close">
+                {{ item.price || item.close }}
+              </span>
+              <span class="text-[0.4rem] font-[600]" v-else>--</span>
+              <span class="w-[0.24rem] h-[0.26rem] ml-[0.06rem] mt-[0.06rem]">
+                <img v-lazy="getStaticImgUrl('/static/img/market/up_icon.svg')" v-if="updown > 0" />
+                <img v-lazy="getStaticImgUrl('/static/img/market/down_icon.svg')" v-else-if="updown < 0" />
+              </span>
+            </h1>
+            <div class="flex mt-[0.2rem]" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
+              <div class="text-[0.24rem]" v-if="item.price * (item.ratio || 0)">
+                {{ updown === 0 ? "" : updown > 0 ? "+" : "" }}
+                {{ item.change ? item.change : '--' }}
+              </div>
+              <div class="text-[0.24rem] ml-[0.16rem]" v-if="item.ratio">
+                {{
+                  item.ratio === undefined
+                    ? "--"
+                    : item.ratio > 0
+                      ? "+" + item.ratio + "%"
+                      : item.ratio + "%"
+                }}
+              </div>
             </div>
-            <div class="text-[0.24rem] ml-[0.16rem]" v-if="item.ratio">
-              {{
-                item.ratio === undefined
-                  ? "--"
-                  : item.ratio > 0
-                    ? "+" + item.ratio + "%"
-                    : item.ratio + "%"
-              }}
+          </div>
+          <div class="count flex-1">
+            <div class="count_item">
+              <span class="text-color3">{{ t('market.market_marketinfo_high') }}</span>
+              <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.high || '--' }}</span>
+            </div>
+            <div class="count_item">
+              <span class="text-color3">{{ t('market.market_marketinfo_low') }}</span>
+              <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.low || '--' }}</span>
+            </div>
+            <div class="count_item">
+              <span class="text-color3">{{ t('market.market_marketinfo_open') }}</span>
+              <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.open || '--' }}</span>
+            </div>
+            <div class="count_item">
+              <span class="text-color3">{{ t('market.market_marketinfo_close') }}</span>
+              <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.close || '--'
+                }}</span>
             </div>
           </div>
         </div>
-        <div class="count flex-1">
-          <div class="count_item">
-            <span class="text-color3">{{ t('market.market_marketinfo_high') }}</span>
-            <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.high || '--' }}</span>
+        <div class="flex text-[0.24rem] pt-[0.2rem] gap-[0.2rem]">
+          <div class="w-[2.6rem] flex-shrink-0">
+            <span class="text-color3">{{ t('market.market_marketinfo_value') }}</span>
+            <span class="text-color ml-[0.12rem]">{{ _formatNumber(item.amount) }}</span>
           </div>
-          <div class="count_item">
-            <span class="text-color3">{{ t('market.market_marketinfo_low') }}</span>
-            <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.low || '--' }}</span>
+          <div class="flex-1">
+            <span class="text-color3">{{ t('market.market_marketinfo_amount') }}</span>
+            <span class="text-color ml-[0.12rem]">{{ _formatNumber(item.volume) }}</span>
           </div>
-          <div class="count_item">
-            <span class="text-color3">{{ t('market.market_marketinfo_open') }}</span>
-            <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.open || '--' }}</span>
-          </div>
-          <div class="count_item">
-            <span class="text-color3">{{ t('market.market_marketinfo_close') }}</span>
-            <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.close || '--' }}</span>
-          </div>
+
         </div>
       </div>
-      <div class="flex text-[0.24rem] pt-[0.2rem] gap-[0.2rem]">
-        <div class="w-[2.6rem] flex-shrink-0">
-          <span class="text-color3">{{ t('market.market_marketinfo_value') }}</span>
-          <span class="text-color ml-[0.12rem]">{{ _formatNumber(item.amount) }}</span>
-        </div>
-        <div class="flex-1">
-          <span class="text-color3">{{ t('market.market_marketinfo_amount') }}</span>
-          <span class="text-color ml-[0.12rem]">{{ _formatNumber(item.volume) }}</span>
-        </div>
 
-      </div>
+
     </div>
-    <div class="mt-[0.4rem] h-[0.2rem]" style="border-top:1px solid var(--ex-border-color);"></div>
-    <!-- 内容 -->
-    <div class="market_content">
-      <!-- 图表 -->
-      <div class="chart_box">
-        <div class="tabs">
-          <div class="tab tab_ani" :class="{ active_tab: timeType == 'Time' }" @click="changeType('Time')">
-            Time
+    <div style="background-color: var(--ex-bg-color3);border-radius: 0.32rem;margin:  0.1rem;flex: 1;overflow: hidden;display: flex;flex-direction: column;">
+      <div class="mt-[0.2rem] h-[0.2rem]" style="border-top:1px solid var(--ex-border-color);"></div>
+      <!-- 内容 -->
+      <div class="market_content">
+        <!-- 图表 -->
+        <div class="chart_box">
+          <div class="tabs">
+            <div class="tab tab_ani" :class="{ active_tab: timeType == 'Time' }" @click="changeType('Time')">
+              Time
+            </div>
+            <div class="tab tab_ani" @click="showPicker = true" :class="{ active_tab: minList.includes(timeType) }">
+              {{ currMin }}
+              <Icon style="transform: rotate(90deg)" size="0.16rem" class="ml-[0.06rem]" name="play" />
+            </div>
+            <div class="tab tab_ani" :class="{ active_tab: timeType == '1h' }" @click="changeType('1h')">
+              1h
+            </div>
+            <div class="tab tab_ani" v-if="!['stocks', 'forex'].includes(periodType)"
+              :class="{ active_tab: timeType == '4h' }" @click="changeType('4h')">
+              4h
+            </div>
+            <div class="tab tab_ani" :class="{ active_tab: timeType == '1D' }" @click="changeType('1D')">
+              1D
+            </div>
+            <div class="tab tab_ani" :class="{ active_tab: timeType == '1W' }" @click="changeType('1W')">
+              1W
+            </div>
+            <div class="tab tab_ani" :class="{ active_tab: timeType == '1M' }" @click="changeType('1M')">
+              1M
+            </div>
+            <div class="tab tab_ani" v-if="!['stocks', 'forex'].includes(periodType)"
+              :class="{ active_tab: timeType == '1Y' }" @click="changeType('1Y')">
+              1Y
+            </div>
+            <div style="flex:1"></div>
+            <div class="full-tab" @click="fullScreen(true)">
+              <img v-lazy="getStaticImgUrl('/static/img/common/full.svg')" alt="" />
+            </div>
           </div>
-          <div class="tab tab_ani" @click="showPicker = true" :class="{ active_tab: minList.includes(timeType) }">
-            {{ currMin }}
-            <Icon style="transform: rotate(90deg)" size="0.16rem" class="ml-[0.06rem]" name="play" />
-          </div>
-          <div class="tab tab_ani" :class="{ active_tab: timeType == '1h' }" @click="changeType('1h')">
-            1h
-          </div>
-          <div class="tab tab_ani" v-if="!['stocks', 'forex'].includes(periodType)"
-            :class="{ active_tab: timeType == '4h' }" @click="changeType('4h')">
-            4h
-          </div>
-          <div class="tab tab_ani" :class="{ active_tab: timeType == '1D' }" @click="changeType('1D')">
-            1D
-          </div>
-          <div class="tab tab_ani" :class="{ active_tab: timeType == '1W' }" @click="changeType('1W')">
-            1W
-          </div>
-          <div class="tab tab_ani" :class="{ active_tab: timeType == '1M' }" @click="changeType('1M')">
-            1M
-          </div>
-          <div class="tab tab_ani" v-if="!['stocks', 'forex'].includes(periodType)"
-            :class="{ active_tab: timeType == '1Y' }" @click="changeType('1Y')">
-            1Y
-          </div>
-          <div style="flex:1"></div>
-          <div class="full-tab" @click="fullScreen(true)">
-            <img v-lazy="getStaticImgUrl('/static/img/common/full.svg')" alt="" />
-          </div>
-        </div>
-        <div v-if="!chartLoading" class="chart_container" :class="{ fullscreen_container: fullWindow }">
-          <!-- 时区 -->
-          <div v-if="showDate" class="chart_time">{{ showDate }}</div>
-          <!-- 分时图 -->
-          <AreaChart ref="AreaChartRef" v-if="timeType == 'Time'" :showY="true" :symbol="item.symbol" />
-          <!-- K线图 -->
-          <KlineChart ref="KlineChartRef" v-if="timeType != 'Time'" :symbol="item.symbol" :period="timeType" />
-          <!-- 全屏关闭按钮 -->
-          <div class="full_close" v-if="fullWindow" @click="fullScreen(false)">
-            <Icon name="cross" />
+          <div v-if="!chartLoading" class="chart_container" :class="{ fullscreen_container: fullWindow }">
+            <!-- 时区 -->
+            <div v-if="showDate" class="chart_time">{{ showDate }}</div>
+            <!-- 分时图 -->
+            <AreaChart ref="AreaChartRef" v-if="timeType == 'Time'" :showY="true" :symbol="item.symbol" />
+            <!-- K线图 -->
+            <KlineChart ref="KlineChartRef" v-if="timeType != 'Time'" :symbol="item.symbol" :period="timeType" />
+            <!-- 全屏关闭按钮 -->
+            <div class="full_close" v-if="fullWindow" @click="fullScreen(false)">
+              <Icon name="cross" />
+            </div>
           </div>
         </div>
       </div>
@@ -285,9 +295,11 @@
           <div style="width: 0.6rem;height: 0.6rem;"></div>
         </div>
         <!-- 合约-->
-        <Opening :item="item" v-if="tradeType == 'constract'" ref="openingRef" @success="showDialog = false" :from="'trade'" />
+        <Opening :item="item" v-if="tradeType == 'constract'" ref="openingRef" @success="showDialog = false"
+          :from="'trade'" />
         <!-- 现货 -->
-        <OpeningSpot :item="item" v-if="tradeType == 'spot'" ref="openingRef2" @success="showDialog = false" :from="'trade'" />
+        <OpeningSpot :item="item" v-if="tradeType == 'spot'" ref="openingRef2" @success="showDialog = false"
+          :from="'trade'" />
       </div>
     </Popup>
 
@@ -664,7 +676,7 @@ setTimeout(() => {
   .info_header {
     width: 100%;
     background-color: var(--ex-bg-color);
-    padding: 0 0.205rem;
+    padding: 0 0.1rem;
     z-index: 100;
 
     .top {
@@ -674,7 +686,8 @@ setTimeout(() => {
       justify-content: space-between;
       position: relative;
       height: 0.88rem;
-      margin-bottom: 0.205rem;
+      margin-bottom: 0.1rem;
+      padding: 0 0.2rem;
 
       .back {
         width: 0.6rem;
@@ -846,6 +859,8 @@ setTimeout(() => {
   .market_content {
     flex: 1;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
 
     .funcs {
       display: flex;
@@ -939,10 +954,13 @@ setTimeout(() => {
 
     .chart_box {
       width: 100%;
-      height: calc(var(--app-height) - 4.8rem);
+      // height: calc(var(--app-height) - 4.8rem);
+      flex: 1;
       display: flex;
       flex-direction: column;
       overflow: hidden;
+      display: flex;
+      flex-direction: column;
 
       .tabs {
         padding: 0 0.2rem;
@@ -986,10 +1004,13 @@ setTimeout(() => {
       }
 
       .chart_container {
-        height: calc(100% - 0.48rem);
+        flex: 1;
         width: 100%;
         padding: 0 0.28rem;
         position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
 
         .chart_time {
           position: absolute;
@@ -1053,6 +1074,10 @@ setTimeout(() => {
     border-top: 1px solid var(--ex-border-color);
     height: 1.4rem;
     background: linear-gradient(0deg, rgb(var(--ex-bg-color5-rgb) / 0.2) 0%, rgb(var(--ex-bg-color5-rgb) / 1) 95.61%);
+    border-radius: 16px 16px 0px 0px;
+    box-shadow: 0px -1px 1px 0px rgba(255, 255, 255, 0.10);
+    backdrop-filter: blur(25px);
+    margin-top: 0.22rem;
 
     .symbol {
       color: var(--ex-text-color);
