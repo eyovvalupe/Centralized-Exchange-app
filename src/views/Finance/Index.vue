@@ -10,14 +10,15 @@
 
         <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" :touchable="true" :loop="false" :duration="300" ref="swipe" @change="swipeChange">
             <SwipeItem>
-                <Follow :from="'finance'"/>
+                <div style="height: calc(100vh - 2rem);">
+                    <Follow :from="'finance'"/>
+                </div>
             </SwipeItem>
             <SwipeItem>
-                <Pledge />
+                <div style="height: calc(100vh - 2rem);"><Pledge /></div>
             </SwipeItem>
             <SwipeItem>
-                <!-- 质押挖矿 -->
-                <Stake />
+                <div style="height: calc(100vh - 2rem);"><Stake /></div>
             </SwipeItem>
         </Swipe>
     </div>
