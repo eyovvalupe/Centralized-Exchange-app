@@ -128,7 +128,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="h-[7.9rem] rounded-[0.32rem] mb-[0.24rem] p-[0.28rem] mx-[0.32rem]"
+                    <!-- <div class="h-[7.9rem] rounded-[0.32rem] mb-[0.24rem] p-[0.28rem] mx-[0.32rem]"
                         style="background-color: var(--ex-bg-white);">
                         <div class="flex justify-between items-center mb-[0.4rem]">
                             <div class="flex items-center">
@@ -166,7 +166,7 @@
                         <div class="line">
                             <SparkLine v-if="points" :points="points" :ratio="1" />
                         </div>
-                    </div>
+                    </div> -->
                     <div class="rounded-[0.32rem] mb-[0.4rem] p-[0.28rem] mx-[0.32rem]"
                         style="background-color: var(--ex-bg-white);">
                         <div class="flex justify-between items-center mb-[0.4rem] mb-[0.4rem]">
