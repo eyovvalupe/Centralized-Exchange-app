@@ -24,9 +24,9 @@
         <div class="info-box">
             <div class="info-left">
                 <div class="text-[0.24rem] text-color2 mb-[0.2rem]">{{ $t('copy.total_revenue') }}</div>
-                <div class="text-[0.4rem] font-semibold mb-[0.2rem]" :class="[props.item.returnrate < 0 ? 'down' : 'up']">{{ (props.item.returnrate > 0
+                <div class="text-[0.32rem] font-semibold mb-[0.2rem]" :class="[props.item.returnrate < 0 ? 'down' : 'up']">{{ (props.item.returnrate > 0
                     ? '+' : '') }}{{ props.item.returnrate }}%</div>
-                <div class="text-[0.28rem]">
+                <div class="text-[0.24rem]">
                     <b>{{ (props.item.returnamount > 0 ? '+' : '') }}{{ props.item.returnamount || '--' }}</b>
                 </div>
             </div>
@@ -120,7 +120,7 @@ const goFollow = () => {
                 }
 
                 .name {
-                    font-size: 0.32rem;
+                    font-size: 0.28rem;
                     font-weight: 600;
                     line-height: 1.4;
                 }
@@ -173,14 +173,14 @@ const goFollow = () => {
         .btn {
             background-color: var(--ex-primary-color);
             color: var(--ex-white);
-            height: 0.68rem;
+            height: 0.58rem;
             border-radius: 0.5rem;
-            padding: 0 0.36rem;
+            padding: 0 0.26rem;
             min-width: 1.4rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.28rem;
+            font-size: 0.24rem;
         }
     }
 
@@ -215,7 +215,7 @@ const goFollow = () => {
             }
 
             .info-num {
-                font-size: 0.32rem;
+                font-size: 0.3rem;
                 font-weight: 600;
                 line-height: 0.4rem;
             }

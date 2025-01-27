@@ -3,9 +3,9 @@
   <div class="stock_table">
     <Loading :type="'circular'" v-show="!props.list.length && props.loading" />
     <div v-if="list.length" v-for="(item, i) in props.list" class="tr" :class="page == 'trade' &&
-        (type == 'stock' && item.symbol == currStockItem.symbol || type == 'future' && item.name == currConstractItem.name)
-        ? 'current_item_effect'
-        : ''
+      (type == 'stock' && item.symbol == currStockItem.symbol || type == 'future' && item.name == currConstractItem.name)
+      ? 'current_item_effect'
+      : ''
       " :key="i" v-show="props.marketType == 'all' || props.marketType == item.type">
       <StockItem :marketType="props.marketType" :theme="theme" :handleClick="props.handleClick"
         :deleteItem="props.deleteItem" :showSparkLine="showSparkLine" :type="props.type" @remove="remove"

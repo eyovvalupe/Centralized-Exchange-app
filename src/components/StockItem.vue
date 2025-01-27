@@ -1,6 +1,6 @@
 <!-- 股票单个元素 -->
 <template>
-  <div ref="root" class="w-full" :class="[props.page == 'home' ? '' : 'px-[0.28rem]']">
+  <div ref="root" style="overflow: visible;" class="w-full" :class="[props.page == 'home' ? '' : 'px-[0.28rem]']">
     <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
       <div class="stock_item_bg"
         :class="[`${' stock_item_' + updownStatus}`, props.page == 'home' ? 'stock_item_home' : '']"
@@ -12,7 +12,7 @@
               props.item.symbol[0] }}</span>
             <span class="text-[0.56rem] font-semibold text-color--bg-light" v-else>{{ props.item.name[0] }}</span>
           </div> -->
-          <div class="size-[0.96rem] mr-[0.18rem] flex justify-center items-center"
+          <div class="size-[0.88rem] mr-[0.18rem] flex justify-center items-center"
             v-if="showIcon">
             <CryptoIcon :name="item.name.split('/')[0]" />
           </div>
@@ -235,7 +235,7 @@ const removeStock = (item) => {
 .stock_item_box {
   width: 100%;
   border-radius: 0.12rem;
-  overflow: hidden;
+  overflow: visible;
 
   .delete_content {
     width: 0.8rem;
@@ -267,6 +267,10 @@ const removeStock = (item) => {
       height: 0.52rem;
     }
   }
+
+  :deep(.van-swipe-cell__wrapper) {
+    overflow: visible;
+  }
 }
 
 .active_symbol {
@@ -290,7 +294,7 @@ const removeStock = (item) => {
     flex: 2.5;
 
     .item_name {
-      font-size: 0.32rem;
+      font-size: 0.28rem;
       color: var(--ex-text-color);
       line-height: 0.32rem;
       font-weight: 600;
@@ -449,6 +453,27 @@ const removeStock = (item) => {
   // border-radius: 0.32rem;
   transition: all ease-in .2s;
   position: relative;
+  overflow: visible;
+  &::after {
+    position: absolute;
+    content: "";
+    width: 0.32rem;
+    height: 100%;
+    top: 0;
+    right: -0.32rem;
+    background-color: rgb(var(--ex-none) / 0.12);
+    transition: all ease-in .2s;
+  }
+  &::before {
+    position: absolute;
+    content: "";
+    width: 0.32rem;
+    height: 100%;
+    top: 0;
+    left: -0.32rem;
+    background-color: rgb(var(--ex-none) / 0.12);
+    transition: all ease-in .2s;
+  }
 }
 
 .stock_item_bg:active {
@@ -457,21 +482,26 @@ const removeStock = (item) => {
 
 .stock_item_up {
   background-color: rgb(var(--ex-up-color-rgb) / 0.12);
+  transition: all ease-in .2s;
   &::after {
+    position: absolute;
     content: "";
     width: 0.32rem;
     height: 100%;
     top: 0;
     right: -0.32rem;
     background-color: rgb(var(--ex-up-color-rgb) / 0.12);
+    transition: all ease-in .2s;
   }
   &::before {
+    position: absolute;
     content: "";
     width: 0.32rem;
     height: 100%;
     top: 0;
     left: -0.32rem;
     background-color: rgb(var(--ex-up-color-rgb) / 0.12);
+    transition: all ease-in .2s;
   }
 
   .stock_item {
@@ -481,21 +511,26 @@ const removeStock = (item) => {
 
 .stock_item_down {
   background-color: rgb(var(--ex-down-color-rgb) / 0.12);
+  transition: all ease-in .2s;
   &::after {
+    position: absolute;
     content: "";
     width: 0.32rem;
     height: 100%;
     top: 0;
     right: -0.32rem;
     background-color: rgb(var(--ex-down-color-rgb) / 0.12);
+    transition: all ease-in .2s;
   }
   &::before {
+    position: absolute;
     content: "";
     width: 0.32rem;
     height: 100%;
     top: 0;
     left: -0.32rem;
     background-color: rgb(var(--ex-down-color-rgb) / 0.12);
+    transition: all ease-in .2s;
   }
 
   .stock_item {

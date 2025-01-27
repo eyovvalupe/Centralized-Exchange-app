@@ -1,35 +1,34 @@
 <template>
-    <div class="home-tabs-box">
+    <div class="home-tabs-box" :class="['home-tabs-box-' + props.from]">
         <Tabs :offset-top="'1.32rem'" class="van-tabs--sub" :class="[props.from == 'trade' ? 'van-tabs--sub_line' : '']" :sticky="props.sticky" :color="'var(--ex-primary-color)'" @change="tabChange"
             v-if="$props.activated" v-model:active="activeTab" animated shrink>
             <Tab :name="0" :title="t('common.spot')">
+               <div class="pl-[0.32rem] pr-[0.32rem]">
                 <Loaidng v-if="commendLoading" :loading="commendLoading" />
-                <div style="padding-bottom: 0.2rem;" v-if="activeTab == 0">
+                <div style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 0">
                     <StockItem :class="[props.from == 'home' ? 'wow fadeInUp': '']" :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="{...item, type: 'spot'}"
                         v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" page="home" />
                 </div>
                 <NoData v-if="!commendLoading && !contractList.length" />
+               </div>
             </Tab>
             <Tab :name="1" :title="$t('common.crypto')">
-                <Loaidng v-if="commendLoading" :loading="commendLoading" />
+                <div class="pl-[0.32rem] pr-[0.32rem]">
+                    <Loaidng v-if="commendLoading" :loading="commendLoading" />
                 <div style="padding-bottom: 0.2rem;" v-if="activeTab == 1">
                     <StockItem :class="[props.from == 'home' ? 'wow fadeInUp': '']" :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="item"
                         v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" page="home" />
                 </div>
                 <NoData v-if="!commendLoading && !contractList.length" />
+                </div>
             </Tab>
-            <!-- <Tab :title="$t('common.IPO')">
-                        <div class="mb-[0.2rem]" >
-                            <IPO ref="ipoRef" v-if="activeTab == 2" :page="'home'" />
-                        </div>
-                    </Tab> -->
             <Tab :name="3" :title="$t('common.option')">
-                <div class="mt-[0.32rem]">
+                <div class="pl-[0.32rem] pr-[0.32rem] mt-[0.32rem]">
                     <Ai :from="props.from" page="home" v-if="activeTab == 3" />
                 </div>
             </Tab>
             <Tab :name="4" :title="'ETF'">
-                <div class="mt-[0.32rem]">
+                <div class="pl-[0.32rem] pr-[0.32rem] mt-[0.32rem]">
                     <Ai :from="props.from" page="home" v-if="activeTab == 4" />
                 </div>
             </Tab>
@@ -119,6 +118,20 @@ defineExpose({
 </script>
 
 <style lang="less" scoped>
+.home-tabs-box-trade {
+    :deep(.van-tabs--line) {
+        .van-sticky > div > .van-tabs__wrap .van-tabs__nav {
+            padding: 0 0.32rem;
+        }
+    }
+}
+.home-tabs-box-home {
+    :deep(.van-tabs--sub) {
+        & > .van-tabs__wrap .van-tabs__nav {
+            padding: 0 0.32rem;
+        }
+    }
+}
 .home-tabs-box {
     :deep(.van-tabs--sub) {
         margin-top: 0;

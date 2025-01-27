@@ -16,8 +16,8 @@
           </div>
         </div>
       </div>
-      <div class="tr" style="text-align: right;">
-        <div class="time-title" style="color: var(--ex-placeholder-color);">{{ t("trade.ai_opening_perform_time") }}</div>
+      <div class="tr" style="text-align: right;font-size: 0.24rem;">
+        <div class="time-title f" style="color: var(--ex-placeholder-color);">{{ t("trade.ai_opening_perform_time") }}</div>
           <div class="time" style="margin-top: 0.2rem;">
             {{
               formatSec(item.runtime)[0] +
@@ -214,7 +214,7 @@ const formatSec = (seconds, t) => {
     .tl {
       .name {
         color: var(--ex-text-color);
-        font-size: 0.36rem;
+        font-size: 0.28rem;
         font-weight: 600;
         line-height: 0.5rem;
       }
@@ -277,7 +277,7 @@ const formatSec = (seconds, t) => {
 
       .ml-val {
         color: var(--ex-error-color);
-        font-size: 0.4rem;
+        font-size: 0.32rem;
         font-weight: 600;
         line-height: 0.4rem;
       }
@@ -297,7 +297,7 @@ const formatSec = (seconds, t) => {
       .time {
         color: var(--ex-text-color);
         text-align: right;
-        font-size: 0.28rem;
+        font-size: 0.24rem;
         font-weight: 400;
         line-height: 0.44rem;
       }
@@ -331,7 +331,7 @@ const formatSec = (seconds, t) => {
 
       .bot-val {
         color: var(--ex-text-color);
-        font-size: 0.3rem;
+        font-size: 0.28rem;
         font-weight: 600;
         line-height: 0.4rem;
       }

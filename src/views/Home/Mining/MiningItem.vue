@@ -38,8 +38,10 @@ const { t } = useI18n();
 
 const loaded = ref(false) // 模拟异步
 onMounted(() => {
-    loaded.value = true
-}, 200)
+    setTimeout(() => {
+        loaded.value = true
+    }, 200)
+})
 </script>
 
 <style lang="less">
@@ -53,7 +55,7 @@ onMounted(() => {
 
     .name {
         padding-left: 0.16rem;
-        font-size: 0.32rem;
+        font-size: 0.28rem;
         font-weight: 600;
         line-height: 1;
         margin-bottom: 0.18rem;
@@ -123,14 +125,14 @@ onMounted(() => {
 
     .btn {
         width: 4.04rem;
-        height: 0.68rem;
+        height: 0.62rem;
         display: flex;
         align-items: center;
         justify-content: center;
         border-radius: 0.32rem;
         background-color: var(--ex-primary-color);
         color: var(--ex-white);
-        font-size: 0.28rem;
+        font-size: 0.24rem;
         font-weight: 400;
         margin: 0.2rem auto 0 auto;
     }
