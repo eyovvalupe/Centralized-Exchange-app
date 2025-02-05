@@ -2,19 +2,19 @@
 <template>
   <div class="page page_assets">
     <!-- 头部 -->
-    <HeaderTabs v-model:active="activeTab" :tabs="[
-      // t('assets.header_total'),
+    <HeaderTabs :from="'assets'" v-model:active="activeTab" :tabs="[
+      t('assets.header_total'),
       t('assets.header_wallet'),
       t('assets.header_order'),
     ]" @change="changeActiveTab(activeTab, true)" />
 
     <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe" @change="swipeChange">
-      <!-- <SwipeItem>
+      <SwipeItem>
         <div class="assets_body pb-[0.32rem]">
           <Overview ref="overviewRef" v-if="loadedTab.indexOf(0) > -1" @jumpToWallet="(val) => jumpToWallet(val)"
             @setLoading="(val) => (loading = val)" />
         </div>
-      </SwipeItem> -->
+      </SwipeItem>
       <SwipeItem>
         <div class="assets_body">
           <Wallet ref="cashRef" v-if="loadedTab.indexOf(0) > -1" @setLoading="(val) => (loading = val)"

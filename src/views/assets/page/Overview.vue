@@ -4,7 +4,7 @@
     <!-- 总览 -->
     <OverviewCard>
       <div class="flex flex-col items-center">
-        <div class="top mt-[0.8rem]">
+        <div class="top mt-[0.6rem]">
           <div class="title">{{ $t("home.totalAssets") }} <span>(USDT)</span></div>
           <div class="eyes" @click="click">
             <img v-lazy="getStaticImgUrl('/static/img/common/open_eye_white.svg')" v-show="!hidden" />
@@ -12,14 +12,14 @@
           </div>
         </div>
         <div class="money">
-          <span>{{
+          <span class="text-[0.48rem] font-semibold">{{
             hidden
               ? "********"
               : parseFloat(assets.total).toLocaleString() || "0"
           }}</span>
         </div>
-        <div class="navs mb-[0.64rem]">
-          <div class="nav bg-color bg-opacity-10">
+        <div class="navs mb-[0.5rem]">
+          <div class="nav bg-opacity-10">
             <div class="nav_label">{{ $t("assets.info_cash") }}</div>
             <div class="num">
               {{
@@ -29,7 +29,7 @@
               }}
             </div>
           </div>
-          <div class="nav bg-color bg-opacity-10">
+          <div class="nav bg-opacity-10">
             <div class="nav_label">{{ $t("assets.wallet_order_value") }}</div>
             <div class="num">
               {{ hidden ? "********" : assets.order_value || "0" }}
@@ -52,7 +52,7 @@
           </div>
         </div>
         <div class="name">{{ $t("assets.over_view_cash") }}</div>
-        <div class="amount">
+        <div class="amount" :class="hidden ? '!pt-[0.2rem]' : ''">
           {{ hidden ? '******' : (parseFloat(assets.money).toLocaleString() || "0") }}
         </div>
         <div class="more">
@@ -68,7 +68,7 @@
           </div>
         </div>
         <div class="name">{{ $t("assets.over_view_stock") }}</div>
-        <div class="amount">
+        <div class="amount" :class="hidden ? '!pt-[0.2rem]' : ''">
           {{
             hidden ? '******' : parseFloat(assets && assets.stock ? assets.stock : 0).toLocaleString()
           }}
@@ -86,7 +86,7 @@
           </div>
         </div>
         <div class="name">{{ $t("assets.over_view_contract") }}</div>
-        <div class="amount">
+        <div class="amount" :class="hidden ? '!pt-[0.2rem]' : ''">
           {{
             hidden ? '******' : parseFloat(assets && assets.futures ? assets.futures : 0).toLocaleString()
           }}
@@ -208,17 +208,21 @@ const jump = (name, check = false, query) => {
   align-items: center;
 
   .top {
-    font-size: 0.28rem;
-    font-weight: 400;
+    width: 100%;
+    font-size: 0.32rem;
+    font-weight: 500;
     display: flex;
     height: 0.32rem;
-    align-items: center;
+    align-items: start;
     line-height: 0.32rem;
+    padding-left: 0.32rem;
 
     .title {
-      color: var(--ex-white);
+      color: var(--ex-text-color2);
       margin-right: 0.12rem;
       font-size: 0.3rem;
+      line-height: 0.32rem;
+      font-weight: 500;
 
       span {
         font-size: 0.24rem;
@@ -233,14 +237,16 @@ const jump = (name, check = false, query) => {
   }
 
   .money {
+    width: 100%;
     color: var(--ex-white);
     font-family: "PingFang SC";
     font-size: 0.52rem;
     font-style: normal;
     font-weight: 600;
-    line-height: 0.6rem;
-    margin-top: 0.26rem;
+    line-height: 0.48rem;
+    margin-top: 0.28rem;
     margin-bottom: 0.28rem;
+    padding-left: 0.32rem;
   }
 
   .navs {
@@ -257,12 +263,12 @@ const jump = (name, check = false, query) => {
       width: 3.27rem;
       height: 1.12rem;
       border-radius: 0.32rem;
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white);
       // padding-top: 0.1rem;
     }
 
     .nav_label {
-      color: var(--ex-white);
+      color: var(--ex-text-color2);
       font-size: 0.28rem;
       line-height: 100%;
       margin-top: 0.1rem;
@@ -288,7 +294,7 @@ const jump = (name, check = false, query) => {
       height: 1.04rem;
       margin-bottom: 0.24rem;
       border-radius: 0.32rem;
-      background: var(--ex-bg-color2);
+      background: var(--ex-bg-white);
       position: relative;
       display: flex;
       align-items: center;
@@ -296,6 +302,7 @@ const jump = (name, check = false, query) => {
 
       .name {
         font-size: 0.3rem;
+        padding-top: 0.025rem;
       }
 
       &:active {
@@ -326,10 +333,10 @@ const jump = (name, check = false, query) => {
       .amount {
         flex: 1;
         text-align: right;
-        padding: 0 0.2rem;
+        padding: 0.04rem 0.2rem 0 0.2rem;
         font-size: 0.32rem;
         font-weight: 600;
-        transition: 0.3s;
+        // transition: 0.3s;
       }
 
       .rights {
