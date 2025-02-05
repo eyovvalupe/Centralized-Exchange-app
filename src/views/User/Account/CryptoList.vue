@@ -13,8 +13,8 @@
             <div class="flex justify-between items-center">
               <span class="text-[0.4rem] text-color font-semibold mr-[0.12rem]">**** **** **** {{ item.address.slice(-4)
                 }}</span>
-              <div class="copy_icon" @click="copyToClipboard(item.address)">
-                <img v-lazy="getStaticImgUrl(`/static/img/crypto/copy.svg`)" alt="">
+              <div class="copy_icon" @click="copyToClipboard(item.address)" @touchstart.stop="">
+                <img v-lazy="getStaticImgUrl(`/static/img/common/copy.svg`)" alt="">
               </div>
             </div>
           </div>

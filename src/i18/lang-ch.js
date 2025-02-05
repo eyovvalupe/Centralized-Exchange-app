@@ -281,7 +281,7 @@ export default {
     no_match_noti: "兩次密碼不一致",
   },
   account: {
-    page_title: "收款賬戶",
+    page_title: "提幣地址",
     crypto: "加密代幣",
     no_data: "暫無收款賬戶",
     bank: "銀行卡",

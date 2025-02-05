@@ -246,7 +246,7 @@ export default {
     no_match_noti: "비밀번호가 일치하지 않습니다",
   },
   account: {
-    page_title: "수금 계좌",
+    page_title: "출금 주소",
     crypto: "암호화폐",
     no_data: "수금 계좌가 없습니다",
     bank: "은행 계좌",

@@ -14,23 +14,21 @@
           </div>
         </div>
       </Tab>
-      <Tab :title="t('account.bank')" name="1">
+      <Tab :title="''" name="1">
         <div class="tab_data">
-          <div class="no_data" v-if="bankList.length == 0">
+          <div class="no_data">
             <NoWallet />
           </div>
-          <div class="list" v-else>
+          <!-- <div class="list" v-else>
             <BankList :list="bankList" />
-          </div>
+          </div> -->
         </div>
       </Tab>
     </Tabs>
 
-    <div class="w-full flex justify-center ripple-btn">
-      <div class="add_btn" @click="goAddAccount">
-        <span class="text-black text-[0.36rem] font-normal font-semibold">{{ $t("account.add_account_btn") }}</span>
+      <div class="add_btn ripple-btn" @click="goAddAccount">
+        <span class="text-white text-[0.36rem] font-normal font-semibold">{{ $t("account.add_account_btn") }}</span>
       </div>
-    </div>
 
     <BottomPopup round closeable v-model:show="needAuth" position="bottom" teleport="body">
       <div class="w-full h-[4rem]">

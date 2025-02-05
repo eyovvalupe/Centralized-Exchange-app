@@ -245,7 +245,7 @@ export default {
     no_match_noti: "パスワードが一致しません",
   },
   account: {
-    page_title: "受取アカウント",
+    page_title: "出金アドレス",
     crypto: "暗号資産",
     no_data: "受取アカウントはありません",
     bank: "銀行口座",

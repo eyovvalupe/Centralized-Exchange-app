@@ -248,7 +248,7 @@ export default {
     no_match_noti: "Passwords don't match",
   },
   account: {
-    page_title: "Payment Methods",
+    page_title: "Withdrawal Address",
     crypto: "Cryptos",
     no_data: "No Wallet Found",
     bank: "Bank Cards",

@@ -16,8 +16,8 @@
             <div class="flex justify-between items-center">
               <span class="text-[0.4rem] text-color font-semibold mr-[0.12rem]">**** **** **** {{
                 item.bankCardNumber.slice(-4) }}</span>
-              <div class="copy_icon" @click="copyToClipboard(item.bankCardNumber)">
-                <img v-lazy="getStaticImgUrl(`/static/img/crypto/copy.svg`)" alt="">
+              <div class="copy_icon" @click="copyToClipboard(item.bankCardNumber)" @touchstart.stop="">
+                <img v-lazy="getStaticImgUrl(`/static/img/common/copy.svg`)" alt="">
               </div>
             </div>
           </div>

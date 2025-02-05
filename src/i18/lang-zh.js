@@ -243,7 +243,7 @@ export default {
     no_match_noti: "两次密码不一致",
   },
   account: {
-    page_title: "收款账户",
+    page_title: "提币地址",
     crypto: "加密货币",
     no_data: "暂无收款账户",
     bank: "银行卡",
