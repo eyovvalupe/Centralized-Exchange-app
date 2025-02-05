@@ -13,9 +13,9 @@
           :tabs="[
             // t('assets.order_title_buy'),
             t('assets.order_title_contract'),
-            t('跟单'),
-            t('DeFi借币'),
-            t('质押挖矿'),
+            t('copy.title'),
+            t('finance.defi_borrow'),
+            t('finance.portfolio_title'),
           ]"
           @change="changeActiveTab(activeTab)"
         />
