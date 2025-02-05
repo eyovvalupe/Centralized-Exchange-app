@@ -105,7 +105,7 @@ defineExpose({
 
 <style lang="less" scoped>
 .page_assets_cash {
-  padding: 0.9rem 0 0.32rem 0;
+  padding: 0.6rem 0 0.32rem 0;
 
   :deep(.van-switch__node) {
     background-color: var(--ex-black);

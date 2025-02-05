@@ -2,29 +2,37 @@
 <template>
   <div class="page page_assets">
     <!-- 头部 -->
-    <HeaderTabs :from="'assets'" v-model:active="activeTab" :tabs="[
+    <HeaderTabs :from="'assets'" :type="'line'" v-model:active="activeTab" :tabs="[
       t('assets.header_total'),
-      t('assets.header_wallet'),
+      t('assets.wallet_header_cash'),
+      t('assets.wallet_header_contract'),
       t('assets.header_order'),
+
     ]" @change="changeActiveTab(activeTab, true)" />
 
-    <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" ref="swipe" @change="swipeChange">
+    <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" :loop="false" ref="swipe" @change="swipeChange">
       <SwipeItem>
         <div class="assets_body pb-[0.32rem]">
-          <Overview ref="overviewRef" v-if="loadedTab.indexOf(0) > -1" @jumpToWallet="(val) => jumpToWallet(val)"
+          <Overview ref="overviewRef" @jumpToWallet="(val) => jumpToWallet(val)"
             @setLoading="(val) => (loading = val)" />
         </div>
       </SwipeItem>
       <SwipeItem>
         <div class="assets_body">
-          <Wallet ref="cashRef" v-if="loadedTab.indexOf(0) > -1" @setLoading="(val) => (loading = val)"
+          <Wallet ref="cashRef" :from="'cash'" @setLoading="(val) => (loading = val)"
+            @click="(val) => click(val)" />
+        </div>
+      </SwipeItem>
+      <SwipeItem>
+        <div class="assets_body">
+          <Wallet ref="cashRef" :from="'futures'" @setLoading="(val) => (loading = val)"
             @click="(val) => click(val)" />
         </div>
       </SwipeItem>
       <SwipeItem>
         <div class="assets_body" id="assets_order_center_body" ref="orderCenterRef">
           <!-- 记录弹窗 -->
-          <OrderCenter v-if="loadedTab.indexOf(1) > -1" />
+          <OrderCenter/>
         </div>
       </SwipeItem>
     </Swipe>

@@ -1,23 +1,34 @@
 <template>
   <div class="wallet_container">
-    <Tabs v-model:active="activeTab" type="custom-card" :swipeable="false" animated shrink
+    <!-- <Tabs v-model:active="activeTab" type="custom-card" :swipeable="false" animated shrink
       @change="(e) => changeActiveTab(e)">
       <Tab :title="t('assets.wallet_header_cash')" name="0">
         <DefaultWallet :name="t('assets.wallet_cash_balance')" type="cash" />
         <Btns />
         <Cash @click="(val) => click(val)" />
       </Tab>
-      <!-- <Tab :title="t('assets.wallet_header_stock')" name="1">
+      <Tab :title="t('assets.wallet_header_stock')" name="1">
         <DefaultWallet :name="t('assets.wallet_stock_balance')" type="stock" />
         <Btns />
         <StockMyWallet @click="(val) => click(val)" />
-      </Tab> -->
+      </Tab>
       <Tab :title="t('assets.wallet_header_contract')" name="2">
         <DefaultWallet :name="t('assets.wallet_contract_balance')" type="futures" />
         <Btns />
         <CryptoWallet @click="(val) => click(val)" />
       </Tab>
-    </Tabs>
+    </Tabs> -->
+    <div v-if="from == 'cash'">
+      <DefaultWallet :name="t('assets.wallet_cash_balance')" type="cash" />
+      <Btns />
+      <Cash @click="(val) => click(val)" />
+    </div>
+    <div v-if="from == 'futures'">
+      <DefaultWallet :name="t('assets.wallet_contract_balance')" type="futures" />
+      <Btns />
+      <CryptoWallet @click="(val) => click(val)" />
+    </div>
+
   </div>
 </template>
 <script setup>
@@ -33,7 +44,12 @@ import { useI18n } from "vue-i18n";
 import { Tabs, Tab } from "vant";
 
 const emits = defineEmits(['click'])
-
+const props = defineProps({
+  from: {
+    type: String,
+    default: 'cash'
+  }
+})
 const { t } = useI18n();
 const currSelectedWallet = computed(() => store.state.currSelectedWallet);
 const activeTab = ref(currSelectedWallet.value);

@@ -1,10 +1,10 @@
 <template>
-    <div class="header_tabs" :class="['header_tabs--' + type]">
+    <div ref="headerTabRef" class="header_tabs" :class="['header_tabs--' + type]">
         <slot name="before" />
         <div class="tabs" :class="from == 'assets' ? 'border-b-[0.02rem]' : ''" ref="tabScroller">
             <div class="tab_body">
-                <div v-for="(tabName, i) in tabs" :key="i"
-                    :class="[{ 'active_tab': from != 'assets' && active == i, 'tab--last': i == tabs.length - 1, 'active_tab_from_assets': from == 'assets' && active == i }, from == 'assets' ? 'tab_assets' : 'tab']"
+                <div class="tab" v-for="(tabName, i) in tabs" :key="i"
+                    :class="{ 'active_tab': active == i, 'tab--last': i == tabs.length - 1 }"
                     @click="changeActiveTab(i)">
                     <span class="tab-name">{{ tabName }}</span>
                 </div>
@@ -200,46 +200,56 @@ onMounted(() => {
     }
 }
 
-.active_tab_from_assets {
-    color: var(--ex-primary-color) !important;
-    font-weight: 400 !important;
-    font-size: 0.4rem !important;
+.header_tabs--line {
+    height: 0.8rem;
 
-    &::after {
-        content: '';
-        position: absolute;
-        bottom: 0rem;
-        left: 50%;
-        width: 0.48rem;
-        margin: 0 auto;
-        height: 0.06rem;
-        border-radius: 0.2rem;
-        transform: translateX(-50%);
-        background-color: var(--ex-primary-color);
+    .tabs {
+        .tab_body {
+            margin: 0;
+        }
+
+        .tab {
+            font-size: .4rem;
+            color: var(--ex-text-color2);
+            padding: 0 .22rem;
+            height: 0.88rem;
+            line-height: 0;
+            border-radius: .48rem;
+            display: flex;
+            padding-bottom: 0.06rem;
+            align-items: center;
+            cursor: pointer;
+            white-space: nowrap;
+            position: relative;
+
+            .tab-name {
+                position: relative;
+                z-index: 1;
+                transition: .3s;
+                font-size: 0.4rem;
+            }
+
+        }
+
+        .active_tab {
+            color: var(--ex-primary-color) !important;
+            font-weight: 400 !important;
+            font-size: 0.4rem !important;
+
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 0rem;
+                left: 50%;
+                width: 0.48rem;
+                margin: 0 auto;
+                height: 0.06rem;
+                border-radius: 0.2rem;
+                transform: translateX(-50%);
+                background-color: var(--ex-primary-color);
+            }
+        }
     }
-}
-
-.tab_assets {
-    font-size: .4rem;
-    color: var(--ex-text-color2);
-    padding: 0 .22rem;
-    height: 0.88rem;
-    line-height: 0;
-    border-radius: .48rem;
-    display: flex;
-    padding-bottom: 0.06rem;
-    align-items: center;
-    cursor: pointer;
-    white-space: nowrap;
-    position: relative;
-
-    .tab-name {
-        position: relative;
-        z-index: 1;
-        transition: .3s;
-        font-size: 0.4rem;
-    }
-
 }
 
 .header_tabs--small-card {

@@ -66,7 +66,7 @@ const changeActiveTab = (val) => {
 <style lang="less">
 .order_container {
   width: 100%;
-  padding: 0 0.32rem;
+  padding: 0.6rem 0.32rem 0 0.32rem;
 
   .order_tabs {
     padding-bottom: 0.4rem;
