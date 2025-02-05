@@ -804,3 +804,16 @@ export const _notifiDetail = (data = {}) => {
     custom: {auth: false, toast: true, retry: true}
   })
 }
+//加入活动列表
+export const _notifiJoinList = (data = {}) => {
+  return http.post(`/authc/v1/notice/joinlist`, data, {
+    custom: {auth: true, toast: true, retry: true}
+  })
+}
+
+//加入活动
+export const _notifiJoin = (data = {}) => {
+  return http.post(`/authc/v1/notice/join`, data, {
+    custom: {auth: true, toast: true, retry: true}
+  })
+}

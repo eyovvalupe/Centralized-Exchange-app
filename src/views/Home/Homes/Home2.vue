@@ -335,6 +335,9 @@ const onSelect = (item) => {
 
 // 跳转
 const jump = (name, needToken, query) => {
+    if (name == 'notification') {
+        store.dispatch('updateNotifiList')
+    }
     if (needToken && !token.value) return store.commit("setIsLoginOpen", true);
 
     router.push({

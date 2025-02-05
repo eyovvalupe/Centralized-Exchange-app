@@ -4,7 +4,7 @@
     <!-- 头部 -->
     <HeaderTabs :from="'assets'" :type="'line'" v-model:active="activeTab" :tabs="[
       t('assets.header_total'),
-      t('assets.wallet_header_cash'),
+      t('assets.wallet_cash_value'),
       t('assets.wallet_header_contract'),
       t('assets.header_order'),
 

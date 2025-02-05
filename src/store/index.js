@@ -1,7 +1,7 @@
 import { computed } from "vue";
 import { createStore } from "vuex";
 import createPersistedState from "vuex-persistedstate";
-import { _listAccount, _notifiList, _sessionToken, _userinfo } from "@/api/api";
+import { _listAccount, _notifiJoinList, _notifiList, _sessionToken, _userinfo } from "@/api/api";
 import assets from "./assets";
 import market from "./market";
 import trade from "./trade";
@@ -29,6 +29,7 @@ const store = createStore({
     notifiData: JSON.parse(sessionStorage.getItem('notifiData')),
     notifiOpen: false,
     notifiList: [],
+    notifiJoinList: [],
     notifiDetailItem: JSON.parse(sessionStorage.getItem('notifiDetailItem')),
     i18Data: {
       name: "中文简体",
@@ -47,6 +48,9 @@ const store = createStore({
     ...finance.state,
   },
   mutations: {
+    setNotifiJoinList(state, data) {
+      state.notifiJoinList = data
+    },
     setNotifiDetailItem(state, data) {
       state.notifiDetailItem = data
     },
@@ -128,7 +132,7 @@ const store = createStore({
       commit("setFollowList", []);
       commit("setMyCopy", []);
       commit("setMyCopyData", []);
-
+      commit("setNotifiJoinList", []);
       // commit('setMarketSearch', {
       //   search: '',
       //   market: '',
@@ -188,6 +192,20 @@ const store = createStore({
           .then(res => {
             if (res.code == 200 && res.data) {
               commit('setNotifiList', res.data)
+              resolve(res.data)
+            } else {
+              resolve(false)
+            }
+          })
+          .catch(() => resolve(false))
+      })
+    },
+    updateNotifiJoinList({commit}) {
+      return new Promise((resolve) => {
+        _notifiJoinList({page: 1})
+          .then(res => {
+            if (res.code == 200 && res.data) {
+              commit('setNotifiJoinList', res.data)
               resolve(res.data)
             } else {
               resolve(false)

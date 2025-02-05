@@ -1,7 +1,7 @@
 <template>
   <div class="notifi_modal">
-    <Dialog v-model:show="existNotifi" show-cancel-button :cancelButtonText="$t('notifi.btn_cancel')" :confirm-button-text="$t('notifi.btn_see_all')"
-      @cancel="cancel" @confirm="jump('notification')">
+    <Dialog v-model:show="existNotifi" show-cancel-button :cancelButtonText="$t('notifi.btn_cancel')"
+      :confirm-button-text="$t('notifi.btn_see_all')" @cancel="cancel" @confirm="jump('notification')">
       <div class="w-full h-[9.36rem] bg-color rounded-[0.32rem] mt-[0.36rem] mb-[0.32rem] p-[0.32rem]">
         <div
           class="w-full text-[0.32rem] text-color leading-[0.52rem] mb-[0.32rem] text-center px-[0.1rem] font-semibold">
@@ -14,8 +14,9 @@
           {{ notifiData.content || '--' }}
         </div>
         <div class="flex gap-[4px]">
-          <div class="flex-1 h-[2rem] rounded-[0.2rem] overflow-hidden mb-[0.32rem]" v-for="(url, i) in notifiData.images.split(';')">
-            <img class="!object-fill" v-lazy="getStaticImgUrl(url)" @click="showPreview(i)"/>
+          <div class="flex-1 h-[2rem] rounded-[0.2rem] overflow-hidden mb-[0.32rem]"
+            v-for="(url, i) in notifiData.images.split(';')">
+            <img class="!object-fill" v-lazy="getStaticImgUrl(url)" @click="showPreview(i)" />
           </div>
         </div>
         <div class="w-full text-[0.28rem] leading-[0.48rem] text-color mb-[0.32rem]">
@@ -23,13 +24,8 @@
         </div>
       </div>
     </Dialog>
-    <ImagePreview 
-      v-model:show="isPreview" 
-      :images="previewImages" 
-      :startPosition="index"
-      :loop="true"
-      @change="onChange"
-    />
+    <ImagePreview v-model:show="isPreview" :images="previewImages" :startPosition="index" :loop="true"
+      @change="onChange" />
   </div>
 </template>
 <script setup>
@@ -42,9 +38,13 @@ import store from "@/store";
 const jump = (url) => {
   localStorage.setItem('lastExecutionTime', Date.now());
   store.commit('setNotifiOpen', false)
-  router.push({
-    name: url
-  })
+  store.dispatch('updateNotifiList')
+  store.dispatch('updateNotifiJoinList')
+  setTimeout(() => {
+    router.push({
+      name: url
+    })
+  }, 300);
 }
 
 const notifiData = computed(() => store.state.notifiData)
