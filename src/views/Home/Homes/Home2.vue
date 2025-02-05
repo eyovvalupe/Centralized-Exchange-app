@@ -337,6 +337,7 @@ const onSelect = (item) => {
 const jump = (name, needToken, query) => {
     if (name == 'notification') {
         store.dispatch('updateNotifiList')
+        if (token.value) store.dispatch('updateNotifiJoinList') 
     }
     if (needToken && !token.value) return store.commit("setIsLoginOpen", true);
 

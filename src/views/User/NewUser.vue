@@ -262,6 +262,7 @@ const jump = (name, needLogin, query) => {
   if(name == 'notification') {
     console.log(name)
     store.dispatch('updateNotifiList');
+    if (token.value) store.dispatch('updateNotifiJoinList')
   }
   if (needLogin && !token.value) {
     store.commit("setIsLoginOpen", true);
