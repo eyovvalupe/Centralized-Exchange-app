@@ -30,7 +30,7 @@
       </div>
 
       <div class="tab" v-if="activeTab == 1">
-        <!-- <CryptoOrderList  /> -->
+        <MyFollow />
       </div>
 
       <div class="tab" v-if="activeTab == 2">
@@ -50,6 +50,7 @@ import CryptoOrderList from "./components/CryptoOrderList.vue";
 import Order from "@/views/Finance/components/Order.vue";
 import PledgeOrder from "@/views/Finance/components/PledgeOrder.vue";
 import { useI18n } from "vue-i18n";
+import MyFollow from "@/views/Home/Follow/MyFollow.vue";
 
 const { t } = useI18n();
 const activeTab = ref(0);
