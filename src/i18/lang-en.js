@@ -685,7 +685,7 @@ export default {
     ai_opening_pop_title: "Balance",
     ai_opening_pop_recharge: "Deposit Funds",
     ai_opening_pop_transfer: "Transfer Funds",
-    ai_opening_perform_time: "Running Time",
+    ai_opening_perform_time: "Run-Time",
     ai_opening_historical_profit_rate: "Historical Profit",
     ai_opening_24_profit_rate: "24h Profit",
     ai_opening_profit_margin: "Profit Ratio",
