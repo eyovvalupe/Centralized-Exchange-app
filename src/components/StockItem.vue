@@ -106,6 +106,7 @@ import { SwipeCell } from "vant";
 import store from "@/store";
 import { _formatNumber } from "@/utils/index";
 import { useI18n } from "vue-i18n";
+import CryptoIcon from "./CryptoIcon.vue";
 
 const { t } = useI18n();
 const market = {

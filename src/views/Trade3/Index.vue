@@ -1,10 +1,10 @@
 <template>
   <div class="w-full h-full p-[0.08rem]">
     <div class="page-trade3 bg-color5">
-      <div class="z-[1] fixed pt-[0.45rem] pb-[0.48rem] bg-color5 top-[0.07rem]" style="width: calc(100% - 0.16rem);">
+      <div class="z-[1] fixed pt-[0.45rem] pb-[0.48rem] bg-color5 top-[0.07rem]" style="width: calc(7.5rem - 0.16rem);">
         <div
           class="transition flex justify-between bg-color2 px-[0.32rem] py-[0.18rem] rounded-[1rem] gap-[0.2rem] h-[0.8rem] mx-[0.4rem] items-center border-[0.02rem]"
-          :class="focusRef ? 'border-white' : ''" style="width: calc(100% - 0.96rem);">
+          :class="focusRef ? 'border-white' : ''" style="width: calc(7.5rem - 0.96rem);">
           <div class="text-[0.32rem] text-color2 leading-[0.5rem] border-r-[1px] flex-1 px-[0.1rem]">
             <input v-model.trim="searchRef" class="text-white" :placeholder="$t('trade.trade_search_item')"
               @input="inputHandle" @focus="focusRef = true" @blur="focusRef = false" />
@@ -88,8 +88,6 @@ const inputHandle = () => {
 }
 
 const goSearch = () => {
-  console.log('aaa')
-
   if (!searchRef.value) return;
   if (searchLoading.value) return;
   searchList.value = [];

@@ -208,6 +208,7 @@ defineExpose({
             background-color: #171717;
             color: var(--ex-text-color2);
             min-width: 1.2rem;
+            font-size: 0.28rem;
         }
 
         .van-tab--active {
