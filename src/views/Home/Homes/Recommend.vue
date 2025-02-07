@@ -4,11 +4,11 @@
             :sticky="props.sticky" :color="'var(--ex-primary-color)'" @change="tabChange" v-if="$props.activated"
             v-model:active="activeTab" animated shrink>
             <Tab :name="0" :title="t('trade.left_mine')">
-                <div class="pl-[0.32rem] pr-[0.32rem] mt-[0.32rem]">
+                <div class="mt-[0.32rem]">
                     <div v-if="token">
                         <Loaidng v-if="watchListLoading" :loading="watchListLoading" />
                         <div style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 0">
-                            <StockItem :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
+                            <StockItem :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
                                 :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="{ ...item, type: 'spot' }"
                                 v-for="(item, i) in watchList" :key="'c_' + i" marketType="crypto" page="home" />
                         </div>
@@ -27,10 +27,10 @@
                 </div>
             </Tab>
             <Tab :name="1" :title="t('common.spot')">
-                <div class="pl-[0.32rem] pr-[0.32rem] mt-[0.32rem]">
+                <div class="mt-[0.32rem]">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
-                    <div style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 1">
-                        <StockItem :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
+                    <div class="" style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 1">
+                        <StockItem :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
                             :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="{ ...item, type: 'spot' }"
                             v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" page="home" />
                     </div>
@@ -38,10 +38,10 @@
                 </div>
             </Tab>
             <Tab :name="2" :title="$t('common.crypto')">
-                <div class="pl-[0.32rem] pr-[0.32rem] mt-[0.32rem]">
+                <div class="mt-[0.32rem]">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 2">
-                        <StockItem :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
+                        <StockItem :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
                             :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="item"
                             v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" page="home" />
                     </div>
@@ -194,25 +194,36 @@ defineExpose({
 .home-tabs-box-home {
     :deep(.van-tabs--sub) {
         &>.van-tabs__wrap .van-tabs__nav {
+
             padding: 0 0.32rem;
         }
     }
 }
 
 .home-tabs-box {
+    background-color: var(--ex-bg-color5);
     :deep(.van-tabs--sub) {
         margin-top: 0;
+
+        .van-tabs__wrap {
+            background-color: var(--ex-bg-color5);
+            margin: 0 0.32rem;
+            border-bottom: 1px solid var(--ex-border-color5);
+        }
     }
+
 
     :deep(.van-tabs__nav) {
         background-color: var(--ex-none);
+        padding: 0 !important;
+        margin: 0 !important;
         width: calc(100% - 60px);
 
         .van-tab {
             background-color: #171717;
             color: var(--ex-text-color2);
             min-width: 1.2rem;
-            border-color: #414345;
+            // border-color: #414345;
         }
 
         .van-tab--active {

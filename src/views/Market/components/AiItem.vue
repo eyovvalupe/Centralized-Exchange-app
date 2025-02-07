@@ -185,7 +185,7 @@ const formatSec = (seconds, t) => {
 <style lang="less" scoped>
 .ai_item {
   border-radius: 0.32rem;
-  // background: var(--ex-bg-white2);
+  background: var(--ex-bg-color);
   border: 0.02rem solid var(--ex-border-color5);
   margin-bottom: 0.32rem;
   // padding: 0 0.12rem 0.12rem 0.12rem;

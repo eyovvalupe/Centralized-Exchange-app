@@ -1,11 +1,11 @@
 <!-- 股票单个元素 -->
 <template>
-  <div ref="root" style="overflow: visible;" class="w-full" :class="[props.page == 'home' ? '' : 'px-[0.28rem]']">
+  <div ref="root" style="overflow: visible;" class="w-full border-b-[1px] border-b-color2" :class="[props.page == 'home' ? '' : 'px-[0.28rem]']">
     <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
       <div class="stock_item_bg"
         :class="[`${' stock_item_' + updownStatus}`, props.page == 'home' ? 'stock_item_home' : '']"
         @click="goInfo(props.item.type)">
-        <div :class="['stock_item', 'mask-btn']">
+        <div :class="['stock_item', 'mask-btn-stock', padding ? 'px-[0.32rem]' : '']">
           <!-- <div class="size-[0.96rem] rounded-full bg-white mr-[0.18rem] flex justify-center items-center"
             v-if="showIcon">
             <span class="text-[0.56rem] font-semibold text-color--bg-light" v-if="item.type == 'stock'">{{
@@ -156,6 +156,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  padding: {
+    type: Boolean,
+    default: false
+  },
   showIcon: Boolean
 });
 
@@ -291,10 +295,10 @@ const removeStock = (item) => {
   // background-color: var(--ex-bg-white2);
   // border-radius: 0.4rem;
   // margin-top: 0.2rem;
-  border-bottom: 1px solid var(--ex-bg-white2);
+  // border-bottom: 1px solid var(--ex-bg-white2);
 
   &:first-child {
-    border-top: 1px solid var(--ex-bg-white2);
+    // border-top: 1px solid var(--ex-bg-white2);
   }
 
   .td5 {
@@ -379,15 +383,15 @@ const removeStock = (item) => {
   position: relative;
   margin-bottom: 0.1rem;
 
-  ::after {
-    content: "";
-    width: calc(100% - 0.6rem);
-    position: absolute;
-    bottom: 0;
-    left: 0.3rem;
-    height: 1px;
-    background-color: var(--ex-bg-color3);
-  }
+  // ::after {
+  //   content: "";
+  //   width: calc(100% - 0.6rem);
+  //   position: absolute;
+  //   bottom: 0;
+  //   left: 0.3rem;
+  //   height: 1px;
+  //   background-color: var(--ex-bg-color3);
+  // }
 
   .td5 {
     // flex: 5;
@@ -464,29 +468,29 @@ const removeStock = (item) => {
   position: relative;
   overflow: visible;
 
-  &::after {
-    position: absolute;
-    content: "";
-    width: 0.16rem;
-    height: 100%;
-    top: 0;
-    right: -0.16rem;
-    background-color: rgb(var(--ex-none) / 0.12);
-    transition: all ease-in .2s;
-    border-radius: 0 0.16rem 0.16rem 0;
-  }
+  // &::after {
+  //   position: absolute;
+  //   content: "";
+  //   width: 0.16rem;
+  //   height: 100%;
+  //   top: 0;
+  //   right: -0.16rem;
+  //   background-color: rgb(var(--ex-none) / 0.12);
+  //   transition: all ease-in .2s;
+  //   border-radius: 0 0.16rem 0.16rem 0;
+  // }
 
-  &::before {
-    position: absolute;
-    content: "";
-    width: 0.16rem;
-    height: 100%;
-    top: 0;
-    left: -0.16rem;
-    background-color: rgb(var(--ex-none) / 0.12);
-    transition: all ease-in .2s;
-    border-radius: 0.16rem 0 0 0.16rem;
-  }
+  // &::before {
+  //   position: absolute;
+  //   content: "";
+  //   width: 0.16rem;
+  //   height: 100%;
+  //   top: 0;
+  //   left: -0.16rem;
+  //   background-color: rgb(var(--ex-none) / 0.12);
+  //   transition: all ease-in .2s;
+  //   border-radius: 0.16rem 0 0 0.16rem;
+  // }
 }
 
 .stock_item_bg:active {
@@ -497,32 +501,32 @@ const removeStock = (item) => {
   background-color: rgb(var(--ex-up-color-rgb) / 0.12);
   transition: all ease-in .2s;
 
-  &::after {
-    position: absolute;
-    content: "";
-    width: 0.16rem;
-    height: 100%;
-    top: 0;
-    right: -0.16rem;
-    background-color: rgb(var(--ex-up-color-rgb) / 0.12);
-    transition: all ease-in .2s;
-    border-radius: 0 0.16rem 0.16rem 0;
-  }
+  // &::after {
+  //   position: absolute;
+  //   content: "";
+  //   width: 0.16rem;
+  //   height: 100%;
+  //   top: 0;
+  //   right: -0.16rem;
+  //   background-color: rgb(var(--ex-up-color-rgb) / 0.12);
+  //   transition: all ease-in .2s;
+  //   border-radius: 0 0.16rem 0.16rem 0;
+  // }
 
-  &::before {
-    position: absolute;
-    content: "";
-    width: 0.16rem;
-    height: 100%;
-    top: 0;
-    left: -0.16rem;
-    background-color: rgb(var(--ex-up-color-rgb) / 0.12);
-    transition: all ease-in .2s;
-    border-radius: 0.16rem 0 0 0.16rem;
-  }
+  // &::before {
+  //   position: absolute;
+  //   content: "";
+  //   width: 0.16rem;
+  //   height: 100%;
+  //   top: 0;
+  //   left: -0.16rem;
+  //   background-color: rgb(var(--ex-up-color-rgb) / 0.12);
+  //   transition: all ease-in .2s;
+  //   border-radius: 0.16rem 0 0 0.16rem;
+  // }
 
   .stock_item {
-    border-bottom: 1px solid rgb(var(--ex-up-color-rgb) / 0.12);
+    // border-bottom: 1px solid rgb(var(--ex-up-color-rgb) / 0.12);
   }
 }
 
@@ -530,32 +534,32 @@ const removeStock = (item) => {
   background-color: rgb(var(--ex-down-color-rgb) / 0.12);
   transition: all ease-in .2s;
 
-  &::after {
-    position: absolute;
-    content: "";
-    width: 0.16rem;
-    height: 100%;
-    top: 0;
-    right: -0.16rem;
-    background-color: rgb(var(--ex-down-color-rgb) / 0.12);
-    transition: all ease-in .2s;
-    border-radius: 0 0.16rem 0.16rem 0;
-  }
+  // &::after {
+  //   position: absolute;
+  //   content: "";
+  //   width: 0.16rem;
+  //   height: 100%;
+  //   top: 0;
+  //   right: -0.16rem;
+  //   background-color: rgb(var(--ex-down-color-rgb) / 0.12);
+  //   transition: all ease-in .2s;
+  //   border-radius: 0 0.16rem 0.16rem 0;
+  // }
 
-  &::before {
-    position: absolute;
-    content: "";
-    width: 0.16rem;
-    height: 100%;
-    top: 0;
-    left: -0.16rem;
-    background-color: rgb(var(--ex-down-color-rgb) / 0.12);
-    transition: all ease-in .2s;
-    border-radius: 0.16rem 0 0 0.16rem;
-  }
+  // &::before {
+  //   position: absolute;
+  //   content: "";
+  //   width: 0.16rem;
+  //   height: 100%;
+  //   top: 0;
+  //   left: -0.16rem;
+  //   background-color: rgb(var(--ex-down-color-rgb) / 0.12);
+  //   transition: all ease-in .2s;
+  //   border-radius: 0.16rem 0 0 0.16rem;
+  // }
 
   .stock_item {
-    border-bottom: 1px solid rgb(var(--ex-down-color-rgb) / 0.12);
+    // border-bottom: 1px solid rgb(var(--ex-down-color-rgb) / 0.12);
   }
 }
 
