@@ -13,8 +13,10 @@
 
     <!-- Tabs -->
     <div class="open_tab_box" :class="{ 'trade-dialog': props.from == 'trade' }">
-      <Tabs animated key="form" class="van-tabs--sub" @change="(e) => (activeTab = e)" v-model="activeTab"
-        :swipeable="false" :color="'var(--ex-primary-color)'" shrink>
+      
+      <div style="border-radius: 0.32rem;background-color: var(--ex-bg-color3);padding: 0.32rem 0.28rem 0.4rem 0.28rem">
+        <Tabs animated key="form" class="van-tabs--sub_line van-tabs--sub_bg" @change="(e) => (activeTab = e)" v-model="activeTab"
+        :swipeable="false" :color="'var(--ex-primary-color)'" >
         <Tab :title="t('trade.stock_market_price')" name="0">
           <OpeningForm :tradeType="props.tradeType" :mode="props.mode" @showNavDialog="showNavDialog"
             v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType"
@@ -31,6 +33,7 @@
             @success="emits('success')" />
         </Tab> -->
       </Tabs>
+      </div>
 
       <div class="account-box" v-if="token">
         <div class="title">{{ $t('trade.ai_opening_cash_wallet') }}</div>
@@ -114,9 +117,9 @@ const currencyAmount = computed(() => {
 
 const activeType = ref(1); // 1-买涨 2-买跌
 // url参数处理
-if (route.query.symbol) {
-  activeType.value = route.query.type || 1;
-}
+// if (route.query.symbol) {
+//   activeType.value = route.query.type || 1;
+// }
 const activeTab = ref(0); // 0-市价 1-限价 2-止盈止损
 
 
@@ -139,17 +142,34 @@ defineExpose({
 
 <style lang="less" scoped>
 .opening {
-  padding: 0.32rem 0;
+  // padding: 0.32rem 0;
   position: relative;
 
   .open_tab_box {
     border-radius: 0 0 0.32rem 0.32rem;
 
+    :deep(.van-tabs__wrap) {
+      padding-left: 3.4rem;
+    }
+    :deep(.van-tabs__nav) {
+      background-color: var(--ex-none);
+      position: relative;
+      &::after {
+        content: '';
+        width: 100%;
+        height: 1px;
+        background-color: rgba(255,255,255,0.06);
+        bottom: 15px;
+        left: 0;
+        position: absolute;
+      }
+    }
+
     .account-box {
       border-radius: 0.32rem;
       background-color: var(--ex-bg-color3);
       padding: 0.36rem 0.32rem;
-      margin-top: 0.2rem;
+      margin-top: 0.1rem;
 
       .title {
         font-size: 0.32rem;
@@ -188,10 +208,14 @@ defineExpose({
     margin-top: 0.24rem;
     display: flex;
     align-items: center;
-    height: 0.96rem;
+    height: 0.68rem;
     border-radius: 1rem;
-    background-color: var(--ex-bg-color3);
-    padding: 0.08rem;
+    background-color: var(--ex-bg-white1);
+    width: 3rem;
+    position: absolute;
+    z-index: 9999;
+    left: 0.32rem;
+    top: 0.24rem;
 
     .type_tab {
       flex: 1;

@@ -603,7 +603,7 @@ defineExpose({
       border-radius: 0.32rem;
       background-color: var(--ex-bg-color3);
       padding: 0.36rem 0.32rem;
-      margin-top: 0.2rem;
+      margin-top: 0.1rem;
       margin-bottom: 0.4rem;
 
       .title {

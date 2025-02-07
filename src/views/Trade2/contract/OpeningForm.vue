@@ -533,7 +533,7 @@ import {
   ActionSheet,
   Picker,
 } from "vant";
-import { ref, computed } from "vue";
+import { ref, computed, onMounted, onBeforeUnmount } from "vue";
 import { _futures, _basic, _futuresPara, _futuresBuy } from "@/api/api";
 import store from "@/store";
 import Decimal from "decimal.js";
@@ -546,6 +546,17 @@ import SlideContainer from "@/components/SlideContainer.vue";
 import FormItem from "@/components/Form/FormItem.vue";
 import { useI18n } from "vue-i18n";
 import BottomPopup from "@/components/BottomPopup.vue";
+import eventBus from "@/utils/eventBus";
+
+onMounted(() => {
+  eventBus.on('choosePrice', val => {
+    form1.value.price = val
+  })
+})
+onBeforeUnmount(() => {
+  eventBus.off('choosePrice')
+})
+
 
 const props = defineProps({
   activeTab: null, // 0-市价 1-限价 2-止盈止损
@@ -1373,7 +1384,7 @@ defineExpose({
 }
 
 .form {
-  padding: 0.28rem;
+  // padding: 0.28rem;
   position: relative;
   border-radius: 0.32rem;
   background-color: var(--ex-bg-color3);

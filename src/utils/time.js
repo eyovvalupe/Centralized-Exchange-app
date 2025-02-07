@@ -29,6 +29,35 @@ export function getTimestr(timestamp, key) {
 }
 
 
+
+// 时间转换为 yyyy-mm-dd hh:mm:ss 格式  指定时区
+// key==2  返回 hh:mm:ss
+export function getTimestrTimezone(timestamp, timezone, key) {
+  const date = new Date(timestamp);
+    const options = {
+        year: 'numeric',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        timeZone: timezone,
+        hour12: false, // 24小时制
+    };
+    
+    const formatter = new Intl.DateTimeFormat('en-GB', options); // 使用 en-GB 让日期格式为 dd/mm/yyyy
+    const formattedDate = formatter.format(date);
+
+    // 获取格式化后的日期组件
+    const [day, month, year, hour, minute, second] = formattedDate.split(/[\/,\s:]+/);
+
+    // 拼接成目标格式
+    if (key == 2) {
+      return `${hour}:${minute}:${second}`;
+    }
+    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+}
+
 // 时间字符转换  20240622105805 ->yyyy-mm-dd hh:mm:ss
 export function strTime2Str(str) {
   if (!str) return str
