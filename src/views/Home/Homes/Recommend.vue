@@ -1,5 +1,5 @@
 <template>
-    <div class="home-tabs-box" :class="['home-tabs-box-' + props.from]">
+    <div class="home-tabs-box" :class="['home-tabs-box-' + props.from, from == 'home' ? '!bg-color' : '']">
         <Tabs :offset-top="'1.32rem'" class="van-tabs--sub" :class="[props.from == 'trade' ? 'van-tabs--sub_line' : '']"
             :sticky="props.sticky" :color="'var(--ex-primary-color)'" @change="tabChange" v-if="$props.activated"
             v-model:active="activeTab" animated shrink>
@@ -17,11 +17,14 @@
                     <div v-if="!token" class="flex flex-col">
                         <div class="w-full flex justify-between border-b-[0.02rem] pb-[0.2rem] mb-[0.6rem]">
                             <div class="text-color2">{{ $t('copy.copy_order_name') }}</div>
-                            <div class="text-color2">{{ $t('market.market_optional_crypto_price') + ' / ' + $t('copy.copy_belong_pl_rate') }}</div>
+                            <div class="text-color2">{{ $t('market.market_optional_crypto_price') + ' / ' +
+                                $t('copy.copy_belong_pl_rate') }}</div>
                         </div>
                         <div class="flex justify-center gap-[0.4rem]">
-                            <div class="w-[3rem] h-[0.8rem] rounded-[0.4rem] bg-white flex items-center justify-center text-[0.32rem] text-black ripple-primary" @click="jump('login')">{{ $t('trade.stock_opening_token_login') }}</div>
-                            <div class="w-[3rem] h-[0.8rem] rounded-[0.4rem] bg-primary flex items-center justify-center text-[0.32rem] text-white ripple-btn" @click="jump('register')">{{ $t('trade.stock_opening_token_register') }}</div>
+                            <div class="w-[3rem] h-[0.8rem] rounded-[0.4rem] bg-white flex items-center justify-center text-[0.32rem] text-black ripple-primary"
+                                @click="jump('login')">{{ $t('trade.stock_opening_token_login') }}</div>
+                            <div class="w-[3rem] h-[0.8rem] rounded-[0.4rem] bg-primary flex items-center justify-center text-[0.32rem] text-white ripple-btn"
+                                @click="jump('register')">{{ $t('trade.stock_opening_token_register') }}</div>
                         </div>
                     </div>
                 </div>
@@ -201,14 +204,25 @@ defineExpose({
 }
 
 .home-tabs-box {
-    background-color: var(--ex-bg-color5);
     :deep(.van-tabs--sub) {
         margin-top: 0;
+        background-color: var(--ex-bg-color5);
 
         .van-tabs__wrap {
             background-color: var(--ex-bg-color5);
-            margin: 0 0.32rem;
-            border-bottom: 1px solid var(--ex-border-color5);
+            // border: none;
+            padding: 0 0.32rem;
+            position: relative;
+            display: inline-block;
+            // &::after {
+            //     content: '';
+            //     position: absolute;
+            //     bottom: 0;
+            //     left: 0;
+            //     width: 100%;
+            //     height: 1px;
+            //     background-color: var(--ex-bg-color5);
+            // }
         }
     }
 

@@ -1,13 +1,17 @@
 <template>
   <div class="page-trade3 bg-color5">
 
-    <div class="max-width search-bg">
-      <div class="search-box item gap-[0.2rem]" @click="showSearchDialog = true">
+    <div class="max-width search-bg bg-color5">
+      <div class="search-box item" @click="showSearchDialog = true">
 
 
-        <div class="text-[0.32rem] text-color2 flex-1 leading-[0.5rem] border-r-[0.02rem]">{{ $t('trade.stock_opening_search') }}</div>
-        <div class="w-[0.5rem] h-[0.5rem]">
-          <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
+        <div
+          class="hhh flex justify-between w-full bg-color2 px-[0.32rem] py-[0.18rem] rounded-[1rem] gap-[0.2rem] h-[0.8rem] items-center">
+          <div class="text-[0.32rem] text-color2 leading-[0.5rem] border-r-[1px] flex-1">{{
+            $t('trade.stock_opening_search') }}</div>
+          <div class="w-[0.5rem] h-[0.5rem]">
+            <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
+          </div>
         </div>
       </div>
 
@@ -212,7 +216,7 @@ setTimeout(() => {
   .search-box {
     height: 0.92rem;
     border-radius: 0.92rem;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-color5);
     display: flex;
     align-items: center;
     justify-content: space-between;
