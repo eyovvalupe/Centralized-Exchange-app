@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full p-[0.08rem]">
     <div class="page-trade3 bg-color5">
-      <div class="z-[1] fixed pt-[0.45rem] pb-[0.4rem] bg-color5 w-full top-[-0.05rem]">
+      <div class="z-[1] fixed pt-[0.45rem] pb-[0.48rem] bg-color5 top-[0.07rem]" style="width: calc(100% - 0.16rem);">
         <div
           class="transition flex justify-between bg-color2 px-[0.32rem] py-[0.18rem] rounded-[1rem] gap-[0.2rem] h-[0.8rem] mx-[0.4rem] items-center border-[0.02rem]"
           :class="focusRef ? 'border-white' : ''" style="width: calc(100% - 0.96rem);">
