@@ -2,7 +2,7 @@
     <div class="home-tabs-box" :class="['home-tabs-box-' + props.from]">
         <Tabs :offset-top="'1.32rem'" :type="from == 'trade' ? 'line-card-trade' : 'sub'"
             :sticky="props.sticky" :color="'var(--ex-primary-color)'" @change="tabChange" v-if="props.activated"
-            v-model:active="activeTab" animated shrink>
+            v-model:active="activeTab" :animated="from != 'home'" shrink>
             <Tab :name="0" v-if="from != 'home'" :title="t('trade.left_mine')">
                 <div :class="from == 'trade' ? 'mt-[1.92rem]' : 'mt-[0.32rem]'">
                     <div v-if="token">
