@@ -1,11 +1,11 @@
 <!-- 股票单个元素 -->
 <template>
-  <div ref="root" style="overflow: visible;" class="w-full border-b-[1px] border-b-color2" :class="[props.page == 'home' ? '' : 'px-[0.28rem]']">
+  <div ref="root" style="overflow: visible;" class="w-full mask-btn-stock px-[0.28rem]" :class="[props.page == 'home' ? '' : 'border-b-[1px] border-b-color2']">
     <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
       <div class="stock_item_bg"
-        :class="[`${' stock_item_' + updownStatus}`, props.page == 'home' ? 'stock_item_home' : '']"
+        :class="[`${' stock_item_' + updownStatus}`, props.page == 'home' ? 'stock_item_home border-b-[1px] border-b-color2' : '']"
         @click="goInfo(props.item.type)">
-        <div :class="['stock_item', 'mask-btn-stock', padding ? 'px-[0.32rem]' : '']">
+        <div :class="['stock_item']">
           <!-- <div class="size-[0.96rem] rounded-full bg-white mr-[0.18rem] flex justify-center items-center"
             v-if="showIcon">
             <span class="text-[0.56rem] font-semibold text-color--bg-light" v-if="item.type == 'stock'">{{

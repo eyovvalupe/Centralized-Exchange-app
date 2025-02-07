@@ -1,21 +1,21 @@
 <template>
-    <div class="home-tabs-box" :class="['home-tabs-box-' + props.from, from == 'home' ? '!bg-color' : '']">
+    <div class="home-tabs-box" :class="['home-tabs-box-' + props.from]">
         <Tabs :offset-top="'1.32rem'" class="van-tabs--sub" :class="[props.from == 'trade' ? 'van-tabs--sub_line' : '']"
             :sticky="props.sticky" :color="'var(--ex-primary-color)'" @change="tabChange" v-if="$props.activated"
             v-model:active="activeTab" animated shrink>
-            <Tab :name="0" :title="t('trade.left_mine')">
+            <Tab :name="0" v-if="from != 'home'" :title="t('trade.left_mine')">
                 <div class="mt-[0.32rem]">
                     <div v-if="token">
                         <Loaidng v-if="watchListLoading" :loading="watchListLoading" />
                         <div style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 0">
-                            <StockItem :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
+                            <StockItem :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
                                 :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="{ ...item, type: 'spot' }"
                                 v-for="(item, i) in watchList" :key="'c_' + i" marketType="crypto" page="home" />
                         </div>
                         <NoData v-if="!watchListLoading && !watchList.length" />
                     </div>
                     <div v-if="!token" class="flex flex-col">
-                        <div class="w-full flex justify-between border-b-[0.02rem] pb-[0.2rem] mb-[0.6rem]">
+                        <div class="w-full flex justify-between border-b-[0.02rem] pb-[0.2rem] mb-[0.6rem] px-[0.32rem] border-b-color2">
                             <div class="text-color2">{{ $t('copy.copy_order_name') }}</div>
                             <div class="text-color2">{{ $t('market.market_optional_crypto_price') + ' / ' +
                                 $t('copy.copy_belong_pl_rate') }}</div>
@@ -33,7 +33,7 @@
                 <div class="mt-[0.32rem]">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div class="" style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 1">
-                        <StockItem :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
+                        <StockItem :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
                             :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="{ ...item, type: 'spot' }"
                             v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" page="home" />
                     </div>
@@ -44,7 +44,7 @@
                 <div class="mt-[0.32rem]">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 2">
-                        <StockItem :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
+                        <StockItem :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
                             :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="item"
                             v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" page="home" />
                     </div>
@@ -206,12 +206,9 @@ defineExpose({
 .home-tabs-box {
     :deep(.van-tabs--sub) {
         margin-top: 0;
-        background-color: var(--ex-bg-color5);
 
         .van-tabs__wrap {
-            background-color: var(--ex-bg-color5);
             // border: none;
-            padding: 0 0.32rem;
             position: relative;
             display: inline-block;
             // &::after {
@@ -229,9 +226,6 @@ defineExpose({
 
     :deep(.van-tabs__nav) {
         background-color: var(--ex-none);
-        padding: 0 !important;
-        margin: 0 !important;
-        width: calc(100% - 60px);
 
         .van-tab {
             background-color: #171717;

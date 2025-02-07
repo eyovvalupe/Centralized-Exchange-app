@@ -1,27 +1,27 @@
 <template>
-  <div class="page-trade3 bg-color5">
+  <div class="w-full h-full p-[0.08rem]">
+    <div class="page-trade3 bg-color5">
 
-    <div class="max-width search-bg bg-color5">
-      <div class="search-box item" @click="showSearchDialog = true">
+      <!-- <div class="max-width search-bg bg-color5"> -->
+        <!-- <div class="search-box item" @click="showSearchDialog = true"> -->
+        <!-- <div
+          class="flex justify-between w-full bg-color2 px-[0.32rem] py-[0.18rem] rounded-[1rem] gap-[0.2rem] h-[0.8rem] items-center"> -->
+          <!-- <div class="text-[0.32rem] text-color2 leading-[0.5rem] border-r-[1px] flex-1">{{
+      $t('trade.stock_opening_search') }}</div>
+    <div class="w-[0.5rem] h-[0.5rem]">
+      <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
+    </div> -->
+        <!-- </div> -->
+        <!-- </div> -->
 
+        <!-- <div class="bill-box" @click="jump('tradeOrder')">
+          <img v-lazy="getStaticImgUrl('/static/img/common/bill.svg')" alt="">
+        </div> -->
 
-        <div
-          class="hhh flex justify-between w-full bg-color2 px-[0.32rem] py-[0.18rem] rounded-[1rem] gap-[0.2rem] h-[0.8rem] items-center">
-          <div class="text-[0.32rem] text-color2 leading-[0.5rem] border-r-[1px] flex-1">{{
-            $t('trade.stock_opening_search') }}</div>
-          <div class="w-[0.5rem] h-[0.5rem]">
-            <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
-          </div>
-        </div>
-      </div>
+      <!-- </div> -->
 
-      <div class="bill-box" @click="jump('tradeOrder')">
-        <img v-lazy="getStaticImgUrl('/static/img/common/bill.svg')" alt="">
-      </div>
-
+      <Recommend ref="recommendRef" from="trade" :sticky="true" :activated="activated" />
     </div>
-
-    <Recommend ref="recommendRef" from="trade" :sticky="true" :activated="activated" />
   </div>
 
   <!-- 搜索列表 -->
