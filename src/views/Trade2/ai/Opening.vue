@@ -99,14 +99,14 @@
         </FormItem>
 
         <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box pb-[0.4rem]">
-        <div class="flex justify-between mb-[0.32rem]">
+        <div class="flex justify-between mb-[0.32rem] gap-[0.2rem]">
           <div
-            class="w-[3.22rem] h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
+            class="flex-1 h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
             @click="store.commit('setIsLoginOpen', true), emits('success')">
             {{ t("trade.stock_opening_token_login") }}
           </div>
           <div
-            class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn ripple-primary"
+            class="flex-1 h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn ripple-primary"
             @click="jump('register')">
             {{ t("trade.stock_opening_token_register") }}
           </div>
