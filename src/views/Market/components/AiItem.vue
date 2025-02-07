@@ -18,7 +18,7 @@
       </div>
       <div class="tr" style="text-align: right;font-size: 0.24rem;">
         <div class="time-title f" style="color: var(--ex-placeholder-color);">{{ t("trade.ai_opening_perform_time") }}</div>
-          <div class="time" style="margin-top: 0.2rem;">
+          <div class="time">
             {{
               formatSec(item.runtime)[0] +
               t("common.day") +
@@ -35,8 +35,8 @@
     <div class="content">
       <div class="mid">
         <div class="ml">
-          <div class="ml-title">{{ t("trade.order_info_profit") }}(USDT)</div>
-          <div class="ml-val" :class="[item.income > 0 ? 'up' : 'down']">
+          <div class="text-[0.28rem] text-color2 mb-[0.2rem]">{{ t("trade.order_info_profit") }}(USDT)</div>
+          <div class="text-[0.4rem] font-semibold" :class="[item.income > 0 ? 'up' : 'down']">
             {{ item.income }}
           </div>
         </div>
@@ -69,7 +69,7 @@
       </div>
     </div>
 
-    <div class="ripple-btn submit">{{ t('trade.ai_opening_trade') }}</div>
+    <!-- <div class="ripple-btn submit">{{ t('trade.ai_opening_trade') }}</div> -->
 
      <!-- 交易弹窗 -->
      <Popup class="trade-popup" teleport="body" v-model:show="showDialog" :title="''" position="bottom" close-on-popstate  >
@@ -185,9 +185,10 @@ const formatSec = (seconds, t) => {
 <style lang="less" scoped>
 .ai_item {
   border-radius: 0.32rem;
-  background: var(--ex-bg-white2);
-  margin-bottom: 0.72rem;
-  padding: 0 0.12rem 0.12rem 0.12rem;
+  background: var(--ex-bg-color);
+  border: 0.02rem solid var(--ex-border-color5);
+  margin-bottom: 0.32rem;
+  // padding: 0 0.12rem 0.12rem 0.12rem;
   position: relative;
   .submit {
     height: 0.72rem;
@@ -214,7 +215,7 @@ const formatSec = (seconds, t) => {
     .tl {
       .name {
         color: var(--ex-text-color);
-        font-size: 0.28rem;
+        font-size: 0.36rem;
         font-weight: 600;
         line-height: 0.5rem;
       }
@@ -256,7 +257,8 @@ const formatSec = (seconds, t) => {
 
   .content {
     border-radius: 0.32rem;
-    background: var(--ex-bg-color);
+    background: var(--ex-bg-color2);
+    border: 0.02rem solid var(--ex-border-color5);
   }
 
   .mid {
@@ -289,7 +291,7 @@ const formatSec = (seconds, t) => {
       .time-title {
         color: var(--ex-text-color3);
         text-align: right;
-        font-size: 0.24rem;
+        font-size: 0.24rem !important;
         font-weight: 400;
         line-height: 0.44rem;
       }
@@ -297,12 +299,30 @@ const formatSec = (seconds, t) => {
       .time {
         color: var(--ex-text-color);
         text-align: right;
-        font-size: 0.24rem;
+        font-size: 0.28rem !important;
         font-weight: 400;
         line-height: 0.44rem;
       }
 
     }
+   
+
+    
+  }
+  .time-title {
+    color: var(--ex-text-color3);
+    text-align: right;
+    font-size: 0.24rem !important;
+    font-weight: 400;
+    line-height: 0.44rem;
+  }
+
+  .time {
+    color: var(--ex-text-color);
+    text-align: right;
+    font-size: 0.28rem !important;
+    font-weight: 400;
+    line-height: 0.44rem;
   }
 
   .bot {

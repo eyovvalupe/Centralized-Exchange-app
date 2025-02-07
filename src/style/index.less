@@ -236,6 +236,38 @@ input[type="number"] {
   }
 }
 
+.mask-btn-stock {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+
+  .ripple {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #000;
+    animation: mask-animation-stock 0.5s ease-in;
+    pointer-events: none;
+    z-index: -1;
+  }
+}
+
+@keyframes mask-animation-stock {
+  0% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
+
 @keyframes mask-animation {
   0% {
     opacity: 0.1;

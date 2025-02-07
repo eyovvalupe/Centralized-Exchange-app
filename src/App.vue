@@ -185,6 +185,18 @@ onMounted(() => {
       });
       return
     }
+
+    const button3 = e.target.closest('.mask-btn-stock');
+    if (button3) {
+      const ripple = document.createElement('span');
+      if (!ripple) return
+      ripple.classList.add('ripple');
+      button3.appendChild(ripple);
+      ripple.addEventListener('animationend', () => {
+        ripple.remove();
+      });
+      return
+    }
   }, { passive: false });
 
   // 这里处理100vh的问题
