@@ -206,6 +206,7 @@ defineExpose({
 
     :deep(.van-tabs__nav) {
         background-color: var(--ex-none);
+        width: calc(100% - 60px);
 
         .van-tab {
             background-color: #171717;
