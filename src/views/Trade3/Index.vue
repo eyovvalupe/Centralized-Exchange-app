@@ -21,7 +21,7 @@
 
       <Recommend v-if="!focusRef && !searchRef" ref="recommendRef" from="trade" :sticky="true" :activated="activated" />
       <div v-if="focusRef || searchRef">
-        <div class="mt-[1.6rem] px-[0.32rem] text-[0.32rem] leading-[0.4rem] mb-[0.32rem]">Result</div>
+        <div class="mt-[1.7rem] px-[0.32rem] text-[0.32rem] leading-[0.4rem] mb-[0.32rem]">Result</div>
         <div class="lists">
           <StockTable :from="'trade'" :showIcon="true" theme="classic" :handleClick="goInfo" :loading="searchLoading"
             :key="'search'" :list="searchList" />
