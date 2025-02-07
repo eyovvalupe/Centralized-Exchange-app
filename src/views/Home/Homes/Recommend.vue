@@ -1,25 +1,51 @@
 <template>
     <div class="home-tabs-box" :class="['home-tabs-box-' + props.from]">
-        <Tabs :offset-top="'1.32rem'" class="van-tabs--sub" :class="[props.from == 'trade' ? 'van-tabs--sub_line' : '']" :sticky="props.sticky" :color="'var(--ex-primary-color)'" @change="tabChange"
-            v-if="$props.activated" v-model:active="activeTab" animated shrink>
-            <Tab :name="0" :title="t('common.spot')">
-               <div class="pl-[0.32rem] pr-[0.32rem] mt-[0.32rem]">
-                <Loaidng v-if="commendLoading" :loading="commendLoading" />
-                <div style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 0">
-                    <StockItem :class="[props.from == 'home' ? 'wow fadeInUp': '']" :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="{...item, type: 'spot'}"
-                        v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" page="home" />
+        <Tabs :offset-top="'1.32rem'" class="van-tabs--sub" :class="[props.from == 'trade' ? 'van-tabs--sub_line' : '']"
+            :sticky="props.sticky" :color="'var(--ex-primary-color)'" @change="tabChange" v-if="$props.activated"
+            v-model:active="activeTab" animated shrink>
+            <Tab :name="0" :title="t('trade.left_mine')">
+                <div class="pl-[0.32rem] pr-[0.32rem] mt-[0.32rem]">
+                    <div v-if="token">
+                        <Loaidng v-if="watchListLoading" :loading="watchListLoading" />
+                        <div style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 0">
+                            <StockItem :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
+                                :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="{ ...item, type: 'spot' }"
+                                v-for="(item, i) in watchList" :key="'c_' + i" marketType="crypto" page="home" />
+                        </div>
+                        <NoData v-if="!watchListLoading && !watchList.length" />
+                    </div>
+                    <div v-if="!token" class="flex flex-col">
+                        <div class="w-full flex justify-between border-b-[0.02rem] pb-[0.2rem] mb-[0.6rem]">
+                            <div class="text-color2">{{ $t('copy.copy_order_name') }}</div>
+                            <div class="text-color2">{{ $t('market.market_optional_crypto_price') + ' / ' + $t('copy.copy_belong_pl_rate') }}</div>
+                        </div>
+                        <div class="flex justify-center gap-[0.4rem]">
+                            <div class="w-[3rem] h-[0.8rem] rounded-[0.4rem] bg-white flex items-center justify-center text-[0.32rem] text-black ripple-primary" @click="jump('login')">{{ $t('trade.stock_opening_token_login') }}</div>
+                            <div class="w-[3rem] h-[0.8rem] rounded-[0.4rem] bg-primary flex items-center justify-center text-[0.32rem] text-white ripple-btn" @click="jump('register')">{{ $t('trade.stock_opening_token_register') }}</div>
+                        </div>
+                    </div>
                 </div>
-                <NoData v-if="!commendLoading && !contractList.length" />
-               </div>
             </Tab>
-            <Tab :name="1" :title="$t('common.crypto')">
+            <Tab :name="1" :title="t('common.spot')">
                 <div class="pl-[0.32rem] pr-[0.32rem] mt-[0.32rem]">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
-                <div style="padding-bottom: 0.2rem;" v-if="activeTab == 1">
-                    <StockItem :class="[props.from == 'home' ? 'wow fadeInUp': '']" :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="item"
-                        v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" page="home" />
+                    <div style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 1">
+                        <StockItem :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
+                            :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="{ ...item, type: 'spot' }"
+                            v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" page="home" />
+                    </div>
+                    <NoData v-if="!commendLoading && !contractList.length" />
                 </div>
-                <NoData v-if="!commendLoading && !contractList.length" />
+            </Tab>
+            <Tab :name="2" :title="$t('common.crypto')">
+                <div class="pl-[0.32rem] pr-[0.32rem] mt-[0.32rem]">
+                    <Loaidng v-if="commendLoading" :loading="commendLoading" />
+                    <div style="padding-bottom: 0.2rem;" v-if="activeTab == 2">
+                        <StockItem :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
+                            :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="item"
+                            v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" page="home" />
+                    </div>
+                    <NoData v-if="!commendLoading && !contractList.length" />
                 </div>
             </Tab>
             <Tab :name="3" :title="$t('common.option')">
@@ -43,9 +69,10 @@ import NoData from "@/components/NoData.vue";
 import Loaidng from "@/components/Loaidng.vue";
 import Ai from "@/views/Market/components/Ai.vue";
 import StockItem from "@/components/StockItem.vue";
-import { _futures } from "@/api/api";
+import { _futures, _watchlist } from "@/api/api";
 import store from "@/store";
 import { useI18n } from "vue-i18n";
+import router from "@/router";
 const { t } = useI18n();
 
 const props = defineProps({
@@ -62,6 +89,11 @@ const subs = () => {
     store.dispatch("subList", {});
 };
 
+const jump = (val) => {
+    router.push({
+        name: val
+    })
+}
 
 const ipoRef = ref();
 const ipoDataList = computed(() => store.state.ipoDataList || []);
@@ -77,7 +109,9 @@ const tabChange = (val) => {
 
 // 获取推荐数据
 const commendLoading = ref(false);
+const token = computed(() => store.state.token);
 const contractList = computed(() => store.state.contractList || []);
+const watchList = computed(() => store.state.marketWatchList || []);
 
 const getRecommendData = () => {
     commendLoading.value = true;
@@ -108,8 +142,39 @@ const getRecommendData = () => {
             commendLoading.value = false;
         });
 };
-getRecommendData();
 
+const watchListLoading = ref(false);
+const getWatchList = () => {
+    if (watchListLoading.value) return;
+    watchListLoading.value = true;
+    _watchlist()
+        .then(res => {
+            if (res.code == 200) {
+                const list = res.data.map(item => {
+                    const target = watchList.value.fine(a => a.symbol == item.symbol)
+                    if (target) return target;
+                    return item;
+                })
+                store.commit("setMarketWatchList", list || []);
+                sessionStorage.setItem('market_watch_list', JSON.stringify(list || []))
+                setTimeout(() => {
+                    store.dispatch('subList', {
+                        commitKey: 'setMarketWatchList',
+                        listKey: 'marketWatchList'
+                    })
+                }, 50);
+            }
+        })
+        .catch(err => console.error(err))
+        .finally(() => watchListLoading.value = false);
+}
+
+const init = () => {
+    getRecommendData();
+    if (token.value) getWatchList();
+}
+
+init()
 
 defineExpose({
     activeTab
@@ -120,18 +185,20 @@ defineExpose({
 <style lang="less" scoped>
 .home-tabs-box-trade {
     :deep(.van-tabs--line) {
-        .van-sticky > div > .van-tabs__wrap .van-tabs__nav {
+        .van-sticky>div>.van-tabs__wrap .van-tabs__nav {
             padding: 0 0.32rem;
         }
     }
 }
+
 .home-tabs-box-home {
     :deep(.van-tabs--sub) {
-        & > .van-tabs__wrap .van-tabs__nav {
+        &>.van-tabs__wrap .van-tabs__nav {
             padding: 0 0.32rem;
         }
     }
 }
+
 .home-tabs-box {
     :deep(.van-tabs--sub) {
         margin-top: 0;

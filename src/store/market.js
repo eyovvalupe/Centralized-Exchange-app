@@ -2,6 +2,7 @@
 import { useSocket } from '@/utils/ws'
 import { _getSnapshotLine } from "@/utils/index"
 import router from "@/router"
+import { _watchlist } from '@/api/api'
 const { startSocket } = useSocket()
 
 // 不同页面对应的监听列表 key
@@ -114,7 +115,8 @@ export default {
         aiquantSearchList: [], // 当前搜索的结果-ai
         forexSearchList: [], // 当前搜索的结果-外汇
 
-        marketWatchList: [], // 当前订阅的列表数据
+        // marketWatchList: [], // 当前订阅的列表数据
+        marketWatchList: sessionStorage.getItem('market_watch_list') ? JSON.parse(sessionStorage.getItem('market_watch_list')) : [], // 当前订阅的列表数据
         marketVolumeList: [], // 首页活跃列表
         marketUpList: [], // 首页涨幅列表
         marketDownList: [], // 首页跌幅列表
@@ -470,6 +472,9 @@ export default {
                     return item
                 })
                 state[ck] = arr
+                if (ck == 'marketWatchList') {
+                    sessionStorage.setItem('market_watch_list', JSON.stringify(arr))
+                }
             })
 
             const socket = startSocket(() => {
@@ -555,6 +560,20 @@ export default {
         },
         setMarketType({ commit, state }) {
             commit("setMarketType", state)
+        },
+        updateMarketWatchList({ commit }) {
+            return new Promise((resolve) => {
+                _watchlist()
+                    .then(res => {
+                        if (res.code == 200 && res.data) {
+                            commit('setMarketWatchList', res.data)
+                            resolve(res.data)
+                        } else {
+                            resolve(false)
+                        }
+                    })
+                    .catch(() => resolve(false))
+            })
         }
     },
     getters: {

@@ -33,7 +33,6 @@
               {{ props.item.name || "--" }}
             </div>
 
-            {{ console.log(item.type) }}
             <div v-if="item.type != 'stock'" class="flex items-center">
               <span
                 :class="`${marketStyle[props.item.type]
