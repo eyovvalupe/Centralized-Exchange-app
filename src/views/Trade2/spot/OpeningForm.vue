@@ -1333,7 +1333,7 @@ defineExpose({
 }
 
 .form {
-  padding: 0.28rem;
+  // padding: 0.28rem;
     position: relative;
     border-radius: 0.32rem;
     background-color: var(--ex-bg-color3);

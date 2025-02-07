@@ -269,11 +269,11 @@ const routes = [
     // 市场详情
     path: "/market_info",
     name: "market_info",
-    component: () => import("../views/Market/MarketInfo.vue"),
+    component: () => import("../views/Market/MarketInfo2.vue"),
     meta: {
       keepAlive: false,
       pageType: "child",
-      pageDeep: 3,
+      pageDeep: 1,
     },
   },
   {
@@ -452,7 +452,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: "child",
-      pageDeep: 1,
+      pageDeep: 4,
     },
   },
   {
@@ -551,7 +551,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: "child",
-      pageDeep: 1,
+      pageDeep: 4,
     },
   },
   {
@@ -562,7 +562,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: "child",
-      pageDeep: 1,
+      pageDeep: 4,
     },
   },
   {
