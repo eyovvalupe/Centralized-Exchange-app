@@ -12,7 +12,7 @@ export default {
     no_more: "没有更多了",
     no_wallet: "暂无收款账户",
     spot: "现货",
-    option: "期权",
+    option: "交易机器人",
     second: "秒",
     hour: "小时",
   },
@@ -760,6 +760,8 @@ export default {
     trade_orders_current: "当前委托",
     trade_orders_status: "状态",
     trade_deal_price: "成交价",
+
+    trade_search_item: "输入品种名称/代码"
   },
   inviteFriends: {
     invite: "推荐朋友",

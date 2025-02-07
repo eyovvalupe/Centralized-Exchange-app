@@ -12,7 +12,7 @@
               props.item.symbol[0] }}</span>
             <span class="text-[0.56rem] font-semibold text-color--bg-light" v-else>{{ props.item.name[0] }}</span>
           </div> -->
-          <div class="size-[0.88rem] mr-[0.18rem] flex justify-center items-center" v-if="showIcon">
+          <div class="size-[0.96rem] mr-[0.28rem] flex justify-center items-center" v-if="showIcon">
             <CryptoIcon :name="item.name.split('/')[0]" />
           </div>
           <div class="td5" :class="{ 'td5--ac': showIcon }">
@@ -21,7 +21,7 @@
                 props.item.name
               }}</span>
               <span class="truncate" v-else>{{ props.item.symbol }}</span>
-              <div v-if="props.page == 'market' && item.type == 'stock'"
+              <div v-if="(props.page == 'market' || props.page == 'trade') && item.type == 'stock'"
                 :class="`${marketStyle[props.item.type]
                   } font-normal whitespace-nowrap text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.08rem] h-[0.3rem] `">
                 {{
@@ -289,7 +289,7 @@ const removeStock = (item) => {
 .stock_item {
   display: flex;
   align-items: center;
-  height: 1.48rem;
+  height: 1.6rem;
   // padding: 0 0.3rem;
   position: relative;
   // background-color: var(--ex-bg-white2);

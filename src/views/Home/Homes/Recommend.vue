@@ -1,16 +1,16 @@
 <template>
     <div class="home-tabs-box" :class="['home-tabs-box-' + props.from]">
-        <Tabs :offset-top="'1.32rem'" class="van-tabs--sub" :class="[props.from == 'trade' ? 'van-tabs--sub_line' : '']"
-            :sticky="props.sticky" :color="'var(--ex-primary-color)'" @change="tabChange" v-if="$props.activated"
+        <Tabs :offset-top="'1.32rem'" :type="from == 'trade' ? 'line-card-trade' : 'sub'"
+            :sticky="props.sticky" :color="'var(--ex-primary-color)'" @change="tabChange" v-if="props.activated"
             v-model:active="activeTab" animated shrink>
             <Tab :name="0" v-if="from != 'home'" :title="t('trade.left_mine')">
-                <div class="mt-[0.32rem]">
+                <div :class="from == 'trade' ? 'mt-[1.92rem]' : 'mt-[0.32rem]'">
                     <div v-if="token">
                         <Loaidng v-if="watchListLoading" :loading="watchListLoading" />
                         <div style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 0">
                             <StockItem :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
                                 :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="{ ...item, type: 'spot' }"
-                                v-for="(item, i) in watchList" :key="'c_' + i" marketType="crypto" page="home" />
+                                v-for="(item, i) in watchList" :key="'c_' + i" marketType="crypto" />
                         </div>
                         <NoData v-if="!watchListLoading && !watchList.length" />
                     </div>
@@ -30,7 +30,7 @@
                 </div>
             </Tab>
             <Tab :name="1" :title="t('common.spot')">
-                <div class="mt-[0.32rem]">
+                <div :class="from == 'trade' ? 'mt-[1.92rem]' : 'mt-[0.32rem]'">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div class="" style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 1">
                         <StockItem :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
@@ -41,7 +41,7 @@
                 </div>
             </Tab>
             <Tab :name="2" :title="$t('common.crypto')">
-                <div class="mt-[0.32rem]">
+                <div :class="from == 'trade' ? 'mt-[1.92rem]' : 'mt-[0.32rem]'">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 2">
                         <StockItem :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
@@ -52,12 +52,12 @@
                 </div>
             </Tab>
             <Tab :name="3" :title="$t('common.option')">
-                <div class="pl-[0.32rem] pr-[0.32rem] mt-[0.32rem]">
+                <div class="pl-[0.32rem] pr-[0.32rem]" :class="from == 'trade' ? 'mt-[1.92rem]' : 'mt-[0.32rem]'">
                     <Ai :from="props.from" page="home" v-if="activeTab == 3" />
                 </div>
             </Tab>
             <Tab :name="4" :title="'ETF'">
-                <div class="pl-[0.32rem] pr-[0.32rem] mt-[0.32rem]">
+                <div class="pl-[0.32rem] pr-[0.32rem]" :class="from == 'trade' ? 'mt-[1.92rem]' : 'mt-[0.32rem]'">
                     <Ai :from="props.from" page="home" v-if="activeTab == 4" />
                 </div>
             </Tab>
@@ -186,14 +186,6 @@ defineExpose({
 </script>
 
 <style lang="less" scoped>
-.home-tabs-box-trade {
-    :deep(.van-tabs--line) {
-        .van-sticky>div>.van-tabs__wrap .van-tabs__nav {
-            padding: 0 0.32rem;
-        }
-    }
-}
-
 .home-tabs-box-home {
     :deep(.van-tabs--sub) {
         &>.van-tabs__wrap .van-tabs__nav {
@@ -203,24 +195,9 @@ defineExpose({
     }
 }
 
-.home-tabs-box {
+.home-tabs-box-home {
     :deep(.van-tabs--sub) {
         margin-top: 0;
-
-        .van-tabs__wrap {
-            // border: none;
-            position: relative;
-            display: inline-block;
-            // &::after {
-            //     content: '';
-            //     position: absolute;
-            //     bottom: 0;
-            //     left: 0;
-            //     width: 100%;
-            //     height: 1px;
-            //     background-color: var(--ex-bg-color5);
-            // }
-        }
     }
 
 
@@ -231,12 +208,11 @@ defineExpose({
             background-color: #171717;
             color: var(--ex-text-color2);
             min-width: 1.2rem;
-            // border-color: #414345;
         }
 
         .van-tab--active {
-            color: var(--ex-white);
-            background-color: var(--ex-primary-color);
+            color: var(--ex-white) !important;
+            background-color: var(--ex-primary-color) !important;
         }
     }
 

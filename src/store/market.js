@@ -68,7 +68,7 @@ const pageKeys = {
         'marketStockHongkongDataList',
         'marketStockMalaysiaDataList'
     ],
-    'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList', 'marketForeignList', 'marketCommoditiesList', 'contractList'],
+    'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList', 'marketForeignList', 'marketCommoditiesList', 'contractList', 'searchList'],
     'search':['marketSearchList']
 }
 
@@ -186,11 +186,14 @@ export default {
         graphColorGradient: false,
         marketActiveTab: 0,
         currDeleteId: '',
-        realtimeData: []
-
+        realtimeData: [],
+        searchList: [],
     },
 
     mutations: {
+        setSearchList(state, data) {
+            state.searchList = data
+        },
         setCurrDeleteId(state, data) {
             state.currDeleteId = data
         },

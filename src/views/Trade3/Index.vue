@@ -1,26 +1,32 @@
 <template>
   <div class="w-full h-full p-[0.08rem]">
     <div class="page-trade3 bg-color5">
+      <div class="z-[1] fixed pt-[0.45rem] pb-[0.4rem] bg-color5 w-full top-[-0.05rem]">
+        <div
+          class="transition flex justify-between bg-color2 px-[0.32rem] py-[0.18rem] rounded-[1rem] gap-[0.2rem] h-[0.8rem] mx-[0.4rem] items-center border-[0.02rem]"
+          :class="focusRef ? 'border-white' : ''" style="width: calc(100% - 0.96rem);">
+          <div class="text-[0.32rem] text-color2 leading-[0.5rem] border-r-[1px] flex-1 px-[0.1rem]">
+            <input v-model.trim="searchRef" class="text-white" :placeholder="$t('trade.trade_search_item')"
+              @input="inputHandle" @focus="focusRef = true" @blur="focusRef = false" />
+          </div>
+          <div class="w-[0.5rem] h-[0.5rem]">
+            <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
+          </div>
+        </div>
+      </div>
 
-      <!-- <div class="max-width search-bg bg-color5"> -->
-        <!-- <div class="search-box item" @click="showSearchDialog = true"> -->
-        <!-- <div
-          class="flex justify-between w-full bg-color2 px-[0.32rem] py-[0.18rem] rounded-[1rem] gap-[0.2rem] h-[0.8rem] items-center"> -->
-          <!-- <div class="text-[0.32rem] text-color2 leading-[0.5rem] border-r-[1px] flex-1">{{
-      $t('trade.stock_opening_search') }}</div>
-    <div class="w-[0.5rem] h-[0.5rem]">
-      <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
-    </div> -->
-        <!-- </div> -->
-        <!-- </div> -->
-
-        <!-- <div class="bill-box" @click="jump('tradeOrder')">
+      <!-- <div class="bill-box" @click="jump('tradeOrder')">
           <img v-lazy="getStaticImgUrl('/static/img/common/bill.svg')" alt="">
         </div> -->
 
-      <!-- </div> -->
-
-      <Recommend ref="recommendRef" from="trade" :sticky="true" :activated="activated" />
+      <Recommend v-if="!focusRef && !searchRef" ref="recommendRef" from="trade" :sticky="true" :activated="activated" />
+      <div v-if="focusRef || searchRef">
+        <div class="mt-[1.6rem] px-[0.32rem] text-[0.32rem] leading-[0.4rem] mb-[0.32rem]">Result</div>
+        <div class="lists">
+          <StockTable :from="'trade'" :showIcon="true" theme="classic" :handleClick="goInfo" :loading="searchLoading"
+            :key="'search'" :list="searchList" />
+        </div>
+      </div>
     </div>
   </div>
 
@@ -49,7 +55,7 @@
 
 <script setup>
 import Recommend from "@/views/Home/Homes/Recommend.vue"
-import { ref, onActivated, onDeactivated, computed } from "vue"
+import { ref, onActivated, onDeactivated, computed, watch } from "vue"
 import { useSocket } from "@/utils/ws";
 import store from "@/store"
 import { getStaticImgUrl } from "@/utils/index.js"
@@ -58,17 +64,48 @@ import BottomPopup from "@/components/BottomPopup.vue";
 import StockTable from "@/components/StockTable.vue";
 import { _futures } from "@/api/api";
 import { useI18n } from "vue-i18n";
+import NoData from "@/components/NoData.vue";
 
 const jump = name => router.push(name)
 const { t } = useI18n();
-
+const focusRef = ref(false)
+const searchList = computed(() => store.state.searchList)
+const contractList = computed(() => store.state.contractList)
+const searchRef = ref('')
 const { startSocket } = useSocket();
-// 订阅
+// 订阅 
 const subs = () => {
   store.commit("setMarketWatchKeysByPage");
   store.dispatch("subList", {});
 };
 
+let timeout = null
+const inputHandle = () => {
+  if (timeout) clearTimeout(timeout)
+  timeout = setTimeout(() => {
+    if (searchRef.value) goSearch()
+  }, 600);
+}
+
+const goSearch = () => {
+  console.log('aaa')
+
+  if (!searchRef.value) return;
+  if (searchLoading.value) return;
+  searchList.value = [];
+  searchLoading.value = true;
+  _futures({
+    type: '',
+    name: searchRef.value
+  })
+    .then(res => {
+      store.commit('setSearchList', res.data)
+      store.dispatch('subList', {
+        listKey: 'searchList'
+      })
+    })
+    .finally(() => searchLoading.value = false);
+}
 
 const activated = ref(false);
 onActivated(() => {
@@ -145,6 +182,14 @@ const goDialogSearch = () => {
 setTimeout(() => {
   goDialogSearch()
 }, 2000)
+
+watch(searchRef, (val) => {
+  if (!val) {
+    setTimeout(() => {
+      store.commit('setSearchList', [])
+    }, 100);
+  }
+})
 </script>
 
 <style lang="less" scoped>
@@ -186,9 +231,20 @@ setTimeout(() => {
 .page-trade3 {
   width: 100%;
   height: 100%;
-  padding: 1.32rem 0 1.4rem 0;
+  padding: 0 0 1.4rem 0;
   overflow-y: auto;
   position: relative;
+
+  .lists {
+    height: calc(var(--vh) * 60);
+    overflow-y: auto;
+    margin-top: 0.32rem;
+    padding: 0 0.32rem;
+  }
+
+  .transition {
+    transition: all 0.3s ease-in;
+  }
 
   .search-bg {
     position: fixed;
