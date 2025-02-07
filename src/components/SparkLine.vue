@@ -1,7 +1,7 @@
 <!-- 折线图标 -->
 <template>
     <div ref="root" class="stock-chart-svg_4vRMv" style="height: 100%;width: 100%;">
-        <div class="hide_svg" :class="{ 'full_svg': onShow }">
+        <div class="hide_svg" :class="[{ 'full_svg': onShow }, {'transition': !route.path.includes('trade')}]">
             <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" :key="color">
                 <line x1="0" y1="30%" :x2="'100%'" y2="30%" stroke-dasharray="2 2"
                     :style="{ stroke: color, 'stroke-width': 1 }"></line>
@@ -23,7 +23,11 @@
 </template>
 
 <script setup>
+import router from '@/router';
 import { computed, ref, onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute()
 const onShow = ref(false)
 onMounted(() => {
     setTimeout(() => {
@@ -97,8 +101,11 @@ const stopEndColor = computed(() => {
 <style lang="less" scoped>
 .hide_svg {
     width: 0%;
-    transition: all linear 0.6s;
     height: 100%;
+}
+
+.transition {
+    transition: all linear 0.6s;
 }
 
 .full_svg {

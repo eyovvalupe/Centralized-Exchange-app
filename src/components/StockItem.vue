@@ -12,8 +12,7 @@
               props.item.symbol[0] }}</span>
             <span class="text-[0.56rem] font-semibold text-color--bg-light" v-else>{{ props.item.name[0] }}</span>
           </div> -->
-          <div class="size-[0.88rem] mr-[0.18rem] flex justify-center items-center"
-            v-if="showIcon">
+          <div class="size-[0.88rem] mr-[0.18rem] flex justify-center items-center" v-if="showIcon">
             <CryptoIcon :name="item.name.split('/')[0]" />
           </div>
           <div class="td5" :class="{ 'td5--ac': showIcon }">
@@ -34,8 +33,8 @@
               {{ props.item.name || "--" }}
             </div>
 
-
-            <div v-if="item.type != 'stock'" class=" flex items-center">
+            {{ console.log(item.type) }}
+            <div v-if="item.type != 'stock'" class="flex items-center">
               <span
                 :class="`${marketStyle[props.item.type]
                   } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center`">
@@ -48,7 +47,9 @@
                         ? t("market.market_optional_forex")
                         : item.type == "blocktrade"
                           ? t("market.market_optional_blocktrade")
-                          : ""
+                          : item.type == "spot"
+                            ? t("market.market_optional_contract")
+                            : ""
                 }}
               </span>
             </div>
@@ -58,6 +59,10 @@
             <SparkLine :style="['width: 100%; height: 0.6rem;']" v-if="props.item.points" :points="props.item.points"
               :ratio="props.item.ratio" />
           </div>
+          <!-- <div :class="['td2']" v-if="showSparkLine">
+            <SparkLine :style="['width: 100%; height: 0.6rem;']" v-if="props.item.points" :points="props.item.points"
+              :ratio="props.item.ratio" />
+          </div> -->
           <div class="td2 td_r">
             <div class="item_num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
               {{ props.item.price ? props.item.price : "--" }}
@@ -114,6 +119,7 @@ const marketStyle = {
   crypto: "tag-crypto",
   forex: "tag-forex",
   blocktrade: "tag-blocktrade",
+  spot: "tag-spot"
 };
 const emits = defineEmits(["remove"]);
 const props = defineProps({
@@ -287,6 +293,7 @@ const removeStock = (item) => {
   // border-radius: 0.4rem;
   // margin-top: 0.2rem;
   border-bottom: 1px solid var(--ex-bg-white2);
+
   &:first-child {
     border-top: 1px solid var(--ex-bg-white2);
   }
@@ -457,6 +464,7 @@ const removeStock = (item) => {
   transition: all ease-in .2s;
   position: relative;
   overflow: visible;
+
   &::after {
     position: absolute;
     content: "";
@@ -468,6 +476,7 @@ const removeStock = (item) => {
     transition: all ease-in .2s;
     border-radius: 0 0.16rem 0.16rem 0;
   }
+
   &::before {
     position: absolute;
     content: "";
@@ -488,6 +497,7 @@ const removeStock = (item) => {
 .stock_item_up {
   background-color: rgb(var(--ex-up-color-rgb) / 0.12);
   transition: all ease-in .2s;
+
   &::after {
     position: absolute;
     content: "";
@@ -499,6 +509,7 @@ const removeStock = (item) => {
     transition: all ease-in .2s;
     border-radius: 0 0.16rem 0.16rem 0;
   }
+
   &::before {
     position: absolute;
     content: "";
@@ -519,6 +530,7 @@ const removeStock = (item) => {
 .stock_item_down {
   background-color: rgb(var(--ex-down-color-rgb) / 0.12);
   transition: all ease-in .2s;
+
   &::after {
     position: absolute;
     content: "";
@@ -530,6 +542,7 @@ const removeStock = (item) => {
     transition: all ease-in .2s;
     border-radius: 0 0.16rem 0.16rem 0;
   }
+
   &::before {
     position: absolute;
     content: "";

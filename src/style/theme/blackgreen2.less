@@ -2,529 +2,537 @@
 // 为兼容tailwindcss 所有颜色使用 rgb 配置，全局颜色变量使用 ex- 开头
 
 :root {
-    --ex-white-rgb: 255 255 255; //#FFFFFF      白色
-    --ex-black-rgb: 0 0 0; //#000000      黑色
-    --ex-red-rgb: 255 24 67; // 红色
-    --ex-blue-rgb: 23 120 241; // 蓝色
-    --ex-up-color-rgb: 0 215 124; //#00D77C   上涨颜色
-    --ex-down-color-rgb: 255 72 52; //#FF4834   下跌颜色
-    --ex-count-color-rgb: 255 163 70;
-    --ex-success-color-rgb: 0 215 124; //#00D77C 成功状态颜色
-    --ex-error-color-rgb: 255 72 52; //FF4834   错误状态颜色
-    --ex-info-color-rgb: 89 132 218; //#5984DA  普通状态颜色
-    --ex-warning-color-rgb: 250 117 0; //#fa7500 警告状态颜色
-    --ex-primary-color-rgb: 0 166 9; //#97E180  风格主色
-    --ex-text-color-rgb: 255 255 255; //#FFFFFF   主要文字颜色
-    --ex-text-color2-rgb: 136 136 136; //#888888 辅助文字颜色 
-    --ex-text-color3-rgb: 136 136 136; //#888888  提示文字颜色
-    --ex-text-color4-rgb: 136 136 136; //#888888 次要文字颜色
-    --ex-text-color5-rgb: 136 136 136; //#888888 禁用颜色
-    --ex-border-color-rgb: 26 27 36; //#1A1B24 边框颜色（浅）
-    --ex-border-color2-rgb: 26 27 36; //#1A1B24 边框颜色（中）
-    --ex-border-color3-rgb: 210 210 210; //#D2D2D2 边框颜色（亮）
-    --ex-border-color4-rgb: 35 36 37; //#232325    边框色(深)
-    --ex-bg-color-rgb: 14 15 24; //#0E0F18   背景颜色
-    --ex-bg-color2-rgb: 10 10 15; //#0A0A0F   
-    --ex-bg-color3-rgb: 26 27 36; //#1A1B24   
-    --ex-bg-color4-rgb: 26 27 36; //#1A1B24 
-    --ex-bg-color5-rgb: 26 27 36; //#1A1B24    
-    --ex-bg-color6-rgb: 26 27 36; //#1A1B24
-    --ex-bg-color7-rgb: 23 23 23; // #171717
-    --ex-bg-color8-rgb: 136 136 136; //#888888
-    --ex-bg-color9-rgb: 38 45 55;// #262D37
+  --ex-white-rgb: 255 255 255; //#FFFFFF      白色
+  --ex-black-rgb: 0 0 0; //#000000      黑色
+  --ex-red-rgb: 255 24 67; // 红色
+  --ex-blue-rgb: 23 120 241; // 蓝色
+  --ex-up-color-rgb: 0 215 124; //#00D77C   上涨颜色
+  --ex-down-color-rgb: 255 72 52; //#FF4834   下跌颜色
+  --ex-count-color-rgb: 255 163 70;
+  --ex-success-color-rgb: 0 215 124; //#00D77C 成功状态颜色
+  --ex-error-color-rgb: 255 72 52; //FF4834   错误状态颜色
+  --ex-info-color-rgb: 89 132 218; //#5984DA  普通状态颜色
+  --ex-warning-color-rgb: 250 117 0; //#fa7500 警告状态颜色
+  --ex-primary-color-rgb: 0 166 9; //#97E180  风格主色
+  --ex-text-color-rgb: 255 255 255; //#FFFFFF   主要文字颜色
+  --ex-text-color2-rgb: 136 136 136; //#888888 辅助文字颜色
+  --ex-text-color3-rgb: 136 136 136; //#888888  提示文字颜色
+  --ex-text-color4-rgb: 136 136 136; //#888888 次要文字颜色
+  --ex-text-color5-rgb: 136 136 136; //#888888 禁用颜色
+  --ex-border-color-rgb: 26 27 36; //#1A1B24 边框颜色（浅）
+  --ex-border-color2-rgb: 26 27 36; //#1A1B24 边框颜色（中）
+  --ex-border-color3-rgb: 210 210 210; //#D2D2D2 边框颜色（亮）
+  --ex-border-color4-rgb: 35 36 37; //#232325    边框色(深)
+  --ex-bg-color-rgb: 14 15 24; //#0E0F18   背景颜色
+  --ex-bg-color2-rgb: 10 10 15; //#0A0A0F
+  --ex-bg-color3-rgb: 26 27 36; //#1A1B24
+  --ex-bg-color4-rgb: 26 27 36; //#1A1B24
+  --ex-bg-color5-rgb: 26 27 36; //#1A1B24
+  --ex-bg-color6-rgb: 26 27 36; //#1A1B24
+  --ex-bg-color7-rgb: 23 23 23; // #171717
+  --ex-bg-color8-rgb: 136 136 136; //#888888
+  --ex-bg-color9-rgb: 38 45 55; // #262D37
 
-    --ex-sbtn-rgb: 140 161 202; // #8CA1CA 特殊按钮颜色
-    --ex-status-color1-rgb: 255 163 70; //#FFA346 状态颜色1
-    --ex-status-color2-rgb: 220 89 89; //#DC5959 状态颜色2
-    --ex-status-color3-rgb: 0 166 9; //#00A609 状态颜色3
-    --ex-status-color4-rgb: 0 153 209; //#0099d1 状态颜色4
-    --ex-status-color5-rgb: 24 183 98; //#18b762 状态颜色5
-    --ex-status-color6-rgb: 108 108 234; //#6c6cea 状态颜色6
-    --ex-status-color7-rgb: 255 138 36; //#ff8a24
-    --ex-status-color8-rgb: 70 193 255; //#46C1FF
-    --ex-status-color9-rgb: 241 144 9; //#F19009 
+  --ex-sbtn-rgb: 140 161 202; // #8CA1CA 特殊按钮颜色
+  --ex-status-color1-rgb: 255 163 70; //#FFA346 状态颜色1
+  --ex-status-color2-rgb: 220 89 89; //#DC5959 状态颜色2
+  --ex-status-color3-rgb: 0 166 9; //#00A609 状态颜色3
+  --ex-status-color4-rgb: 0 153 209; //#0099d1 状态颜色4
+  --ex-status-color5-rgb: 24 183 98; //#18b762 状态颜色5
+  --ex-status-color6-rgb: 108 108 234; //#6c6cea 状态颜色6
+  --ex-status-color7-rgb: 255 138 36; //#ff8a24
+  --ex-status-color8-rgb: 70 193 255; //#46C1FF
+  --ex-status-color9-rgb: 241 144 9; //#F19009
 
-    --ex-none: rgb(var(--ex-black-rgb) / 0);
-    --ex-white: rgb(var(--ex-white-rgb));
-    --ex-black: rgb(var(--ex-black-rgb));
-    --ex-red: rgb(var(--ex-red-rgb));
-    --ex-blue: rgb(var(--ex-blue-rgb));
-    --ex-up-color: rgb(var(--ex-up-color-rgb));
-    --ex-down-color: rgb(var(--ex-down-color-rgb));
-    --ex-count-color: rgb(var(--ex-count-color-rgb));
-    --ex-primary-color: rgb(var(--ex-primary-color-rgb));
-    --ex-primary-bg: rgb(var(--ex-primary-color-rgb) / 0.1);
-    --ex-text-primary: rgb(var(--ex-primary-color-rgb));
-    --ex-success-color: rgb(var(--ex-success-color-rgb));
-    --ex-error-color: rgb(var(--ex-error-color-rgb));
-    --ex-info-color: rgb(var(--ex-info-color-rgb));
-    --ex-warning-color: rgb(var(--ex-warning-color-rgb));
-    --ex-text-color: rgb(var(--ex-text-color-rgb));
-    --ex-placeholder-color: rgb(var(--ex-text-color-rgb) / 0.5);
-    --ex-text-color2: rgb(var(--ex-text-color2-rgb) / 1);
-    --ex-text-color3: rgb(var(--ex-text-color3-rgb) / 1);
-    --ex-text-color4: rgb(var(--ex-text-color4-rgb) / 1);
-    --ex-text-color5: rgb(var(--ex-text-color5-rgb) / 1);
-    --ex-border-color: rgb(var(--ex-border-color-rgb));
-    --ex-border-color2: rgb(var(--ex-border-color2-rgb));
-    --ex-border-color3: rgb(var(--ex-border-color3-rgb));
-    --ex-border-color4: rgb(var(--ex-border-color4-rgb));
-    --ex-border-error: rgb(var(--ex-error-color-rgb));
-    --ex-bg-color: rgb(var(--ex-bg-color-rgb));
-    --ex-bg-color2: rgb(var(--ex-bg-color2-rgb) / 1);
-    --ex-bg-color3: rgb(var(--ex-bg-color3-rgb) / 1);
-    --ex-bg-color4: rgb(var(--ex-bg-color4-rgb) / 1);
-    --ex-bg-color5: rgb(var(--ex-bg-color5-rgb) / 1);
-    --ex-bg-color6: rgb(var(--ex-bg-color6-rgb) / 1);
-    --ex-bg-color7: rgb(var(--ex-bg-color7-rgb) / 1);
-    --ex-bg-color8: rgb(var(--ex-bg-color8-rgb) / 1);
-    --ex-bg-color9: rgb(var(--ex-bg-color9-rgb) / 1);
-    --ex-bg-white: rgb(var(--ex-bg-color4-rgb));
-    --ex-bg-white2: rgb(var(--ex-white-rgb) / 0.06);
-    --ex-bg-white1: rgb(var(--ex-white-rgb) / 0.1);
-    --ex-text-color--bg-primary: rgb(var(--ex-text-color-rgb)); //主色背景下的文字颜色
-    --ex-text-color--bg-light: rgb(var(--ex-bg-color-rgb)); //浅色背景下的文字颜色
+  --ex-none: rgb(var(--ex-black-rgb) / 0);
+  --ex-white: rgb(var(--ex-white-rgb));
+  --ex-black: rgb(var(--ex-black-rgb));
+  --ex-red: rgb(var(--ex-red-rgb));
+  --ex-blue: rgb(var(--ex-blue-rgb));
+  --ex-up-color: rgb(var(--ex-up-color-rgb));
+  --ex-down-color: rgb(var(--ex-down-color-rgb));
+  --ex-count-color: rgb(var(--ex-count-color-rgb));
+  --ex-primary-color: rgb(var(--ex-primary-color-rgb));
+  --ex-primary-bg: rgb(var(--ex-primary-color-rgb) / 0.1);
+  --ex-text-primary: rgb(var(--ex-primary-color-rgb));
+  --ex-success-color: rgb(var(--ex-success-color-rgb));
+  --ex-error-color: rgb(var(--ex-error-color-rgb));
+  --ex-info-color: rgb(var(--ex-info-color-rgb));
+  --ex-warning-color: rgb(var(--ex-warning-color-rgb));
+  --ex-text-color: rgb(var(--ex-text-color-rgb));
+  --ex-placeholder-color: rgb(var(--ex-text-color-rgb) / 0.5);
+  --ex-text-color2: rgb(var(--ex-text-color2-rgb) / 1);
+  --ex-text-color3: rgb(var(--ex-text-color3-rgb) / 1);
+  --ex-text-color4: rgb(var(--ex-text-color4-rgb) / 1);
+  --ex-text-color5: rgb(var(--ex-text-color5-rgb) / 1);
+  --ex-border-color: rgb(var(--ex-border-color-rgb));
+  --ex-border-color2: rgb(var(--ex-border-color2-rgb));
+  --ex-border-color3: rgb(var(--ex-border-color3-rgb));
+  --ex-border-color4: rgb(var(--ex-border-color4-rgb));
+  --ex-border-error: rgb(var(--ex-error-color-rgb));
+  --ex-bg-color: rgb(var(--ex-bg-color-rgb));
+  --ex-bg-color2: rgb(var(--ex-bg-color2-rgb) / 1);
+  --ex-bg-color3: rgb(var(--ex-bg-color3-rgb) / 1);
+  --ex-bg-color4: rgb(var(--ex-bg-color4-rgb) / 1);
+  --ex-bg-color5: rgb(var(--ex-bg-color5-rgb) / 1);
+  --ex-bg-color6: rgb(var(--ex-bg-color6-rgb) / 1);
+  --ex-bg-color7: rgb(var(--ex-bg-color7-rgb) / 1);
+  --ex-bg-color8: rgb(var(--ex-bg-color8-rgb) / 1);
+  --ex-bg-color9: rgb(var(--ex-bg-color9-rgb) / 1);
+  --ex-bg-white: rgb(var(--ex-bg-color4-rgb));
+  --ex-bg-white2: rgb(var(--ex-white-rgb) / 0.06);
+  --ex-bg-white1: rgb(var(--ex-white-rgb) / 0.1);
+  --ex-text-color--bg-primary: rgb(
+    var(--ex-text-color-rgb)
+  ); //主色背景下的文字颜色
+  --ex-text-color--bg-light: rgb(var(--ex-bg-color-rgb)); //浅色背景下的文字颜色
 
+  --ex-sbtn-color: rgb(var(--ex-sbtn-rgb));
+  --ex-status-color1: rgb(var(--ex-status-color1-rgb));
+  --ex-status-bg1: rgb(var(--ex-status-color1-rgb) / 0.1);
+  --ex-status-color2: rgb(var(--ex-status-color2-rgb));
+  --ex-status-bg2: rgb(var(--ex-status-color2-rgb) / 0.1);
+  --ex-status-color3: rgb(var(--ex-status-color3-rgb));
+  --ex-status-bg3: rgb(var(--ex-status-color3-rgb) / 0.1);
+  --ex-status-color4: rgb(var(--ex-status-color4-rgb));
+  --ex-status-bg4: rgb(var(--ex-status-color4-rgb) / 0.1);
+  --ex-status-color5: rgb(var(--ex-status-color5-rgb));
+  --ex-status-bg5: rgb(var(--ex-status-color5-rgb) / 0.1);
+  --ex-status-color6: rgb(var(--ex-status-color6-rgb));
+  --ex-status-bg6: rgb(var(--ex-status-color6-rgb) / 0.1);
+  --ex-status-color7: rgb(var(--ex-status-color7-rgb));
+  --ex-status-bg7: rgb(var(--ex-status-color7-rgb) / 0.1);
+  --ex-status-color8: rgb(var(--ex-status-color8-rgb));
+  --ex-status-bg8: rgb(var(--ex-status-color8-rgb) / 0.1);
+  --ex-status-color9: rgb(var(--ex-status-color9-rgb));
+  --ex-status-bg9: rgb(var(--ex-status-color9-rgb) / 0.1);
 
-    --ex-sbtn-color: rgb(var(--ex-sbtn-rgb));
-    --ex-status-color1: rgb(var(--ex-status-color1-rgb));
-    --ex-status-bg1: rgb(var(--ex-status-color1-rgb) / 0.1);
-    --ex-status-color2: rgb(var(--ex-status-color2-rgb));
-    --ex-status-bg2: rgb(var(--ex-status-color2-rgb) / 0.1);
-    --ex-status-color3: rgb(var(--ex-status-color3-rgb));
-    --ex-status-bg3: rgb(var(--ex-status-color3-rgb) / 0.1);
-    --ex-status-color4: rgb(var(--ex-status-color4-rgb));
-    --ex-status-bg4: rgb(var(--ex-status-color4-rgb) / 0.1);
-    --ex-status-color5: rgb(var(--ex-status-color5-rgb));
-    --ex-status-bg5: rgb(var(--ex-status-color5-rgb) / 0.1);
-    --ex-status-color6: rgb(var(--ex-status-color6-rgb));
-    --ex-status-bg6: rgb(var(--ex-status-color6-rgb) / 0.1);
-    --ex-status-color7: rgb(var(--ex-status-color7-rgb));
-    --ex-status-bg7: rgb(var(--ex-status-color7-rgb) / 0.1);
-    --ex-status-color8: rgb(var(--ex-status-color8-rgb));
-    --ex-status-bg8: rgb(var(--ex-status-color8-rgb) / 0.1);
-    --ex-status-color9: rgb(var(--ex-status-color9-rgb));
-    --ex-status-bg9: rgb(var(--ex-status-color9-rgb) / 0.1);
+  *,
+  ::before,
+  ::after {
+    border-color: var(--ex-border-color);
+  }
 
-    *,
-    ::before,
-    ::after {
-        border-color: var(--ex-border-color);
-    }
-
-    input::placeholder {
-        color: var(--ex-text-color4);
-    }
-
+  input::placeholder {
+    color: var(--ex-text-color4);
+  }
 }
 
 .text-color {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-text-color-rgb) / var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-text-color-rgb) / var(--tw-text-opacity));
 }
 
 .text-color2 {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-text-color2-rgb) / var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-text-color2-rgb) / var(--tw-text-opacity));
 }
 
 .text-color3 {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-text-color3-rgb)/ var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-text-color3-rgb) / var(--tw-text-opacity));
 }
 
 .text-color4 {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-text-color4-rgb)/ var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-text-color4-rgb) / var(--tw-text-opacity));
 }
 
 .text-color5 {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-text-color5-rgb)/ var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-text-color5-rgb) / var(--tw-text-opacity));
 }
 
 .text-primary {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-primary-color-rgb) / var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-primary-color-rgb) / var(--tw-text-opacity));
 }
 
 .text-color--bg-primary {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-bg-color-rgb)/ var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-bg-color-rgb) / var(--tw-text-opacity));
 }
 
 .text-color--bg-light {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-bg-color-rgb)/ var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-bg-color-rgb) / var(--tw-text-opacity));
 }
 
 .text-success {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-success-color-rgb) / var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-success-color-rgb) / var(--tw-text-opacity));
 }
 
 .text-error {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-error-color-rgb) / var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-error-color-rgb) / var(--tw-text-opacity));
 }
 
 .text-info {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-info-color-rgb) / var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-info-color-rgb) / var(--tw-text-opacity));
 }
 
 .text-warning {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-warning-color-rgb) / var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-warning-color-rgb) / var(--tw-text-opacity));
 }
 
 //涨跌颜色
 .text-up {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-up-color-rgb) / var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-up-color-rgb) / var(--tw-text-opacity));
 }
 
 .up {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-up-color-rgb) / var(--tw-text-opacity)) !important;
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-up-color-rgb) / var(--tw-text-opacity)) !important;
 }
 
 .bg-up {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-up-color-rgb) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--ex-up-color-rgb) / var(--tw-bg-opacity));
 }
 
 .status-up {
-    --tw-bg-opacity: 0.1;
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-up-color-rgb) / var(--tw-text-opacity)) !important;
-    background-color: rgb(var(--ex-up-color-rgb) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.1;
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-up-color-rgb) / var(--tw-text-opacity)) !important;
+  background-color: rgb(var(--ex-up-color-rgb) / var(--tw-bg-opacity));
 }
 
 .status-down {
-    --tw-bg-opacity: 0.1;
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-down-color-rgb) / var(--tw-text-opacity)) !important;
-    background-color: rgb(var(--ex-down-color-rgb) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.1;
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-down-color-rgb) / var(--tw-text-opacity)) !important;
+  background-color: rgb(var(--ex-down-color-rgb) / var(--tw-bg-opacity));
 }
 
 .up_bg {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-up-color-rgb) / var(--tw-bg-opacity)) !important;
-    color: var(--ex-white) !important;
+  --tw-bg-opacity: 1;
+  background-color: rgb(
+    var(--ex-up-color-rgb) / var(--tw-bg-opacity)
+  ) !important;
+  color: var(--ex-white) !important;
 }
 
 .bg-down {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-down-color-rgb) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--ex-down-color-rgb) / var(--tw-bg-opacity));
 }
 
 .down_bg {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-down-color-rgb) / var(--tw-bg-opacity)) !important;
-    color: var(--ex-white) !important;
+  --tw-bg-opacity: 1;
+  background-color: rgb(
+    var(--ex-down-color-rgb) / var(--tw-bg-opacity)
+  ) !important;
+  color: var(--ex-white) !important;
 }
 
 .text-down {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-down-color-rgb) / var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-down-color-rgb) / var(--tw-text-opacity));
 }
 
 .down {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-down-color-rgb) / var(--tw-text-opacity)) !important;
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-down-color-rgb) / var(--tw-text-opacity)) !important;
 }
 
 //背景
 
 .bg-primary {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-primary-color-rgb) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--ex-primary-color-rgb) / var(--tw-bg-opacity));
 }
 
 .bg-primary-text-color {
-    --tw-text-opacity: 1;
-    color: rgb(var(--ex-bg-color-rgb) / var(--tw-text-opacity));
+  --tw-text-opacity: 1;
+  color: rgb(var(--ex-bg-color-rgb) / var(--tw-text-opacity));
 }
 
 .bg-success {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-success-color-rgb) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--ex-success-color-rgb) / var(--tw-bg-opacity));
 }
 
 .bg-error {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-error-color-rgb) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--ex-error-color-rgb) / var(--tw-bg-opacity));
 }
 
 .bg-warning {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-warning-color-rgb) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--ex-warning-color-rgb) / var(--tw-bg-opacity));
 }
 
 .bg-wait {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-status-color7-rgb) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--ex-status-color7-rgb) / var(--tw-bg-opacity));
 }
 
 .bg-info {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-info-color-rgb) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--ex-info-color-rgb) / var(--tw-bg-opacity));
 }
 
 .bg-color {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-bg-color-rgb) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--ex-bg-color-rgb) / var(--tw-bg-opacity));
 }
 
 .bg-color2 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-bg-color2-rgb) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--ex-bg-color2-rgb) / var(--tw-bg-opacity));
 }
 
 .bg-color3 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-bg-color3-rgb) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--ex-bg-color3-rgb) / var(--tw-bg-opacity));
 }
 
 .bg-color4 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-bg-color4-rgb) / var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--ex-bg-color4-rgb) / var(--tw-bg-opacity));
 }
 
 .bg-color5 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-bg-color5-rgb)/ var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--ex-bg-color5-rgb) / var(--tw-bg-opacity));
 }
 
 .bg-color6 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-bg-color6-rgb)/ var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--ex-bg-color6-rgb) / var(--tw-bg-opacity));
 }
 
 .bg-color8 {
-    --tw-bg-opacity: 1;
-    background-color: rgb(var(--ex-bg-color8-rgb)/ var(--tw-bg-opacity));
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--ex-bg-color8-rgb) / var(--tw-bg-opacity));
 }
 
 .bg-white1 {
-    --tw-bg-opacity: 0.1;
-    background-color: rgb(var(--ex-white-rgb)/ var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.1;
+  background-color: rgb(var(--ex-white-rgb) / var(--tw-bg-opacity));
 }
 .bg-white2 {
-    --tw-bg-opacity: 0.06;
-    background-color: rgb(var(--ex-white-rgb)/ var(--tw-bg-opacity));
+  --tw-bg-opacity: 0.06;
+  background-color: rgb(var(--ex-white-rgb) / var(--tw-bg-opacity));
 }
 
 .border-primary {
-    --tw-border-opacity: 1;
-    border-color: rgb(var(--ex-primary-color-rgb) / var(--tw-border-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgb(var(--ex-primary-color-rgb) / var(--tw-border-opacity));
 }
 
 .border-color {
-    --tw-border-opacity: 1;
-    border-color: rgb(var(--ex-border-color-rgb) / var(--tw-border-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgb(var(--ex-border-color-rgb) / var(--tw-border-opacity));
 }
 
 .border-b-color {
-    --tw-border-opacity: 1;
-    border-bottom-color: rgb(var(--ex-border-color-rgb) / var(--tw-border-opacity));
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(
+    var(--ex-border-color-rgb) / var(--tw-border-opacity)
+  );
 }
 
 .border-x-color {
-    --tw-border-opacity: 1;
-    border-left-color: rgb(var(--ex-border-color-rgb) / var(--tw-border-opacity));
-    border-right-color: rgb(var(--ex-border-color-rgb) / var(--tw-border-opacity));
+  --tw-border-opacity: 1;
+  border-left-color: rgb(var(--ex-border-color-rgb) / var(--tw-border-opacity));
+  border-right-color: rgb(
+    var(--ex-border-color-rgb) / var(--tw-border-opacity)
+  );
 }
 
 .border-y-color {
-    --tw-border-opacity: 1;
-    border-top-color: rgb(var(--ex-border-color-rgb) / var(--tw-border-opacity));
-    border-bottom-color: rgb(var(--ex-border-color-rgb) / var(--tw-border-opacity));
+  --tw-border-opacity: 1;
+  border-top-color: rgb(var(--ex-border-color-rgb) / var(--tw-border-opacity));
+  border-bottom-color: rgb(
+    var(--ex-border-color-rgb) / var(--tw-border-opacity)
+  );
 }
 
 .border-color2 {
-    --tw-border-opacity: 1;
-    border-color: rgb(var(--ex-border-color2-rgb) / var(--tw-border-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgb(var(--ex-border-color2-rgb) / var(--tw-border-opacity));
 }
 
 .border-color3 {
-    --tw-border-opacity: 1;
-    border-color: rgb(var(--ex-border-color3-rgb) / var(--tw-border-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgb(var(--ex-border-color3-rgb) / var(--tw-border-opacity));
 }
 
 .border-error {
-    --tw-border-opacity: 1;
-    border-color: rgb(var(--ex-error-color-rgb)/ var(--tw-border-opacity));
+  --tw-border-opacity: 1;
+  border-color: rgb(var(--ex-error-color-rgb) / var(--tw-border-opacity));
 }
 
 //合約種類
 .tag-default {
-    color: var(--ex-white);
-    background: var(--ex-bg-color3);
-    border-color: var(--ex-bg-color3);
+  color: var(--ex-white);
+  background: var(--ex-bg-color3);
+  border-color: var(--ex-bg-color3);
 }
 
 .tag-stock {
-    color: var(--ex-text-color);
-    background: var(--ex-bg-color3);
+  color: var(--ex-text-color);
+  background: var(--ex-bg-color3);
 }
 
 .tag-crypto {
-    color: var(--ex-placeholder-color);
-    background: var(--ex-none);
+  color: var(--ex-placeholder-color);
+  background: var(--ex-bg-white1);
+}
+
+.tag-spot {
+  color: var(--ex-placeholder-color);
+  background: var(--ex-bg-white1);
 }
 
 .tag-forex {
-    color: var(--ex-text-color);
-    background: var(--ex-bg-color3);
+  color: var(--ex-text-color);
+  background: var(--ex-bg-color3);
 }
 
 .tag-blocktrade {
-    color: var(--ex-text-color);
-    background: var(--ex-bg-color3);
+  color: var(--ex-text-color);
+  background: var(--ex-bg-color3);
 }
 
 //资产部分
 .bg-topup {
-    background: rgb(var(--ex-primary-color-rgb) / 0.1);
+  background: rgb(var(--ex-primary-color-rgb) / 0.1);
 }
 
 .bg-withdraw {
-    background: rgb(var(--ex-warning-color-rgb) / 0.1);
+  background: rgb(var(--ex-warning-color-rgb) / 0.1);
 }
 
 .bg-transfer-in {
-    background: rgb(var(--ex-success-color-rgb) / 0.1);
+  background: rgb(var(--ex-success-color-rgb) / 0.1);
 }
 
 .bg-transfer-out {
-    background: rgb(var(--ex-error-color-rgb) / 0.1);
+  background: rgb(var(--ex-error-color-rgb) / 0.1);
 }
 
 .text-topup {
-    color: #46C1FF;
+  color: #46c1ff;
 }
 
 .text-withdraw {
-    color: var(--ex-warning-color);
+  color: var(--ex-warning-color);
 }
 
 .text-transfer-in {
-    color: var(--ex-success-color);
+  color: var(--ex-success-color);
 }
 
 .text-transfer-out {
-    color: var(--ex-error-color);
+  color: var(--ex-error-color);
 }
 
 //消息
 .bg-unread-msg {
-    background-color: var(--ex-error-color);
+  background-color: var(--ex-error-color);
 }
 
 .bg-unread-msg-text-color {
-    color: var(--ex-white);
+  color: var(--ex-white);
 }
 
 //买入
 .bg-buy {
-    background-color: var(--ex-success-color) !important;
+  background-color: var(--ex-success-color) !important;
 }
 
 .bg-buy-text-color {
-    color: var(--ex-text-color--bg-light) !important;
+  color: var(--ex-text-color--bg-light) !important;
 }
 
 //卖出
 
 .bg-sell {
-    background-color: var(--ex-error-color) !important;
+  background-color: var(--ex-error-color) !important;
 }
 
 .bg-sell-text-color {
-    color: var(--ex-text-color--bg-light) !important;
+  color: var(--ex-text-color--bg-light) !important;
 }
 
-
-
-
 .status-open {
-    color: var(--ex-status-color3);
-    border-color: var(--ex-status-color3);
+  color: var(--ex-status-color3);
+  border-color: var(--ex-status-color3);
 }
 
 .status-fail,
 .status-lock {
-    color: var(--ex-status-color2);
-    border-color: var(--ex-status-color2);
+  color: var(--ex-status-color2);
+  border-color: var(--ex-status-color2);
 }
 
 .status-none {
-    color: var(--ex-status-color1);
-    border-color: var(--ex-status-color1);
+  color: var(--ex-status-color1);
+  border-color: var(--ex-status-color1);
 }
 
 .status-count {
-    color: var(--ex-status-color9);
-    border-color: var(--ex-status-color9);
+  color: var(--ex-status-color9);
+  border-color: var(--ex-status-color9);
 }
 
 .status-cancel {
-    color: var(--ex-text-color3);
-    border-color: var(--ex-text-color3);
+  color: var(--ex-text-color3);
+  border-color: var(--ex-text-color3);
 }
-
-
 
 // 该皮肤的一些特殊修改
 .van-slider.slider-dom {
+  position: relative;
+  height: 0.12rem !important;
+
+  .van-slider__bar {
+    z-index: 1;
     position: relative;
-    height: 0.12rem !important;
+  }
 
-    .van-slider__bar {
-        z-index: 1;
-        position: relative;
+  .van-slider__button-wrapper {
+    width: 0.2rem !important;
+    height: 0.2rem !important;
+
+    .slider-custom-num {
+      width: 0.2rem;
+      height: 0.2rem;
+      position: relative;
+      background: var(--ex-primary-color);
+      color: var(--ex-text-color--bg-primary);
+      border-radius: 50%;
     }
+  }
 
-    .van-slider__button-wrapper {
-        width: 0.2rem !important;
-        height: 0.2rem !important;
+  &::after {
+    content: "";
+    width: 50%;
+    height: 100%;
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border-left: 0.06rem solid #31323a;
+    border-right: 0.06rem solid #31323a;
+  }
 
-        .slider-custom-num {
-            width: 0.2rem;
-            height: 0.2rem;
-            position: relative;
-            background: var(--ex-primary-color);
-            color: var(--ex-text-color--bg-primary);
-            border-radius: 50%;
-        }
-    }
-
-
-    &::after {
-        content: "";
-        width: 50%;
-        height: 100%;
-        position: absolute;
-        z-index: 0;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        border-left: 0.06rem solid #31323A;
-        border-right: 0.06rem solid #31323A;
-    }
-
-    &::before {
-        content: "";
-        width: 0.04rem;
-        height: 100%;
-        position: absolute;
-        z-index: 0;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        background-color: #31323A;
-    }
+  &::before {
+    content: "";
+    width: 0.04rem;
+    height: 100%;
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #31323a;
+  }
 }
-
