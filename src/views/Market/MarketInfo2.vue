@@ -199,6 +199,7 @@ const addCollect = () => {
     })
       .then((res) => {
         if (res.code == 200) {
+          store.dispatch('updateMarketWatchList');
           switch (route.query.type) {
             case "constract": // 合约
               store.commit("setCurrConstract", { watchlist: 1 });
@@ -218,6 +219,7 @@ const addCollect = () => {
     })
       .then((res) => {
         if (res.code == 200) {
+          store.dispatch('updateMarketWatchList');
           switch (route.query.type) {
             case "constract": // 合约
               store.commit("setCurrConstract", { watchlist: 0 });
