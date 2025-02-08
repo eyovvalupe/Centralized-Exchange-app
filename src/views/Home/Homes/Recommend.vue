@@ -72,7 +72,7 @@ import NoData from "@/components/NoData.vue";
 import Loaidng from "@/components/Loaidng.vue";
 import Ai from "@/views/Market/components/Ai.vue";
 import StockItem from "@/components/StockItem.vue";
-import { _futures, _watchlist } from "@/api/api";
+import { _futures, _stock, _watchlist } from "@/api/api";
 import store from "@/store";
 import { useI18n } from "vue-i18n";
 import router from "@/router";
@@ -154,7 +154,7 @@ const getWatchList = () => {
         .then(res => {
             if (res.code == 200) {
                 const list = res.data.map(item => {
-                    const target = watchList.value.fine(a => a.symbol == item.symbol)
+                    const target = watchList.value.find(a => a.symbol == item.symbol)
                     if (target) return target;
                     return item;
                 })
