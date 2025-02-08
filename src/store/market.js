@@ -569,7 +569,6 @@ export default {
                 _watchlist()
                     .then(res => {
                         if (res.code == 200 && res.data) {
-                            console.log('watch list  =======>', res.data)
                             commit('setMarketWatchList', res.data)
                             resolve(res.data)
                         } else {
