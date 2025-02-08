@@ -11,7 +11,7 @@
         :deleteItem="props.deleteItem" :showSparkLine="showSparkLine" :type="props.type" @remove="remove"
         :scrollBox="props.scrollBox" :item="item" :page="props.page" :showIcon="props.showIcon" />
     </div>
-    <NoData v-if="!props.loading && !props.list.length" />
+    <NoData style="margin-top: 1rem;" v-if="!props.loading && !props.list.length" />
   </div>
 </template>
 

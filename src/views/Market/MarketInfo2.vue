@@ -31,31 +31,91 @@
         </div>
 
       </div>
+      <div style="background-color: var(--ex-bg-color3);border-radius: 0.32rem;padding: 0.28rem">
 
+        <div class="flex items-center justify-center gap-[0.2rem]">
+
+          <div class="w-[2.6rem] flex-shrink-0">
+            <h1 class="flex items-center" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
+              <span class="text-[0.4rem] font-[600]" v-if="item.price || item.close">
+                {{ item.price || item.close }}
+              </span>
+              <span class="text-[0.4rem] font-[600]" v-else>--</span>
+              <span class="w-[0.24rem] h-[0.26rem] ml-[0.06rem] mt-[0.06rem]">
+                <img v-lazy="getStaticImgUrl('/static/img/market/up_icon.svg')" v-if="updown > 0" />
+                <img v-lazy="getStaticImgUrl('/static/img/market/down_icon.svg')" v-else-if="updown < 0" />
+              </span>
+            </h1>
+            <div class="flex mt-[0.2rem]" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
+              <div class="text-[0.24rem]" v-if="item.price * (item.ratio || 0)">
+                {{ updown === 0 ? "" : updown > 0 ? "+" : "" }}
+                {{ item.change ? item.change : '--' }}
+              </div>
+              <div class="text-[0.24rem] ml-[0.16rem]" v-if="item.ratio">
+                {{
+                  item.ratio === undefined
+                    ? "--"
+                    : item.ratio > 0
+                      ? "+" + item.ratio + "%"
+                      : item.ratio + "%"
+                }}
+              </div>
+            </div>
+          </div>
+          <div class="count flex-1">
+            <div class="count_item">
+              <span class="text-color3">{{ t('market.market_marketinfo_high') }}</span>
+              <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.high || '--' }}</span>
+            </div>
+            <div class="count_item">
+              <span class="text-color3">{{ t('market.market_marketinfo_low') }}</span>
+              <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.low || '--' }}</span>
+            </div>
+            <div class="count_item">
+              <span class="text-color3">{{ t('market.market_marketinfo_open') }}</span>
+              <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.open || '--' }}</span>
+            </div>
+            <div class="count_item">
+              <span class="text-color3">{{ t('market.market_marketinfo_close') }}</span>
+              <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.close || '--'
+                }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex text-[0.24rem] pt-[0.2rem] gap-[0.2rem]">
+          <div class="w-[2.6rem] flex-shrink-0">
+            <span class="text-color3">{{ t('market.market_marketinfo_value') }}</span>
+            <span class="text-color ml-[0.12rem]">{{ _formatNumber(item.amount) }}</span>
+          </div>
+          <div class="flex-1">
+            <span class="text-color3">{{ t('market.market_marketinfo_amount') }}</span>
+            <span class="text-color ml-[0.12rem]">{{ _formatNumber(item.volume) }}</span>
+          </div>
+
+        </div>
+      </div>
     </div>
 
     <!-- 内容 -->
-    <div style="padding: 0 0.1rem">
+    <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
       <Tabs class="van-tabs--sub_line van-tabs--sub_bg" :sticky="true" :color="'var(--ex-primary-color)'"
         v-model:active="activeTab" animated shrink>
-        <Tab :name="1" :title="'开仓'">
+        <!-- <Tab :name="1" :title="'开仓'">
           <div class="market-box" style="height: calc(var(--vh) * 100 - 2.2rem);overflow-y: auto;">
-            <!-- 合约-->
             <Opening :item="item" v-if="tradeType == 'constract'" ref="openingRef" 
               :from="'trade'" />
-            <!-- 现货 -->
             <OpeningSpot :item="item" v-if="tradeType == 'spot'" ref="openingRef2" 
               :from="'trade'" />
           </div>
-        </Tab>
+        </Tab> -->
         <Tab :name="2" :title="'行情'">
           <div class="market-box">
-            <Chart v-if="!chartLoading" :type="'constract'" />
+            <Chart ref="chartRef" v-if="!chartLoading" :type="'constract'" />
           </div>
         </Tab>
         <Tab :name="3" :title="'订单薄'" v-if="item.type == 'crypto'">
           <div class="market-box">
-            <OrderingSpot v-if="activeTab == 3" :key="'o'" type="nomal" />
+            <OrderingSpot v-if="activeTab == 3" :key="'o'" type="infinite" />
           </div>
         </Tab>
         <Tab :name="4" :title="'最新成交'" v-if="item.type == 'crypto'">
@@ -64,6 +124,15 @@
           </div>
         </Tab>
       </Tabs>
+    </div>
+
+    <!-- 去交易按钮 -->
+    <div class="bottom-box">
+      <div class="info">
+        <div class="name">{{ item.symbol || "--" }}</div>
+        <div class="type" v-if="chartRef">{{ chartRef.timeType }}</div>
+      </div>
+      <div class="btn">交易</div>
     </div>
 
 
@@ -118,9 +187,10 @@ const props = defineProps({
 const { t } = useI18n();
 const route = useRoute();
 const token = computed(() => store.state.token);
+const chartRef = ref()
 
 
-const activeTab = ref(1)
+const activeTab = ref(2)
 
 const periodType = computed(() => route.query.type || props.type);
 const tradeType = ref(route.query.tradeType)
@@ -288,6 +358,7 @@ setTimeout(() => {
     height: calc(var(--vh) * 60);
     overflow-y: auto;
     margin-top: 0.32rem;
+    padding: 0 0.32rem;
   }
 
   .search_box {
@@ -325,9 +396,50 @@ setTimeout(() => {
   display: flex;
   flex-direction: column;
   position: relative;
+  background-color: var(--ex-bg-color);
+
+  .bottom-box {
+    margin-top: 0.32rem;
+    height: 1.4rem;
+    background-color: var(--ex-bg-color3);
+    border-radius: 0.32rem 0.32rem 0 0;
+    padding: 0.18rem 0.32rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-top: 1px solid var(--ex-bg-white1);
+    .info {
+      .name {
+        font-size: 0.32rem;
+      }
+      .type {
+        margin-top: 0.16rem;
+        color: var(--ex-text-color5);
+        height: 0.36rem;
+        align-items: center;
+        justify-content: center;
+        border-radius: 0.4rem;
+        padding: 0 0.16rem;
+        display: inline-flex;
+        border: 1px solid var(--ex-text-color5);
+      }
+    }
+    .btn {
+      background-color: var(--ex-status-color3);
+      width: 2.88rem;
+      height: 0.92rem;
+      border-radius: 1rem;
+      color: var(--ex-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.32rem;
+    }
+  }
 
   .market-box {
     margin-top: 0.1rem;
+    height: calc(var(--vh) * 100 - 6rem)
     // border-radius: 0.32rem;
     // background-color: var(--ex-bg-color3);
   }
@@ -402,7 +514,25 @@ setTimeout(() => {
       }
 
     }
+    .count {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
 
+      .count_item {
+        color: var(--ex-text-color2);
+        font-size: 0.24rem;
+        font-weight: 400;
+        line-height: 0.36rem;
+        width: 50%;
+        margin-top: 0.18rem;
+
+        .num {
+          margin-left: 0.1rem;
+        }
+      }
+    }
   }
 
 

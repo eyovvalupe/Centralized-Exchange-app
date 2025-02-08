@@ -1,9 +1,9 @@
 <!-- 股票单个元素 -->
 <template>
-  <div ref="root" style="overflow: visible;" class="w-full mask-btn-stock px-[0.28rem]" :class="[props.page == 'home' ? '' : 'border-b-[1px] border-b-color2']">
+  <div ref="root" style="overflow: visible;" class="w-full mask-btn-stock border-b-[1px] border-b-color2">
     <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
       <div class="stock_item_bg"
-        :class="[`${' stock_item_' + updownStatus}`, props.page == 'home' ? 'stock_item_home border-b-[1px] border-b-color2' : '']"
+        :class="[`${' stock_item_' + updownStatus} ${props.page == 'home' ? 'px-[0.28rem]' : ''}`]"
         @click="goInfo(props.item.type)">
         <div :class="['stock_item']">
           <!-- <div class="size-[0.96rem] rounded-full bg-white mr-[0.18rem] flex justify-center items-center"
@@ -12,7 +12,7 @@
               props.item.symbol[0] }}</span>
             <span class="text-[0.56rem] font-semibold text-color--bg-light" v-else>{{ props.item.name[0] }}</span>
           </div> -->
-          <div class="size-[0.96rem] mr-[0.28rem] flex justify-center items-center" v-if="showIcon">
+          <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center" v-if="showIcon">
             <CryptoIcon :name="item.name.split('/')[0]" />
           </div>
           <div class="td5" :class="{ 'td5--ac': showIcon }">
@@ -34,9 +34,9 @@
             </div>
 
             <div v-if="item.type != 'stock'" class="flex items-center">
-              <span
+              <span style="color:var(--ex-white)"
                 :class="`${marketStyle[props.item.type]
-                  } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center`">
+                  } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center ]`">
                 {{
                   item.type == "stock"
                     ? t("market.market_optional_stock")
@@ -468,7 +468,7 @@ const removeStock = (item) => {
   transition: all ease-in .2s;
   position: relative;
   overflow: visible;
-
+  border-radius: 0.12rem;
   // &::after {
   //   position: absolute;
   //   content: "";

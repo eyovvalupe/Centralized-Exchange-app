@@ -144,13 +144,16 @@ const fullScreen = (key) => {
   if (AreaChartRef.value) AreaChartRef.value.resetSize();
 };
 
+defineExpose({
+  timeType
+})
 </script>
 
 <style lang="less" scoped>
 .market-charts {
     display: flex;
     flex-direction: column;
-    height: calc(var(--vh) * 100 - 2.2rem);
+    height: 100%;
     .chart_box {
       width: 100%;
       padding: 0.2rem;
