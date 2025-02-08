@@ -775,7 +775,7 @@ export default {
     trade_orders_current: "Open Orders",
     trade_orders_status: "Status",
     trade_deal_price: "Price",
-
+    trade_search_item: "Enter the asset name/code"
   },
   inviteFriends: {
     invite: "Invite",

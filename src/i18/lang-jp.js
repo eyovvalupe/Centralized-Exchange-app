@@ -764,6 +764,8 @@ export default {
     trade_orders_current: "現在のデリゲート",
     trade_orders_status: "状態",
     trade_deal_price: "成交価格",
+    trade_search_item: "品種名/コードを入力してください"
+    
   },
   inviteFriends: {
     invite: "友達を招待",

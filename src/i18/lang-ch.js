@@ -763,6 +763,8 @@ export default {
     trade_orders_current: "當前委託",
     trade_orders_status: "狀態",
     trade_deal_price: "成交價",
+    trade_search_item: "輸入品種名稱/代碼"
+
 
   },
   inviteFriends: {

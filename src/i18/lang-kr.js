@@ -763,6 +763,7 @@ export default {
     trade_orders_current: "현재 주문",
     trade_orders_status: "상태",
     trade_deal_price: "체결가격",
+    trade_search_item: "종목명/코드를 입력하세요"
 
   },
   inviteFriends: {
