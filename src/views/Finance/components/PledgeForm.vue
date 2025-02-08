@@ -45,7 +45,7 @@
     <div class="item_box mt-[0.32rem]">
       <div class="item_box_right">
         <FormItem :hasScroll="true" :placeholder="t('finance.defi_avail_qty')" :max="maxLoan" v-model="loan"
-          :tip="maxLoan > 0 ? '≤' + maxLoan : ''" @change="changePercent" input-type="number">
+          :tip="maxLoan > 0 ? '≤' + maxLoan : ''" @change="changePercent" @btnClick="onSliderChange(100)" input-type="number">
 
           <template #scroll>
             <!-- 拖动 -->
@@ -257,15 +257,23 @@ const getPara = () => {
 
 getPara()
 
-const maxLoan = computed(() => {
-  if (!numb.value) {
-    return 0
-  }
-  return numb.value * (param.lever || 1)
+const maxLoan = computed(()=>{
+    return walletAmount.value * (param.lever || 1)
 })
 
-const step = ref(1)
+const step = computed(()=>{
+    let d = '1'
+    if(tpp.value > 0){
+        let s = ''
+        for(let i=1;i<tpp.value;i++){
+            s += '0'
+        }
+        d = '0.'+s+'1'
+    }
+    return Number(d)
+})
 const sliderValue = ref(0);
+const sliderValue2 = ref(0);
 
 const onSliderChange = (newValue) => {
   sliderValue.value = newValue;
@@ -279,10 +287,22 @@ const onSliderChange = (newValue) => {
 };
 
 const changePercent = () => {
-  if (!maxLoan.value || !loan)
-    return (sliderValue.value = 0);
+  if (!maxLoan.value || !loan.value){
+    sliderValue.value = 0
+    sliderValue2.value = 0
+    numb.value = ''
+    return
+  }
+  if(loan.value > maxLoan.value){
+    loan.value = maxLoan.value
+  }
   let v = new Decimal(loan.value);
   loan.value = v.sub(v.mod(step.value));
+
+  numb.value = new Decimal(loan.value).div(param.lever || 1);
+  const v2 = new Decimal(numb.value)
+  numb.value = v2.sub(v2.mod(step.value));
+
   let p = new Decimal(loan.value)
     .div(maxLoan.value)
     .mul(100)
@@ -290,10 +310,10 @@ const changePercent = () => {
   if (p < 0) p = 0;
   if (p > 100) p = 100;
   sliderValue.value = Number(p);
+  sliderValue2.value = sliderValue.value
 
 };
 
-const sliderValue2 = ref(0);
 
 const onSliderChange2 = (newValue) => {
   sliderValue2.value = newValue;
@@ -307,13 +327,13 @@ const onSliderChange2 = (newValue) => {
 };
 
 const changePercent2 = () => {
-  if (!walletAmount.value || !numb.value) {
+  if (!walletAmount.value || !numb.value){
     sliderValue2.value = 0
     loan.value = ''
     sliderValue.value = 0
-    return
+    return 
   }
-  let v = new Decimal(numb.value)
+  const v = new Decimal(numb.value)
   numb.value = v.sub(v.mod(step.value));
   let p = new Decimal(numb.value)
     .div(walletAmount.value)
@@ -322,8 +342,10 @@ const changePercent2 = () => {
   if (p < 0) p = 0;
   if (p > 100) p = 100;
   sliderValue2.value = Number(p);
-  loan.value = maxLoan.value
-  sliderValue.value = 100
+  loan.value = numb.value.mul(param.lever || 1)
+  const v2 = new Decimal(loan.value)
+  loan.value = v2.sub(v2.mod(step.value));
+  sliderValue.value = sliderValue2.value
 };
 
 const openConfirm = () => {
