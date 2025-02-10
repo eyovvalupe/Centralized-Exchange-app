@@ -4,22 +4,25 @@
             :sticky="props.sticky" :color="'var(--ex-primary-color)'" @change="tabChange" v-if="props.activated"
             v-model:active="activeTab" :animated="from != 'home'" shrink>
             <Tab :name="0" v-if="from != 'home'" :title="t('trade.left_mine')">
-                <div :class="from == 'trade' ? 'mt-[1.92rem]' : 'mt-[0.32rem]'">
+                <div :class="['home-tab-box-' + props.from, from == 'trade' ? 'mt-[1.68rem]' : 'mt-[0.32rem]']">
                     <div v-if="token">
                         <Loaidng v-if="watchListLoading" :loading="watchListLoading" />
+                        {{ console.log(watchList) }}
                         <div style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 0 && !watchListLoading">
                             <StockItem :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
-                                :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="{ ...item, type: 'spot' }"
+                                :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item=item
                                 v-for="(item, i) in watchList" :key="'c_' + i" marketType="crypto" />
                         </div>
                         <NoData v-if="!watchListLoading && !watchList.length" />
                     </div>
-                    <div v-if="!token" class="flex flex-col">
+                    <div v-if="!token" class="flex flex-col pt-[0.32rem] pb-[0.32rem]">
                         <div class="w-full flex justify-between border-b-[0.02rem] pb-[0.2rem] mb-[0.6rem] px-[0.32rem] border-b-color2">
                             <div class="text-color2">{{ $t('copy.copy_order_name') }}</div>
                             <div class="text-color2">{{ $t('market.market_optional_crypto_price') + ' / ' +
                                 $t('copy.copy_belong_pl_rate') }}</div>
                         </div>
+
+                        <div style="width: 100%;text-align: center;margin: 1rem 0;color: var(--ex-placeholder-color);">登录或注册开始交易</div>
                         <div class="flex justify-center gap-[0.4rem]">
                             <div class="w-[3rem] h-[0.8rem] rounded-[0.4rem] bg-white flex items-center justify-center text-[0.32rem] text-black ripple-primary"
                                 @click="jump('login')">{{ $t('trade.stock_opening_token_login') }}</div>
@@ -30,7 +33,7 @@
                 </div>
             </Tab>
             <Tab :name="1" :title="t('common.spot')">
-                <div :class="from == 'trade' ? 'mt-[1.92rem]' : 'mt-[0.32rem]'">
+                <div :class="['home-tab-box-' + props.from,from == 'trade' ? 'mt-[1.68rem]' : 'mt-[0.32rem]']">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div class="" style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 1">
                         <StockItem :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
@@ -41,7 +44,7 @@
                 </div>
             </Tab>
             <Tab :name="2" :title="$t('common.crypto')">
-                <div :class="from == 'trade' ? 'mt-[1.92rem]' : 'mt-[0.32rem]'">
+                <div :class="['home-tab-box-' + props.from,from == 'trade' ? 'mt-[1.68rem]' : 'mt-[0.32rem]']">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 2">
                         <StockItem :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
@@ -52,12 +55,12 @@
                 </div>
             </Tab>
             <Tab :name="3" :title="$t('common.option')">
-                <div class="pl-[0.32rem] pr-[0.32rem]" :class="from == 'trade' ? 'mt-[1.92rem]' : 'mt-[0.32rem]'">
+                <div class="pl-[0.32rem] pr-[0.32rem]" :class="['home-tab-box-' + props.from,from == 'trade' ? 'mt-[1.92rem]' : 'mt-[0.32rem]']">
                     <Ai :from="props.from" page="home" v-if="activeTab == 3" />
                 </div>
             </Tab>
             <Tab :name="4" :title="'ETF'">
-                <div class="pl-[0.32rem] pr-[0.32rem]" :class="from == 'trade' ? 'mt-[1.92rem]' : 'mt-[0.32rem]'">
+                <div class="pl-[0.32rem] pr-[0.32rem]" :class="['home-tab-box-' + props.from,from == 'trade' ? 'mt-[1.92rem]' : 'mt-[0.32rem]']">
                     <Ai :from="props.from" page="home" v-if="activeTab == 4" />
                 </div>
             </Tab>
@@ -186,6 +189,14 @@ defineExpose({
 </script>
 
 <style lang="less" scoped>
+.home-tab-box-trade {
+    // background-color: var(--ex-bg-color5);
+    border-radius: 0.32rem;
+    margin-left: 0.32rem;
+    margin-right: 0.32rem;
+    min-height: calc(var(--vh) * 100 - 4rem);
+}
+
 .home-tabs-box-home {
     :deep(.van-tabs--sub) {
         &>.van-tabs__wrap .van-tabs__nav {
@@ -193,9 +204,7 @@ defineExpose({
             padding: 0 0.32rem;
         }
     }
-}
 
-.home-tabs-box-home {
     :deep(.van-tabs--sub) {
         margin-top: 0;
     }

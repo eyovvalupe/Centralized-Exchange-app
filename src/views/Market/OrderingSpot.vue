@@ -2,6 +2,47 @@
 <template>
     <div class="spot-ordering">
 
+        <!-- 竖排 -->
+        <div style="display: flex;flex: 1;" v-if="props.type == 'infinite'">
+            <div class="ordering-box" style="height: 100%;">
+                <div class="lists-tr lists-title" v-if="item.symbol">
+                    <div class="lists-td">价格(USDT)</div>
+                    <div class="lists-td">数量({{ item.symbol.replace('usdt', '').toUpperCase() }})</div>
+                </div>
+                <Loaidng :loading="loading" v-if="loading" />
+                <div class="lists-box" ref="listBox">
+                    <div class="lists-down">
+                        <div class="lists-item" @click="clickItem(item)" v-for="(item, i) in showBids" :key="i">
+                            <div class="bg" :style="{ transform: `scaleX(${item[2]})` }"></div>
+                            <div class="lists-tr">
+                                <div class="lists-td up">{{ item[0] }}</div>
+                                <div class="lists-td">{{ item[1] }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ordering-box" style="height: 100%;margin-left: 0.1rem;">
+                <div class="lists-tr lists-title" v-if="item.symbol">
+                    <div class="lists-td">价格(USDT)</div>
+                    <div class="lists-td">数量({{ item.symbol.replace('usdt', '').toUpperCase() }})</div>
+                </div>
+                <Loaidng :loading="loading" v-if="loading" />
+                <div class="lists-box" ref="listBox">
+                    <div class="lists-down">
+                        <div class="lists-item" @click="clickItem(item)" v-for="(item, i) in showAsks" :key="i">
+                            <div class="bg" :style="{ transform: `scaleX(${item[2]})` }"></div>
+                            <div class="lists-tr">
+                                <div class="lists-td down">{{ item[0] }}</div>
+                                <div class="lists-td">{{ item[1] }}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 横排 -->
         <div class="ordering-box" v-if="props.type == 'nomal'">
             <div class="control-box">
                 <div class="nav" :class="{ 'nav-active': currNav == 1 }" @click="changeNav(1)">
@@ -87,6 +128,7 @@
             </div>
         </div>
 
+        <!-- 最新 -->
         <div class="ordering-box bbo-box" v-if="props.type == 'news'">
             <div class="lists-tr lists-title" v-if="item.symbol">
                 <div class="lists-td">价格(USDT)</div>
@@ -188,8 +230,8 @@ const max = ref(0)
 const listBox = ref()
 const reset = () => {
     if (!listBox.value) return
-    const h = Math.floor((listBox.value.clientHeight - 40) / 20)
-    if (currNav.value != 1) {
+    const h = Math.floor(listBox.value.clientHeight / 20)
+    if (currNav.value != 1 || props.type == 'infinite') {
         max.value = h
     } else {
         max.value = Math.floor(h / 2)
@@ -287,7 +329,7 @@ onUnmounted(() => {
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    height: calc(var(--vh) * 100 - 2.2rem);
+    height: 100%;
     width: 100%;
 
     .ordering-box {
@@ -354,7 +396,7 @@ onUnmounted(() => {
 
         .lists-item {
             position: relative;
-            height: 0.4rem;
+            height: 20px;
 
             .bg {
                 position: absolute;
@@ -450,23 +492,24 @@ onUnmounted(() => {
         margin-top: 0.08rem;
     }
 }
+
 .times_list {
-  padding: 0.5rem 0.32rem;
+    padding: 0.5rem 0.32rem;
 
-  .item {
-    height: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 0.28rem;
-    color: var(--ex-text-color2);
-    overflow: hidden;
-  }
+    .item {
+        height: 1rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.28rem;
+        color: var(--ex-text-color2);
+        overflow: hidden;
+    }
 
-  .active_item {
-    background-color: var(--ex-bg-color2);
-    color: var(--ex-primary-color);
-    border-radius: 0.32rem;
-  }
+    .active_item {
+        background-color: var(--ex-bg-color2);
+        color: var(--ex-primary-color);
+        border-radius: 0.32rem;
+    }
 }
 </style>

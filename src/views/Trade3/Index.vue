@@ -1,13 +1,14 @@
 <template>
-  <div class="w-full h-full p-[0.08rem]">
-    <div class="page-trade3 bg-color5">
-      <div class="z-[1] fixed pt-[0.45rem] pb-[0.48rem] bg-color5 top-[0.07rem]" style="width: calc(7.5rem - 0.16rem);">
+  <div class="w-full h-full">
+    <div class="page-trade3">
+      <div class="z-[1] fixed pt-[0.45rem] pb-[0.48rem] bg-color max-width" style="width:100%;">
         <div
-          class="transition flex justify-between bg-color2 px-[0.32rem] py-[0.18rem] rounded-[1rem] gap-[0.2rem] h-[0.8rem] mx-[0.4rem] items-center border-[0.02rem]"
-          :class="focusRef ? 'border-white' : ''" style="width: calc(7.5rem - 0.96rem);">
+          class="transition flex justify-between  px-[0.32rem] py-[0.18rem] rounded-[1rem] gap-[0.2rem] h-[0.8rem] mx-[0.4rem] items-center border-[0.02rem]"
+          :class="focusRef ? 'border-white' : ''" style="background-color: var(--ex-bg-white1);">
           <div class="text-[0.32rem] text-color2 leading-[0.5rem] border-r-[1px] flex-1 px-[0.1rem]">
-            <input v-model.trim="searchRef" class="text-white" :placeholder="$t('trade.trade_search_item')"
-              @input="inputHandle" @focus="focusRef = true" @blur="focusRef = false" />
+            <input style="flex:1;width: 100%;" v-model.trim="searchRef" class="text-white"
+              :placeholder="$t('trade.trade_search_item')" @input="inputHandle" @focus="focusRef = true"
+              @blur="focusRef = false" />
           </div>
           <div class="w-[0.5rem] h-[0.5rem]">
             <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
@@ -19,10 +20,20 @@
           <img v-lazy="getStaticImgUrl('/static/img/common/bill.svg')" alt="">
         </div> -->
 
-      <Recommend v-if="!focusRef && !searchRef" ref="recommendRef" from="trade" :sticky="true" :activated="activated" />
+      <div v-if="!focusRef && !searchRef">
+        <Recommend v-if="activated" ref="recommendRef" from="trade" :sticky="true" :activated="activated" />
+      </div>
+
       <div v-if="focusRef || searchRef">
-        <div class="mt-[1.7rem] px-[0.32rem] text-[0.32rem] leading-[0.4rem] mb-[0.32rem]">Result</div>
-        <div class="lists">
+        <div class="mt-[1.7rem] pl-[0.38rem] pr-[0.32rem] text-[0.28rem] leading-[0.4rem]  pb-[0.08rem]"
+          style="border-bottom: 1px solid var(--ex-border-color5);color:var(--ex-text-color2)">搜索结果</div>
+        <div class="lists" style=" 
+    border-radius: 0.32rem;
+    margin-left: 0.32rem;
+    margin-right: 0.32rem;
+    padding-left: 0;
+    padding-right: 0;
+    min-height: calc(var(--vh) * 100 - 4rem);">
           <StockTable :from="'trade'" :showIcon="true" theme="classic" :handleClick="goInfo" :loading="searchLoading"
             :key="'search'" :list="searchList" />
         </div>
@@ -108,7 +119,9 @@ const goSearch = () => {
 const activated = ref(false);
 onActivated(() => {
   store.commit("setMarketWatchKeys", []);
-  activated.value = true;
+  setTimeout(() => {
+    activated.value = true;
+  }, 300)
   subs();
 });
 onDeactivated(() => {
@@ -181,13 +194,13 @@ setTimeout(() => {
   goDialogSearch()
 }, 2000)
 
-watch(searchRef, (val) => {
-  if (!val) {
-    setTimeout(() => {
-      store.commit('setSearchList', [])
-    }, 100);
-  }
-})
+// watch(searchRef, (val) => {
+//   if (!val) {
+//     setTimeout(() => {
+//       store.commit('setSearchList', [])
+//     }, 100);
+//   }
+// })
 </script>
 
 <style lang="less" scoped>
@@ -232,6 +245,7 @@ watch(searchRef, (val) => {
   padding: 0 0 1.4rem 0;
   overflow-y: auto;
   position: relative;
+  background-color: var(--ex-bg-color);
 
   .lists {
     height: calc(var(--vh) * 60);
