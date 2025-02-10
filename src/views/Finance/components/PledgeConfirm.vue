@@ -40,7 +40,7 @@
             </div>
         </div>
 
-        <FormItem size="large" class="mt-[0.4rem]" :placeholder="t('trade.stock_opening_trade_pw')" input-type="password" v-model="safeword" />
+        <FormItem size="large" class="mt-[0.4rem]" :placeholder="t('trade.stock_opening_trade_pw')" input-type="password" v-model="safeword" v-if="userInfo.role != 'guest'" />
 
         <div class="pt-[0.6rem]">
             <Button :loading="isLoading" size="large" round class="ripple-btn" @click="submit" type="primary">{{ t('trade.stock_opening_confirm') }}</Button>
@@ -49,7 +49,6 @@
     </div>
 </template>
 <script setup>
-import { getStaticImgUrl } from "@/utils/index.js"
 import FormItem from "@/components/Form/FormItem.vue";
 import { Button,showToast } from 'vant'
 import { useI18n } from "vue-i18n";
@@ -71,11 +70,15 @@ const isLoading = ref(false)
 const safeword = ref('')
 const emits = defineEmits(['success'])
 const sessionToken = computed(() => store.state.sessionToken || '')
+const userInfo = computed(() => store.state.userInfo)
 const getSessionToken = () => {
     store.dispatch('updateSessionToken')
 }
 getSessionToken()
 const submit = ()=>{
+    if(userInfo.value.role == 'guest'){
+        safeword.value = '000000'
+    }
     if (!safeword.value) {
         return showToast(t("assets.safety_trade_no_password"));
     }
