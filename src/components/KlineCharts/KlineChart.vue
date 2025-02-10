@@ -131,7 +131,7 @@ const initData = async () => { // 初始化数据
                 chart.setTimezone(datas[0].timezone)
             }
             // 同步数据到股票详情
-            setCurrData(datas[datas.length - 1] || {})
+            // setCurrData(datas[datas.length - 1] || {})
             chart.loadMore(loadMoreData)
             setTimeout(() => {
                 if (!vol.value) {
@@ -264,6 +264,7 @@ const setCurrData = (item) => {
                 ...item,
                 price: item.close
             }
+            console.error('---这里提交', obj)
             store.commit('setCurrConstract', obj)
             break
         default:
