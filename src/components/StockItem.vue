@@ -29,11 +29,12 @@
                 }}
               </div>
             </div>
-            <div class="item_info" v-show="props.item.type == 'stock'">
+            <!-- <div class="item_info" v-show="props.item.type == 'stock'">
               {{ props.item.name || "--" }}
-            </div>
+            </div> -->
 
-            <div v-if="item.type != 'stock'" class="flex items-center">
+            <!-- <div v-if="item.type != 'stock'" class="flex items-center"> -->
+            <div class="flex items-center">
               <span style="color:var(--ex-white)"
                 :class="`${marketStyle[props.item.type]
                   } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center ]`">

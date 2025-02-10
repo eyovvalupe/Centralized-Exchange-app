@@ -7,9 +7,10 @@
                 <div :class="['home-tab-box-' + props.from, from == 'trade' ? 'mt-[1.68rem]' : 'mt-[0.32rem]']">
                     <div v-if="token">
                         <Loaidng v-if="watchListLoading" :loading="watchListLoading" />
+                        {{ console.log(watchList) }}
                         <div style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 0 && !watchListLoading">
                             <StockItem :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
-                                :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="{ ...item, type: 'spot' }"
+                                :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item=item
                                 v-for="(item, i) in watchList" :key="'c_' + i" marketType="crypto" />
                         </div>
                         <NoData v-if="!watchListLoading && !watchList.length" />
