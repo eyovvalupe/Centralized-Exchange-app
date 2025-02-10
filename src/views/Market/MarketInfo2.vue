@@ -115,7 +115,7 @@
         </Tab>
         <Tab :name="3" :title="'订单薄'" v-if="item.type == 'crypto'">
           <div class="market-box">
-            <OrderingSpot v-if="activeTab == 3" :key="'o'" type="infinite" />
+            <OrderingSpot v-if="activeTab == 3" :key="'o'" type="nomal" />
           </div>
         </Tab>
         <Tab :name="4" :title="'最新成交'" v-if="item.type == 'crypto'">
@@ -132,7 +132,7 @@
         <div class="name">{{ item.symbol || "--" }}</div>
         <div class="type" v-if="chartRef">{{ chartRef.timeType }}</div>
       </div>
-      <div class="btn">交易</div>
+      <div class="btn" @click="gotrade">交易</div>
     </div>
 
 
@@ -157,6 +157,7 @@
         </div>
       </div>
     </BottomPopup>
+
   </div>
 
 </template>
@@ -172,10 +173,10 @@ import { Tab, Tabs, Icon, showToast } from "vant";
 import { _futures, _basic, _add, _del } from "@/api/api";
 import BottomPopup from "@/components/BottomPopup.vue";
 import StockTable from "@/components/StockTable.vue";
-import Opening from "@/views/Trade2/contract/Opening.vue"
-import OpeningSpot from "@/views/Trade2/spot/Opening.vue"
 import OrderingSpot from "./OrderingSpot.vue"
 import Chart from "./Chart.vue"
+
+
 
 const props = defineProps({
   type: {
@@ -189,9 +190,16 @@ const route = useRoute();
 const token = computed(() => store.state.token);
 const chartRef = ref()
 
+// 跳转交易
+const gotrade = () => {
+  router.push({
+    name: 'tradeInfo',
+    query: route.query
+  })
+}
+
 
 const activeTab = ref(2)
-
 const periodType = computed(() => route.query.type || props.type);
 const tradeType = ref(route.query.tradeType)
 

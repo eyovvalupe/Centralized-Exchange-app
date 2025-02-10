@@ -394,6 +394,17 @@ const routes = [
     },
   },
   {
+    // 交易
+    path: "/tradeInfo",
+    name: "tradeInfo",
+    component: () => import("../views/Trade3/Info.vue"),
+    meta: {
+      keepAlive: false,
+      pageType: "child",
+      pageDeep: 3,
+    },
+  },
+  {
     // 交易订单
     path: "/tradeOrder",
     name: "tradeOrder",

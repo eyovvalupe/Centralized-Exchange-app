@@ -5,9 +5,9 @@
         <!-- 竖排 -->
         <div style="display: flex;flex: 1;" v-if="props.type == 'infinite'">
             <div class="ordering-box" style="height: 100%;">
-                <div class="lists-tr lists-title" v-if="item.symbol">
+                <div class="lists-tr lists-title" v-if="currStock.symbol">
                     <div class="lists-td">价格(USDT)</div>
-                    <div class="lists-td">数量({{ item.symbol.replace('usdt', '').toUpperCase() }})</div>
+                    <div class="lists-td">数量({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
                 </div>
                 <Loaidng :loading="loading" v-if="loading" />
                 <div class="lists-box" ref="listBox">
@@ -23,9 +23,9 @@
                 </div>
             </div>
             <div class="ordering-box" style="height: 100%;margin-left: 0.1rem;">
-                <div class="lists-tr lists-title" v-if="item.symbol">
+                <div class="lists-tr lists-title" v-if="currStock.symbol">
                     <div class="lists-td">价格(USDT)</div>
-                    <div class="lists-td">数量({{ item.symbol.replace('usdt', '').toUpperCase() }})</div>
+                    <div class="lists-td">数量({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
                 </div>
                 <Loaidng :loading="loading" v-if="loading" />
                 <div class="lists-box" ref="listBox">
@@ -94,9 +94,9 @@
                     </div> -->
                 </div>
             </div>
-            <div class="lists-tr lists-title" v-if="item.symbol">
+            <div class="lists-tr lists-title" v-if="currStock.symbol">
                 <div class="lists-td">价格(USDT)</div>
-                <div class="lists-td">数量({{ item.symbol.replace('usdt', '').toUpperCase() }})</div>
+                <div class="lists-td">数量({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
             </div>
             <Loaidng :loading="loading" v-if="loading" />
             <div class="lists-box" ref="listBox">
@@ -130,9 +130,9 @@
 
         <!-- 最新 -->
         <div class="ordering-box bbo-box" v-if="props.type == 'news'">
-            <div class="lists-tr lists-title" v-if="item.symbol">
+            <div class="lists-tr lists-title" v-if="currStock.symbol">
                 <div class="lists-td">价格(USDT)</div>
-                <div class="lists-td">数量({{ item.symbol.replace('usdt', '').toUpperCase() }})</div>
+                <div class="lists-td">数量({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
                 <div class="lists-td">时间</div>
             </div>
             <div class="lists-box" style="overflow-y: auto;">
@@ -230,6 +230,7 @@ const max = ref(0)
 const listBox = ref()
 const reset = () => {
     if (!listBox.value) return
+    console.error('listBox.value.clientHeight', listBox.value.clientHeight)
     const h = Math.floor(listBox.value.clientHeight / 20)
     if (currNav.value != 1 || props.type == 'infinite') {
         max.value = h
@@ -238,8 +239,6 @@ const reset = () => {
     }
 }
 
-// 股票信息
-const item = computed(() => store.state.currConstact || {});
 // 最新成交
 const news = ref([])
 
@@ -357,13 +356,13 @@ onUnmounted(() => {
 
             .nav {
                 cursor: pointer;
-                margin-right: 0.16rem;
+                margin-right: 0.12rem;
                 opacity: 0.5;
                 transition: all ease-in .2s;
 
                 >svg {
-                    width: 0.4rem;
-                    height: 0.4rem;
+                    width: 0.32rem;
+                    height: 0.32rem;
                 }
             }
 
@@ -456,6 +455,7 @@ onUnmounted(() => {
 
             .lists-td {
                 color: var(--ex-text-color3);
+                line-height: 1;
             }
         }
 
@@ -464,7 +464,8 @@ onUnmounted(() => {
             align-items: center;
             justify-content: flex-start;
             height: 0.8rem;
-            line-height: 0.8rem;
+            line-height: 1;
+            flex-wrap: wrap;
 
             .price {
                 font-size: 0.4rem;

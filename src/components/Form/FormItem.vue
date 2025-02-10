@@ -274,6 +274,7 @@ const percentTagClick = (percent) => {
   display: flex;
 
   .item {
+    margin: 0 1px;
     flex: 1;
     display: flex;
     align-items: center;
@@ -476,6 +477,7 @@ const percentTagClick = (percent) => {
       .item {
         height: 100%;
         padding-bottom: 1.1rem;
+        margin: 0 1px;
 
         .scroll-box {
           width: 100%;

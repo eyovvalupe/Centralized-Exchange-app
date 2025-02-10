@@ -32,11 +32,16 @@
               1Y
             </div>
             <div style="flex:1"></div>
-            <div class="full-tab" @click="fullScreen(true)">
+            <!-- 全屏 -->
+            <div class="full-tab" @click="fullScreen(true)" v-if="!props.mini">
               <img v-lazy="getStaticImgUrl('/static/img/common/full.svg')" alt="" />
             </div>
+            <!-- 折叠 -->
+            <div class="full-tab mini-tab" v-if="props.mini" @click="zipo = !zipo" :style="{transform: `rotate(${zipo?180:0}deg)`}">
+              <img v-lazy="getStaticImgUrl('/static/img/common/switch.svg')" alt="" />
+            </div>
           </div>
-          <div  class="chart_container" :class="{ fullscreen_container: fullWindow }">
+          <div v-if="!(props.mini && zipo)"  class="chart_container" :class="{ fullscreen_container: fullWindow }">
             <!-- 时区 -->
             <div v-if="showDate" class="chart_time">{{ showDate }}</div>
             <!-- 分时图 -->
@@ -78,8 +83,14 @@
     type: String,
     default: "",
   },
+  mini: { // 如果事mini 就不要全屏了  换成折叠
+    type: Boolean,
+    default: false
+  }
 });
  const periodType = computed(() => props.type);
+
+ const zipo = ref(true) // 折叠状态
 
  // 股票信息
 const item = computed(() => {
@@ -208,8 +219,15 @@ defineExpose({
         text-align: center;
         line-height: 0;
       }
+      .mini-tab {
+        width: 0.32rem;
+        height: 0.32rem;
+        transition: all ease-in .2s;
+        transform: rotate(0);
+      }
 
       .chart_container {
+        min-height: 5rem;
         flex: 1;
         width: 100%;
         padding: 0 0.28rem;
