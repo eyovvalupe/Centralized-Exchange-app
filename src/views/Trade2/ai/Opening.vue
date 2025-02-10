@@ -197,7 +197,7 @@
         </div>
         </div>
 
-        <FormItem style="margin-top: 0.4rem;" v-model="form1.safeword" size="large" input-type="password"
+        <FormItem style="margin-top: 0.4rem;" v-model="form1.safeword" v-if="userInfo.role != 'guest'" size="large" input-type="password"
           :placeholder="t('trade.stock_opening_trade_pw')">
         </FormItem>
 
@@ -308,6 +308,7 @@ const backFunc = () => {
 const safeRef = ref();
 
 const token = computed(() => store.state.token);
+const userInfo = computed(() => store.state.userInfo);
 const tab = ref(1); // 1-看涨 2-看跌
 const showModel = ref(false);
 
@@ -408,6 +409,9 @@ const checkForm = () => {
 
 const submitLoading = ref(false);
 const submitForm = (s) => {
+  if(userInfo.value.role == 'guest'){
+    s = '000000'
+  }
   if (submitLoading.value) return;
   if (!s) {
     return showToast(t("trade.ai_opening_trade_password"));

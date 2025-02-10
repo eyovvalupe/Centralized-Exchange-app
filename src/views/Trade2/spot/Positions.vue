@@ -105,7 +105,7 @@
                         </div>
                     </div> -->
 
-          <FormItem v-model="sellForm.safeword" size="large" input-type="password"
+          <FormItem v-model="sellForm.safeword" size="large" input-type="password" v-if="userInfo.role != 'guest'"
             :placeholder="t('trade.stock_opening_trade_pw')">
           </FormItem>
 
@@ -159,7 +159,7 @@
             <SlideContainer v-model="sliderValue" @change="onSliderChange" />
           </div>
 
-          <FormItem v-model="updateForm.safeword" size="large" input-type="password"
+          <FormItem v-model="updateForm.safeword" size="large" input-type="password" v-if="userInfo.role != 'guest'"
             :placeholder="t('trade.stock_opening_trade_pw')">
           </FormItem>
 
@@ -243,6 +243,7 @@ const safeRef = ref();
 const safeRef2 = ref();
 
 const token = computed(() => store.state.token);
+const userInfo = computed(() => store.state.userInfo);
 
 const contractPositionsList = computed(() => store.state.positionSpotList);
 const elseWallet = computed(() => store.state.elseWallet || []);
@@ -374,11 +375,12 @@ const sell = (item) => {
 const sellLoading = ref(false);
 const goSellDialog = () => {
   if (sellLoading.value) return;
+  if(userInfo.value.role == 'guest'){
+    sellForm.value.safeword = '000000'
+  }
   if (!sellForm.value.volume) return showToast(t('trade.contract_position_no_close_amount'));
   if (!sellForm.value.safeword) return showToast(t('trade.stock_opening_trade_pw_placeholder'));
   goSell(sellForm.value.safeword);
-  //showSell.value = false
-  //safeRef2.value && safeRef2.value.open()
 };
 const goSell = (s) => {
   sellLoading.value = true;
@@ -429,11 +431,12 @@ const update = (item) => {
 const updateLoading = ref(false);
 const goUpdateDialog = () => {
   if (updateLoading.value) return;
+  if(userInfo.value.role == 'guest'){
+    updateForm.value.safeword = '000000'
+  }
   if (!updateForm.value.amount) return showToast(t("trade.stock_position_no_deposit"));
   if (!updateForm.value.safeword) return showToast(t('trade.stock_opening_trade_pw_placeholder'));
   goUpdate(updateForm.value.safeword);
-  // showUpdate.value = false
-  // safeRef.value && safeRef.value.open()
 };
 const goUpdate = (s) => {
   updateLoading.value = true;

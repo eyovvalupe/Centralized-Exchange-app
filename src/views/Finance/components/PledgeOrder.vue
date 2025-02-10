@@ -1,23 +1,6 @@
 <template>
     <div class="pledge_order_list_page">
-        <div class="flex  rounded-[0.32rem] mt-[0.32rem] bg-color3 p-[0.32rem]">
-            <div class="flex-1 flex flex-col justify-center items-center gap-[0.24rem]">
-                <div class="text-color2 text-[0.3rem]">
-                    {{ t('finance.defi_borrow_already') }}<span class="text-[0.24rem]">(USDT)</span>
-                </div>
-                <div class="text-[0.4rem] font-[600] text-color leading-[0.6rem]">
-                    10,000.00
-                </div>
-            </div>
-            <div class="flex-1  flex flex-col justify-center items-center gap-[0.24rem]">
-                <div class="text-color2 text-[0.3rem]">
-                    {{ t('finance.defi_borrow_remain') }}<span class="text-[0.24rem]">(USDT)</span>
-                </div>
-                <div class="text-[0.4rem] font-[600] text-color leading-[0.6rem]">
-                    10,000.00
-                </div>
-            </div>
-        </div>
+       
         <Tabs key="form" type="sub-stake" v-model:active="activeTab" @click-tab="onTabClick" :swipeable="false" shrink>
             <Tab name="open" style="min-width: 2rem" :title="t('finance.defi_borrow_on')">
             </Tab>

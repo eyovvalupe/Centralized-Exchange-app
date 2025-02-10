@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="line"></div>
-            <div class="item pass_ipt">
+            <div class="item pass_ipt" v-if="userInfo.role != 'guest'">
                 <input v-model="safePass" :placeholder="t('trade.stock_opening_trade_pw')"
                     :type="showPassword ? 'text' : 'password'" class="ipt" />
                 <img v-if="!showPassword" v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')"
@@ -75,6 +75,7 @@ const maxStockNum = computed(() => {
     // 最大可买 可卖
     return stockWalletAmount.value;
 });
+const userInfo = computed(() => store.state.userInfo)
 const goDeposit = () => {
     router.push({
         name: 'topUpCrypto',
@@ -93,6 +94,9 @@ const goTransfer = () => {
 }
 const plusLoading = ref(false)
 const submitPlus = () => {
+    if(userInfo.value.role == 'guest'){
+        safePass.value = '000000'   
+    }
     if (plusLoading.value) return
     if (!amount.value || amount.value < 0) return showToast(t('topUpCrypto.no_amount_msg'))
     if (!safePass.value) return showToast(t('trade.ai_opening_trade_password'))

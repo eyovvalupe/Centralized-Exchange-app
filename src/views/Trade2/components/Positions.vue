@@ -131,11 +131,6 @@
                         </div>
                     </div> -->
 
-          <!-- <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
-                    <div class="item">
-                        <input v-model="sellForm.safeword" type="password" class="ipt">
-                    </div> -->
-
           <Button class="submit ripple-btn" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"
             color="var(--ex-primary-color)">
             <span style="color: var(--ex-white);">{{ t("trade.stock_position_btn") }}</span>
@@ -193,13 +188,6 @@
           <div style="padding: 0.2rem 0 0.4rem 0.08rem">
             <SlideContainer v-model="sliderValue" @change="onSliderChange" />
           </div>
-
-
-
-          <!-- <div class="subtitle" style="margin-top: 0.2rem;">请输入交易密码</div>
-                    <div class="item">
-                        <input v-model="updateForm.safeword" type="password" class="ipt">
-                    </div> -->
 
           <Button @click="goUpdateDialog" class="submit ripple-btn" round size="large" :loading="updateLoading" type="primary"
             color="var(--ex-primary-color)">
@@ -262,6 +250,7 @@ const safeRef = ref();
 const safeRef2 = ref();
 
 const token = computed(() => store.state.token);
+const userInfo = computed(() => store.state.userInfo);
 const positionsList = computed(() => store.state.positionsList);
 
 const elseWallet = computed(() => store.state.elseWallet || []);
@@ -393,9 +382,14 @@ const goSellDialog = () => {
     return showToast(t("trade.stock_position_no_close_amount"));
   // if (!sellForm.value.safeword) return showToast('请输入交易密码')
   showSell.value = false;
-  safeRef2.value && safeRef2.value.open();
+  if(userInfo.value.role == 'guest'){
+    goSell('000000')
+  }else{
+    safeRef2.value && safeRef2.value.open();
+  }
 };
 const goSell = (s) => {
+  
   sellLoading.value = true;
   _stocksSell({
     ...sellForm.value,
@@ -447,7 +441,11 @@ const goUpdateDialog = () => {
     return showToast(t("trade.stock_position_no_deposit"));
   // if (!updateForm.value.safeword) return showToast('请输入交易密码')
   showUpdate.value = false;
-  safeRef.value && safeRef.value.open();
+  if(userInfo.value.role == 'guest'){
+    goUpdate('000000')
+  }else{
+    safeRef.value && safeRef.value.open();
+  }
 };
 const goUpdate = (s) => {
   updateLoading.value = true;

@@ -152,7 +152,7 @@
                     </div>
 
                 </div>
-                <FormItem size="large" class="mt-[0.4rem]" :placeholder="t('trade.stock_opening_trade_pw')" input-type="password" v-model="safeword" />
+                <FormItem v-if="userInfo.role != 'guest'" size="large" class="mt-[0.4rem]" :placeholder="t('trade.stock_opening_trade_pw')" input-type="password" v-model="safeword" />
                 <div class="py-[0.6rem]">
                     <Button :loading="isLoading" type="primary" @click="submit" class="submit ripple-btn">
                         <span class="text-[0.32rem] font-bold">{{ t('trade.stock_opening_confirm') }}</span>
@@ -186,6 +186,7 @@ const copy = (text) => {
   showToast(t('recharging.copied'));
 };
 const sessionToken = computed(() => store.state.sessionToken || '')
+const userInfo = computed(() => store.state.userInfo || '')
 const getSessionToken = () => {
     store.dispatch('updateSessionToken')
 }
@@ -196,6 +197,9 @@ const openConfirm = ()=>{
 }
 const isLoading = ref(false)
 const submit = ()=>{
+    if(userInfo.value.role == 'guest'){
+        safeword.value = '000000'
+    }
     if (!safeword.value) {
         return showToast(t("assets.safety_trade_no_password"));
     }

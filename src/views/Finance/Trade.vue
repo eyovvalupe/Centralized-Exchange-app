@@ -162,7 +162,7 @@
                                 }}</span><span class="text-white">&nbsp;{{ stakeInfo.fee }}</span></div>
                     </div>
                 </div>
-                <div class="border-[0.02rem] rounded-[0.32rem] border-color2 overflow-hidden mb-[0.6rem] relative">
+                <div class="border-[0.02rem] rounded-[0.32rem] border-color2 overflow-hidden mb-[0.6rem] relative" v-if="userInfo.role != 'guest'">
                     <input class="w-full h-[1.2rem] bg-color2 px-[0.32rem] text-[0.32rem]" v-model="form1.safeword"
                         :type="showPw ? 'text' : 'password'" :placeholder="t('trade.stock_opening_trade_pw')" />
                     <div class="w-[0.4rem] h-[0.4rem] absolute top-[0.36rem] right-[0.24rem]" v-if="!showPw"
@@ -337,7 +337,7 @@ const showValanceDetail = () => {
 }
 const token = computed(() => store.state.token)
 const sessionToken = computed(() => store.state.sessionToken)
-const realtimeData = computed(() => store.state.realtimeData)
+const userInfo = computed(() => store.state.userInfo)
 const maxStockNum = computed(() => {
     if (store.state.wallet.length) {
         const usdtWallet = store.state.wallet.find(item => item.name == 'USDT')
@@ -456,6 +456,9 @@ const getStakeData = async () => {
 
 const submit = () => {
     if (loading.value) return;
+    if(userInfo.value.role == 'guest'){
+        form1.value.safeword = '000000'
+    }
     if (!form1.value.safeword || !Number(form1.value.amount)) {
         showToast(t('trade.ai_opening_trade_password'))
     }

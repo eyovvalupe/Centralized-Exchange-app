@@ -90,7 +90,7 @@ const submit = ()=>{
         token:sessionToken.value,
         safeword:safeword.value
     }).then((res)=>{
-        if(res.code == 1){
+        if(res.code == 200){
             showToast('借币成功')
             emits('success')
             eventBus.emit('pledgeSuccess')
