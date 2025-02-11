@@ -1,6 +1,6 @@
 <!-- ai持仓 -->
 <template>
-    <div class="page_ai_position">
+    <div class="page_ai_position" v-if="token">
         <NoData v-if="!loading && !aiPositionsList.length" />
         <div class="list">
             <div class="item mask-btn" v-for="(item, i) in aiPositionsList" :key="i" @click="openInfo(item)"
@@ -19,6 +19,7 @@
         </div>
         <LoadingMore :loading="loading" v-if="loading && !aiPositionsList.length" />
     </div>
+    <UnLogin @loginfinish="loginfinish" v-show="!token" />
 
     <!-- 详情 -->
     <AiInfo ref="infoRef" />
@@ -33,6 +34,7 @@ import AiInfo from "../components/AiInfo.vue"
 import LoadingMore from "@/components/LoadingMore.vue"
 import NoData from '@/components/NoData.vue';
 import { formatSec2 } from "@/utils/time"
+import UnLogin from "@/components/UnLogin.vue"
 
 
 // 详情
@@ -86,6 +88,12 @@ const cancelSubs = () => {
         socket && socket.emit('user', '')
         socket && socket.emit('aiquantorder', '')
     })
+}
+
+const loginfinish = () => {
+    setTimeout(() => {
+        subs()
+    }, 100)
 }
 
 onMounted(() => {

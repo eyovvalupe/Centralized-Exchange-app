@@ -96,6 +96,10 @@ const props = defineProps({
   mode: { // constract-加密货币 foreign-外汇 commodities-大宗交易
     type: String,
     default: 'constract'
+  },
+  scrollBox: { // 滚动的父级
+    type: String,
+    default: '.page'
   }
 })
 
@@ -210,11 +214,14 @@ const scrolHandle = () => {
   }
 };
 onMounted(() => {
+  if (token.value) {
+    init()
+  }
   setTimeout(() => {
     try {
       moreDom = document.querySelector(".loading_more");
       document
-        .querySelector(".page")
+        .querySelector(props.scrollBox)
         .addEventListener("scroll", scrolHandle);
     } catch { }
   }, 500);
@@ -222,7 +229,7 @@ onMounted(() => {
 onUnmounted(() => {
   try {
     document
-      .querySelector(".page")
+      .querySelector(props.scrollBox)
       .removeEventListener("scroll", scrolHandle);
   } catch { }
 });

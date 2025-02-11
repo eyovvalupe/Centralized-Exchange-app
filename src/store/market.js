@@ -412,12 +412,15 @@ export default {
             state.marketAiGridList = data || [];
         },
         setCurrStock(state, data) {
+            sessionStorage.setItem('currStock', JSON.stringify(data))
             setCurr('currStock', state, data)
         },
         setCurrConstract(state, data) {
+            sessionStorage.setItem('currConstact', JSON.stringify(data))
             setCurr('currConstact', state, data)
         },
         setCurrAi(state, data) {
+            sessionStorage.setItem('currAi', JSON.stringify(data))
             setCurr('currAi', state, data)
         },
         setCurrForeign(state, data) {
