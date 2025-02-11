@@ -5,13 +5,13 @@
         <div
           class="transition flex justify-between  px-[0.32rem] py-[0.18rem] rounded-[1rem] gap-[0.2rem] h-[0.8rem] mx-[0.4rem] items-center border-[0.02rem]"
           :class="focusRef ? 'border-white' : ''" style="background-color: var(--ex-bg-white1);">
-          <div class="text-[0.32rem] text-color2 leading-[0.5rem] border-r-[1px] flex-1 px-[0.1rem]">
-            <input style="flex:1;width: 100%;" v-model.trim="searchRef" class="text-white"
-              :placeholder="$t('trade.trade_search_item')" @input="inputHandle" @focus="focusRef = true"
-              @blur="focusRef = false" />
-          </div>
           <div class="w-[0.5rem] h-[0.5rem]">
             <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
+          </div>
+          <div class="text-[0.32rem] text-color2 leading-[0.5rem] border-r-[1px] flex-1 px-[0.1rem]">
+            <input style="flex:1;width: 100%;" v-model.trim="searchRef" class="text-white"
+              :placeholder="'输入币对'" @input="inputHandle" @focus="focusRef = true"
+              @blur="focusRef = false" />
           </div>
         </div>
       </div>

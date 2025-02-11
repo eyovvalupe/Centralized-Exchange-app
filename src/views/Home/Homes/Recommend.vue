@@ -16,24 +16,31 @@
                         <NoData v-if="!watchListLoading && !watchList.length" />
                     </div>
                     <div v-if="!token" class="flex flex-col pt-[0.32rem] pb-[0.32rem]">
+
+
                         <div class="w-full flex justify-between border-b-[0.02rem] pb-[0.2rem] mb-[0.6rem] px-[0.32rem] border-b-color2">
                             <div class="text-color2">{{ $t('copy.copy_order_name') }}</div>
                             <div class="text-color2">{{ $t('market.market_optional_crypto_price') + ' / ' +
                                 $t('copy.copy_belong_pl_rate') }}</div>
                         </div>
 
-                        <div style="width: 100%;text-align: center;margin: 1rem 0;color: var(--ex-placeholder-color);">登录或注册开始交易</div>
+                        <div style="width: 100%;text-align: center;margin: 0.6rem 0 0.4rem 0;color: var(--ex-placeholder-color);">
+                            <div style="width:1.12rem;height:1.12rem;margin: 0 auto 0.2rem auto;">
+                                <img v-lazy="getStaticImgUrl('/static/img/user/unlogin-user.png')" alt="">
+                            </div>
+                            <div>请先登录再查看自选哦</div>
+                        </div>
                         <div class="flex justify-center gap-[0.4rem]">
-                            <div class="w-[3rem] h-[0.8rem] rounded-[0.4rem] bg-white flex items-center justify-center text-[0.32rem] text-black ripple-primary"
+                            <div style="min-width: 2rem;" class="px-[0.28rem] h-[0.8rem] rounded-[0.4rem] bg-[var(--ex-bg-white1)] flex items-center justify-center text-[0.32rem] text-white ripple-primary"
                                 @click="jump('login')">{{ $t('trade.stock_opening_token_login') }}</div>
-                            <div class="w-[3rem] h-[0.8rem] rounded-[0.4rem] bg-primary flex items-center justify-center text-[0.32rem] text-white ripple-btn"
-                                @click="jump('register')">{{ $t('trade.stock_opening_token_register') }}</div>
+                            <!-- <div class="w-[3rem] h-[0.8rem] rounded-[0.4rem] bg-primary flex items-center justify-center text-[0.32rem] text-white ripple-btn"
+                                @click="jump('register')">{{ $t('trade.stock_opening_token_register') }}</div> -->
                         </div>
                     </div>
                 </div>
             </Tab>
             <Tab :name="1" :title="t('common.spot')">
-                <div :class="['home-tab-box-' + props.from,from == 'trade' ? 'mt-[1.68rem]' : 'mt-[0.32rem]']">
+                <div :class="['home-tab-box-' + props.from,from == 'trade' ? 'mt-[1.68rem]' : 'mt-[0.32rem]']" :style="{borderTop: props.from == 'home' ? '1px solid var(--ex-border-color5)' : ''}">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div class="" style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 1">
                         <StockItem :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
@@ -44,7 +51,7 @@
                 </div>
             </Tab>
             <Tab :name="2" :title="$t('common.crypto')">
-                <div :class="['home-tab-box-' + props.from,from == 'trade' ? 'mt-[1.68rem]' : 'mt-[0.32rem]']">
+                <div :class="['home-tab-box-' + props.from,from == 'trade' ? 'mt-[1.68rem]' : 'mt-[0.32rem]']" :style="{borderTop: props.from == 'home' ? '1px solid var(--ex-border-color5)' : ''}">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 2">
                         <StockItem :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
@@ -79,6 +86,8 @@ import { _futures, _stock, _watchlist } from "@/api/api";
 import store from "@/store";
 import { useI18n } from "vue-i18n";
 import router from "@/router";
+import { getStaticImgUrl } from "@/utils/index.js"
+
 const { t } = useI18n();
 
 const props = defineProps({
@@ -192,8 +201,8 @@ defineExpose({
 .home-tab-box-trade {
     // background-color: var(--ex-bg-color5);
     border-radius: 0.32rem;
-    margin-left: 0.32rem;
-    margin-right: 0.32rem;
+    // margin-left: 0.32rem;
+    // margin-right: 0.32rem;
     min-height: calc(var(--vh) * 100 - 4rem);
 }
 
