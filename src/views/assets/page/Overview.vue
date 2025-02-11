@@ -4,21 +4,23 @@
     <!-- 总览 -->
     <OverviewCard>
       <div class="flex flex-col items-center">
-        <div class="top mt-[0.6rem]">
-          <div class="title">{{ $t("home.totalAssets") }} <span>(USDT)</span></div>
-          <div class="eyes" @click="click">
-            <img v-lazy="getStaticImgUrl('/static/img/common/open_eye_white.svg')" v-show="!hidden" />
-            <img v-lazy="getStaticImgUrl('/static/img/common/close_eye_white.svg')" v-show="hidden" />
+        <div class=" bg-contain bg-no-repeat bg-center w-[6.86rem] h-[2.58rem] mt-[0.26rem] flex flex-col justify-center items-center" :style="{backgroundImage:'url('+getStaticImgUrl('/static/img/assets/wallet_bg.svg')+')'}">
+          <div class="top mt-[0.6rem]">
+            <div class="title">{{ $t("home.totalAssets") }} <span>(USDT)</span></div>
+            <div class="eyes" @click="click">
+              <img v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" v-show="!hidden" />
+              <img v-lazy="getStaticImgUrl('/static/img/common/close_eye_white.svg')" v-show="hidden" />
+            </div>
+          </div>
+          <div class="money">
+            <span class="text-[0.48rem] font-semibold">{{
+              hidden
+                ? "********"
+                : parseFloat(assets.total).toLocaleString() || "0"
+            }}</span>
           </div>
         </div>
-        <div class="money">
-          <span class="text-[0.48rem] font-semibold">{{
-            hidden
-              ? "********"
-              : parseFloat(assets.total).toLocaleString() || "0"
-          }}</span>
-        </div>
-        <div class="navs mb-[0.5rem]">
+        <div class="navs mt-[0.24rem] bg-contain bg-no-repeat h-[1.6rem] w-[6.86rem] mb-[0.4rem]" :style="{background:'#23272D url('+getStaticImgUrl('/static/img/assets/money_bg.svg')+')'}">
           <div class="nav bg-opacity-10">
             <div class="nav_label">{{ $t("assets.info_cash") }}</div>
             <div class="num">
@@ -208,22 +210,17 @@ const jump = (name, check = false, query) => {
   align-items: center;
 
   .top {
-    width: 100%;
     font-size: 0.32rem;
     font-weight: 500;
     display: flex;
     height: 0.32rem;
-    align-items: start;
-    line-height: 0.32rem;
-    padding-left: 0.32rem;
-
+    align-items: center;
     .title {
-      color: var(--ex-text-color2);
+      color: var(--ex-text-color);
       margin-right: 0.12rem;
-      font-size: 0.3rem;
+      font-size: 0.32rem;
       line-height: 0.32rem;
       font-weight: 500;
-
       span {
         font-size: 0.24rem;
       }
@@ -237,46 +234,40 @@ const jump = (name, check = false, query) => {
   }
 
   .money {
-    width: 100%;
     color: var(--ex-white);
-    font-family: "PingFang SC";
-    font-size: 0.52rem;
+    font-size: 0.48rem;
     font-style: normal;
     font-weight: 600;
     line-height: 0.48rem;
     margin-top: 0.28rem;
     margin-bottom: 0.28rem;
-    padding-left: 0.32rem;
   }
 
   .navs {
     display: flex;
-    width: 100%;
-    padding: 0 0.32rem;
+    padding: 0 0.28rem;
     justify-content: space-between;
-
+    border-radius: 0.32rem;
     .nav {
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
-      width: 3.27rem;
-      height: 1.12rem;
-      border-radius: 0.32rem;
-      background-color: var(--ex-bg-white);
-      // padding-top: 0.1rem;
     }
-
+    .nav:first-child{
+      align-items: self-start;
+    }
+    .nav:last-child{
+      align-items: self-end;
+    }
     .nav_label {
-      color: var(--ex-text-color2);
-      font-size: 0.28rem;
-      line-height: 100%;
-      margin-top: 0.1rem;
+      color: var(--ex-text-color);
+      font-size: 0.24rem;
     }
 
     .num {
-      color: var(--ex-white);
-      font-size: 0.3rem;
+      color: var(--ex-text-color);
+      font-size: 0.32rem;
       font-weight: 600;
       line-height: 0.3rem;
       margin-top: 0.2rem;

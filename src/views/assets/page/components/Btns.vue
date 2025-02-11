@@ -86,7 +86,7 @@ const onSelect = (item) => {
 
   &__icon {
     border-radius: 0.6rem;
-    background: var(--ex-white);
+    background: rgb(var(--ex-white-rgb) / 0.06);
     display: flex;
     justify-content: center;
     align-items: center;

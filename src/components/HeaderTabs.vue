@@ -201,7 +201,7 @@ onMounted(() => {
 }
 
 .header_tabs--line {
-    height: 0.8rem;
+    height: 0.92rem;
 
     .tabs {
         .tab_body {
@@ -232,8 +232,7 @@ onMounted(() => {
         }
 
         .active_tab {
-            color: var(--ex-primary-color) !important;
-            font-weight: 400 !important;
+            color: var(--ex-text-color) !important;
             font-size: 0.4rem !important;
 
             &::after {
