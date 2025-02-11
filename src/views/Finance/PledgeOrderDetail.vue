@@ -2,14 +2,14 @@
     <div class="pledge_order_detail_page">
         <Top :title="$t('trade.ipo_detail_title')" />
         <div
-            class=" mt-[1.42rem] mx-[0.32rem] mb-[0.32rem] h-[2.1rem] bg-color6 rounded-[0.32rem] flex justify-center items-center ">
+            class=" mt-[1.08rem] mx-[0.1rem] mb-[0.1rem] h-[2.1rem] bg-color6 rounded-[0.32rem] flex justify-center items-center ">
             <div class="flex flex-col gap-[0.32rem] justify-between items-center">
                 <div class="text-color2 text-[0.32rem]">{{ t('finance.defi_borrow_est_due') }}({{ order.symbol }})</div>
                 <div class="text-[0.6rem] text-color font-[600]">{{ order.loan }}</div>
             </div>
         </div>
         <div
-            class="mx-[0.32rem] bg-color6 rounded-[0.32rem] mb-[0.28rem] pb-[0.12rem] pt-[0.24rem] relative overflow-hidden">
+            class="mx-[0.1rem] bg-color6 rounded-[0.32rem] mb-[0.28rem] pb-[0.12rem] pt-[0.24rem] relative overflow-hidden">
             <div class="w-max h-[0.6rem] px-[0.28rem] absolute top-[0] right-[0] rounded-bl-[0.32rem] bg-primary"
                 v-if="false">
                 <div class="w-full h-full relative flex items-center justify-center">

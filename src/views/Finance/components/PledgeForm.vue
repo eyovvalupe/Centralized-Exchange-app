@@ -5,7 +5,7 @@
     </div>
 
     <!-- 验资数量 -->
-    <div class="item_box mt-[0.4rem]">
+    <div class="item_box mt-[0.1rem]">
       <div class="item_box_right">
         <FormItem :hasLT="true" :hasRT="true" :hasScroll="true" :placeholder="t('finance.defi_verif_qty')"
           :max="walletAmount" v-model="numb" @change="changePercent2" @btnClick="onSliderChange2(100)"
@@ -42,7 +42,7 @@
       </div>
     </div>
     <!-- 可借数量 -->
-    <div class="item_box mt-[0.32rem]">
+    <div class="item_box mt-[0.1rem]">
       <div class="item_box_right">
         <FormItem :hasScroll="true" :placeholder="t('finance.defi_avail_qty')" :max="maxLoan" v-model="loan"
           :tip="maxLoan > 0 ? '≤' + maxLoan : ''" @change="changePercent" @btnClick="onSliderChange(100)" input-type="number">
@@ -54,7 +54,7 @@
         </FormItem>
       </div>
     </div>
-    <div class="px-[0.28rem]  py-[0.24rem] rounded-[0.32rem] bg-color2 border-color border-[1px] mt-[0.32rem]">
+    <div class="px-[0.28rem]  py-[0.24rem] rounded-[0.32rem] bg-color2 border-color border-[1px] mt-[0.1rem]">
       <div class="text-[0.28rem] leading-[0.28rem] text-color2">{{ t('finance.defi_borrow_period') }}</div>
       <div class="flex flex-wrap gap-[0.12rem] gap-y-[0.2rem] pt-[0.2rem]">
         <div
@@ -65,7 +65,7 @@
         </div>
       </div>
     </div>
-    <div class="bg-color3 mt-[0.32rem] p-[0.12rem] text-[0.28rem] rounded-[0.32rem]">
+    <div class="bg-color3 mt-[0.1rem] p-[0.12rem] text-[0.28rem] rounded-[0.32rem]">
       <div class="p-[0.16rem]">
         <div class="flex justify-between items-center leading-[0.44rem]">
           <span class="text-color2">{{ t('finance.defi_daily_interest') }}</span>
@@ -86,7 +86,7 @@
             }}</span></span>
       </div>
     </div>
-    <div>
+    <div class="px-[0.1rem]">
       <!-- 协议 -->
       <label class="pledge_doc">
         <div :class="checked ? 'checked_icon_blue' : 'unchecked_icon'" class="mr-[0.2rem]" @click="checked = !checked">
@@ -95,10 +95,12 @@
         </div>
         {{ t('finance.defi_borrow_agreement1') }}<span>“{{ t('finance.defi_borrow_agreement2') }}”</span>
       </label>
+      
+      <Button type="primary" class="submit ripple-btn" @click="openConfirm">
+        <span class="text-[0.32rem] font-bold">{{ t('finance.defi_borrow_now') }}</span>
+      </Button>
     </div>
-    <Button type="primary" class="submit ripple-btn" @click="openConfirm">
-      <span class="text-[0.32rem] font-bold">{{ t('finance.defi_borrow_now') }}</span>
-    </Button>
+    
     <div class="h-[2.2rem]"></div>
 
     <!-- 售出币种 -->

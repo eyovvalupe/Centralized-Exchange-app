@@ -1,13 +1,13 @@
 <template>
     <div class="pledge_order_list_page">
        
-        <Tabs key="form" type="sub-stake" v-model:active="activeTab" @click-tab="onTabClick" :swipeable="false" shrink>
+        <Tabs key="form" type="sub-stake" style="margin-top:0.2rem;" v-model:active="activeTab" @click-tab="onTabClick" :swipeable="false" shrink>
             <Tab name="open" style="min-width: 2rem" :title="t('finance.defi_borrow_on')">
             </Tab>
             <Tab name="close" style="min-width: 2rem" :title="t('finance.defi_borrow_repay')">
             </Tab>
         </Tabs>
-        <div class="min-h-[10rem] mt-[0.4rem]">
+        <div class="min-h-[10rem] mt-[0.2rem]">
             <div class="flex items-center justify-center p-[0.4rem]" v-if="isLoading">
                 <Loading />
             </div>

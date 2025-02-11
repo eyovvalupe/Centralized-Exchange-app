@@ -1,6 +1,6 @@
 <!-- 跟单广场 -->
 <template>
-    <div class="page-follow pb-[0.32rem] px-[0.32rem]" :class="from != 'finance' ? 'pt-[1.28rem]' : ''">
+    <div class="page-follow pb-[0.1rem] px-[0.1rem]" :class="from != 'finance' ? 'pt-[1.28rem]' : ''">
         <Top :title="$t('copy.copy_ground')" v-if="from != 'finance'"></Top>
 
         <!-- Tab -->
@@ -11,10 +11,10 @@
             </div>
         </div> -->
 
-        <Tabs type="custom-card" @change="onChange" v-model="activeTab"
+        <Tabs type="custom-card-stake" @change="onChange" v-model="activeTab"
             style="height: calc(var(--vh) * 100 - 0.88rem); overflow-y: auto;" :swipeable="false" animated>
             <Tab :title="$t('copy.copy_portfolio')" :active="activeTab == 0" :name="'0'">
-                <div class="px-[0.1rem] pt-[0.32rem] pb-[1.6rem]">
+                <div class="pt-[0.1rem] pb-[1.6rem]">
                     <NoData v-if="!loading && !followList.length" />
                     <div class="list-i" v-for="(item, i) in followList" :key="i">
                         <FollowItem :item="item" :showDetail="true" />
@@ -22,7 +22,7 @@
                 </div>
             </Tab>
             <Tab class="mb-[1.2rem]" :title="$t('copy.copy_tab_tab2')" :active="activeTab == 1" :name="'1'">
-                <div class="px-[0.1rem] pt-[0.32rem] pb-[1.6rem]">
+                <div class="pt-[0.1rem] pb-[1.6rem]">
                     <div class="my-total" v-if="!isEmpty(myCopyData)">
                         <div class="info-flex">
                             <div class="info-item">
@@ -37,7 +37,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="flex gap-[0.12rem] mb-[0.32rem]">
+                    <div class="flex gap-[0.1rem] mb-[0.2rem]">
                         <div class="w-max px-[0.4rem] h-[0.78rem] rounded-[1rem] text-[0.3rem] font-semibold flex items-center justify-center"
                             :class="typeChange == 'option' ? 'bg-white text-black ripple-primary' : 'text-color2 ripple-btn'"
                             @click="typeChange = 'option'"
@@ -225,14 +225,14 @@ const openInfo = item => {
     //     overflow-y: auto;
 
         .list-i {
-            margin-bottom: 0.32rem;
+            margin-bottom: 0.1rem;
         }
 
         .my-total {
             border-radius: 0.32rem;
             background: var(--ex-bg-color3);
             padding: 0.12rem;
-            margin-bottom: 0.32rem;
+            margin-bottom: 0.2rem;
 
             .info-flex {
                 display: flex;

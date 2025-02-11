@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <div class="order_page w-full mt-[0.32rem]" v-if="!earnLoading && !isEmpty(myEarn)">
+        <div class="order_page w-full mt-[0.1rem]" v-if="!earnLoading && !isEmpty(myEarn)">
             <div class="flex w-full h-[1.74rem] bg-color6 rounded-[0.32rem]">
                 <div class="flex flex-col items-center justify-center w-1/2">
                     <div class="text-[0.3rem] text-color2 mb-[0.24rem]">{{ t('finance.portfolio_revenue') }}<span
@@ -13,11 +13,11 @@
                     <div class="text-[0.4rem]">{{ Number(myEarn.amount).toLocaleString() }}</div>
                 </div>
             </div>
-            <Tabs key="form" type="sub-stake" v-model="activeTab" :swipeable="false" :color="'var(--ex-primary-color)'"
+            <Tabs key="form" type="sub-stake" style="margin-top:0.2rem;" v-model="activeTab" :swipeable="false" :color="'var(--ex-primary-color)'"
                 shrink @change="changeTab">
                 <Tab :active="activeTab == 0" style="min-width: 2rem" :title="t('finance.portfolio_order_tab1')"
                     name="0">
-                    <div ref="orderListRef" class="order_list h-[9.2rem] mt-[0.4rem] overflow-auto" v-if="!loading">
+                    <div ref="orderListRef" class="order_list h-[9.2rem] mt-[0.2rem] overflow-auto" v-if="!loading">
                         <NoData v-if="!orderList.length" />
                         <OrderList :list="orderList" :type="'position'" />
                     </div>
@@ -28,7 +28,7 @@
                 </Tab>
                 <Tab :active="activeTab == 1" style="min-width: 2rem" :title="t('finance.portfolio_order_tab2')"
                     name="1">
-                    <div class="mt-[0.4rem]" v-if="!loading">
+                    <div class="mt-[0.2rem]" v-if="!loading">
                         <NoData v-if="!orderList.length" />
                         <OrderList :list="orderList" :type="'redeem'" />
                     </div>

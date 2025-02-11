@@ -1,5 +1,5 @@
 <template>
-    <div class="staking_list w-full mt-[0.32rem] mb-[2rem]">
+    <div class="staking_list w-full mt-[0.1rem] mb-[2rem]">
         <StakingItem v-if="stakingList.length" :list="stakingList" />
         <NoData v-if="!loading && !stakingList.length" />
         <div class="w-full flex justify-center">

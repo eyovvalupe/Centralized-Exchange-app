@@ -51,7 +51,7 @@ const typeChange = ref('option')
 <style lang="less">
 .my_follow_list {
   .list-i {
-    margin-bottom: 0.32rem;
+    margin-bottom: 0.1rem;
   }
 
   .my-total {

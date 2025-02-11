@@ -3,15 +3,11 @@
         <Tabs type="custom-card-stake" @change="onChange" v-model="activeTab"
             style="height: calc(var(--vh) * 100 - 0.88rem);" :swipeable="false" animated>
             <Tab :title="t('finance.portfolio_title')" :active="activeTab == 0" :name="'0'">
-                <div class="px-[0.1rem]">
-                    <StakingList />
-                </div>
+                <StakingList />
             </Tab>
             <Tab class="mb-[1.2rem]" :title="t('finance.portfolio_order')" :active="activeTab == 1" :name="'1'">
-                <div class="px-[0.1rem]">
                     <Order v-if="token"/>
                     <NoData v-if="!token"/>
-                </div>
             </Tab>
         </Tabs>
     </div>
@@ -37,6 +33,6 @@ const onChange = (val) => {
 </script>
 <style lang="less">
 .staking_page {
-    padding: 0 0.32rem;
+    padding: 0 0.1rem ;
 }
 </style>

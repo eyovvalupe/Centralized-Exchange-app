@@ -2,11 +2,10 @@
 <template>
   <div class="page page_assets">
     <!-- 头部 -->
-    <HeaderTabs class="border-b-[0.02rem]" :from="'assets'" :type="'line'" v-model:active="activeTab" :tabs="[
+    <HeaderTabs class="border-b-[0.02rem]" :type="'line'" v-model:active="activeTab" :tabs="[
       t('assets.header_total'),
       t('assets.wallet_cash_value'),
       t('assets.wallet_header_contract')
-
     ]" @change="changeActiveTab(activeTab, true)">
 
       <template #after>

@@ -22,6 +22,8 @@
       </div>
 
       <div class="tab" v-if="activeTab == 0">
+        <div class="h-[0.32rem]"></div>
+        <TradeOrderList  />
       </div>
 
       <div class="tab" v-if="activeTab == 1">
@@ -47,6 +49,7 @@
 <script setup>
 import { ref } from "vue";
 import HeaderTabs from "@/components/HeaderTabs.vue";
+import TradeOrderList from "./components/TradeOrderList.vue";
 import CryptoOrderList from "./components/CryptoOrderList.vue";
 import Order from "@/views/Finance/components/Order.vue";
 import PledgeOrder from "@/views/Finance/components/PledgeOrder.vue";

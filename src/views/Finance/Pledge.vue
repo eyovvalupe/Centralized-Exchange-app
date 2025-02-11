@@ -2,14 +2,10 @@
     <div class="pledge_page">
         <Tabs v-model:active="active" animated type="custom-card-stake" @change="onChange" style="height: calc(var(--vh) * 100 - 0.88rem); overflow-y: auto;">
             <Tab :title="$t('finance.defi_coll_borrow')">
-                <div class="px-[0.1rem]">
-                    <PledgeForm />
-                </div>
+                <PledgeForm />
             </Tab>
             <Tab class="mb-[1.2rem]" :title="$t('finance.defi_borrow_order')">
-                <div class="px-[0.1rem]" v-if="token">
-                    <PledgeOrder/>
-                </div>
+                <PledgeOrder v-if="token"/>
                 <NoData v-if="!token"/>
             </Tab>
         </Tabs>
@@ -44,6 +40,6 @@ onBeforeUnmount(()=>{
 
 <style lang="less">
 .pledge_page {
-    padding: 0 0.32rem;
+    padding: 0 0.1rem;
 }
 </style>

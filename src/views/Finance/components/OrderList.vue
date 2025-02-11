@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full bg-color6 rounded-[0.32rem] mb-[0.28rem] pb-[0.12rem] pt-[0.24rem]"
+    <div class="w-full bg-color6 rounded-[0.32rem] mb-[0.1rem] pb-[0.12rem] pt-[0.24rem]"
         :class="i == list.length - 1 ? 'mb-[0.5rem]' : ''" v-for="(item, i) in list" @click="jump(item)" v-if="list.length">
         <div class="flex justify-between mx-[0.28rem] mb-[0.3rem]">
             <div class="flex flex-col justify-between">

@@ -3,7 +3,7 @@
         {{ console.log(orderItem) }}
         <Top :title="$t('trade.ipo_detail_title')" />
         <div
-            class=" mt-[1.42rem] mx-[0.32rem] mb-[0.32rem] h-[2.1rem] bg-color6 rounded-[0.32rem] flex justify-center items-center">
+            class=" mt-[1.08rem] mx-[0.1rem] mb-[0.1rem] h-[2.1rem] bg-color6 rounded-[0.32rem] flex justify-center items-center">
             <div class="h-[1rem] flex flex-col justify-between items-center">
                 <div class="text-color2 text-[0.32rem]">{{ $t('finance.portfolio_mining_revenue') }}<span>({{ 'USDT'
                         }})</span></div>
@@ -11,7 +11,7 @@
             </div>
         </div>
         <div
-            class="mx-[0.32rem] bg-color6 rounded-[0.32rem] mb-[0.28rem] pb-[0.12rem] pt-[0.24rem] relative overflow-hidden">
+            class="mx-[0.1rem] bg-color6 rounded-[0.32rem] mb-[0.1rem] pb-[0.12rem] pt-[0.24rem] relative overflow-hidden">
             <div class="w-max h-[0.6rem] px-[0.28rem] absolute top-[0] right-[0] rounded-bl-[0.32rem] bg-primary"
                 v-if="orderItem.type == 'position'">
                 <div class="w-full h-full relative flex items-center justify-center">
@@ -77,11 +77,6 @@ import store from '@/store';
 import { getStaticImgUrl } from "@/utils/index.js";
 import { isEmpty } from '@/utils/isEmpty';
 import { computed } from 'vue';
-
 const orderItem = computed(() => store.state.orderItem)
-
-
-
-const iconList = ['BTC', 'USDT']
 
 </script>

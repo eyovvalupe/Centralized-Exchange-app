@@ -107,7 +107,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-
+    height: 0.88rem;
     .tabs {
         flex: 1;
         display: flex;

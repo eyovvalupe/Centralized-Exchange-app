@@ -72,7 +72,7 @@ const clickLeft = () => {
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: 1.12rem;
+  height: 0.88rem;
   background-color: var(--ex-bg-color);
   display: flex;
   align-items: center;
@@ -88,12 +88,12 @@ const clickLeft = () => {
   .back {
     position: absolute;
     left: 0.32rem;
-    width: 0.7rem;
-    height: 0.7rem;
+    width: 0.6rem;
+    height: 0.6rem;
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: 0.1rem;
+    border-radius: 0.6rem;
     background-color: var(--ex-bg-color6);
   }
 

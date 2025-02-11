@@ -10,7 +10,7 @@
             </div>
             <div class="left">
                 <div class="top">
-                    <div class="name">{{ info.name || '萨达萨达' }}</div>
+                    <div class="name">{{ info.name || '' }}</div>
                     <div class="level">{{ $t('copy.level', { level: info.lv || '--' }) }}</div>
                 </div>
                 <div class="bottom">
@@ -27,7 +27,7 @@
             shrink>
             <Tab :title="$t('copy.copy_belong_tab1')" name="0">
                 <div class="follow-box">
-                    <div class="follow-info-box mb-[0.24rem] mx-[0.32rem]">
+                    <div class="follow-info-box mb-[0.1rem] mx-[0.1rem]">
                         <div class="info-box pb-[0.12rem]">
                             <div class="flex justify-between mb-[0.48rem]">
                                 <div class="flex ml-[0.28rem] mt-[0.28rem] items-center">
@@ -78,7 +78,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="rounded-[0.32rem] p-[0.28rem] mb-[0.24rem] mx-[0.32rem]"
+                    <div class="rounded-[0.32rem] p-[0.28rem] mb-[0.1rem] mx-[0.1rem]"
                         style="background-color: var(--ex-bg-white);">
                         <div class="flex items-center">
                             <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
@@ -90,12 +90,12 @@
                             <div class="h-[2.4rem] flex flex-col justify-between mb-[0.6rem]">
                                 <div class="w-full flex">
                                     <div class="flex-1 flex flex-col">
-                                        <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{
+                                        <div class="text-[0.28rem] text-color2 text-center mb-[0.1rem]">{{
                                             $t('copy.copy_belong_days') }}</div>
                                         <div class="text-[0.4rem] font-semibold text-center">{{ info.days }}</div>
                                     </div>
                                     <div class="flex-1 flex flex-col">
-                                        <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{
+                                        <div class="text-[0.28rem] text-color2 text-center mb-[0.1rem]">{{
                                             $t('copy.copy_leader_order_size') }}</div>
                                         <div class="text-[0.4rem] font-semibold text-center">{{ info.amount }}</div>
                                     </div>
@@ -103,13 +103,13 @@
                                 <div class="w-full flex">
 
                                     <div class="flex-1 flex flex-col">
-                                        <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{
+                                        <div class="text-[0.28rem] text-color2 text-center mb-[0.1rem]">{{
                                             $t('copy.copy_leader_followers_profit') }}</div>
                                         <div class="text-[0.4rem] font-semibold text-center">{{ info.returnamount }}
                                         </div>
                                     </div>
                                     <div class="flex-1 flex flex-col">
-                                        <div class="text-[0.28rem] text-color2 text-center mb-[0.24rem]">{{
+                                        <div class="text-[0.28rem] text-color2 text-center mb-[0.1rem]">{{
                                             $t('copy.copy_leader_followers_num') }}</div>
                                         <div class="text-[0.4rem] font-semibold text-center">{{ info.followers }}</div>
                                     </div>
@@ -123,9 +123,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="h-[7.9rem] rounded-[0.32rem] mb-[0.24rem] p-[0.28rem] mx-[0.32rem]"
+                    <div class="h-[7.9rem] rounded-[0.32rem] mb-[0.1rem] p-[0.28rem] mx-[0.1rem]"
                         style="background-color: var(--ex-bg-white);">
-                        <div class="flex justify-between items-center mb-[0.4rem]">
+                        <div class="flex justify-between items-center mb-[0.1rem]">
                             <div class="flex items-center">
                                 <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                     <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
@@ -177,9 +177,9 @@
                             </div>
                         </div>
                     </div>
-                    <div class="rounded-[0.32rem] mb-[0.4rem] p-[0.28rem] mx-[0.32rem]"
+                    <div class="rounded-[0.32rem] mb-[0.1rem] p-[0.28rem] mx-[0.1rem]"
                         style="background-color: var(--ex-bg-white);">
-                        <div class="flex justify-between items-center mb-[0.4rem] mb-[0.4rem]">
+                        <div class="flex justify-between items-center mb-[0.1rem]">
                             <div class="flex items-center">
                                 <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                     <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
@@ -191,10 +191,10 @@
                                 <img v-lazy="getStaticImgUrl('static/img/common/next.svg')" alt="" />
                             </div>
                         </div>
-                        <div class="rounded-[0.32rem] h-[1.72rem] flex items-center justify-center mb-[0.24rem]"
+                        <div class="rounded-[0.32rem] h-[1.72rem] flex items-center justify-center mb-[0.1rem]"
                             style="background-color: var(--ex-bg-white2);">
                             <div class="flex flex-col items-center">
-                                <div class="text-[0.28rem] text-color2 mb-[0.24rem]">{{ $t('copy.copy_follower_amount')
+                                <div class="text-[0.28rem] text-color2 mb-[0.1rem]">{{ $t('copy.copy_follower_amount')
                                     }}</div>
                                 <div class="text-[0.4rem] font-semibold">{{ follows.length }}</div>
                             </div>
@@ -226,7 +226,7 @@
             </Tab>
             <Tab :title="$t('copy.copy_belong_tab2')" name="1">
                 <div class="follow-box">
-                    <div class="flex h-[0.6rem] mx-[0.32rem] border-b-[0.02rem]">
+                    <div class="flex h-[0.6rem] mx-[0.1rem] border-b-[0.02rem]">
                         <div class="w-1/4 text-[0.22rem] text-[0.24rem] text-color2">{{ $t('copy.copy_belong_subtitle1')
                             }}</div>
                         <div class="w-1/4 text-[0.22rem] text-[0.24rem] text-color2">{{ $t('copy.copy_belong_subtitle2')
@@ -272,7 +272,7 @@
                                     <div class="avatar overflow-hidden">
                                         <img v-lazy="getStaticImgUrl(`static/avatar/${item.avatar || 1}.png`)" alt="" />
                                     </div>
-                                    <div>{{ item.name }}</div>
+                                    <div class="max-w-[3rem] truncate">{{ item.name }}</div>
                                 </div>
                             </div>
                             <div class="td">
@@ -392,15 +392,15 @@ watch(copyItem, (val) => {
 
 <style lang="less" scoped>
 .page-follow-detail {
-    padding-top: 1.28rem;
+    padding-top: 0.88rem;
 
     :deep(.van-tabs__nav) {
         padding-left: 0.24rem;
     }
 
     .title-box {
-        padding: 0.16rem 0.32rem;
-        margin-bottom: 0.32rem;
+        padding: 0.2rem 0.32rem;
+        margin-bottom: 0.1rem;
         width: 100%;
         display: flex;
         align-items: flex-start;
@@ -495,7 +495,7 @@ watch(copyItem, (val) => {
     }
 
     .follow-box {
-        padding-top: 0.4rem;
+        padding-top: 0.2rem;
     }
 
     .follow-info-box {
@@ -640,6 +640,7 @@ watch(copyItem, (val) => {
             height: 1.28rem;
             padding: 0 0.24rem;
             background-color: var(--ex-bg-color3);
+            gap:0.1rem;
         }
 
 
@@ -650,7 +651,6 @@ watch(copyItem, (val) => {
             flex-direction: column;
             align-items: start;
             justify-content: center;
-
             .name {
                 font-size: 0.28rem;
             }
