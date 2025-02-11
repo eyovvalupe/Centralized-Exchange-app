@@ -328,7 +328,7 @@ export default {
     financialRecords: "資金記錄",
     header_total: "總資產",
     header_wallet: "帳戶",
-    header_order: "訂單中心",
+    header_order: "訂單",
     info_cash: "現金帳戶",
     info_order: "持倉金額",
     over_view_cash: "現金帳戶",

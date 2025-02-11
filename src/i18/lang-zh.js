@@ -323,7 +323,7 @@ export default {
     financialRecords: "资金记录",
     header_total: "总资产",
     header_wallet: "账户",
-    header_order: "订单中心",
+    header_order: "订单",
     info_cash: "现金账户",
     info_order: "持仓金额",
     over_view_cash: "现金账户",

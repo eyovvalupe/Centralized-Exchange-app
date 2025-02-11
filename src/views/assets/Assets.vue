@@ -2,13 +2,19 @@
 <template>
   <div class="page page_assets">
     <!-- 头部 -->
-    <HeaderTabs :from="'assets'" :type="'line'" v-model:active="activeTab" :tabs="[
+    <HeaderTabs class="border-b-[0.02rem]" :from="'assets'" :type="'line'" v-model:active="activeTab" :tabs="[
       t('assets.header_total'),
       t('assets.wallet_cash_value'),
-      t('assets.wallet_header_contract'),
-      t('assets.header_order'),
+      t('assets.wallet_header_contract')
 
-    ]" @change="changeActiveTab(activeTab, true)" />
+    ]" @change="changeActiveTab(activeTab, true)">
+
+      <template #after>
+        <div class="h-[0.68rem] text-[0.28rem] flex items-center px-[0.2rem] rounded-l-full bg-white2" :class="{'text-primary':activeTab == 3}" @click="changeActiveTab(3,true)">
+          <span class="size-[0.32rem] mr-[0.12rem]"><img :src="activeTab == 3 ? getStaticImgUrl('/static/img/assets/order_primary.svg') : getStaticImgUrl('/static/img/assets/order.svg')" /></span>
+          {{ t('assets.header_order') }}</div>
+      </template>
+    </HeaderTabs>
 
     <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" :loop="false" ref="swipe" @change="swipeChange">
       <SwipeItem>

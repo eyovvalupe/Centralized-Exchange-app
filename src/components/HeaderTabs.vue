@@ -1,7 +1,7 @@
 <template>
     <div ref="headerTabRef" class="header_tabs" :class="['header_tabs--' + type]">
         <slot name="before" />
-        <div class="tabs" :class="from == 'assets' ? 'border-b-[0.02rem]' : ''" ref="tabScroller">
+        <div class="tabs"  ref="tabScroller">
             <div class="tab_body">
                 <div class="tab" v-for="(tabName, i) in tabs" :key="i"
                     :class="{ 'active_tab': active == i, 'tab--last': i == tabs.length - 1 }"
