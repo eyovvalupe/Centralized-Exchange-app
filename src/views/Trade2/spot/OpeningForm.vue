@@ -211,15 +211,15 @@
           @click="store.commit('setIsLoginOpen', true)">
           {{ t("trade.stock_opening_token_login") }}
         </div>
-        <div class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn"
+        <div class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn btn2"
           @click="jump('register')">
           {{ t("trade.stock_opening_token_register") }}
         </div>
       </div>
-      <div class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn" @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
+      <!-- <div class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn" @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
         ">
         {{ t("trade.contract_create_guest_btn") }}
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -1516,6 +1516,10 @@ defineExpose({
     .btn {
       background-color: var(--ex-white);
       color: var(--ex-bg-color);
+    }
+    .btn2 {
+      background-color: var(--ex-primary-color);
+      color: var(--ex-white);
     }
   }
 

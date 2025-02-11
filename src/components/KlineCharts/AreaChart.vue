@@ -32,7 +32,8 @@ const props = defineProps({
     showY: {
         type: Boolean,
         default: false
-    }
+    },
+    mini: false,
 })
 const symbol = computed(() => props.symbol || '')
 watch(symbol, val => {
@@ -282,11 +283,16 @@ defineExpose({
 .chat_area_box {
     width: 100%;
     height: 100%;
+    flex: 1;
     position: relative;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
 
     .chat_area {
         width: 100%;
         height: 100%;
+        flex: 1;
     }
 
     .chat_area_loading {

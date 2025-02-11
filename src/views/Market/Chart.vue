@@ -41,13 +41,13 @@
               <img v-lazy="getStaticImgUrl('/static/img/common/switch.svg')" alt="" />
             </div>
           </div>
-          <div v-if="!(props.mini && zipo)"  class="chart_container" :class="{ fullscreen_container: fullWindow }">
+          <div v-show="!(props.mini && zipo)"  class="chart_container" :class="{ fullscreen_container: fullWindow }">
             <!-- 时区 -->
             <div v-if="showDate" class="chart_time">{{ showDate }}</div>
             <!-- 分时图 -->
-            <AreaChart ref="AreaChartRef" v-if="timeType == 'Time'" :showY="true" :symbol="item.symbol" />
+            <AreaChart :mini="props.mini" ref="AreaChartRef" v-if="timeType == 'Time'" :showY="true" :symbol="item.symbol" />
             <!-- K线图 -->
-            <KlineChart ref="KlineChartRef" v-if="timeType != 'Time'" :symbol="item.symbol" :period="timeType" />
+            <KlineChart :mini="props.mini" ref="KlineChartRef" v-if="timeType != 'Time'" :symbol="item.symbol" :period="timeType" />
             <!-- 全屏关闭按钮 -->
             <div class="full_close" v-if="fullWindow" @click="fullScreen(false)">
               <Icon name="cross" />
@@ -90,7 +90,7 @@
 });
  const periodType = computed(() => props.type);
 
- const zipo = ref(true) // 折叠状态
+ const zipo = ref(false) // 折叠状态
 
  // 股票信息
 const item = computed(() => {
@@ -227,7 +227,7 @@ defineExpose({
       }
 
       .chart_container {
-        min-height: 5rem;
+        min-height: 3rem;
         flex: 1;
         width: 100%;
         padding: 0 0.28rem;

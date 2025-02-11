@@ -65,19 +65,19 @@
           <div class="count flex-1">
             <div class="count_item">
               <span class="text-color3">{{ t('market.market_marketinfo_high') }}</span>
-              <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.high || '--' }}</span>
+              <span class="num text-white" >{{ item.high || '--' }}</span>
             </div>
             <div class="count_item">
               <span class="text-color3">{{ t('market.market_marketinfo_low') }}</span>
-              <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.low || '--' }}</span>
+              <span class="num text-white" >{{ item.low || '--' }}</span>
             </div>
             <div class="count_item">
               <span class="text-color3">{{ t('market.market_marketinfo_open') }}</span>
-              <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.open || '--' }}</span>
+              <span class="num text-white" >{{ item.open || '--' }}</span>
             </div>
             <div class="count_item">
               <span class="text-color3">{{ t('market.market_marketinfo_close') }}</span>
-              <span class="num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">{{ item.close || '--'
+              <span class="num text-white" >{{ item.close || '--'
                 }}</span>
             </div>
           </div>
@@ -98,7 +98,7 @@
 
     <!-- 内容 -->
     <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
-      <Tabs class="van-tabs--sub_line van-tabs--sub_bg" :sticky="true" :color="'var(--ex-primary-color)'"
+      <Tabs style="background-color: var(--ex-bg-color3);border-radius: 0.32rem 0.32rem 0 0;" class="van-tabs--sub_line van-tabs--sub_bg" :sticky="true" :color="'var(--ex-primary-color)'"
         v-model:active="activeTab" animated shrink>
         <!-- <Tab :name="1" :title="'开仓'">
           <div class="market-box" style="height: calc(var(--vh) * 100 - 2.2rem);overflow-y: auto;">
@@ -129,9 +129,11 @@
     <!-- 去交易按钮 -->
     <div class="bottom-box">
       <div class="info">
-        <div class="name">{{ item.symbol || "--" }}</div>
+        <div class="name">{{ item.name || "--" }}</div>
         <div class="type" v-if="chartRef">{{ chartRef.timeType }}</div>
       </div>
+      <div style="flex: 1;"></div>
+      <div class="data" @click="showInfo = true">数据</div>
       <div class="btn" @click="gotrade">交易</div>
     </div>
 
@@ -158,12 +160,100 @@
       </div>
     </BottomPopup>
 
+    <!-- 数据弹窗 -->
+    <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showInfo"
+      :title="t('market.market_marketinfo_data')" closeable>
+      <div class="info_popup">
+        <div class="info_price">
+          <div class="info_num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
+            <template v-if="item.price || item.close">
+              {{ item.price || item.close }}
+            </template>
+            <span v-else>--</span>
+          </div>
+          <div style="display: flex; align-items: center" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
+            <div v-if="Number(item.change)" :class="[
+              updown === 0 ? '' : updown > 0 ? 'price_up' : 'price_down',
+            ]">
+              {{ updown === 0 ? "" : updown > 0 ? "+" : ""
+              }}{{ item.change }}
+            </div>
+            <div v-if="item.ratio" style="margin-left: 0.15rem" :class="[
+              updown === 0
+                ? ''
+                : updown > 0
+                  ? 'percentage_up'
+                  : 'percentage_down',
+            ]">
+              {{
+                updown === 0 || item.ratio === undefined
+                  ? ""
+                  : updown > 0
+                    ? "+"
+                    : ""
+              }}{{ item.ratio === undefined ? "--" : item.ratio + "%" }}
+            </div>
+          </div>
+        </div>
+        <div class="info_items">
+          <div class="info_item"
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.svg')})` }" style="
+              background-repeat: no-repeat;
+              background-position: center bottom;
+            ">
+            <div class="name">{{ t("market.market_marketinfo_open") }}</div>
+            <div class="info_item__value">{{ item.open }}</div>
+          </div>
+          <div class="info_item"
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.svg')})` }" style="
+              background-repeat: no-repeat;
+              background-position: center bottom;
+            ">
+            <div class="name">{{ t("market.market_marketinfo_high") }}</div>
+            <div class="info_item__value">{{ item.high }}</div>
+          </div>
+          <div class="info_item"
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.svg')})` }" style="
+              background-repeat: no-repeat;
+              background-position: center bottom;
+            ">
+            <div class="name">{{ t("market.market_marketinfo_amount") }}</div>
+            <div class="info_item__value">{{ _formatNumber(item.volume) }}</div>
+          </div>
+          <div class="info_item"
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.svg')})` }" style="
+              background-repeat: no-repeat;
+              background-position: center bottom;
+            ">
+            <div class="name">{{ t("market.market_marketinfo_close") }}</div>
+            <div class="info_item__value">{{ item.close }}</div>
+          </div>
+          <div class="info_item"
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.svg')})` }" style="
+              background-repeat: no-repeat;
+              background-position: center bottom;
+            ">
+            <div class="name">{{ t("market.market_marketinfo_low") }}</div>
+            <div class="info_item__value">{{ item.low }}</div>
+          </div>
+          <div class="info_item"
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/common/price_bg.svg')})` }" style="
+              background-repeat: no-repeat;
+              background-position: center bottom;
+            ">
+            <div class="name">{{ t("market.market_marketinfo_value") }}</div>
+            <div class="info_item__value">{{ _formatNumber(item.amount) }}</div>
+          </div>
+        </div>
+      </div>
+    </BottomPopup>
+
   </div>
 
 </template>
 
 <script setup>
-import { ref, computed } from "vue"
+import { ref, computed, onMounted } from "vue"
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import router from "@/router/index"
@@ -200,8 +290,7 @@ const gotrade = () => {
 
 
 const activeTab = ref(2)
-const periodType = computed(() => route.query.type || props.type);
-const tradeType = ref(route.query.tradeType)
+const showInfo = ref(false);
 
 // 股票信息
 const item = computed(() => {
@@ -250,7 +339,12 @@ const getBasic = (obj) => {
 if (item.value.symbol) {
   getBasic(item.value)
 }
-const chartLoading = ref(false)
+const chartLoading = ref(true)
+onMounted(() => {
+  setTimeout(() => {
+    chartLoading.value = false
+  }, 300)
+})
 const handleClick = (obj) => {
   if (obj.type != 'crypto' && ['3', '4'].includes(activeTab.value)) { // 非加密货币的没有订单薄
     activeTab.value = 1
@@ -261,7 +355,7 @@ const handleClick = (obj) => {
   getBasic(obj)
   setTimeout(() => {
     chartLoading.value = false
-  }, 0)
+  }, 100)
 };
 
 
@@ -432,6 +526,18 @@ setTimeout(() => {
         border: 1px solid var(--ex-text-color5);
       }
     }
+    .data {
+      background-color: var(--ex-bg-white1);
+      height: 0.92rem;
+      border-radius: 1rem;
+      color: var(--ex-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.32rem;
+      padding: 0 0.4rem;
+      margin-right: 0.12rem;
+    }
     .btn {
       background-color: var(--ex-status-color3);
       width: 2.88rem;
@@ -553,5 +659,82 @@ setTimeout(() => {
     }
   }
 
+}
+
+.info_popup {
+  padding: 0.4rem 0.32rem 0.2rem 0.32rem;
+
+  .info_name {
+    font-size: 0.32rem;
+    line-height: 0.44rem;
+    color: var(--ex-text-color);
+    margin-bottom: 0.54rem;
+    text-align: center;
+  }
+
+  .info_price {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    font-size: 0.32rem;
+    height: 1.3rem;
+    padding: 0.24rem;
+    background: var(--ex-bg-color3);
+    border-radius: 0.4rem;
+
+    .info_num {
+      font-size: 0.6rem;
+      line-height: 0.81rem;
+      font-weight: 600;
+      margin-right: 0.2rem;
+    }
+
+    .price_up,
+    .percentage_up {
+      height: 0.56rem;
+      display: flex;
+      align-items: center;
+      background: rgb(var(--ex-up-color-rgb) / 0.1);
+      border-radius: 1.25rem;
+      padding: 0.075rem 0.25rem;
+    }
+
+    .price_down,
+    .percentage_down {
+      height: 0.56rem;
+      display: flex;
+      align-items: center;
+      background: rgb(var(--ex-down-color-rgb) / 0.1);
+      border-radius: 1.25rem;
+      padding: 0.075rem 0.25rem;
+    }
+  }
+
+  .info_items {
+    margin: 0.32rem 0 0 0;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .info_item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 0.32rem;
+      width: 31%;
+      background-color: var(--ex-bg-color2);
+      border-radius: 0.4rem;
+      height: 1.26rem;
+
+      .name {
+        margin-top: 0.2rem;
+      }
+
+      .info_item__value {
+        font-weight: 600;
+      }
+    }
+  }
 }
 </style>

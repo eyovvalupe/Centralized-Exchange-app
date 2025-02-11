@@ -40,14 +40,14 @@
         <div class="info">
           <div>{{ $t('market.market_faster_available') }}</div>
           <div>
-            <span style="font-size: 0.32rem;color:var(--ex-primary-color)">{{ stockWalletAmount || '--' }}</span>
+            <span style="font-size: 0.32rem;color:var(--ex-primary-color)">{{ stockWalletAmount || '0' }}</span>
             <span style="color:var(--ex-white)">&nbsp;USDT</span>
           </div>
         </div>
         <div class="info" style="margin-top: 0.4rem;">
           <div>{{ $t('trade.spot_trade_available') }}</div>
           <div>
-            <span style="font-size: 0.32rem;color:var(--ex-primary-color)">{{ currencyAmount || '--' }}</span>
+            <span style="font-size: 0.32rem;color:var(--ex-primary-color)">{{ currencyAmount || '0' }}</span>
             <span style="color:var(--ex-white)">&nbsp;{{ props.item.symbol ? props.item.symbol.replace('usdt', '').toUpperCase() : '' }}</span>
           </div>
         </div>
@@ -196,9 +196,9 @@ defineExpose({
           display: flex;
           align-items: center;
           justify-content: center;
-          color: var(--ex-bg-color);
+          color: var(--ex-white);
           font-size: 0.28rem;
-          background-color: var(--ex-white);
+          background-color: var(--ex-bg-white1);
         }
       }
     }

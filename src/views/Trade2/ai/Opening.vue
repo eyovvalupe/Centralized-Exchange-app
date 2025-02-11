@@ -106,17 +106,17 @@
             {{ t("trade.stock_opening_token_login") }}
           </div>
           <div
-            class="flex-1 h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn ripple-primary"
+            class="flex-1 h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn btn2 ripple-primary"
             @click="jump('register')">
             {{ t("trade.stock_opening_token_register") }}
           </div>
         </div>
-        <div
+        <!-- <div
           class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
           @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
             ">
           {{ t("trade.contract_create_guest_btn") }}
-        </div>
+        </div> -->
       </div>
       <div class="btns" v-else>
         <Button :loading="loading || submitLoading" @click="checkForm" v-if="token" size="large" class="btn ripple-btn"
@@ -133,7 +133,7 @@
         <div class="info">
           <div>{{ t('market.market_faster_available') }}</div>
           <div>
-            <span style="font-size: 0.32rem;color:var(--ex-primary-color)">{{ usdt.amount || '--' }}</span>
+            <span style="font-size: 0.32rem;color:var(--ex-primary-color)">{{ usdt.amount || '0' }}</span>
             <span style="color:var(--ex-white)">USDT</span>
           </div>
         </div>
@@ -635,9 +635,9 @@ defineExpose({
           display: flex;
           align-items: center;
           justify-content: center;
-          color: var(--ex-bg-color);
+          color: var(--ex-white);
           font-size: 0.28rem;
-          background-color: var(--ex-white);
+          background-color: var(--ex-bg-white1);
         }
       }
     }
@@ -746,6 +746,10 @@ defineExpose({
     .btn {
       background-color: var(--ex-white);
       color: var(--ex-bg-color);
+    }
+    .btn2 {
+      background-color: var(--ex-primary-color);
+      color: var(--ex-white);
     }
   }
 

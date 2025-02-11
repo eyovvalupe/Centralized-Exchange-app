@@ -42,7 +42,6 @@ import LoadingMore from "@/components/LoadingMore.vue"
 import { _ailist } from "@/api/api"
 import AiInfo from "../components/AiInfo.vue"
 import UnLogin from "@/components/UnLogin.vue"
-import { formatNumber } from 'vant/lib/utils';
 
 const props = defineProps({
     scrollDom: {
@@ -98,7 +97,7 @@ const getList = () => {
             store.commit('setAiInquireList', res.data || [])
         } else {
             const arr = aiInquireList.value
-            arr.push(...LoadingMore(res.data || []))
+            arr.push(...(res.data || []))
             store.commit('setAiInquireList', arr)
         }
         if (!res.data?.length) {
@@ -120,6 +119,9 @@ const scrolHandle = () => {
     }
 }
 onMounted(() => {
+    if (token.value) {
+        init()
+    }
     setTimeout(() => {
         try {
             moreDom = document.querySelector('.loading_more')

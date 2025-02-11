@@ -38,6 +38,7 @@ let socket = null
 const props = defineProps({
     symbol: '',
     period: '',
+    mini: false,
 })
 const periodMap = {
     '1m': '1min',
@@ -82,7 +83,7 @@ onMounted(() => {
                 }
             }
         })
-    }, 100)
+    }, 0)
     setTimeout(() => {
         initData()
     }, 300)
@@ -134,12 +135,14 @@ const initData = async () => { // 初始化数据
             // setCurrData(datas[datas.length - 1] || {})
             chart.loadMore(loadMoreData)
             setTimeout(() => {
-                if (!vol.value) {
-                    vol.value = chart.createIndicator('VOL')
-                } else {
-                    chart.overrideIndicator({
-                        name: vol.value
-                    })
+                if (!props.mini) {
+                    if (!vol.value) {
+                        vol.value = chart.createIndicator('VOL')
+                    } else {
+                        chart.overrideIndicator({
+                            name: vol.value
+                        })
+                    }
                 }
                 chart.resize()
             }, 300)

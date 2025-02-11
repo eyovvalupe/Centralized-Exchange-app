@@ -118,20 +118,22 @@ const props = defineProps({
 const showDialog = ref(false)
 const clickItem = () => {
   console.error('打开交易弹窗')
-  showDialog.value = true
-  setTimeout(() => {
-    openingRef.value && openingRef.value.choose(props.item)
-  }, 300)
-  // goTrade()
+  // showDialog.value = true
+  // setTimeout(() => {
+  //   openingRef.value && openingRef.value.choose(props.item)
+  // }, 300)
+  goTrade()
 }
 const goTrade = () => {
   store.commit("setCurrAi", props.item);
   router.push({
-    name: "trade",
+    name: "tradeInfo",
     query: {
-      to: "ai",
-      name: props.item.name,
+      // to: "ai",
+      // name: props.item.name,
       symbol: props.item.symbol,
+      type: 'ai',
+      tradeType: 'ai'
     },
   });
   if (route.name == "trade") {
