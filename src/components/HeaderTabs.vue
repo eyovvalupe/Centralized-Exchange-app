@@ -185,8 +185,8 @@ onMounted(() => {
 
         .active_tab {
             font-weight: normal;
-            color: var(--ex-text-color);
-
+            color: var(--ex-black);
+            background-color: var(--ex-white);
             .tab-name {
                 font-weight: 600;
                 font-size: 0.32rem;
