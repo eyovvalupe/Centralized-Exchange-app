@@ -43,7 +43,7 @@
           <slot v-if="custom" />
 
           <!-- 输入框 -->
-          <input :disabled="disabled" :style="{height:inputHeight}" v-else v-model="inputVal" @focus="
+          <input :disabled="disabled" :style="{height:inputHeight, pointerEvents:disabled?'none':''}" v-else v-model="inputVal" @focus="
             inputFocus = true;
           emit('focus');
           " @blur="
@@ -135,6 +135,7 @@ const emit = defineEmits([
   "btnClick",
   "focus",
   "blur",
+  "input"
 ]);
 const props = defineProps({
   rightContent: {
@@ -256,6 +257,7 @@ const onInput = () => {
     inputVal.value = props.max;
   }
   emit("update:modelValue", inputVal.value);
+  emit('input')
 };
 const percentTagClick = (percent) => {
   emit("percentTagClick", percent);

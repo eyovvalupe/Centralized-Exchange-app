@@ -2,43 +2,31 @@
 <!-- 市场行情 -->
 <template>
     <div class="page-marketinfo2">
-        <!-- 头部 -->
-        <div class="max-width info_header">
-            <div class="top">
-                <div v-if="!props.innerPage" class="back" @click="router.back">
-                    <Icon name="arrow-left" />
-                </div>
 
-                <!-- 标题 -->
-                <div class="title"  @click="showSearchDialog = true">
-                    <div class="title_name">{{ item.name || "--" }}
-                        <Icon name="arrow-down" />
-                    </div>
-                </div>
-                <!-- 详情 -->
-                <div class="title_shadow"></div>
-                <div v-if="!props.innerPage" class="search star" @click="addCollect(activeTab)"
-                    :style="{ opacity: loading ? '0.5' : '1' }">
-                    <div class="size-[0.48rem]">
-                        <img v-if="item.watchlist == 1" v-lazy="getStaticImgUrl('/static/img/market/star.svg')" alt="">
-                        <img v-else v-lazy="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
-                    </div>
-                </div>
+        <div class="left-icon" @click="showSearchDialog = true">
+            <div class="size-[0.4rem]">
+                <img v-lazy="getStaticImgUrl('/static/img/trade/open.svg')" alt="">
+            </div>
+        </div>
+        <div class="right-icon" @click="goMaret">
+            <div class="size-[0.4rem]">
+                <img v-lazy="getStaticImgUrl('/static/img/market/market.svg')" alt="">
             </div>
         </div>
 
         <div class="market-trade-body">
-            <Tabs @change="changeTab" :key="'main'" class="van-tabs--sub_line van-tabs--sub_bg" :sticky="true"
+            <Tabs @change="changeTab" :key="'main'" class="van-tabs--top" :sticky="true"
                 :color="'var(--ex-primary-color)'" v-model:active="activeTab" animated shrink>
                 <!-- 现货 -->
                 <Tab :name="1" :title="'现货'">
+
                     <div class="dialog-market-box" v-if="activeTab == 1 && !chartLoading">
                         <div class="charts-box">
                             <Chart :type="'constract'" :mini="true" />
                         </div>
                         <!-- 内容1 -->
-                        <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
-                            <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg"
+                        <div style="margin: 0.1rem;background-color:var(--ex-bg-color3);border-radius: 0.32rem;">
+                            <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg van-tabs--market2"
                                 :color="'var(--ex-primary-color)'" v-model:active="activeTab2" animated shrink>
                                 <Tab :name="11" :title="'开仓'">
                                     <div style="height: 0.2rem;"></div>
@@ -55,11 +43,24 @@
                                         <OrderingSpot v-if="activeTab2 == 33" :key="'n'" type="news" />
                                     </div>
                                 </Tab>
+                                <Tab :title="t('trade.trade_orders_current')" :name="44">
+                                    <div style="height: 0.2rem;"></div>
+                                    <div class="dialog-market-bg" v-if="activeTab2 == 44">
+                                        <PositionsSpot :type="'constract'" />
+                                    </div>
+                                </Tab>
+                                <Tab :title="t('trade.trade_order_history')" :name="55">
+                                    <div style="height: 0.2rem;"></div>
+                                    <div class="dialog-market-bg" v-if="activeTab2 == 55">
+                                        <InquireSpot :scrollBox="'.dialog-market-box'" :type="'constract'"
+                                            ref="InquireRef" />
+                                    </div>
+                                </Tab>
                             </Tabs>
                         </div>
 
                         <!-- 内容2 -->
-                        <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
+                        <!-- <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
                             <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg"
                                 :color="'var(--ex-primary-color)'" v-model:active="activeTab3" animated shrink>
                                 <Tab :title="t('trade.trade_orders_current')" :name="44">
@@ -75,7 +76,7 @@
                                     </div>
                                 </Tab>
                             </Tabs>
-                        </div>
+                        </div> -->
                         <div style="height: 0.4rem;"></div>
                     </div>
                 </Tab>
@@ -85,8 +86,8 @@
                             <Chart :type="'constract'" :mini="true" />
                         </div>
                         <!-- 内容1 -->
-                        <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
-                            <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg"
+                        <div style="margin: 0.1rem;background-color:var(--ex-bg-color3);border-radius: 0.32rem;">
+                            <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg van-tabs--market2"
                                 :color="'var(--ex-primary-color)'" v-model:active="activeTab2" animated shrink>
                                 <Tab :name="11" :title="'开仓'">
                                     <div style="height: 0.2rem;"></div>
@@ -103,11 +104,24 @@
                                         <OrderingSpot v-if="activeTab2 == 33" :key="'n'" type="news" />
                                     </div>
                                 </Tab>
+                                <Tab :title="t('trade.trade_orders_current')" :name="44">
+                                    <div style="height: 0.2rem;"></div>
+                                    <div class="dialog-market-bg" v-if="activeTab2 == 44">
+                                        <PositionsContract :type="'constract'" />
+                                    </div>
+                                </Tab>
+                                <Tab :title="t('trade.trade_order_history')" :name="55">
+                                    <div style="height: 0.2rem;"></div>
+                                    <div class="dialog-market-bg" v-if="activeTab2 == 55">
+                                        <InquireContract :scrollBox="'.dialog-market-box'" :type="'constract'"
+                                            ref="InquireRef" />
+                                    </div>
+                                </Tab>
                             </Tabs>
                         </div>
 
                         <!-- 内容2 -->
-                        <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
+                        <!-- <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
                             <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg"
                                 :color="'var(--ex-primary-color)'" v-model:active="activeTab3" animated shrink>
                                 <Tab :title="t('trade.trade_orders_current')" :name="44">
@@ -123,7 +137,7 @@
                                     </div>
                                 </Tab>
                             </Tabs>
-                        </div>
+                        </div> -->
                         <div style="height: 0.4rem;"></div>
                     </div>
                 </Tab>
@@ -133,12 +147,12 @@
                             <Chart :type="'ai'" :mini="true" />
                         </div>
                         <!-- 内容1 -->
-                        <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
-                            <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg"
+                        <div style="margin: 0.1rem;background-color:var(--ex-bg-color3);border-radius: 0.32rem;">
+                            <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg van-tabs--market2"
                                 :color="'var(--ex-primary-color)'" v-model:active="activeTab2" animated shrink>
                                 <Tab :name="11" :title="'开仓'">
                                     <div style="height: 0.2rem;"></div>
-                                    <OpeningAi :tradeType="3"  ref="openingRef2"  />
+                                    <OpeningAi :tradeType="3" ref="openingRef2" />
                                 </Tab>
                                 <Tab :name="22" :title="'订单薄'" v-if="item.type == 'crypto'">
                                     <div style="height: 0.08rem;"></div>
@@ -151,11 +165,23 @@
                                         <OrderingSpot v-if="activeTab2 == 33" :key="'n'" type="news" />
                                     </div>
                                 </Tab>
+                                <Tab :title="t('trade.trade_orders_current')" :name="44">
+                                    <div style="height: 0.2rem;"></div>
+                                    <div class="dialog-market-bg" v-if="activeTab2 == 44">
+                                        <PositionsAi />
+                                    </div>
+                                </Tab>
+                                <Tab :title="t('trade.trade_order_history')" :name="55">
+                                    <div style="height: 0.2rem;"></div>
+                                    <div class="dialog-market-bg" v-if="activeTab2 == 55">
+                                        <InquireAi :scrollDom="'.dialog-market-box'" ref="InquireRef" />
+                                    </div>
+                                </Tab>
                             </Tabs>
                         </div>
 
                         <!-- 内容2 -->
-                        <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
+                        <!-- <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
                             <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg"
                                 :color="'var(--ex-primary-color)'" v-model:active="activeTab3" animated shrink>
                                 <Tab :title="t('trade.trade_orders_current')" :name="44">
@@ -171,7 +197,7 @@
                                     </div>
                                 </Tab>
                             </Tabs>
-                        </div>
+                        </div> -->
                         <div style="height: 0.4rem;"></div>
                     </div>
                 </Tab>
@@ -242,6 +268,13 @@ const props = defineProps({
 const { t } = useI18n();
 const route = useRoute();
 const token = computed(() => store.state.token);
+
+const goMaret = () => {
+    router.push({
+        name: 'market_info',
+        query: route.query
+    })
+}
 
 // 分类
 const activeTab = ref(1) // 一级
@@ -485,20 +518,26 @@ setTimeout(() => {
     position: relative;
     background-color: var(--ex-bg-color);
 
+    .right-icon {
+        position: absolute;
+        right: 0.32rem;
+        top: 0.24rem;
+        z-index: 99;
+    }
+    .left-icon {
+        position: absolute;
+        left: 0.24rem;
+        top: 0.28rem;
+        z-index: 99;
+    }
+
 
     .market-trade-body {
 
-        :deep(.van-tabs--sub_bg) {
-            &>div {
-                &>.van-sticky {
-                    &>div {
-                        &>.van-tabs__wrap {
-                            width: calc(100% - 0.2rem);
-                            position: relative;
-                            left: 0.1rem;
-                            border-bottom: none;
-                        }
-                    }
+        :deep(.van-tabs--top) {
+            .van-sticky {
+                .van-tabs__wrap {
+                    padding-left: 0.68rem;
                 }
             }
         }
@@ -507,6 +546,16 @@ setTimeout(() => {
             margin-top: 0.1rem;
             height: calc(var(--vh) * 100 - 2rem);
             overflow-y: auto;
+
+            :deep(.van-tabs--market2) {
+                &>.van-tabs__wrap {
+                    border-bottom: 1px solid var(--ex-border-color4);
+
+                    .van-tabs__nav {
+                        background: var(--ex-none);
+                    }
+                }
+            }
 
             .charts-box {
                 padding: 0 0.1rem;
@@ -581,103 +630,6 @@ setTimeout(() => {
 
     .has_padding_x {
         padding: 0 0.3rem;
-    }
-
-    .info_header {
-        width: 100%;
-        background-color: var(--ex-bg-color);
-        padding: 0 0.1rem;
-        z-index: 100;
-
-        .top {
-            display: flex;
-            min-height: 1rem;
-            align-items: center;
-            justify-content: space-between;
-            position: relative;
-            height: 0.88rem;
-            margin-bottom: 0.1rem;
-            padding: 0 0.2rem;
-
-            .back {
-                width: 0.6rem;
-                height: 0.6rem;
-                font-size: 0.32rem;
-                background-color: var(--ex-bg-color3);
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .title_shadow {
-                flex: 1;
-            }
-
-            .star {
-                width: 0.7rem;
-                height: 0.7rem;
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-
-            .title {
-                // pointer-events: none;
-                position: absolute;
-                width: calc(100% - 1.6rem);
-                top: 50%;
-                transform: translateY(-50%) translateX(-50%);
-                left: 50%;
-                text-align: center;
-                white-space: nowrap;
-                text-overflow: ellipsis;
-                overflow: hidden;
-                font-size: 0.24rem;
-                line-height: 0.332rem;
-                font-weight: 400;
-                color: var(--ex-text-color3);
-
-                .title_name {
-                    color: var(--ex-text-color);
-                    font-size: 0.32rem;
-                    line-height: 0.432rem;
-                    font-weight: 500;
-                }
-            }
-
-        }
-
-        .count {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: center;
-
-            .count_item {
-                color: var(--ex-text-color2);
-                font-size: 0.24rem;
-                font-weight: 400;
-                line-height: 0.36rem;
-                width: 50%;
-                margin-top: 0.18rem;
-
-                .num {
-                    margin-left: 0.1rem;
-                }
-            }
-        }
-    }
-
-
-
-    @media (min-width: 751px) {
-
-
-        .info_header {
-            max-width: 375px;
-        }
     }
 
 }

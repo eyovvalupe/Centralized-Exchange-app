@@ -291,7 +291,7 @@ const removeStock = (item) => {
 .stock_item {
   display: flex;
   align-items: center;
-  height: 1.6rem;
+  height: 1.44rem;
   // padding: 0 0.3rem;
   position: relative;
   // background-color: var(--ex-bg-white2);

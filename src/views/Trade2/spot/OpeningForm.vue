@@ -118,6 +118,10 @@
           { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
         ]
         " @percentTagClick="percentTagClick" v-if="props.activeTab == 1" />
+    <FormItem class="mb-[0.4rem]" v-else input-type="number" :placeholder="'以当前市场最优价格下单'" :tip="''" :disabled="true" />
+
+    <FormItem class="mb-[0.4rem]" input-type="number" :placeholder="'成交额'" :tip="''" v-model="form1.amount"
+      @input="changeAmount" />
 
 
     <!-- 保证金模式 -->
@@ -197,7 +201,8 @@
 
     <!-- 按钮 -->
     <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1"
-      class="submit ripple-btn" :color="props.activeType == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'" round>
+      class="submit ripple-btn" :color="props.activeType == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'"
+      round>
       <span style="color: var(--ex-white);">{{
         props.activeType == 1
           ? $t('market.market_buy_fast_buy_btn')
@@ -874,6 +879,7 @@ const form1 = ref({
   leverType: "cross",
   lever: 1,
   volume: "",
+  amount: "",
   price: "",
   price_type: props.activeTab == 1 ? "limit" : "market",
   stop_profit_type: null, // 价格-[ price ]  金额-[ amount ]  百分比-[ ratio ]
@@ -1043,7 +1049,29 @@ const changePercent = () => {
   if (p < 0) p = 0;
   if (p > 100) p = 100;
   sliderValue.value = Number(p);
+
+  // 成交额
+  setTimeout(() => {
+    if (!form1.value.volume) return form1.value.amount = ''
+    if (props.activeTab == 1) { // 限价
+      if (!form1.value.price) return form1.value.amount = ''
+      form1.value.amount = new Decimal(form1.value.volume).mul(form1.value.price)
+    } else { // 市价
+      form1.value.amount = new Decimal(form1.value.volume).mul(currStock.value.price)
+    }
+  }, 0)
 };
+const changeAmount = () => {
+  if (!form1.value.amount) return form1.value.volume = ''
+  setTimeout(() => {
+    if (props.activeTab == 1) { // 限价
+      if (!form1.value.price) return form1.value.volume = ''
+      form1.value.volume = new Decimal(form1.value.amount).div(form1.value.price)
+    } else { // 市价
+      form1.value.volume = new Decimal(form1.value.amount).div(currStock.value.price)
+    }
+  })
+}
 
 const volumeFocus = () => {
   if (!currStock.value.symbol)
@@ -1217,7 +1245,7 @@ const getAmount = computed(() => {
 });
 
 const orderAmount = computed(() => {
-  return new Decimal(params.value.volume).mul( props.activeTab == 1 ? form1.value.price : currStock.value.price ).toNumber()
+  return new Decimal(params.value.volume).mul(props.activeTab == 1 ? form1.value.price : currStock.value.price).toNumber()
 });
 const payOrigin = computed(() => {
   // 保证金
@@ -1334,10 +1362,10 @@ defineExpose({
 
 .form {
   // padding: 0.28rem;
-    position: relative;
-    border-radius: 0.32rem;
-    background-color: var(--ex-bg-color3);
-    margin-top: 0.24rem;
+  position: relative;
+  border-radius: 0.32rem;
+  background-color: var(--ex-bg-color3);
+  margin-top: 0.24rem;
 
   .subtitle {
     color: var(--ex-text-color);
@@ -1517,6 +1545,7 @@ defineExpose({
       background-color: var(--ex-white);
       color: var(--ex-bg-color);
     }
+
     .btn2 {
       background-color: var(--ex-primary-color);
       color: var(--ex-white);
