@@ -141,7 +141,7 @@ const goInfo = (item) => {
   showSearchDialog.value = false
   store.commit("setCurrConstract", item);
   router.push({
-    name: "market_info",
+    name: "tradeInfo",
     query: {
       symbol: item.name,
       type: "constract",

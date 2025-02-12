@@ -105,7 +105,7 @@ const getLever = (lever) => {
 const goInfo = (item) => {
   store.commit("setCurrConstract", item);
   router.push({
-    name: "market_info",
+    name: "tradeInfo",
     query: {
       symbol: item.name,
       type: "constract",

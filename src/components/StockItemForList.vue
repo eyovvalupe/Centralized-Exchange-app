@@ -177,7 +177,7 @@ const goInfo = (type) => {
   if (type == "stock") {
     store.commit("setCurrStock", props.item);
     router.push({
-      name: "market_info",
+      name: "tradeInfo",
       query: {
         symbol: props.item.symbol,
         type: "stock",
@@ -187,7 +187,7 @@ const goInfo = (type) => {
   if (type == "crypto") {
     store.commit("setCurrConstract", props.item);
     router.push({
-      name: "market_info",
+      name: "tradeInfo",
       query: {
         symbol: props.item.name,
         type: "constract",

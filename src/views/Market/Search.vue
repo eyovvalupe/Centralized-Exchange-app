@@ -247,7 +247,7 @@ const goItem = (item) => {
     store.commit("setCurrStock", item);
     setTimeout(() => {
       router.push({
-        name: "market_info",
+        name: "tradeInfo",
         query: {
           symbol: item.symbol,
           type: "stock",
@@ -259,7 +259,7 @@ const goItem = (item) => {
     store.commit("setMarketSearchTextList", newList);
     store.commit("setCurrConstract", item);
     router.push({
-      name: "market_info",
+      name: "tradeInfo",
       query: {
         symbol: item.name,
         type: "constract",
