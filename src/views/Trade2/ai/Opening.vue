@@ -27,7 +27,7 @@
         </div> -->
 
         <!-- 时间 -->
-        <div class="item_content" v-if="times.length">
+        <div class="item_content" style="margin-bottom: 0.2rem;" v-if="times.length">
           <div class="subtitle">{{ t("trade.ai_opening_time_zone") }}</div>
           <!-- <div class="item item_box disabled_item item_time" @click="showTime=true;">
                         <span>{{ currTime.time }}{{ _dateUnitMap[currTime.unit] }}</span>
@@ -43,7 +43,6 @@
           </div>
         </div>
         <!-- 数量 -->
-        <div style="height: 0.2rem;"></div>
         <FormItem style="height: 3.6rem;" :hasBot="true" :hasRT="true" :hasScroll="true" input-type="number" v-model="form1.grid"
           :tip="maxgrid > 0 ? '≤' + maxgrid : ''" :placeholder="t('trade.ai_opening_network_amount')"
           btn-show-mode="focus" :max="maxgrid" @change="changeGrid">
@@ -598,17 +597,16 @@ defineExpose({
 <style lang="less" scoped>
 .scroller {
   box-sizing: border-box;
-  padding: 0.28rem;
+  padding: 0.2rem 0.16rem 0.4rem 0.16rem;
   border-radius: 0.32rem;
   background-color: var(--ex-bg-color3);
-  margin-top: 0.4rem;
+  border-bottom:1px solid var(--ex-bg-white2);
 }
 .account-box {
       border-radius: 0.32rem;
       background-color: var(--ex-bg-color3);
       padding: 0.36rem 0.32rem;
       margin-top: 0.1rem;
-      margin-bottom: 0.4rem;
 
       .title {
         font-size: 0.32rem;
@@ -630,8 +628,8 @@ defineExpose({
         margin-top: 0.52rem;
         .btn {
           flex: 1;
-          height: 0.6rem;
-          border-radius: 1rem;
+          height: 0.68rem;
+          border-radius: 1rem!important;
           display: flex;
           align-items: center;
           justify-content: center;
@@ -738,7 +736,7 @@ defineExpose({
     .btn {
       flex: 1;
       // margin: 0.2rem 0.16rem 0.6rem 0.16rem;
-      border-radius: 0.4rem;
+      border-radius: 1rem;
     }
   }
 
@@ -951,15 +949,15 @@ defineExpose({
 }
 
 .tabs-container {
-
+  padding-top: 0.1rem;
   .type_tabs {
     height: 0.96rem;
     display: flex;
     align-items: center;
     z-index: 99;
     border-radius: 1rem;
-    background-color: var(--ex-bg-color3);
-    padding: 0 0.1rem;
+    background-color: var(--ex-bg-white1);
+    margin: 0 0.2rem;
 
     .type_tab {
       flex: 1;
@@ -969,7 +967,6 @@ defineExpose({
       justify-content: center;
       color: var(--ex-text-color2);
       font-size: 0.3rem;
-
     }
 
     .type_tab_text {
@@ -980,7 +977,7 @@ defineExpose({
     .active_type_tab {
       color: var(--ex-text-color--bg-primary);
       position: relative;
-      height: 0.8rem;
+      height: 100%;
       background-color: var(--ex-primary-color);
       border-radius: 1rem;
 

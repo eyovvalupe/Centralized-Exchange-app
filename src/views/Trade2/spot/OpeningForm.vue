@@ -37,7 +37,7 @@
       <FormItem :placeholder="props.activeType == 1
         ? t('trade.stock_opening_take')
         : t('trade.stock_opening_stop')
-        " class="mb-[0.4rem]" input-type="number" v-model="form1.stop_loss_price" :percent-tags="props.activeType == 1
+        " class="mb-[0.2rem]" input-type="number" v-model="form1.stop_loss_price" :percent-tags="props.activeType == 1
           ? [
             { label: '-20%', value: 20 },
             { label: '-15%', value: 15 },
@@ -103,7 +103,7 @@
     </template>
 
     <!-- 价格 -->
-    <FormItem class="mb-[0.4rem]" input-type="number" :placeholder="t('trade.stock_opening_price_title')"
+    <FormItem class="mb-[0.2rem]" input-type="number" :placeholder="t('trade.stock_opening_price_title')"
       :tip="t('trade.stock_opening_price_tip')" v-model="form1.price" :percent-tags="props.activeType == 1
         ? [
           { label: '-3%', value: 3 },
@@ -118,9 +118,9 @@
           { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
         ]
         " @percentTagClick="percentTagClick" v-if="props.activeTab == 1" />
-    <FormItem class="mb-[0.4rem]" v-else input-type="number" :placeholder="'以当前市场最优价格下单'" :tip="''" :disabled="true" />
+    <FormItem class="mb-[0.2rem]" v-else input-type="number" :placeholder="'以当前市场最优价格下单'" :tip="''" :disabled="true" />
 
-    <FormItem class="mb-[0.4rem]" input-type="number" :placeholder="'成交额'" :tip="''" v-model="form1.amount"
+    <FormItem class="mb-[0.2rem]" input-type="number" :placeholder="`成交额(${currName.split('/')[1]})`" :tip="''" v-model="form1.amount"
       @input="changeAmount" />
 
 
@@ -156,7 +156,7 @@
     <!-- 张数 -->
     <div class="item_box">
       <div class="item_box_right">
-        <FormItem :hasScroll="true" :placeholder="t('trade.stock_position_amount')" @focus="volumeFocus"
+        <FormItem :hasScroll="true" :placeholder="t('trade.stock_position_amount') + `(${currName.split('/')[0]})`" @focus="volumeFocus"
           v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll"
           @change="changePercent" :tip="'≤' + maxStockNum" :max="maxStockNum" tip-align="right" input-type="digit">
           <!-- <template #title-icon v-if="amountper && paramCurrency">
@@ -874,6 +874,13 @@ const currStock = computed(() => {
   }
   return obj;
 }); // 当前
+const currName = computed(() => {
+  let str = '/'
+  if (currStock.value.name) {
+    str = currStock.value.name
+  }
+  return str
+})
 
 const form1 = ref({
   leverType: "cross",
@@ -1389,7 +1396,7 @@ defineExpose({
   .item_box {
     display: flex;
     align-items: stretch;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.2rem;
 
     .item {
       flex: 1;

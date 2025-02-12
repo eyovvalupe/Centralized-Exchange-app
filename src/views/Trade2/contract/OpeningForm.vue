@@ -37,7 +37,7 @@
       <FormItem :placeholder="activeType == 1
         ? t('trade.stock_opening_take')
         : t('trade.stock_opening_stop')
-        " class="mb-[0.4rem]" input-type="number" v-model="form1.stop_loss_price" :percent-tags="props.activeType == 1
+        " class="mb-[0.2rem]" input-type="number" v-model="form1.stop_loss_price" :percent-tags="props.activeType == 1
           ? [
             { label: '-20%', value: 20 },
             { label: '-15%', value: 15 },
@@ -103,7 +103,7 @@
     </template>
 
     <!-- 价格 -->
-    <FormItem class="mb-[0.4rem]" input-type="number" :placeholder="t('trade.stock_opening_price_title')"
+    <FormItem class="mb-[0.2rem]" input-type="number" :placeholder="t('trade.stock_opening_price_title')"
       :tip="t('trade.stock_opening_price_tip')" v-model="form1.price" :percent-tags="props.activeType == 1
         ? [
           { label: '-3%', value: 3 },
@@ -1388,7 +1388,7 @@ defineExpose({
   position: relative;
   border-radius: 0.32rem;
   background-color: var(--ex-bg-color3);
-  margin-top: 0.24rem;
+  margin-top: 0.32rem;
 
   .subtitle {
     color: var(--ex-text-color);
@@ -1412,7 +1412,7 @@ defineExpose({
   .item_box {
     display: flex;
     align-items: stretch;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.2rem;
     position: relative;
 
     .tip-box {

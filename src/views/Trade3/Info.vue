@@ -8,11 +8,6 @@
                 <img v-lazy="getStaticImgUrl('/static/img/trade/open.svg')" alt="">
             </div>
         </div>
-        <div class="right-icon" @click="goMaret">
-            <div class="size-[0.4rem]">
-                <img v-lazy="getStaticImgUrl('/static/img/market/market.svg')" alt="">
-            </div>
-        </div>
 
         <div class="market-trade-body">
             <Tabs @change="changeTab" :key="'main'" class="van-tabs--top" :sticky="true"
@@ -20,7 +15,32 @@
                 <!-- 现货 -->
                 <Tab :name="1" :title="'现货'">
 
+
                     <div class="dialog-market-box" v-if="activeTab == 1 && !chartLoading">
+
+                        <div class="top-box">
+                            <!-- 标题 -->
+                            <div class="title" @click="showSearchDialog = true">
+                                <div class="title_name">{{ item.name || "--" }}
+                                    <Icon name="arrow-down" />
+                                </div>
+                            </div>
+                            <div style="flex: 1;"></div>
+                            <div @click="goMaret">
+                                <div class="size-[0.48rem] mr-[0.24rem]">
+                                    <img v-lazy="getStaticImgUrl('/static/img/market/market.svg')" alt="">
+                                </div>
+                            </div>
+                            <!-- 详情 -->
+                            <div class="search star" @click="addCollect(activeTab)"
+                                :style="{ opacity: loading ? '0.5' : '1' }">
+                                <div class="size-[0.48rem]">
+                                    <img v-if="item.watchlist == 1"
+                                        v-lazy="getStaticImgUrl('/static/img/market/star.svg')" alt="">
+                                    <img v-else v-lazy="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
+                                </div>
+                            </div>
+                        </div>
                         <div class="charts-box">
                             <Chart :type="'constract'" :mini="true" />
                         </div>
@@ -29,7 +49,6 @@
                             <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg van-tabs--market2"
                                 :color="'var(--ex-primary-color)'" v-model:active="activeTab2" animated shrink>
                                 <Tab :name="11" :title="'开仓'">
-                                    <div style="height: 0.2rem;"></div>
                                     <OpeningSpot :item="item" ref="openingRef2" :from="'trade'" />
                                 </Tab>
                                 <Tab :name="22" :title="'订单薄'" v-if="item.type == 'crypto'">
@@ -82,6 +101,29 @@
                 </Tab>
                 <Tab :name="2" :title="'合约'">
                     <div class="dialog-market-box" v-if="activeTab == 2 && !chartLoading">
+                        <div class="top-box">
+                            <!-- 标题 -->
+                            <div class="title" @click="showSearchDialog = true">
+                                <div class="title_name">{{ item.name || "--" }}
+                                    <Icon name="arrow-down" />
+                                </div>
+                            </div>
+                            <div style="flex: 1;"></div>
+                            <div @click="goMaret">
+                                <div class="size-[0.48rem] mr-[0.24rem]">
+                                    <img v-lazy="getStaticImgUrl('/static/img/market/market.svg')" alt="">
+                                </div>
+                            </div>
+                            <!-- 详情 -->
+                            <div class="search star" @click="addCollect(activeTab)"
+                                :style="{ opacity: loading ? '0.5' : '1' }">
+                                <div class="size-[0.48rem]">
+                                    <img v-if="item.watchlist == 1"
+                                        v-lazy="getStaticImgUrl('/static/img/market/star.svg')" alt="">
+                                    <img v-else v-lazy="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
+                                </div>
+                            </div>
+                        </div>
                         <div class="charts-box">
                             <Chart :type="'constract'" :mini="true" />
                         </div>
@@ -90,7 +132,6 @@
                             <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg van-tabs--market2"
                                 :color="'var(--ex-primary-color)'" v-model:active="activeTab2" animated shrink>
                                 <Tab :name="11" :title="'开仓'">
-                                    <div style="height: 0.2rem;"></div>
                                     <OpeningContract :item="item" ref="openingRef2" :from="'trade'" />
                                 </Tab>
                                 <Tab :name="22" :title="'订单薄'" v-if="item.type == 'crypto'">
@@ -143,6 +184,29 @@
                 </Tab>
                 <Tab :name="3" :title="'交易机器人'">
                     <div class="dialog-market-box" v-if="activeTab == 3 && !chartLoading">
+                        <div class="top-box">
+                            <!-- 标题 -->
+                            <div class="title" @click="showSearchDialog = true">
+                                <div class="title_name">{{ item.name || "--" }}
+                                    <Icon name="arrow-down" />
+                                </div>
+                            </div>
+                            <div style="flex: 1;"></div>
+                            <div @click="goMaret">
+                                <div class="size-[0.48rem] mr-[0.24rem]">
+                                    <img v-lazy="getStaticImgUrl('/static/img/market/market.svg')" alt="">
+                                </div>
+                            </div>
+                            <!-- 详情 -->
+                            <div class="search star" @click="addCollect(activeTab)"
+                                :style="{ opacity: loading ? '0.5' : '1' }">
+                                <div class="size-[0.48rem]">
+                                    <img v-if="item.watchlist == 1"
+                                        v-lazy="getStaticImgUrl('/static/img/market/star.svg')" alt="">
+                                    <img v-else v-lazy="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
+                                </div>
+                            </div>
+                        </div>
                         <div class="charts-box">
                             <Chart :type="'ai'" :mini="true" />
                         </div>
@@ -151,7 +215,7 @@
                             <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg van-tabs--market2"
                                 :color="'var(--ex-primary-color)'" v-model:active="activeTab2" animated shrink>
                                 <Tab :name="11" :title="'开仓'">
-                                    <div style="height: 0.2rem;"></div>
+                                    <div style="height: 0.32rem;"></div>
                                     <OpeningAi :tradeType="3" ref="openingRef2" />
                                 </Tab>
                                 <Tab :name="22" :title="'订单薄'" v-if="item.type == 'crypto'">
@@ -524,6 +588,7 @@ setTimeout(() => {
         top: 0.24rem;
         z-index: 99;
     }
+
     .left-icon {
         position: absolute;
         left: 0.24rem;
@@ -544,7 +609,7 @@ setTimeout(() => {
 
         .dialog-market-box {
             margin-top: 0.1rem;
-            height: calc(var(--vh) * 100 - 2rem);
+            height: calc(var(--vh) * 100 - 1rem);
             overflow-y: auto;
 
             :deep(.van-tabs--market2) {
@@ -555,6 +620,17 @@ setTimeout(() => {
                         background: var(--ex-none);
                     }
                 }
+            }
+
+            .top-box {
+                border-radius: 0.32rem;
+                background-color: var(--ex-bg-color3);
+                margin: 0.1rem;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                padding: 0 0.28rem;
+                height: 0.96rem;
             }
 
             .charts-box {

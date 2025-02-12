@@ -14,7 +14,7 @@
     <!-- Tabs -->
     <div class="open_tab_box" :class="{ 'trade-dialog': props.from == 'trade' }">
 
-      <div style="border-radius: 0.32rem;background-color: var(--ex-bg-color3);padding: 0.32rem 0.28rem 0.4rem 0.28rem">
+      <div style="border-radius: 0.32rem;background-color: var(--ex-bg-color3);padding: 0.2rem 0.16rem 0.4rem 0.16rem;border-bottom:1px solid var(--ex-bg-white2);">
         <Tabs animated key="form" class="van-tabs--sub_line van-tabs--sub_bg" @change="(e) => (activeTab = e)"
           v-model="activeTab" :swipeable="false" :color="'var(--ex-primary-color)'" shrink>
           <Tab :title="t('trade.stock_market_price')" name="0">
@@ -183,7 +183,7 @@ defineExpose({
 
         .btn {
           width: 3rem;
-          height: 0.6rem;
+          height: 0.68rem;
           border-radius: 1rem;
           display: flex;
           align-items: center;
@@ -206,8 +206,8 @@ defineExpose({
     width: 3rem;
     position: absolute;
     z-index: 9999;
-    left: 0.32rem;
-    top: 0.24rem;
+    left: 0.24rem;
+    top: 0.16rem;
 
     .type_tab {
       flex: 1;
