@@ -1,9 +1,9 @@
 <!-- 市场行情 -->
 <template>
-  <div class="page-marketinfo2">
+  <div class="page-marketinfo2" :style="{backgroundColor:props.innerPage?'var(--ex-bg-color9)':'var(--ex-bg-color)'}">
     <!-- 头部 -->
-    <div class="max-width info_header">
-      <div class="top">
+    <div class="max-width info_header" :style="{zIndex: props.innerPage ? 1 : 100,backgroundColor:props.innerPage?'var(--ex-bg-color9)':'var(--ex-bg-color)'}">
+      <div v-if="!props.innerPage" class="top">
         <div v-if="!props.innerPage" class="back" @click="router.back">
           <Icon name="arrow-left" />
         </div>
@@ -97,7 +97,7 @@
     </div>
 
     <!-- 内容 -->
-    <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
+    <div style="padding: 0 0.1rem;margin-top: 0.1rem;" :style="{backgroundColor:props.innerPage?'var(--ex-bg-color9)':'var(--ex-bg-color)'}">
       <Tabs style="background-color: var(--ex-bg-color3);border-radius: 0.32rem 0.32rem 0 0;" class="van-tabs--sub_line van-tabs--sub_bg" :sticky="true" :color="'var(--ex-primary-color)'"
         v-model:active="activeTab" animated shrink>
         <!-- <Tab :name="1" :title="'开仓'">
@@ -113,12 +113,12 @@
             <Chart ref="chartRef" v-if="!chartLoading" :type="'constract'" />
           </div>
         </Tab>
-        <Tab :name="3" :title="'订单薄'" v-if="item.type == 'crypto'">
+        <Tab :name="3" :title="'订单薄'" v-if="item.type == 'crypto' && !props.innerPage">
           <div class="market-box">
             <OrderingSpot v-if="activeTab == 3" :key="'o'" type="nomal" />
           </div>
         </Tab>
-        <Tab :name="4" :title="'最新成交'" v-if="item.type == 'crypto'">
+        <Tab :name="4" :title="'最新成交'" v-if="item.type == 'crypto' && !props.innerPage">
           <div class="market-box">
             <OrderingSpot v-if="activeTab == 4" :key="'n'" type="news" />
           </div>
@@ -127,7 +127,7 @@
     </div>
 
     <!-- 去交易按钮 -->
-    <div class="bottom-box">
+    <div class="bottom-box" v-if="!props.innerPage">
       <div class="info">
         <div class="name">{{ item.name || "--" }}</div>
         <div class="type" v-if="chartRef">{{ chartRef.timeType }}</div>
@@ -136,6 +136,7 @@
       <div class="data" @click="showInfo = true">数据</div>
       <div class="btn" @click="gotrade">交易</div>
     </div>
+    <div v-else style="height:0.12rem"></div>
 
 
     <!-- 搜索列表 -->
@@ -273,6 +274,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  innerPage: { // 内联页
+    type: Boolean,
+    default: false
+  }
 });
 
 const { t } = useI18n();

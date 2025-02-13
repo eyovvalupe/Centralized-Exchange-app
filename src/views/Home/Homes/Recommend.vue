@@ -1,17 +1,17 @@
 <template>
     <div class="home-tabs-box" :class="['home-tabs-box-' + props.from]">
-        <Tabs :offset-top="'1.32rem'" :type="from == 'trade' ? 'line-card-trade' : 'sub'"
-            :sticky="props.sticky" :color="'var(--ex-primary-color)'" @change="tabChange" v-if="props.activated"
+        <Tabs  :type="from == 'trade' ? 'line-card-trade' : 'sub'"
+             :color="'var(--ex-primary-color)'" @change="tabChange" v-if="props.activated"
             v-model:active="activeTab" :animated="from != 'home'" shrink>
             <Tab :name="0" v-if="from != 'home'" :title="t('trade.left_mine')">
-                <div :class="['home-tab-box-' + props.from, from == 'trade' ? 'mt-[1.68rem]' : 'mt-[0.32rem]']">
+                <div :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']" :style="{borderTop: '1px solid var(--ex-border-color5)'}">
                     <div v-if="token">
                         <Loaidng v-if="watchListLoading" :loading="watchListLoading" />
                         {{ console.log(watchList) }}
                         <div style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 0 && !watchListLoading">
-                            <StockItem :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
+                            <StockItem :handleClick="props.innerPage ? handleClick : null" :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
                                 :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item=item
-                                v-for="(item, i) in watchList" :key="'c_' + i" marketType="crypto" />
+                                v-for="(item, i) in watchList" :key="'c_' + i" menuType="option" marketType="crypto" />
                         </div>
                         <NoData v-if="!watchListLoading && !watchList.length" />
                     </div>
@@ -40,35 +40,35 @@
                 </div>
             </Tab>
             <Tab :name="1" :title="t('common.spot')">
-                <div :class="['home-tab-box-' + props.from,from == 'trade' ? 'mt-[1.68rem]' : 'mt-[0.32rem]']" :style="{borderTop: props.from == 'home' ? '1px solid var(--ex-border-color5)' : ''}">
+                <div :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']" :style="{borderTop: '1px solid var(--ex-border-color5)'}">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div class="" style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 1">
-                        <StockItem :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
+                        <StockItem :handleClick="props.innerPage ? handleClick : null" :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
                             :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="{ ...item, type: 'spot' }"
-                            v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" page="home" />
+                            v-for="(item, i) in contractList" :key="'c_' + i" menuType="spot" marketType="crypto" page="home" />
                     </div>
                     <NoData v-if="!commendLoading && !contractList.length" />
                 </div>
             </Tab>
             <Tab :name="2" :title="$t('common.crypto')">
-                <div :class="['home-tab-box-' + props.from,from == 'trade' ? 'mt-[1.68rem]' : 'mt-[0.32rem]']" :style="{borderTop: props.from == 'home' ? '1px solid var(--ex-border-color5)' : ''}">
+                <div :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']" :style="{borderTop: '1px solid var(--ex-border-color5)'}">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 2">
-                        <StockItem :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
+                        <StockItem :handleClick="props.innerPage ? handleClick : null" :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
                             :data-wow-delay="(0.03 * i) + 's'" :showIcon="true" :item="item"
-                            v-for="(item, i) in contractList" :key="'c_' + i" marketType="crypto" page="home" />
+                            v-for="(item, i) in contractList" :key="'c_' + i" menuType="constract" marketType="crypto" page="home" />
                     </div>
                     <NoData v-if="!commendLoading && !contractList.length" />
                 </div>
             </Tab>
             <Tab :name="3" :title="$t('common.option')">
-                <div class="pl-[0.32rem] pr-[0.32rem]" :class="['home-tab-box-' + props.from,from == 'trade' ? 'mt-[1.92rem]' : 'mt-[0.32rem]']">
-                    <Ai :from="props.from" page="home" v-if="activeTab == 3" />
+                <div class="pl-[0.32rem] pr-[0.32rem]" :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']">
+                    <Ai :handleClick="props.innerPage ? handleClick : null" :from="props.from" page="home" v-if="activeTab == 3" />
                 </div>
             </Tab>
             <Tab :name="4" :title="'ETF'">
-                <div class="pl-[0.32rem] pr-[0.32rem]" :class="['home-tab-box-' + props.from,from == 'trade' ? 'mt-[1.92rem]' : 'mt-[0.32rem]']">
-                    <Ai :from="props.from" page="home" v-if="activeTab == 4" />
+                <div class="pl-[0.32rem] pr-[0.32rem]" :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']">
+                    <Ai :handleClick="props.innerPage ? handleClick : null" :from="props.from" page="home" v-if="activeTab == 4" />
                 </div>
             </Tab>
         </Tabs>
@@ -88,12 +88,25 @@ import { useI18n } from "vue-i18n";
 import router from "@/router";
 import { getStaticImgUrl } from "@/utils/index.js"
 
+const emits = defineEmits(['handleClick'])
+const handleClick = (item, type) => {
+    console.error(item, type)
+    emits('handleClick', {
+        item,
+        type,
+    })
+}
+
 const { t } = useI18n();
 
 const props = defineProps({
     activated: false,
     sticky: false,
-    from: ''
+    from: '',
+    innerPage: {
+        type: Boolean,
+        default: false
+    }
 })
 
 const activeTab = ref(0);
@@ -199,14 +212,30 @@ defineExpose({
 
 <style lang="less" scoped>
 .home-tab-box-trade {
-    // background-color: var(--ex-bg-color5);
     border-radius: 0.32rem;
-    // margin-left: 0.32rem;
-    // margin-right: 0.32rem;
     min-height: calc(var(--vh) * 100 - 4rem);
+}
+.home-tabs-box-trade {
+    :deep(.van-tabs--line-card-trade) {
+        &>.van-tabs__wrap {
+            // border-bottom: 1px solid var(--ex-border-color5);
+            // padding-bottom: 0.24rem;
+            &>.van-tabs__nav {
+                padding-left: 0.2rem;
+                &>.van-tab {
+                    font-size: 0.32rem;
+                }
+                &>.van-tab--active {
+                    font-weight: 600!important;
+                }
+            }
+        }
+    }
 }
 
 .home-tabs-box-home {
+
+    
     :deep(.van-tabs--sub) {
         &>.van-tabs__wrap .van-tabs__nav {
 

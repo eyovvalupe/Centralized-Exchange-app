@@ -112,12 +112,16 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  handleClick: {
+    type: Function,
+    default: null
+  }
 });
 
 
 const showDialog = ref(false)
 const clickItem = () => {
-  console.error('打开交易弹窗')
+  if (props.handleClick) return props.handleClick(props.item, 'ai')
   // showDialog.value = true
   // setTimeout(() => {
   //   openingRef.value && openingRef.value.choose(props.item)

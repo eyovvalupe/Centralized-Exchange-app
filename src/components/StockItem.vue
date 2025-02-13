@@ -162,7 +162,8 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  showIcon: Boolean
+  showIcon: Boolean,
+  menuType: String,
 });
 
 const mode = ref(1);
@@ -190,7 +191,7 @@ watch(price, (newVal, oldVal) => {
 });
 
 const goInfo = (type) => {
-  if (props.handleClick) return props.handleClick(props.item);
+  if (props.handleClick) return props.handleClick(props.item, props.menuType);
   if (type == "stock") {
     store.commit("setCurrStock", props.item);
     router.push({

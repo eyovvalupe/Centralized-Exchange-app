@@ -1,7 +1,7 @@
 <template>
   <div class="w-full h-full">
     <div class="page-trade3">
-      <div class="z-[1] fixed pt-[0.45rem] pb-[0.48rem] bg-color max-width" style="width:100%;">
+      <div class="z-[1]  pt-[0.4rem] pb-[0.4rem] bg-color" >
         <div
           class="transition flex justify-between  px-[0.32rem] py-[0.18rem] rounded-[1rem] gap-[0.2rem] h-[0.8rem] mx-[0.4rem] items-center border-[0.02rem]"
           :class="focusRef ? 'border-white' : ''" style="background-color: var(--ex-bg-white1);">
@@ -19,13 +19,12 @@
       <!-- <div class="bill-box" @click="jump('tradeOrder')">
           <img v-lazy="getStaticImgUrl('/static/img/common/bill.svg')" alt="">
         </div> -->
-
       <div v-if="!focusRef && !searchRef">
-        <Recommend v-if="activated" ref="recommendRef" from="trade" :sticky="true" :activated="activated" />
+        <Recommend @handleClick="handleClick" :innerPage="props.innerPage" v-if="activated" ref="recommendRef" from="trade" :sticky="false" :activated="activated" />
       </div>
 
       <div v-if="focusRef || searchRef">
-        <div class="mt-[1.7rem] pl-[0.38rem] pr-[0.32rem] text-[0.28rem] leading-[0.4rem]  pb-[0.08rem]"
+        <div class=" pl-[0.38rem] pr-[0.32rem] text-[0.28rem] leading-[0.4rem]  pb-[0.08rem]"
           style="border-bottom: 1px solid var(--ex-border-color5);color:var(--ex-text-color2)">搜索结果</div>
         <div class="lists" style=" 
     border-radius: 0.32rem;
@@ -66,7 +65,7 @@
 
 <script setup>
 import Recommend from "@/views/Home/Homes/Recommend.vue"
-import { ref, onActivated, onDeactivated, computed, watch } from "vue"
+import { ref, onActivated, onDeactivated, computed, onMounted, onUnmounted } from "vue"
 import { useSocket } from "@/utils/ws";
 import store from "@/store"
 import { getStaticImgUrl } from "@/utils/index.js"
@@ -76,6 +75,14 @@ import StockTable from "@/components/StockTable.vue";
 import { _futures } from "@/api/api";
 import { useI18n } from "vue-i18n";
 import NoData from "@/components/NoData.vue";
+
+const emits = defineEmits(['handleClick'])
+const props = defineProps({
+  innerPage: {
+    type: Boolean,
+    default: false
+  }
+})
 
 const jump = name => router.push(name)
 const { t } = useI18n();
@@ -117,14 +124,14 @@ const goSearch = () => {
 }
 
 const activated = ref(false);
-onActivated(() => {
+const act = () => {
   store.commit("setMarketWatchKeys", []);
   setTimeout(() => {
     activated.value = true;
   }, 300)
   subs();
-});
-onDeactivated(() => {
+}
+const unact = () => {
   activated.value = false;
   // 取消订阅
   const socket = startSocket(() => {
@@ -133,11 +140,24 @@ onDeactivated(() => {
     socket && socket.off("realtime");
     socket && socket.off("snapshot");
   });
-
+}
+onActivated(() => {
+  act()
 });
+onDeactivated(() => {
+  unact()
+});
+onUnmounted(() => {
+  unact()
+})
+
+const handleClick = (obj) => { // 如果作为侧窗点击元素
+  emits('handleClick', obj)
+}
 
 const recommendRef = ref()
-const goInfo = (item) => {
+const goInfo = (item) => { // 作为页面点击元素
+  if (props.innerPage) return handleClick({item: item})
   showSearchDialog.value = false
   store.commit("setCurrConstract", item);
   router.push({
@@ -201,6 +221,12 @@ setTimeout(() => {
 //     }, 100);
 //   }
 // })
+
+
+
+defineExpose({
+  act
+})
 </script>
 
 <style lang="less" scoped>

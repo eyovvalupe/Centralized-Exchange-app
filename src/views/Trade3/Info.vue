@@ -1,16 +1,15 @@
 <!-- 交易页 -->
-<!-- 市场行情 -->
 <template>
     <div class="page-marketinfo2">
 
-        <div class="left-icon" @click="showSearchDialog = true">
+        <div class="left-icon" @click="openMenu">
             <div class="size-[0.4rem]">
                 <img v-lazy="getStaticImgUrl('/static/img/trade/open.svg')" alt="">
             </div>
         </div>
 
         <div class="market-trade-body">
-            <Tabs @change="changeTab" :key="'main'" class="van-tabs--top" :sticky="true"
+            <Tabs @change="changeTab2" :key="'main'" class="van-tabs--top" :sticky="true"
                 :color="'var(--ex-primary-color)'" v-model:active="activeTab" animated shrink>
                 <!-- 现货 -->
                 <Tab :name="1" :title="'现货'">
@@ -41,7 +40,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="charts-box">
+                        <div class="charts-box" v-if="!showInfoDialog">
                             <Chart :type="'constract'" :mini="true" />
                         </div>
                         <!-- 内容1 -->
@@ -124,7 +123,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="charts-box">
+                        <div class="charts-box" v-if="!showInfoDialog">
                             <Chart :type="'constract'" :mini="true" />
                         </div>
                         <!-- 内容1 -->
@@ -207,7 +206,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="charts-box">
+                        <div class="charts-box" v-if="!showInfoDialog">
                             <Chart :type="'ai'" :mini="true" />
                         </div>
                         <!-- 内容1 -->
@@ -285,12 +284,25 @@
                 </div>
 
                 <div class="lists">
-                    <StockTable :showIcon="true" theme="classic" :handleClick="handleClick" :loading="searchLoading"
-                        :key="'search'" :list="marketSearchList" />
+                    <StockTable :showIcon="true" theme="classic" :handleClick="handleClick" :loading="searchLoading2"
+                        :key="'search'" :list="marketSearchList2" />
                 </div>
             </div>
         </BottomPopup>
 
+
+        <!-- 详情 -->
+        <BottomPopup round v-model:show="showInfoDialog" position="bottom" closeable teleport="body">
+            <div style="max-height: calc(var(--vh) * 90);overflow-y: auto;">
+                <div style="height: 0.32rem;"></div>
+                <MarketInfo2 :innerPage="true" />
+            </div>
+        </BottomPopup>
+
+        <!-- 菜单 -->
+        <Popup round v-model:show="showNavDialog" position="left" :style="{ width: '85%', height: '100%' }">
+            <Index @handleClick="handleClickIndex" ref="IndexRef" :innerPage="true" />
+        </Popup>
     </div>
 
 </template>
@@ -299,10 +311,9 @@
 import { ref, computed, onMounted } from "vue"
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
-import router from "@/router/index"
 import store from "@/store";
 import { getStaticImgUrl, _formatNumber } from "@/utils/index.js"
-import { Tab, Tabs, Icon, showToast } from "vant";
+import { Tab, Tabs, Icon, Popup } from "vant";
 import { _futures, _basic, _add, _del } from "@/api/api";
 import BottomPopup from "@/components/BottomPopup.vue";
 // 公共
@@ -321,6 +332,10 @@ import InquireContract from "@/views/Trade2/contract/Inquire.vue";
 import OpeningAi from "@/views/Trade2/ai/Opening.vue"
 import PositionsAi from "@/views/Trade2/ai/Positions.vue";
 import InquireAi from "@/views/Trade2/ai/Inquire.vue";
+// 详情
+import MarketInfo2 from "@/views/Market/MarketInfo2.vue"
+// 导航
+import Index from "./Index"
 
 const props = defineProps({
     type: {
@@ -333,11 +348,10 @@ const { t } = useI18n();
 const route = useRoute();
 const token = computed(() => store.state.token);
 
+// 详情弹窗
+const showInfoDialog = ref(false)
 const goMaret = () => {
-    router.push({
-        name: 'market_info',
-        query: route.query
-    })
+    showInfoDialog.value = true
 }
 
 // 分类
@@ -352,7 +366,7 @@ const activeTab2 = ref(11) // 二级
 const activeTab3 = ref(44) // 三级
 
 const lastTab = ref(activeTab.value) // 上一次的分类，切换时同步数据用的
-const changeTab = e => {
+const changeTab2 = e => {
     if (e == 3) { // 切换到交易机器人
         store.commit("setCurrAi", JSON.parse(JSON.stringify(store.state.currConstact)));
     }
@@ -437,6 +451,25 @@ const handleClick = (obj) => {
         chartLoading.value = false
     }, 100)
 };
+const handleClickIndex = ({item, type}) => {
+    if (type) {
+        switch(type) {
+            case 'spot':
+            activeTab.value = 1
+            break;
+            case 'constract':
+            activeTab.value = 2
+            break;
+            case 'ai':
+            activeTab.value = 3
+            break;
+        }
+    }
+    setTimeout(() => {
+        handleClick(item)
+        showNavDialog.value = false
+    }, 300)
+}
 
 
 // 添加自选
@@ -492,14 +525,14 @@ const addCollect = (tab) => {
 
 
 // 搜索
-const marketSearchList = computed(() => store.state.futuresSearchList)
+const marketSearchList2 = computed(() => store.state.futuresSearchList)
 const showSearchDialog = ref(false);
 const searchDialogStr = ref("");
 let searchTimeout = null;
-const searchLoading = ref(false);
+const searchLoading2 = ref(false);
 const goDialogSearch = () => {
     if (searchTimeout) clearTimeout(searchTimeout);
-    searchLoading.value = true;
+    searchLoading2.value = true;
     let s = searchDialogStr.value;
     searchTimeout = setTimeout(() => {
         _futures({
@@ -509,7 +542,7 @@ const goDialogSearch = () => {
             .then((res) => {
                 if (searchDialogStr.value == s) {
                     let arr = (res.data || []).map((item) => {
-                        const target = marketSearchList.value.find(
+                        const target = marketSearchList2.value.find(
                             (a) => a.symbol == item.symbol
                         );
                         if (target)
@@ -527,14 +560,27 @@ const goDialogSearch = () => {
                 }
             })
             .finally(() => {
-                searchLoading.value = false;
+                searchLoading2.value = false;
             });
     }, 100);
 };
 setTimeout(() => {
     goDialogSearch()
 }, 2000)
+
+
+// 侧边弹框
+const showNavDialog = ref(false)
+const IndexRef = ref()
+const openMenu = () => {
+    showNavDialog.value = true
+    setTimeout(() => {
+        IndexRef.value && IndexRef.value.act()
+    }, 0)
+}
 </script>
+
+
 
 <style lang="less" scoped>
 .search_dialog_trade {
