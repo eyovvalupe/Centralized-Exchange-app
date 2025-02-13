@@ -8,7 +8,7 @@
             </div>
         </div>
 
-        <div class="market-trade-body">
+        <div class="market-trade-body" v-if="item.symbol">
             <Tabs @change="changeTab2" :key="'main'" class="van-tabs--top" :sticky="true"
                 :color="'var(--ex-primary-color)'" v-model:active="activeTab" animated shrink>
                 <!-- 现货 -->
@@ -316,6 +316,7 @@ import { getStaticImgUrl, _formatNumber } from "@/utils/index.js"
 import { Tab, Tabs, Icon, Popup } from "vant";
 import { _futures, _basic, _add, _del } from "@/api/api";
 import BottomPopup from "@/components/BottomPopup.vue";
+import router from "@/router";
 // 公共
 import StockTable from "@/components/StockTable.vue";
 import OrderingSpot from "@/views/Market/OrderingSpot.vue"
@@ -451,18 +452,18 @@ const handleClick = (obj) => {
         chartLoading.value = false
     }, 100)
 };
-const handleClickIndex = ({item, type}) => {
+const handleClickIndex = ({ item, type }) => {
     if (type) {
-        switch(type) {
+        switch (type) {
             case 'spot':
-            activeTab.value = 1
-            break;
+                activeTab.value = 1
+                break;
             case 'constract':
-            activeTab.value = 2
-            break;
+                activeTab.value = 2
+                break;
             case 'ai':
-            activeTab.value = 3
-            break;
+                activeTab.value = 3
+                break;
         }
     }
     setTimeout(() => {
@@ -557,6 +558,54 @@ const goDialogSearch = () => {
                         commitKey: "setFuturesSearchList",
                         listKey: "futuresSearchList",
                     });
+
+                    // 这里如果当前没有item的值 就设置下
+                    if (!item.symbol) {
+                        const obj = arr[0]
+                        switch (activeTab.value) {
+                            case 1:
+                                store.commit("setCurrConstract", obj || {});
+                                if (route.name == 'tradeInfo') {
+                                    router.replace({
+                                        name: 'tradeInfo',
+                                        query: {
+                                            symbol: obj.symbol,
+                                            type: 'constract',
+                                            tradeType: 'spot'
+                                        }
+                                    })
+                                }
+
+                            case 3:
+                                store.commit("setCurrAi", obj || {});
+                                if (route.name == 'tradeInfo') {
+                                    router.replace({
+                                        name: 'tradeInfo',
+                                        query: {
+                                            symbol: obj.symbol,
+                                            type: 'ai',
+                                            tradeType: 'ai'
+                                        }
+                                    })
+                                }
+
+                                break
+                            default:
+                                store.commit("setCurrConstract", obj || {});
+                                if (route.name == 'tradeInfo') {
+                                    router.replace({
+                                        name: 'tradeInfo',
+                                        query: {
+                                            symbol: obj.symbol,
+                                            type: 'constract',
+                                            tradeType: 'constract'
+                                        }
+                                    })
+                                }
+
+                                break
+                        }
+                    }
                 }
             })
             .finally(() => {
@@ -657,6 +706,7 @@ const openMenu = () => {
             margin-top: 0.1rem;
             height: calc(var(--vh) * 100 - 1rem);
             overflow-y: auto;
+            padding-bottom: 1.26rem;
 
             :deep(.van-tabs--market2) {
                 &>.van-tabs__wrap {

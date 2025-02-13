@@ -599,69 +599,18 @@ body .van-dialog {
 }
 
 .van-tabs--line-card-trade {
-  >div>.van-sticky {
-    top: 1.6rem !important;
+  &>.van-tabs__wrap {
+    overflow: inherit;
+    background-color: var(--ex-bg-color);
+    // padding: 0 0.32rem;
 
-    >div>.van-tabs__wrap {
-      overflow: inherit;
-      background-color: var(--ex-bg-color);
-      // padding: 0 0.32rem;
-
-      .van-tabs__nav {
-        height: 0.6rem;
-        padding: 0 0.32rem;
-        overflow: inherit;
-        color: var(--ex-text-color3);
-        background-color: var(--ex-bg-color);
-        position: relative;
-        border-bottom: 0.02rem solid var(--ex-border-color5) !important;
-      }
-
+    .van-tabs__nav {
       .van-tab {
-        margin-right: 0.2rem;
+        font-size: 0.3rem;
       }
-
+  
       .van-tab--active {
-        position: relative;
-
-        &::after {
-          content: "";
-          width: 0.3rem;
-          height: 0.06rem;
-          border-radius: 0.3rem;
-          position: absolute;
-          bottom: -0.03rem;
-          left: 50%;
-          transform: translateX(-50%);
-          background-color: var(--ex-primary-color);
-        }
-
-        .van-tab__text {
-          font-size: 0.28rem;
-          font-weight: 600;
-          color: var(--ex-white);
-        }
-      }
-
-      .van-tab__text {
-        font-size: 0.28rem;
-        color: var(--ex-text-color2);
-      }
-
-      .van-tab--shrink {
-        padding: 0 0.08rem !important;
-      }
-
-      .van-tab:first-child.van-tab--active {
-        border-radius: 0.32rem 0 0 0;
-      }
-
-      .van-tab:last-child.van-tab--active {
-        border-radius: 0 0.32rem 0 0;
-      }
-
-      .van-tabs__line {
-        display: none;
+        font-size: 0.36rem;
       }
     }
   }

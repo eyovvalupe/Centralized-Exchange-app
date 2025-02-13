@@ -4,7 +4,7 @@
              :color="'var(--ex-primary-color)'" @change="tabChange" v-if="props.activated"
             v-model:active="activeTab" :animated="from != 'home'" shrink>
             <Tab :name="0" v-if="from != 'home'" :title="t('trade.left_mine')">
-                <div :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']" :style="{borderTop: '1px solid var(--ex-border-color5)'}">
+                <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']" :style="{borderTop: '1px solid var(--ex-border-color)'}">
                     <div v-if="token">
                         <Loaidng v-if="watchListLoading" :loading="watchListLoading" />
                         {{ console.log(watchList) }}
@@ -40,7 +40,7 @@
                 </div>
             </Tab>
             <Tab :name="1" :title="t('common.spot')">
-                <div :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']" :style="{borderTop: '1px solid var(--ex-border-color5)'}">
+                <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']" :style="{borderTop: '1px solid var(--ex-border-color)'}">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div class="" style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 1">
                         <StockItem :handleClick="props.innerPage ? handleClick : null" :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
@@ -51,7 +51,7 @@
                 </div>
             </Tab>
             <Tab :name="2" :title="$t('common.crypto')">
-                <div :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']" :style="{borderTop: '1px solid var(--ex-border-color5)'}">
+                <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']" :style="{borderTop: '1px solid var(--ex-border-color)'}">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 2">
                         <StockItem :handleClick="props.innerPage ? handleClick : null" :page="from == 'home' ? 'home' : ''" :padding="true" :class="[props.from == 'home' ? 'wow fadeInUp' : '']"
@@ -62,12 +62,12 @@
                 </div>
             </Tab>
             <Tab :name="3" :title="$t('common.option')">
-                <div class="pl-[0.32rem] pr-[0.32rem]" :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']">
+                <div class="pl-[0.32rem] pr-[0.24rem]" :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']">
                     <Ai :handleClick="props.innerPage ? handleClick : null" :from="props.from" page="home" v-if="activeTab == 3" />
                 </div>
             </Tab>
             <Tab :name="4" :title="'ETF'">
-                <div class="pl-[0.32rem] pr-[0.32rem]" :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']">
+                <div class="pl-[0.32rem] pr-[0.24rem]" :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']">
                     <Ai :handleClick="props.innerPage ? handleClick : null" :from="props.from" page="home" v-if="activeTab == 4" />
                 </div>
             </Tab>
@@ -212,22 +212,15 @@ defineExpose({
 
 <style lang="less" scoped>
 .home-tab-box-trade {
-    border-radius: 0.32rem;
+    // border-radius: 0.32rem;
     min-height: calc(var(--vh) * 100 - 4rem);
 }
 .home-tabs-box-trade {
     :deep(.van-tabs--line-card-trade) {
         &>.van-tabs__wrap {
-            // border-bottom: 1px solid var(--ex-border-color5);
-            // padding-bottom: 0.24rem;
             &>.van-tabs__nav {
                 padding-left: 0.2rem;
-                &>.van-tab {
-                    font-size: 0.32rem;
-                }
-                &>.van-tab--active {
-                    font-weight: 600!important;
-                }
+                padding-right: 1.2rem;
             }
         }
     }

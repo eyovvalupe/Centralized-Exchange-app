@@ -1,19 +1,24 @@
 <template>
   <div class="w-full h-full">
     <div class="page-trade3">
-      <div class="z-[1]  pt-[0.4rem] pb-[0.4rem] bg-color" >
+      <div class="z-[1]  pt-[0.4rem] pb-[0.4rem] bg-color" v-if="props.innerPage">
         <div
           class="transition flex justify-between  px-[0.32rem] py-[0.18rem] rounded-[1rem] gap-[0.2rem] h-[0.8rem] mx-[0.4rem] items-center border-[0.02rem]"
           :class="focusRef ? 'border-white' : ''" style="background-color: var(--ex-bg-white1);">
           <div class="w-[0.5rem] h-[0.5rem]">
             <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
           </div>
-          <div class="text-[0.32rem] text-color2 leading-[0.5rem] border-r-[1px] flex-1 px-[0.1rem]">
+          <div class="text-[0.32rem] text-color2 leading-[0.5rem]  flex-1 px-[0.1rem]">
             <input style="flex:1;width: 100%;" v-model.trim="searchRef" class="text-white"
               :placeholder="'输入币对'" @input="inputHandle" @focus="focusRef = true"
               @blur="focusRef = false" />
           </div>
         </div>
+      </div>
+      <div style="height: 0.24rem;" v-else>
+        <div @click="jump('search')" style="width: 0.56rem;height: 0.56rem;border-radius: 50%;background-color: var(--ex-bg-white1);position: absolute;right: 0.24rem;top: 0.18rem;z-index: 99;padding: 0.11rem 0.12rem 0.13rem 0.12rem;">
+            <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
+          </div>
       </div>
 
       <!-- <div class="bill-box" @click="jump('tradeOrder')">

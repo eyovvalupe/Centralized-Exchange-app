@@ -207,7 +207,7 @@ const goInfo = (type) => {
     router.push({
       name: "tradeInfo",
       query: {
-        symbol: props.item.name,
+        symbol: props.item.symbol,
         type: "constract",
         tradeType: 'spot'
       },
@@ -218,7 +218,7 @@ const goInfo = (type) => {
     router.push({
       name: "tradeInfo",
       query: {
-        symbol: props.item.name,
+        symbol: props.item.symbol,
         type: "constract",
         tradeType: 'constract'
       },
