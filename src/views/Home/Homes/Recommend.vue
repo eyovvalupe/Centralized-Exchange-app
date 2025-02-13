@@ -98,6 +98,7 @@ const handleClick = (item, type) => {
 }
 
 const { t } = useI18n();
+const token = computed(() => store.state.token);
 
 const props = defineProps({
     activated: false,
@@ -110,6 +111,9 @@ const props = defineProps({
 })
 
 const activeTab = ref(0);
+if (!token.value) {
+    activeTab.value = 1
+}
 
 // 订阅
 const subs = () => {
@@ -137,7 +141,6 @@ const tabChange = (val) => {
 
 // 获取推荐数据
 const commendLoading = ref(false);
-const token = computed(() => store.state.token);
 const contractList = computed(() => store.state.contractList || []);
 const watchList = computed(() => store.state.marketWatchList || []);
 

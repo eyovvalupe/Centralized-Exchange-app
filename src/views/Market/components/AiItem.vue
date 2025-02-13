@@ -69,7 +69,7 @@
       </div>
     </div>
 
-    <!-- <div class="ripple-btn submit">{{ t('trade.ai_opening_trade') }}</div> -->
+    <div class="ripple-btn submit">去交易</div>
 
      <!-- 交易弹窗 -->
      <Popup class="trade-popup" teleport="body" v-model:show="showDialog" :title="''" position="bottom" close-on-popstate  >
@@ -191,10 +191,11 @@ const formatSec = (seconds, t) => {
 <style lang="less" scoped>
 .ai_item {
   border-radius: 0.32rem;
-  background: var(--ex-bg-color);
-  border: 0.02rem solid var(--ex-border-color5);
-  margin-bottom: 0.32rem;
+  background: var(--ex-bg-white2);
+  // border: 0.02rem solid var(--ex-border-color5);
+  margin-bottom: 0.76rem;
   // padding: 0 0.12rem 0.12rem 0.12rem;
+  padding-bottom: 0.56rem;
   position: relative;
   .submit {
     height: 0.72rem;
@@ -263,15 +264,16 @@ const formatSec = (seconds, t) => {
 
   .content {
     border-radius: 0.32rem;
-    background: var(--ex-bg-color2);
-    border: 0.02rem solid var(--ex-border-color5);
+    background: var(--ex-bg-white2);
+    // border: 0.02rem solid var(--ex-border-color5);
+    margin: 0.12rem;
   }
 
   .mid {
     display: flex;
     align-items: center;
     padding: 0.28rem;
-    border-bottom: 1px dashed var(--ex-border-color);
+    border-bottom: 1px dashed var(--ex-bg-white2);
     justify-content: space-between;
 
     .ml {
@@ -340,7 +342,7 @@ const formatSec = (seconds, t) => {
     .bot-line {
       height: 0.9rem;
       width: 1px;
-      background-color: var(--ex-bg-color3);
+      background-color: var(--ex-bg-white2);
     }
 
     .bot-item {

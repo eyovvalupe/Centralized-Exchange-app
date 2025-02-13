@@ -478,7 +478,7 @@ const removeStock = (item) => {
     height: 100%;
     top: 0;
     right: -0.32rem;
-    background-color: rgb(var(--ex-none) / 0.12);
+    background-color: rgb(var(--ex-none) / 0.06);
     transition: all ease-in .2s;
     // border-radius: 0 0.32rem 0.32rem 0;
   }
@@ -490,18 +490,19 @@ const removeStock = (item) => {
     height: 100%;
     top: 0;
     left: -0.32rem;
-    background-color: rgb(var(--ex-none) / 0.12);
+    background-color: rgb(var(--ex-none) / 0.06);
     transition: all ease-in .2s;
     // border-radius: 0.32rem 0 0 0.32rem;
   }
 }
 
 .stock_item_bg:active {
-  background-color: var(--ex-bg-color3);
+  transition: none;
+  background-color: var(--ex-bg-white2);
 }
 
 .stock_item_up {
-  background-color: rgb(var(--ex-up-color-rgb) / 0.12);
+  background-color: rgb(var(--ex-up-color-rgb) / 0.06);
   transition: all ease-in .2s;
 
   &::after {
@@ -511,7 +512,7 @@ const removeStock = (item) => {
     height: 100%;
     top: 0;
     right: -0.32rem;
-    background-color: rgb(var(--ex-up-color-rgb) / 0.12);
+    background-color: rgb(var(--ex-up-color-rgb) / 0.06);
     transition: all ease-in .2s;
     // border-radius: 0 0.32rem 0.32rem 0;
   }
@@ -523,18 +524,18 @@ const removeStock = (item) => {
     height: 100%;
     top: 0;
     left: -0.32rem;
-    background-color: rgb(var(--ex-up-color-rgb) / 0.12);
+    background-color: rgb(var(--ex-up-color-rgb) / 0.06);
     transition: all ease-in .2s;
     // border-radius: 0.32rem 0 0 0.32rem;
   }
 
   .stock_item {
-    // border-bottom: 1px solid rgb(var(--ex-up-color-rgb) / 0.12);
+    // border-bottom: 1px solid rgb(var(--ex-up-color-rgb) / 0.06);
   }
 }
 
 .stock_item_down {
-  background-color: rgb(var(--ex-down-color-rgb) / 0.12);
+  background-color: rgb(var(--ex-down-color-rgb) / 0.06);
   transition: all ease-in .2s;
 
   &::after {
@@ -544,7 +545,7 @@ const removeStock = (item) => {
     height: 100%;
     top: 0;
     right: -0.32rem;
-    background-color: rgb(var(--ex-down-color-rgb) / 0.12);
+    background-color: rgb(var(--ex-down-color-rgb) / 0.06);
     transition: all ease-in .2s;
     // border-radius: 0 0.32rem 0.32rem 0;
   }
@@ -556,13 +557,13 @@ const removeStock = (item) => {
     height: 100%;
     top: 0;
     left: -0.32rem;
-    background-color: rgb(var(--ex-down-color-rgb) / 0.12);
+    background-color: rgb(var(--ex-down-color-rgb) / 0.06);
     transition: all ease-in .2s;
     // border-radius: 0.32rem 0 0 0.32rem;
   }
 
   .stock_item {
-    // border-bottom: 1px solid rgb(var(--ex-down-color-rgb) / 0.12);
+    // border-bottom: 1px solid rgb(var(--ex-down-color-rgb) / 0.06);
   }
 }
 

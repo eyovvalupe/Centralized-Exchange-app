@@ -80,6 +80,7 @@ const getList = () => {
   })
     .then((res) => {
       const list = res.data || [];
+      let list2 = []
       switch (by) {
         case "ratereturn":
           store.commit("setMarketAiHisList", list);
@@ -109,6 +110,12 @@ const getList = () => {
           }, 500);
           break;
         default:
+          list.forEach(item => {
+            const target = marketAiList.value.find(a => a.symbol == item.symbol)
+            if (target) {
+              item = Object.assign(item, target)
+            }
+          })
           store.commit("setMarketAiList", list);
           setTimeout(() => {
             store.dispatch("subList", {
