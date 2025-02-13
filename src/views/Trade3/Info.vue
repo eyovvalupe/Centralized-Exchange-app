@@ -8,6 +8,10 @@
             </div>
         </div>
 
+        <div v-if="!item.symbol">
+            <div style="height:2rem"></div>
+            <Loaidng :loading="true" />
+        </div>
         <div class="market-trade-body" v-if="item.symbol">
             <Tabs @change="changeTab2" :key="'main'" class="van-tabs--top" :sticky="true"
                 :color="'var(--ex-primary-color)'" v-model:active="activeTab" animated shrink>
@@ -267,6 +271,8 @@
             </Tabs>
         </div>
 
+        
+
 
         <!-- 搜索列表 -->
         <BottomPopup round v-model:show="showSearchDialog" position="bottom" closeable teleport="body">
@@ -316,6 +322,7 @@ import { getStaticImgUrl, _formatNumber } from "@/utils/index.js"
 import { Tab, Tabs, Icon, Popup } from "vant";
 import { _futures, _basic, _add, _del } from "@/api/api";
 import BottomPopup from "@/components/BottomPopup.vue";
+import Loaidng from "@/components/Loaidng.vue"
 import router from "@/router";
 // 公共
 import StockTable from "@/components/StockTable.vue";
@@ -562,6 +569,7 @@ const goDialogSearch = () => {
                     // 这里如果当前没有item的值 就设置下
                     if (!item.symbol) {
                         const obj = arr[0]
+                        console.error('?????', activeTab.value)
                         switch (activeTab.value) {
                             case 1:
                                 store.commit("setCurrConstract", obj || {});
@@ -575,7 +583,7 @@ const goDialogSearch = () => {
                                         }
                                     })
                                 }
-
+                                break
                             case 3:
                                 store.commit("setCurrAi", obj || {});
                                 if (route.name == 'tradeInfo') {
@@ -588,7 +596,6 @@ const goDialogSearch = () => {
                                         }
                                     })
                                 }
-
                                 break
                             default:
                                 store.commit("setCurrConstract", obj || {});
@@ -602,7 +609,6 @@ const goDialogSearch = () => {
                                         }
                                     })
                                 }
-
                                 break
                         }
                     }
