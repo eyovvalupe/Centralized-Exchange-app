@@ -457,11 +457,11 @@ const openConfirm = () => {
     padding-top: 1rem !important;
     padding-bottom: 2rem !important;
     .mid-scroll{
-      height: 1.14rem;
-      bottom: 0.84rem;
+      height: 1.14rem !important;
+      bottom: 0.84rem !important;
     }
     .bottom_content{
-      height: 0.84rem;
+      height: 0.84rem !important;
     }
     .lt-box{
       top:0.16rem;
