@@ -24,7 +24,7 @@
             </div>
 
             <!-- 欢迎 -->
-            <div class="welcome">
+            <div class="welcome" @click="install">
                 <div class="name mb-[0.42rem] " :data-wow-delay="'0.1s'" data-wow-duration="1s">{{ t('home.secure') }} | {{ t('home.convinient') }} | {{ t('home.reliable') }}
                 </div>
                 <div class="title mb-[0.16rem] " :data-wow-delay="'0.2s'" data-wow-duration="1s"><span

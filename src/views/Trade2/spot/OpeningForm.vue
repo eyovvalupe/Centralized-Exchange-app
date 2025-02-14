@@ -37,7 +37,7 @@
       <FormItem :placeholder="props.activeType == 1
         ? t('trade.stock_opening_take')
         : t('trade.stock_opening_stop')
-        " class="mb-[0.4rem]" input-type="number" v-model="form1.stop_loss_price" :percent-tags="props.activeType == 1
+        " class="mb-[0.2rem]" input-type="number" v-model="form1.stop_loss_price" :percent-tags="props.activeType == 1
           ? [
             { label: '-20%', value: 20 },
             { label: '-15%', value: 15 },
@@ -103,7 +103,7 @@
     </template>
 
     <!-- 价格 -->
-    <FormItem class="mb-[0.4rem]" input-type="number" :placeholder="t('trade.stock_opening_price_title')"
+    <FormItem class="mb-[0.2rem]" input-type="number" :placeholder="t('trade.stock_opening_price_title')"
       :tip="t('trade.stock_opening_price_tip')" v-model="form1.price" :percent-tags="props.activeType == 1
         ? [
           { label: '-3%', value: 3 },
@@ -118,6 +118,10 @@
           { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
         ]
         " @percentTagClick="percentTagClick" v-if="props.activeTab == 1" />
+    <FormItem class="mb-[0.2rem]" v-else input-type="number" :placeholder="'以当前市场最优价格下单'" :tip="''" :disabled="true" />
+
+    <FormItem class="mb-[0.2rem]" input-type="number" :placeholder="`成交额(${currName.split('/')[1]})`" :tip="''" v-model="form1.amount"
+      @input="changeAmount" />
 
 
     <!-- 保证金模式 -->
@@ -152,7 +156,7 @@
     <!-- 张数 -->
     <div class="item_box">
       <div class="item_box_right">
-        <FormItem :hasScroll="true" :placeholder="t('trade.stock_position_amount')" @focus="volumeFocus"
+        <FormItem :hasScroll="true" :placeholder="t('trade.stock_position_amount') + `(${currName.split('/')[0]})`" @focus="volumeFocus"
           v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll"
           @change="changePercent" :tip="'≤' + maxStockNum" :max="maxStockNum" tip-align="right" input-type="digit">
           <!-- <template #title-icon v-if="amountper && paramCurrency">
@@ -197,7 +201,8 @@
 
     <!-- 按钮 -->
     <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1"
-      class="submit ripple-btn" :color="props.activeType == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'" round>
+      class="submit ripple-btn" :color="props.activeType == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'"
+      round>
       <span style="color: var(--ex-white);">{{
         props.activeType == 1
           ? $t('market.market_buy_fast_buy_btn')
@@ -807,7 +812,7 @@ const maxStockNum = computed(() => {
   if (props.activeType == 1) {
     // 买入 市价/限价
     if (props.activeTab == 1 && !form1.value.price) return 0
-    return new Decimal(stockWalletAmount.value).mul(1 - openFee.value).div((props.activeTab == 1 ? form1.value.price : currStock.value.price)).toNumber()
+    return new Decimal(stockWalletAmount.value || 0).mul(1 - openFee.value).div((props.activeTab == 1 ? form1.value.price : currStock.value.price) || 1).toNumber()
   } else {
     return currencyAmount.value || 0
   }
@@ -829,13 +834,13 @@ const setPricePercent = (i) => {
   // 设置浮动价格
   if (props.activeType == 1) {
     // 买涨
-    form1.value.price = new Decimal(currStock.value.price)
+    form1.value.price = new Decimal(currStock.value.price || 0)
       .mul(100 - i)
       .div(100)
       .toNumber();
   } else {
     // 买跌
-    form1.value.price = new Decimal(currStock.value.price)
+    form1.value.price = new Decimal(currStock.value.price || 0)
       .mul(100 + i)
       .div(100)
       .toNumber();
@@ -869,11 +874,19 @@ const currStock = computed(() => {
   }
   return obj;
 }); // 当前
+const currName = computed(() => {
+  let str = '/'
+  if (currStock.value.name) {
+    str = currStock.value.name
+  }
+  return str
+})
 
 const form1 = ref({
   leverType: "cross",
   lever: 1,
   volume: "",
+  amount: "",
   price: "",
   price_type: props.activeTab == 1 ? "limit" : "market",
   stop_profit_type: null, // 价格-[ price ]  金额-[ amount ]  百分比-[ ratio ]
@@ -891,13 +904,13 @@ const setPriceStop = (p) => {
   const i = p.value;
   if (props.activeType == 1) {
     // 买涨
-    form1.value.stop_loss_price = new Decimal(currStock.value.price)
+    form1.value.stop_loss_price = new Decimal(currStock.value.price || 0)
       .mul(100 - i)
       .div(100)
       .toNumber();
   } else {
     // 买跌
-    form1.value.stop_loss_price = new Decimal(currStock.value.price)
+    form1.value.stop_loss_price = new Decimal(currStock.value.price || 0)
       .mul(100 + i)
       .div(100)
       .toNumber();
@@ -1019,7 +1032,7 @@ const sliderValue = ref(0);
 const onSliderChange = (newValue) => {
   sliderValue.value = newValue;
   if (maxStockNum.value == "--") return (sliderValue.value = 0);
-  let v = new Decimal(maxStockNum.value).mul(newValue).div(100);
+  let v = new Decimal(maxStockNum.value || 0).mul(newValue).div(100);
   // v = v.sub(v.mod(step.value));
   form1.value.volume = v.toNumber();
   setTimeout(() => {
@@ -1036,14 +1049,36 @@ const changePercent = () => {
     form1.value.volume = "";
     return (sliderValue.value = 0);
   }
-  let p = new Decimal(form1.value.volume)
-    .div(maxStockNum.value)
+  let p = new Decimal(form1.value.volume || 0)
+    .div(maxStockNum.value || 1)
     .mul(100)
     .toNumber();
   if (p < 0) p = 0;
   if (p > 100) p = 100;
   sliderValue.value = Number(p);
+
+  // 成交额
+  setTimeout(() => {
+    if (!form1.value.volume) return form1.value.amount = ''
+    if (props.activeTab == 1) { // 限价
+      if (!form1.value.price) return form1.value.amount = ''
+      form1.value.amount = new Decimal(form1.value.volume || 0).mul(form1.value.price)
+    } else { // 市价
+      form1.value.amount = new Decimal(form1.value.volume || 0).mul(currStock.value.price)
+    }
+  }, 0)
 };
+const changeAmount = () => {
+  if (!form1.value.amount) return form1.value.volume = ''
+  setTimeout(() => {
+    if (props.activeTab == 1) { // 限价
+      if (!form1.value.price) return form1.value.volume = ''
+      form1.value.volume = new Decimal(form1.value.amount || 0).div(form1.value.price || 1)
+    } else { // 市价
+      form1.value.volume = new Decimal(form1.value.amount || 0).div(currStock.value.price || 1)
+    }
+  })
+}
 
 const volumeFocus = () => {
   if (!currStock.value.symbol)
@@ -1209,26 +1244,26 @@ const showModel = ref(false);
 const safePass = ref("");
 const payAmount = computed(() => {
   // 需要支付
-  return new Decimal(orderAmount.value).add(payFee.value).toNumber();
+  return new Decimal(orderAmount.value || 0).add(payFee.value).toNumber();
 });
 const getAmount = computed(() => {
   // 预计得到
-  return new Decimal(orderAmount.value).sub(payFee.value).toNumber();
+  return new Decimal(orderAmount.value || 0).sub(payFee.value).toNumber();
 });
 
 const orderAmount = computed(() => {
-  return new Decimal(params.value.volume).mul( props.activeTab == 1 ? form1.value.price : currStock.value.price ).toNumber()
+  return new Decimal(params.value.volume || 0).mul(props.activeTab == 1 ? form1.value.price : currStock.value.price).toNumber()
 });
 const payOrigin = computed(() => {
   // 保证金
   if (!params.value.volume || !amountper.value || !params.value.lever) return 0;
-  return new Decimal(params.value.volume)
+  return new Decimal(params.value.volume || 0)
     .mul(amountper.value)
-    .div(form1.value.lever);
+    .div(form1.value.lever || 1);
 });
 const payFee = computed(() => {
   // 手续费
-  return new Decimal(orderAmount.value).mul(openFee.value);
+  return new Decimal(orderAmount.value || 0).mul(openFee.value);
 });
 const submitLoading = ref(false);
 const submitFormDialog = () => {
@@ -1334,10 +1369,10 @@ defineExpose({
 
 .form {
   // padding: 0.28rem;
-    position: relative;
-    border-radius: 0.32rem;
-    background-color: var(--ex-bg-color3);
-    margin-top: 0.24rem;
+  position: relative;
+  border-radius: 0.32rem;
+  background-color: var(--ex-bg-color3);
+  margin-top: 0.24rem;
 
   .subtitle {
     color: var(--ex-text-color);
@@ -1361,7 +1396,7 @@ defineExpose({
   .item_box {
     display: flex;
     align-items: stretch;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.2rem;
 
     .item {
       flex: 1;
@@ -1517,6 +1552,7 @@ defineExpose({
       background-color: var(--ex-white);
       color: var(--ex-bg-color);
     }
+
     .btn2 {
       background-color: var(--ex-primary-color);
       color: var(--ex-white);

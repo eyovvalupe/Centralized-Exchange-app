@@ -2,6 +2,7 @@ import { createRouter, createWebHashHistory } from "vue-router";
 import store from "@/store";
 import Home from "../views/Home/Home.vue";
 import { DESKTOP_INVITE_URL } from "@/config";
+import { _setTitle } from "@/utils/index"
 
 const routes = [
   {
@@ -12,6 +13,7 @@ const routes = [
     meta: {
       keepAlive: true,
       pageType: "tab",
+      title: '首页'
     },
   },
   {
@@ -23,6 +25,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '跟单'
     },
   },
   {
@@ -34,6 +37,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '跟单'
     },
   },
   {
@@ -45,6 +49,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 2,
+      title: '跟单'
     },
   },
   {
@@ -56,6 +61,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 3,
+      title: '跟单'
     },
   },
   {
@@ -66,6 +72,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: "tab",
+      title: '用户中心'
     },
   },
   {
@@ -77,6 +84,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '安全中心'
     },
   },
   {
@@ -88,6 +96,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 2,
+      title: '修改密码'
     },
   },
   {
@@ -99,6 +108,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 2,
+      title: '修改密码'
     },
   },
   {
@@ -110,6 +120,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 2,
+      title: '成功'
     },
   },
   {
@@ -121,6 +132,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '谷歌验证码'
     },
   },
   {
@@ -132,6 +144,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 2,
+      title: '谷歌验证码'
     },
   },
   {
@@ -143,6 +156,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '用户认证'
     },
   },
   {
@@ -154,6 +168,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 2,
+       title: '提交成功'
     },
   },
   {
@@ -165,6 +180,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '认证成功'
     },
   },
   {
@@ -176,6 +192,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '收款账户'
     },
   },
   {
@@ -187,6 +204,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: ''
     },
   },
   {
@@ -198,6 +216,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 2,
+      title: '添加银行卡'
     },
   },
   {
@@ -208,6 +227,7 @@ const routes = [
     meta: {
       keepAlive: true,
       pageType: "tab",
+      title: '市场'
     },
   },
   {
@@ -219,6 +239,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '买币'
     },
   },
   {
@@ -230,6 +251,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '买币'
     },
   },
   {
@@ -241,6 +263,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '搜索'
     },
   },
   {
@@ -252,6 +275,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '通知'
     },
   },
   {
@@ -263,6 +287,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 2,
+       title: '通知'
     },
   },
   {
@@ -273,7 +298,8 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: "child",
-      pageDeep: 1,
+      pageDeep: 6,
+       title: '详情'
     },
   },
   {
@@ -285,6 +311,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '理财'
     },
   },
 
@@ -297,6 +324,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '交易规则'
     },
   },
   {
@@ -307,6 +335,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: "login",
+      title: '登录'
     },
   },
   {
@@ -317,6 +346,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: "login",
+      title: '忘记密码'
     },
   },
   {
@@ -327,6 +357,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: "login",
+      title: '注册'
     },
   },
   {
@@ -337,6 +368,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: "login",
+      title: '交易密码'
     },
   },
   {
@@ -348,6 +380,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 2,
+      title: '注册成功'
     },
   },
   {
@@ -359,6 +392,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '注册成功'
     },
   },
   {
@@ -370,6 +404,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '语言'
     },
   },
   {
@@ -381,6 +416,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '客服'
     },
   },
   {
@@ -391,6 +427,7 @@ const routes = [
     meta: {
       keepAlive: true,
       pageType: "tab",
+      title: '市场'
     },
   },
   {
@@ -400,8 +437,8 @@ const routes = [
     component: () => import("../views/Trade3/Info.vue"),
     meta: {
       keepAlive: false,
-      pageType: "child",
-      pageDeep: 3,
+      pageType: "tab",
+      title: '交易'
     },
   },
   {
@@ -413,6 +450,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '交易'
     },
   },
   {
@@ -433,6 +471,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: "tab",
+      title: 'IPO'
     },
   },
   {
@@ -443,6 +482,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: "tab",
+      title: 'IPO'
     },
   },
   {
@@ -453,6 +493,7 @@ const routes = [
     meta: {
       keepAlive: true,
       pageType: "tab",
+      title: '资产'
     },
   },
   {
@@ -464,6 +505,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 4,
+      title: '划转'
     },
   },
   {
@@ -475,6 +517,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '划转记录'
     },
   },
   {
@@ -486,6 +529,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '兑换'
     },
   },
   {
@@ -497,6 +541,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '兑换记录'
     },
   },
   {
@@ -508,6 +553,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '借贷记录'
     },
   },
   {
@@ -519,6 +565,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '借贷'
     },
   },
   {
@@ -530,6 +577,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '提现'
     },
   },
   {
@@ -541,6 +589,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '提现记录'
     },
   },
   {
@@ -552,6 +601,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '提现'
     },
   },
   {
@@ -563,6 +613,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 4,
+      title: '充值'
     },
   },
   {
@@ -574,6 +625,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 4,
+      title: '充值'
     },
   },
   {
@@ -585,6 +637,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '充值'
     },
   },
   {
@@ -596,6 +649,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '充值'
     },
   },
   {
@@ -607,6 +661,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '充值记录'
     },
   },
   {
@@ -618,6 +673,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '充值'
     },
   },
   {
@@ -629,6 +685,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '记录列表'
     },
   },
   {
@@ -641,6 +698,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+       title: '认购'
     },
   },
   {
@@ -651,6 +709,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 3,
+      title: 'IPO'
     },
   },
   {
@@ -661,6 +720,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: 'IPO'
     },
   },
   {
@@ -672,6 +732,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '认购成功'
     },
   },
   {
@@ -683,6 +744,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '关于'
     },
   },
   {
@@ -694,6 +756,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '充值'
     },
   },
   {
@@ -704,6 +767,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '邀请好友'
     },
   },
   {
@@ -714,6 +778,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '邀请好友'
     },
   },
   {
@@ -723,6 +788,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: "tab",
+      title: '理财'
     },
   },
   {
@@ -733,6 +799,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '质押挖矿'
     },
   },
   {
@@ -743,6 +810,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
+      title: '质押挖矿'
     },
   },
   {
@@ -845,5 +913,13 @@ router.beforeEach((to, from) => {
   //   }
   // }
 });
+
+router.afterEach((to, from) => {
+  if (to.meta?.title) {
+    _setTitle(to.meta.title + ' ')
+  } else {
+    _setTitle(' ')
+  }
+})
 
 export default router;

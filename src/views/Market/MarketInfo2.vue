@@ -1,9 +1,9 @@
 <!-- 市场行情 -->
 <template>
-  <div class="page-marketinfo2">
+  <div class="page-marketinfo2" :style="{backgroundColor:props.innerPage?'var(--ex-bg-color9)':'var(--ex-bg-color)'}">
     <!-- 头部 -->
-    <div class="max-width info_header">
-      <div class="top">
+    <div class="max-width info_header" :style="{zIndex: props.innerPage ? 1 : 100,backgroundColor:props.innerPage?'var(--ex-bg-color9)':'var(--ex-bg-color)'}">
+      <div v-if="!props.innerPage" class="top">
         <div v-if="!props.innerPage" class="back" @click="router.back">
           <Icon name="arrow-left" />
         </div>
@@ -31,7 +31,7 @@
         </div>
 
       </div>
-      <div style="background-color: var(--ex-bg-color3);border-radius: 0.32rem;padding: 0.28rem">
+      <div :style="{backgroundColor:props.innerPage?'var(--ex-bg-white2)':'var(--ex-bg-color3)'}" style="border-radius: 0.32rem;padding: 0.28rem">
 
         <div class="flex items-center justify-center gap-[0.2rem]">
 
@@ -97,8 +97,8 @@
     </div>
 
     <!-- 内容 -->
-    <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
-      <Tabs style="background-color: var(--ex-bg-color3);border-radius: 0.32rem 0.32rem 0 0;" class="van-tabs--sub_line van-tabs--sub_bg" :sticky="true" :color="'var(--ex-primary-color)'"
+    <div :class="[props.innerPage ? 'inner-marketinfo' : '']" style="padding: 0 0.1rem;margin-top: 0.1rem;" :style="{backgroundColor:props.innerPage?'var(--ex-none':'var(--ex-bg-color)'}">
+      <Tabs :style="{backgroundColor:props.innerPage?'var(--ex-bg-white2)':'var(--ex-bg-color3)'}" style="border-radius: 0.32rem 0.32rem 0 0;" class="van-tabs--sub_line van-tabs--sub_bg" :sticky="true" :color="'var(--ex-primary-color)'"
         v-model:active="activeTab" animated shrink>
         <!-- <Tab :name="1" :title="'开仓'">
           <div class="market-box" style="height: calc(var(--vh) * 100 - 2.2rem);overflow-y: auto;">
@@ -113,12 +113,12 @@
             <Chart ref="chartRef" v-if="!chartLoading" :type="'constract'" />
           </div>
         </Tab>
-        <Tab :name="3" :title="'订单薄'" v-if="item.type == 'crypto'">
+        <Tab :name="3" :title="'订单薄'" v-if="item.type == 'crypto' && !props.innerPage">
           <div class="market-box">
             <OrderingSpot v-if="activeTab == 3" :key="'o'" type="nomal" />
           </div>
         </Tab>
-        <Tab :name="4" :title="'最新成交'" v-if="item.type == 'crypto'">
+        <Tab :name="4" :title="'最新成交'" v-if="item.type == 'crypto' && !props.innerPage">
           <div class="market-box">
             <OrderingSpot v-if="activeTab == 4" :key="'n'" type="news" />
           </div>
@@ -127,7 +127,7 @@
     </div>
 
     <!-- 去交易按钮 -->
-    <div class="bottom-box">
+    <div class="bottom-box" v-if="!props.innerPage">
       <div class="info">
         <div class="name">{{ item.name || "--" }}</div>
         <div class="type" v-if="chartRef">{{ chartRef.timeType }}</div>
@@ -136,6 +136,7 @@
       <div class="data" @click="showInfo = true">数据</div>
       <div class="btn" @click="gotrade">交易</div>
     </div>
+    <div v-else style="height:0.12rem"></div>
 
 
     <!-- 搜索列表 -->
@@ -164,7 +165,7 @@
     <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showInfo"
       :title="t('market.market_marketinfo_data')" closeable>
       <div class="info_popup">
-        <div class="info_price">
+        <div class="info_price" :style="{backgroundColor: updown > 0 ? 'rgb(var(--ex-up-color-rgb) / 0.06)' : 'rgb(var(--ex-down-color-rgb) / 0.06)'}">
           <div class="info_num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
             <template v-if="item.price || item.close">
               {{ item.price || item.close }}
@@ -273,6 +274,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  innerPage: { // 内联页
+    type: Boolean,
+    default: false
+  }
 });
 
 const { t } = useI18n();
@@ -679,7 +684,7 @@ setTimeout(() => {
     font-size: 0.32rem;
     height: 1.3rem;
     padding: 0.24rem;
-    background: var(--ex-bg-color3);
+    // background: var(--ex-bg-color3);
     border-radius: 0.4rem;
 
     .info_num {
@@ -723,16 +728,45 @@ setTimeout(() => {
       align-items: center;
       margin-bottom: 0.32rem;
       width: 31%;
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white2);
       border-radius: 0.4rem;
       height: 1.26rem;
 
       .name {
         margin-top: 0.2rem;
+        color: var(--ex-bg-color8);
       }
 
       .info_item__value {
         font-weight: 600;
+      }
+    }
+  }
+}
+
+
+.inner-marketinfo {
+  :deep(.van-tabs--sub_bg) {
+     .van-sticky > div > .van-tabs__wrap .van-tabs__nav {
+      background-color: var(--ex-none);
+     }
+  }
+  
+  :deep(.market-charts) {
+    .chart_box {
+      background-color: var(--ex-none);
+      .tabs {
+        .tab {
+          background-color: var(--ex-bg-white1);
+        }
+        .active_tab {
+          background-color: var(--ex-white);
+        }
+      }
+      .chart_container {
+        .chart_time {
+          background-color: var(--ex-bg-white1);
+        }
       }
     }
   }

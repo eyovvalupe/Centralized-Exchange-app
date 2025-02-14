@@ -1,9 +1,9 @@
 <!-- 股票单个元素 -->
 <template>
-  <div ref="root" style="overflow: visible;" class="w-full mask-btn-stock border-b-[1px] border-b-color2">
+  <div ref="root" style="overflow: visible;" class="w-full mask-btn-stock ">
     <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
       <div class="stock_item_bg"
-        :class="[`${' stock_item_' + updownStatus} ${props.page == 'home' ? 'px-[0.28rem]' : ''}`]"
+        :class="[`${' stock_item_' + updownStatus} px-[0.28rem]`]"
         @click="goInfo(props.item.type)">
         <div :class="['stock_item']">
           <!-- <div class="size-[0.96rem] rounded-full bg-white mr-[0.18rem] flex justify-center items-center"
@@ -162,7 +162,8 @@ const props = defineProps({
     type: Boolean,
     default: false
   },
-  showIcon: Boolean
+  showIcon: Boolean,
+  menuType: String,
 });
 
 const mode = ref(1);
@@ -190,7 +191,7 @@ watch(price, (newVal, oldVal) => {
 });
 
 const goInfo = (type) => {
-  if (props.handleClick) return props.handleClick(props.item);
+  if (props.handleClick) return props.handleClick(props.item, props.menuType);
   if (type == "stock") {
     store.commit("setCurrStock", props.item);
     router.push({
@@ -206,7 +207,7 @@ const goInfo = (type) => {
     router.push({
       name: "market_info",
       query: {
-        symbol: props.item.name,
+        symbol: props.item.symbol,
         type: "constract",
         tradeType: 'spot'
       },
@@ -217,7 +218,7 @@ const goInfo = (type) => {
     router.push({
       name: "market_info",
       query: {
-        symbol: props.item.name,
+        symbol: props.item.symbol,
         type: "constract",
         tradeType: 'constract'
       },
@@ -291,7 +292,7 @@ const removeStock = (item) => {
 .stock_item {
   display: flex;
   align-items: center;
-  height: 1.6rem;
+  height: 1.44rem;
   // padding: 0 0.3rem;
   position: relative;
   // background-color: var(--ex-bg-white2);
@@ -470,98 +471,99 @@ const removeStock = (item) => {
   position: relative;
   overflow: visible;
   border-radius: 0.12rem;
-  // &::after {
-  //   position: absolute;
-  //   content: "";
-  //   width: 0.16rem;
-  //   height: 100%;
-  //   top: 0;
-  //   right: -0.16rem;
-  //   background-color: rgb(var(--ex-none) / 0.12);
-  //   transition: all ease-in .2s;
-  //   border-radius: 0 0.16rem 0.16rem 0;
-  // }
+  &::after {
+    position: absolute;
+    content: "";
+    width: 0.32rem;
+    height: 100%;
+    top: 0;
+    right: -0.32rem;
+    background-color: rgb(var(--ex-none) / 0.06);
+    transition: all ease-in .2s;
+    // border-radius: 0 0.32rem 0.32rem 0;
+  }
 
-  // &::before {
-  //   position: absolute;
-  //   content: "";
-  //   width: 0.16rem;
-  //   height: 100%;
-  //   top: 0;
-  //   left: -0.16rem;
-  //   background-color: rgb(var(--ex-none) / 0.12);
-  //   transition: all ease-in .2s;
-  //   border-radius: 0.16rem 0 0 0.16rem;
-  // }
+  &::before {
+    position: absolute;
+    content: "";
+    width: 0.32rem;
+    height: 100%;
+    top: 0;
+    left: -0.32rem;
+    background-color: rgb(var(--ex-none) / 0.06);
+    transition: all ease-in .2s;
+    // border-radius: 0.32rem 0 0 0.32rem;
+  }
 }
 
 .stock_item_bg:active {
-  background-color: var(--ex-bg-color3);
+  transition: none;
+  background-color: var(--ex-bg-white2);
 }
 
 .stock_item_up {
-  background-color: rgb(var(--ex-up-color-rgb) / 0.12);
+  background-color: rgb(var(--ex-up-color-rgb) / 0.06);
   transition: all ease-in .2s;
 
-  // &::after {
-  //   position: absolute;
-  //   content: "";
-  //   width: 0.16rem;
-  //   height: 100%;
-  //   top: 0;
-  //   right: -0.16rem;
-  //   background-color: rgb(var(--ex-up-color-rgb) / 0.12);
-  //   transition: all ease-in .2s;
-  //   border-radius: 0 0.16rem 0.16rem 0;
-  // }
+  &::after {
+    position: absolute;
+    content: "";
+    width: 0.32rem;
+    height: 100%;
+    top: 0;
+    right: -0.32rem;
+    background-color: rgb(var(--ex-up-color-rgb) / 0.06);
+    transition: all ease-in .2s;
+    // border-radius: 0 0.32rem 0.32rem 0;
+  }
 
-  // &::before {
-  //   position: absolute;
-  //   content: "";
-  //   width: 0.16rem;
-  //   height: 100%;
-  //   top: 0;
-  //   left: -0.16rem;
-  //   background-color: rgb(var(--ex-up-color-rgb) / 0.12);
-  //   transition: all ease-in .2s;
-  //   border-radius: 0.16rem 0 0 0.16rem;
-  // }
+  &::before {
+    position: absolute;
+    content: "";
+    width: 0.32rem;
+    height: 100%;
+    top: 0;
+    left: -0.32rem;
+    background-color: rgb(var(--ex-up-color-rgb) / 0.06);
+    transition: all ease-in .2s;
+    // border-radius: 0.32rem 0 0 0.32rem;
+  }
 
   .stock_item {
-    // border-bottom: 1px solid rgb(var(--ex-up-color-rgb) / 0.12);
+    // border-bottom: 1px solid rgb(var(--ex-up-color-rgb) / 0.06);
   }
 }
 
 .stock_item_down {
-  background-color: rgb(var(--ex-down-color-rgb) / 0.12);
+  background-color: rgb(var(--ex-down-color-rgb) / 0.06);
   transition: all ease-in .2s;
 
-  // &::after {
-  //   position: absolute;
-  //   content: "";
-  //   width: 0.16rem;
-  //   height: 100%;
-  //   top: 0;
-  //   right: -0.16rem;
-  //   background-color: rgb(var(--ex-down-color-rgb) / 0.12);
-  //   transition: all ease-in .2s;
-  //   border-radius: 0 0.16rem 0.16rem 0;
-  // }
+  &::after {
+    position: absolute;
+    content: "";
+    width: 0.32rem;
+    height: 100%;
+    top: 0;
+    right: -0.32rem;
+    background-color: rgb(var(--ex-down-color-rgb) / 0.06);
+    transition: all ease-in .2s;
+    // border-radius: 0 0.32rem 0.32rem 0;
+  }
 
-  // &::before {
-  //   position: absolute;
-  //   content: "";
-  //   width: 0.16rem;
-  //   height: 100%;
-  //   top: 0;
-  //   left: -0.16rem;
-  //   background-color: rgb(var(--ex-down-color-rgb) / 0.12);
-  //   transition: all ease-in .2s;
-  //   border-radius: 0.16rem 0 0 0.16rem;
-  // }
+  &::before {
+    position: absolute;
+    content: "";
+    width: 0.32rem;
+    height: 100%;
+    top: 0;
+    left: -0.32rem;
+    background-color: rgb(var(--ex-down-color-rgb) / 0.06);
+    transition: all ease-in .2s;
+    // border-radius: 0.32rem 0 0 0.32rem;
+  }
 
   .stock_item {
-    // border-bottom: 1px solid rgb(var(--ex-down-color-rgb) / 0.12);
+    // border-bottom: 1px solid rgb(var(--ex-down-color-rgb) / 0.06);
   }
 }
 

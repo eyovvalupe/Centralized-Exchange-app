@@ -2,6 +2,11 @@
 import { VERSION } from "@/config"
 
 
+// 设置标题
+export const _setTitle = name => {
+  document.title = name || 'Lorna'
+}
+
 // 获取一个虚假的points数据
 // x,y x,y x,y  x-下标 y-数值越小越靠上（0-25）
 // id-表示数据唯一值

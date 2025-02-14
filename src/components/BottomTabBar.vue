@@ -42,8 +42,10 @@ const token = computed(() => store.state.token);
 
 const navs = ref([
   { name: t("home.homepage"), route: "home", icon: "/static/img/bottom/shouye1.svg", icon2: "/static/img/bottom/shouye2.svg" },
-
-  { name: t("home.trade"), route: "trade", icon: "/static/img/bottom/jiaoyi1.svg", icon2: "/static/img/bottom/jiaoyi2.svg" },
+  {
+    name: '市场', route: "trade", icon: "/static/img/bottom/shichang1.svg", icon2: "/static/img/bottom/shichang2.svg"
+  },
+  { name: t("home.trade"), route: "tradeInfo", icon: "/static/img/bottom/jiaoyi1.svg", icon2: "/static/img/bottom/jiaoyi2.svg" },
   {
     name: t('home.finance'),
     route: "finance",
@@ -59,13 +61,13 @@ const navs = ref([
     icon2: "/static/img/bottom/zichan2.svg",
     needLogin: true,
   },
-  {
-    name: t("home.user"),
-    route: "user",
-    children: ["account"],
-    icon: "/static/img/bottom/yonghu1.svg",
-    icon2: "/static/img/bottom/yonghu2.svg",
-  },
+  // {
+  //   name: t("home.user"),
+  //   route: "user",
+  //   children: ["account"],
+  //   icon: "/static/img/bottom/yonghu1.svg",
+  //   icon2: "/static/img/bottom/yonghu2.svg",
+  // },
 ]);
 
 const touchLoading = ref(false);

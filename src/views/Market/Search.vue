@@ -56,13 +56,17 @@
     <div class="list">
       <Loading v-show="!searchList.length && loading" />
       <NoData v-if="!searchList.length && !loading" />
+      
       <div class="item" v-for="(item, i) in searchList" :key="i" @click="goItem(item)">
-        <div @click.stop="collect(item)">
+        <!-- <div @click.stop="collect(item)">
           <div class="size-[0.48rem]">
             <img v-if="item.watchlist == 1" v-lazy="getStaticImgUrl('/static/img/market/star.svg')" alt="">
             <img v-else v-lazy="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
           </div>
-        </div>
+        </div> -->
+        <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center" >
+            <CryptoIcon :name="item.name.split('/')[0]" />
+          </div>
         <div class="info">
           <div class="title flex items-center gap-1">
             {{ item.type == "stock" ? item.symbol || "--" : item.name || "--" }}
@@ -141,6 +145,7 @@ import { _add, _del } from "@/api/api";
 import NoData from "@/components/NoData.vue";
 import eventBus from "@/utils/eventBus";
 import { useI18n } from "vue-i18n";
+import CryptoIcon from "@/components/CryptoIcon.vue"
 
 const { t } = useI18n();
 
@@ -355,7 +360,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
     }
 
     &:has(.search:focus) {
-      border: 1px solid var(--ex-primary-color);
+      border: 1px solid var(--ex-border-color3);
     }
 
     .icon {
@@ -387,7 +392,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
       height: 1.62rem;
       display: flex;
       align-items: center;
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white2);
       margin-bottom: 0.2rem;
       border-radius: 0.3rem;
       padding-inline: 0.26rem;

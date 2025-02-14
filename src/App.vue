@@ -43,7 +43,7 @@
           </div>
         </template>
       </Skeleton>
-      <Loading style="position: absolute;top: 50%;left: 50%;transform: translateX(-50) translateY(-50%);" v-else
+      <Loading style="position: absolute;top: 50%;left: 50%;transform: translateX(-50%) translateY(-50%);" v-else
         :type="'circular'" :size="44" color="var(--ex-primary-color)" />
     </div>
     <div v-show="!pageLoading" class="app_scroll wow_scroll">
@@ -109,6 +109,7 @@ const showBottom = computed(() => {
       "assets",
       "transfer",
       "finance",
+      "tradeInfo",
     ].includes(route.name) && !fullWindow.value
   );
 });

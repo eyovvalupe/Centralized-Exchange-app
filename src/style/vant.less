@@ -220,7 +220,7 @@ body .van-dialog {
 
 /*自定义选项卡样式1*/
 .van-tabs--custom-card {
-  > .van-tabs__wrap {
+  >.van-tabs__wrap {
     .van-tabs__nav {
       background: var(--ex-bg-color3);
       height: 0.96rem;
@@ -258,7 +258,7 @@ body .van-dialog {
 }
 
 .van-tabs--custom-card-stake {
-  > .van-tabs__wrap {
+  >.van-tabs__wrap {
     .van-tabs__nav {
       height: 0.94rem;
       padding: 0 0.12rem;
@@ -307,7 +307,7 @@ body .van-dialog {
 }
 
 .van-tabs--custom-tab {
-  > .van-tabs__wrap {
+  >.van-tabs__wrap {
     .van-tabs__nav {
       background: var(--ex-bg-color3);
       height: 100%;
@@ -350,7 +350,7 @@ body .van-dialog {
 
 /*自定义选项卡样式n*/
 .van-tabs--custom-line {
-  > .van-tabs__wrap {
+  >.van-tabs__wrap {
     .van-tabs__nav {
       height: 0.72rem;
       position: relative;
@@ -395,8 +395,9 @@ body .van-dialog {
 }
 
 .van-tabs--custom-line-small {
-  > .van-tabs__wrap {
+  >.van-tabs__wrap {
     border-bottom: 0.02rem solid var(--ex-border-color4);
+
     .van-tabs__nav {
       height: 0.7rem;
       width: 3.4rem;
@@ -431,7 +432,7 @@ body .van-dialog {
 }
 
 .van-tabs--custom-scroll-card {
-  > .van-tabs__wrap {
+  >.van-tabs__wrap {
     overflow: inherit;
     position: relative;
 
@@ -492,7 +493,7 @@ body .van-dialog {
 
 /*自定义选项卡样式1*/
 .van-tabs--round-card {
-  > .van-tabs__wrap {
+  >.van-tabs__wrap {
     overflow: inherit;
 
     .van-tabs__nav {
@@ -519,11 +520,9 @@ body .van-dialog {
 
     .van-tab--active {
       border-radius: 0.32rem 0.32rem 0 0;
-      background: linear-gradient(
-        180deg,
-        rgba(1, 76, 250, 0.2) 0%,
-        rgba(1, 76, 250, 0) 100%
-      );
+      background: linear-gradient(180deg,
+          rgba(1, 76, 250, 0.2) 0%,
+          rgba(1, 76, 250, 0) 100%);
       height: 1.12rem;
       position: relative;
       z-index: 1;
@@ -553,7 +552,7 @@ body .van-dialog {
 
 /*自定义选项卡样式1*/
 .van-tabs--line-card {
-  > .van-tabs__wrap {
+  >.van-tabs__wrap {
     overflow: inherit;
 
     .van-tabs__nav {
@@ -612,69 +611,18 @@ body .van-dialog {
 }
 
 .van-tabs--line-card-trade {
-  > div > .van-sticky {
-    top: 1.6rem !important;
+  &>.van-tabs__wrap {
+    overflow: inherit;
+    background-color: var(--ex-bg-color);
+    // padding: 0 0.32rem;
 
-    > div > .van-tabs__wrap {
-      overflow: inherit;
-      background-color: var(--ex-bg-color);
-      // padding: 0 0.32rem;
-
-      .van-tabs__nav {
-        height: 0.6rem;
-        padding: 0 0.32rem;
-        overflow: inherit;
-        color: var(--ex-text-color3);
-        background-color: var(--ex-bg-color);
-        position: relative;
-        border-bottom: 0.02rem solid var(--ex-border-color5) !important;
-      }
-
+    .van-tabs__nav {
       .van-tab {
-        margin-right: 0.2rem;
+        font-size: 0.3rem;
       }
-
+  
       .van-tab--active {
-        position: relative;
-
-        &::after {
-          content: "";
-          width: 0.3rem;
-          height: 0.06rem;
-          border-radius: 0.3rem;
-          position: absolute;
-          bottom: -0.03rem;
-          left: 50%;
-          transform: translateX(-50%);
-          background-color: var(--ex-primary-color);
-        }
-
-        .van-tab__text {
-          font-size: 0.28rem;
-          font-weight: 600;
-          color: var(--ex-white);
-        }
-      }
-
-      .van-tab__text {
-        font-size: 0.28rem;
-        color: var(--ex-text-color2);
-      }
-
-      .van-tab--shrink {
-        padding: 0 0.08rem !important;
-      }
-
-      .van-tab:first-child.van-tab--active {
-        border-radius: 0.32rem 0 0 0;
-      }
-
-      .van-tab:last-child.van-tab--active {
-        border-radius: 0 0.32rem 0 0;
-      }
-
-      .van-tabs__line {
-        display: none;
+        font-size: 0.36rem;
       }
     }
   }
@@ -684,7 +632,7 @@ body .van-dialog {
 .van-tabs--sub {
   margin-top: 0.32rem;
 
-  > .van-tabs__wrap {
+  >.van-tabs__wrap {
     height: 0.8rem;
 
     .van-tabs__nav {
@@ -715,8 +663,9 @@ body .van-dialog {
       padding-bottom: 0;
     }
   }
+
   .van-sticky {
-    > div > .van-tabs__wrap {
+    >div>.van-tabs__wrap {
       background-color: var(--ex-bg-color);
 
       .van-tabs__nav {
@@ -747,79 +696,106 @@ body .van-dialog {
     }
   }
 }
+
 .van-tabs--sub_line {
-    .van-sticky {
-        > div > .van-tabs__wrap {
-            height: 0.88rem;
-            // background-color: var(--ex-bg-color);
-            position: relative;
-            border-bottom: 0.02rem solid var(--ex-bg-white2);
-    
-            .van-tabs__nav {
-                margin: 0 !important;
-                padding: 0;
-    
-                .van-tabs__line {
-                    display: none;
-                }
-    
-                .van-tab {
-                    height: 0.8rem;
-                    border: 1px solid var(--ex-none);
-                    margin-right: 0.12rem;
-                    border-radius: 1rem;
-                    background-color: var(--ex-none);
-                    font-size: 0.3rem;
-                    transition: all ease-in .2s;
-                }
-    
-                .van-tab--active {
-                    color: var(--ex-primary-color);
-                    position: relative;
-                    font-size: 0.32rem;
-                    font-weight: bold;
-                    &::after {
-                        content: "";
-                        width: 0.48rem;
-                        height: 0.06rem;
-                        border-radius: 0.3rem;
-                        position: absolute;
-                        bottom: -0.08rem;
-                        left: 50%;
-                        transform: translateX(-50%);
-                        background-color: var(--ex-primary-color);
-                    }
-                }
-            }
-    
-            .van-tabs__nav--line {
-                padding-bottom: 0;
-            }
+  .van-sticky {
+    >div>.van-tabs__wrap {
+      height: 0.88rem;
+      // background-color: var(--ex-bg-color);
+      position: relative;
+      border-bottom: 0.02rem solid var(--ex-bg-white2);
+
+      .van-tabs__nav {
+        margin: 0 !important;
+        padding: 0;
+
+        .van-tabs__line {
+          display: none;
         }
+
+        .van-tab {
+          height: 0.8rem;
+          border: 1px solid var(--ex-none);
+          margin-right: 0.12rem;
+          border-radius: 1rem;
+          background-color: var(--ex-none);
+          font-size: 0.3rem;
+          transition: all ease-in .2s;
+        }
+
+        .van-tab--active {
+          color: var(--ex-primary-color);
+          position: relative;
+          font-size: 0.32rem;
+          font-weight: bold;
+
+          &::after {
+            content: "";
+            width: 0.48rem;
+            height: 0.06rem;
+            border-radius: 0.3rem;
+            position: absolute;
+            bottom: -0.08rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--ex-primary-color);
+          }
+        }
+      }
+
+      .van-tabs__nav--line {
+        padding-bottom: 0;
+      }
     }
+  }
 }
+
 .van-tabs--sub_bg {
-    .van-sticky {
-        > div > .van-tabs__wrap {
-            .van-tabs__nav {
-                background-color: var(--ex-bg-color3);
-                border-radius: 0.32rem;
-                padding: 0 0.32rem;
-                .van-tab {
-                    margin-right: 0.24rem;
-                }
-                .van-tab--active {
-                    color: var(--ex-white);
-                }
-            }
+  .van-sticky {
+    >div>.van-tabs__wrap {
+      .van-tabs__nav {
+        background-color: var(--ex-bg-color3);
+        border-radius: 0.32rem;
+        padding: 0 0.32rem;
+
+        .van-tab {
+          margin-right: 0.24rem;
         }
+
+        .van-tab--active {
+          color: var(--ex-white);
+        }
+      }
     }
+  }
+}
+
+.van-tabs--top {
+  .van-sticky {
+    >div>.van-tabs__wrap {
+      border-bottom: 1px solid var(--ex-border-color);
+      .van-tabs__nav {
+        .van-tabs__line {
+          display: none;
+        }
+        .van-tab {
+          font-size: 0.3rem;
+        }
+
+        .van-tab--active {
+          color: var(--ex-white);
+          font-size: 0.36rem;
+          font-weight: 600;
+        }
+      }
+    }
+  }
 }
 
 .van-tabs--sub-stake {
   margin-top: 0.32rem;
 
-  > .van-tabs__wrap {
+  >.van-tabs__wrap {
     height: 0.8rem;
 
     .van-tabs__nav {
@@ -857,7 +833,7 @@ body .van-dialog {
 }
 
 .van-tabs--sub.van-tabs--sub_mini {
-  > .van-tabs__wrap {
+  >.van-tabs__wrap {
     .van-tabs__nav {
       margin: 0 0.28rem !important;
     }
@@ -867,7 +843,7 @@ body .van-dialog {
 .van-tabs--oval-card {
   margin-top: 0.16rem;
 
-  > .van-tabs__wrap {
+  >.van-tabs__wrap {
     overflow: inherit;
 
     .van-tabs__nav {
@@ -918,7 +894,7 @@ body .van-dialog {
 }
 
 .van-tabs--oval-sub {
-  > .van-tabs__wrap {
+  >.van-tabs__wrap {
     height: 0.68rem !important;
 
     .van-tabs__nav {
@@ -961,7 +937,7 @@ body .van-dialog {
 }
 
 .van-tabs--oval-sub-small {
-  > .van-tabs__wrap {
+  >.van-tabs__wrap {
     height: 0.64rem !important;
 
     .van-tabs__nav {

@@ -152,7 +152,7 @@ const goInfo = (item) => {
   store.commit("setCurrStock", item);
   setTimeout(() => {
     router.push({
-      name: "market_info",
+      name: "tradeInfo",
       query: {
         symbol: item.symbol,
         type: "stock",

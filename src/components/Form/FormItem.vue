@@ -59,15 +59,7 @@
                 @click="showPassword = false" />
             </span>
 
-            <!-- 百分比按钮 -->
-            <Transition name="opacity">
-              <div class="flex items-center" v-show="inputFocus" v-if="percentTags && percentTags.length">
-                <span class="percent_tag" v-for="(percent, i) in percentTags" :key="i"
-                  @click="percentTagClick(percent)">{{
-                    percent.label }}</span>
-              </div>
-            </Transition>
-
+          
             <!--  输入框右侧 全部按钮或提示 -->
          
             <span class="put_all put_all_place" v-if="
