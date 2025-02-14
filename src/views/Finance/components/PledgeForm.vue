@@ -451,7 +451,7 @@ const openConfirm = () => {
 }
 
 .yz-form-item {
-  height: 4.1rem;
+  height: 4.1rem !important;
 
   :deep(.form-item-box .form-item-con .item) {
     padding-top: 1rem !important;
