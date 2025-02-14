@@ -267,6 +267,7 @@ const formatSec = (seconds, t) => {
     background: var(--ex-bg-white2);
     // border: 0.02rem solid var(--ex-border-color5);
     margin: 0.12rem;
+    margin-top: 0;
   }
 
   .mid {

@@ -437,8 +437,7 @@ const routes = [
     component: () => import("../views/Trade3/Info.vue"),
     meta: {
       keepAlive: false,
-      pageType: "child",
-      pageDeep: 3,
+      pageType: "tab",
       title: '交易'
     },
   },

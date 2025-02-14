@@ -31,7 +31,7 @@
         </div>
 
       </div>
-      <div style="background-color: var(--ex-bg-color3);border-radius: 0.32rem;padding: 0.28rem">
+      <div :style="{backgroundColor:props.innerPage?'var(--ex-bg-white2)':'var(--ex-bg-color3)'}" style="border-radius: 0.32rem;padding: 0.28rem">
 
         <div class="flex items-center justify-center gap-[0.2rem]">
 
@@ -97,8 +97,8 @@
     </div>
 
     <!-- 内容 -->
-    <div style="padding: 0 0.1rem;margin-top: 0.1rem;" :style="{backgroundColor:props.innerPage?'var(--ex-bg-color9)':'var(--ex-bg-color)'}">
-      <Tabs style="background-color: var(--ex-bg-color3);border-radius: 0.32rem 0.32rem 0 0;" class="van-tabs--sub_line van-tabs--sub_bg" :sticky="true" :color="'var(--ex-primary-color)'"
+    <div :class="[props.innerPage ? 'inner-marketinfo' : '']" style="padding: 0 0.1rem;margin-top: 0.1rem;" :style="{backgroundColor:props.innerPage?'var(--ex-none':'var(--ex-bg-color)'}">
+      <Tabs :style="{backgroundColor:props.innerPage?'var(--ex-bg-white2)':'var(--ex-bg-color3)'}" style="border-radius: 0.32rem 0.32rem 0 0;" class="van-tabs--sub_line van-tabs--sub_bg" :sticky="true" :color="'var(--ex-primary-color)'"
         v-model:active="activeTab" animated shrink>
         <!-- <Tab :name="1" :title="'开仓'">
           <div class="market-box" style="height: calc(var(--vh) * 100 - 2.2rem);overflow-y: auto;">
@@ -165,7 +165,7 @@
     <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showInfo"
       :title="t('market.market_marketinfo_data')" closeable>
       <div class="info_popup">
-        <div class="info_price">
+        <div class="info_price" :style="{backgroundColor: updown > 0 ? 'rgb(var(--ex-up-color-rgb) / 0.06)' : 'rgb(var(--ex-down-color-rgb) / 0.06)'}">
           <div class="info_num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
             <template v-if="item.price || item.close">
               {{ item.price || item.close }}
@@ -684,7 +684,7 @@ setTimeout(() => {
     font-size: 0.32rem;
     height: 1.3rem;
     padding: 0.24rem;
-    background: var(--ex-bg-color3);
+    // background: var(--ex-bg-color3);
     border-radius: 0.4rem;
 
     .info_num {
@@ -728,16 +728,45 @@ setTimeout(() => {
       align-items: center;
       margin-bottom: 0.32rem;
       width: 31%;
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white2);
       border-radius: 0.4rem;
       height: 1.26rem;
 
       .name {
         margin-top: 0.2rem;
+        color: var(--ex-bg-color8);
       }
 
       .info_item__value {
         font-weight: 600;
+      }
+    }
+  }
+}
+
+
+.inner-marketinfo {
+  :deep(.van-tabs--sub_bg) {
+     .van-sticky > div > .van-tabs__wrap .van-tabs__nav {
+      background-color: var(--ex-none);
+     }
+  }
+  
+  :deep(.market-charts) {
+    .chart_box {
+      background-color: var(--ex-none);
+      .tabs {
+        .tab {
+          background-color: var(--ex-bg-white1);
+        }
+        .active_tab {
+          background-color: var(--ex-white);
+        }
+      }
+      .chart_container {
+        .chart_time {
+          background-color: var(--ex-bg-white1);
+        }
       }
     }
   }

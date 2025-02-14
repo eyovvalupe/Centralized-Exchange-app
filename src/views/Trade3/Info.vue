@@ -299,7 +299,7 @@
 
         <!-- 详情 -->
         <BottomPopup round v-model:show="showInfoDialog" position="bottom" closeable teleport="body">
-            <div style="max-height: calc(var(--vh) * 90);overflow-y: auto;">
+            <div class="page_trade_info" style="max-height: calc(var(--vh) * 90);overflow-y: auto;">
                 <div style="height: 0.32rem;"></div>
                 <MarketInfo2 :innerPage="true" />
             </div>
@@ -811,4 +811,6 @@ const openMenu = () => {
     }
 
 }
+
+
 </style>

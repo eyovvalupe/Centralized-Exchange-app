@@ -166,7 +166,7 @@ const goInfo = (item) => { // 作为页面点击元素
   showSearchDialog.value = false
   store.commit("setCurrConstract", item);
   router.push({
-    name: "tradeInfo",
+    name: "market_info",
     query: {
       symbol: item.name,
       type: "constract",

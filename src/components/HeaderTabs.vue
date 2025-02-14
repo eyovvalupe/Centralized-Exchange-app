@@ -125,7 +125,7 @@ onMounted(() => {
         .tab {
             font-size: .3rem;
             color: var(--ex-text-color3);
-            padding: 0 .22rem;
+            padding: 0 .14rem 0 0.18rem;
             height: .66rem;
             line-height: 0;
             border-radius: .48rem;
@@ -139,7 +139,6 @@ onMounted(() => {
             .tab-name {
                 position: relative;
                 z-index: 1;
-                transition: .3s;
                 font-size: 0.3rem;
             }
 
@@ -147,7 +146,7 @@ onMounted(() => {
 
         .active_tab {
             color: var(--ex-text-color);
-            font-weight: 700;
+            // font-weight: 700;
             opacity: 1;
 
             .tab-name {
