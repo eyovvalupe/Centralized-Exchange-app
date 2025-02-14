@@ -39,16 +39,6 @@ module.exports = defineConfig({
       }),
     ],
   },
-  chainWebpack: config => {
-    // config.module
-    //   .rule('vue')
-    //   .use('vue-loader')
-    //   .tap(options => {
-    //     options.compilerOptions = options.compilerOptions || {}
-    //     options.compilerOptions.isCustomElement = tag => tag === 'iconpark-icon'
-    //     return options
-    //   })
-  },
   publicPath: '/',
   transpileDependencies: true,
   productionSourceMap: false,
@@ -67,6 +57,76 @@ module.exports = defineConfig({
         logLevel: 'debug',
         pathRewrite: { '^/api': '' },
       },
+    },
+  },
+  pwa: {
+    name: 'Lorna', // 应用名称
+    short_name: 'Lorna', // 短名称
+    themeColor: '#00a609', // 主题颜色
+    backgroundColor: '#0E0F18', // 背景颜色
+    appleMobileWebAppCapable: 'yes', // 是否启用 iOS 的 Web App 模式
+    appleMobileWebAppStatusBarStyle: 'black', // iOS 状态栏样式
+    workboxPluginMode: 'InjectManifest', // 使用自定义 Service Worker
+    workboxOptions: {
+      swSrc: './public/service-worker.js', // 指定自定义 Service Worker 文件
+      // swDest: 'service-worker.js', // 输出的 Service Worker 文件
+    },
+    // iconPaths: { // 图标路径配置
+    //   favicon32: './pwa/logo_192x192.png',
+    //   favicon16: './pwa/logo_192x192.png',
+    //   appleTouchIcon: './pwa/logo_192x192.png',
+    // },
+    manifestPath: 'manifest.json', // manifest 文件路径
+    manifestOptions: {
+      // manifest 文件内容
+      name: 'Lorna',
+      short_name: 'Lorna',
+      start_url: '.',
+      display: 'standalone',
+      background_color: '#0E0F18',
+      theme_color: '#00a609',
+      icons: [
+        {
+          src: './pwa/logo_192x192.png',
+          sizes: '72x72',
+          type: 'image/png',
+        },
+        {
+          src: './pwa/logo_192x192.png',
+          sizes: '96x96',
+          type: 'image/png',
+        },
+        {
+          src: './pwa/logo_192x192.png',
+          sizes: '128x128',
+          type: 'image/png',
+        },
+        {
+          src: './pwa/logo_192x192.png',
+          sizes: '144x144',
+          type: 'image/png',
+        },
+        {
+          src: './pwa/logo_192x192.png',
+          sizes: '152x152',
+          type: 'image/png',
+        },
+        {
+          src: './pwa/logo_192x192.png',
+          sizes: '192x192',
+          type: 'image/png',
+        },
+        {
+          src: './pwa/logo_192x192.png',
+          sizes: '384x384',
+          type: 'image/png',
+        },
+        {
+          src: './pwa/logo_192x192.png',
+          sizes: '512x512',
+          type: 'image/png',
+        },
+      ],
     },
   },
 })

@@ -196,6 +196,7 @@ const goRegister = () => {
 
 // 安装
 const install = () => {
+    alert(deferredPrompt)
     if (!deferredPrompt || !deferredPrompt.prompt) return
     deferredPrompt.prompt();
     deferredPrompt.userChoice.then((choiceResult) => {
@@ -220,10 +221,10 @@ const pageLoading = computed(() => store.state.pageLoading);
 // store.commit("setPageLoading", true);
 
 Promise.all([
-    import("@/views/Market/MarketInfo.vue"),
+    import("@/views/Market/MarketInfo2.vue"),
     import("@/views/Market/Search.vue"),
     import("@/views/Public/Login.vue"),
-    import("@/views/assets/TopUpCrypto.vue"),
+    // import("@/views/assets/TopUpCrypto.vue"),
 ]).finally(() => {
     // store.commit("setPageLoading", false);
 });

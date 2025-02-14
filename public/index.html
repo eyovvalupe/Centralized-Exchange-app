@@ -6,7 +6,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="theme-color" content="#0E0F18" >
   <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <link rel="manifest" href="/pwa/manifest.json">
+  <link rel="manifest" href="./manifest.json">
   <title></title>
   <style>
     :root {
@@ -183,15 +183,13 @@
       oldScripts.forEach(script => script.remove());
     }
 
-
   </script>
-  <script src="./static/js/qrcode.min.js"></script>
   <script>
     var deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
-      e.preventDefault();
-      deferredPrompt = e;
-      // 显示安装按钮
+      alert('pwa ready!')
+      e.preventDefault(); // 阻止默认的安装提示
+      deferredPrompt = e; // 保存事件对象
     });
     // 在用户点击安装按钮时调用
     // window.addEventListener('click', () => {
@@ -205,17 +203,8 @@
     //     deferredPrompt = null;
     //   });
     // });
-
-    if ('serviceWorker' in navigator) {
-      navigator.serviceWorker.register('/pwa/service-worker.js')
-        .then((registration) => {
-          console.log('Service Worker registered with scope:', registration.scope);
-        })
-        .catch((error) => {
-          console.log('Service Worker registration failed:', error);
-        });
-    }
   </script>
+  <script src="./static/js/qrcode.min.js"></script>
 </body>
 
 </html>
