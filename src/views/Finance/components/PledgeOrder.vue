@@ -9,7 +9,8 @@
         </Tabs>
         <div class="min-h-[10rem] mt-[0.32rem]">
            
-            <NoData v-if="!isLoading && !list.length"/>
+            <UnLogin v-if="!isLoading && !list.length && !token" @loginfinish="getList()" />
+            <NoData v-else-if="!isLoading && !list.length"/>
             <PledgeOrderList :list="list"/>
             <div class="flex items-center justify-center p-[0.4rem]" v-if="isLoading">
                 <Loading />
@@ -24,15 +25,21 @@ import NoData from '@/components/NoData.vue';
 import PledgeOrderList from './PledgeOrderList.vue';
 import {_pledgeOrders} from '@/api/api'
 import eventBus from "@/utils/eventBus";
-import { onBeforeUnmount, onMounted } from "vue";
+import store from '@/store'
+import UnLogin from "@/components/UnLogin.vue";
+import { computed, onBeforeUnmount, onMounted } from "vue";
 
 const activeTab = ref('open')
 const { t } = useI18n();
 const finish = ref(false)
 const list = ref([])
 const isLoading = ref(false)
+const token = computed(()=>store.state.token)
 const currentPage = ref(1)
 const getList = (page=1)=>{
+    if(!token.value){
+        return
+    }
     finish.value = false
     isLoading.value = true
     _pledgeOrders({
