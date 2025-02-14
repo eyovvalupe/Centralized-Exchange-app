@@ -1,33 +1,26 @@
 <template>
-  <div class="pledge_form">
+  <div class="pledge_form px-[0.32rem]">
     <div v-show="pageLoading" class="w-full h-full absolute left-0 top-0 flex items-center justify-center">
       <Loading :type="'circular'" :size="44" color="var(--ex-primary-color)" />
     </div>
 
     <!-- 验资数量 -->
-    <div class="item_box mt-[0.1rem]">
+    <div class="item_box mt-[0.32rem]">
       <div class="item_box_right">
-        <FormItem :hasLT="true" :hasRT="true" :hasScroll="true" :placeholder="t('finance.defi_verif_qty')"
-          :max="walletAmount" v-model="numb" @change="changePercent2" @btnClick="onSliderChange2(100)"
+        <FormItem :hasLT="true" :hasScroll="true" :hasBot="true" :placeholder="t('finance.defi_verif_qty')"
+           v-model="numb"
+          @input="changePercent2" @btnClick="onSliderChange2(100)"
           class="yz-form-item" input-type="number">
 
-          <template #lt>
-            <div class="pt-[0.12rem] text-color2 text-[0.24rem]">
-              <span>{{ t('finance.defi_verifiable_qty') }}</span>
-              <span class="text-primary mx-[0.08rem]">{{ walletAmount || '--' }} </span>
-              <span>{{ currIn.currency }}</span>
-            </div>
-
-          </template>
-          <template #rt>
+          <template #lt>            
             <div
-              class="flex items-center bg-color3 h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]  ripple-btn"
+              class="flex w-[6.3rem] items-center bg-white2 h-[0.8rem] rounded-[0.32rem] justify-between px-[0.28rem] ripple-btn"
               @click="showDialog = true;">
               <div class="flex items-center">
                 <div v-if="currIn.name" class="size-[0.52rem] mr-[0.16rem]">
                   <CryptoIcon class="rounded-50" :name="currIn.name" />
                 </div>
-                <span class="text-[0.3rem] w-[1rem]">{{ currIn.name || "--" }}</span>
+                <span class="text-[0.3rem] w-[1rem] text-white">{{ currIn.name || "--" }}</span>
               </div>
               <div class="more_icon">
                 <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
@@ -37,16 +30,27 @@
           <template #scroll>
             <!-- 拖动 -->
             <SlideContainer v-model="sliderValue2" @change="onSliderChange2" />
+            
+          </template>
+          <template #bottom-con>
+            <div class="h-[0.84rem] text-color2 flex items-center justify-between px-[0.28rem] text-[0.28rem]">
+              <span>{{ t('finance.defi_verifiable_qty') }}</span>
+              <span>
+                  <span class="text-primary mx-[0.08rem]">{{ walletAmount || '--' }} </span>
+                  <span class="text-white">{{ currIn.currency }}</span>
+              </span>
+            </div>
           </template>
         </FormItem>
       </div>
     </div>
     <!-- 可借数量 -->
-    <div class="item_box mt-[0.1rem]">
+    <div class="item_box mt-[0.32rem]">
       <div class="item_box_right">
-        <FormItem :hasScroll="true" :placeholder="t('finance.defi_avail_qty')" :max="maxLoan" v-model="loan"
-          :tip="maxLoan > 0 ? '≤' + maxLoan : ''" @change="changePercent" @btnClick="onSliderChange(100)" input-type="number">
-
+        <FormItem :hasScroll="true" :placeholder="t('finance.defi_avail_qty')"  v-model="loan" @input="changePercent"  input-type="number">
+          <template #right-con>
+            {{ currIn.currency }} 
+          </template>
           <template #scroll>
             <!-- 拖动 -->
             <SlideContainer v-model="sliderValue" @change="onSliderChange" />
@@ -54,19 +58,19 @@
         </FormItem>
       </div>
     </div>
-    <div class="px-[0.28rem]  py-[0.24rem] rounded-[0.32rem] bg-color2 border-color border-[1px] mt-[0.1rem]">
+    <div class="px-[0.28rem]  py-[0.24rem] rounded-[0.32rem] bg-white1 mt-[0.32rem]">
       <div class="text-[0.28rem] leading-[0.28rem] text-color2">{{ t('finance.defi_borrow_period') }}</div>
       <div class="flex flex-wrap gap-[0.12rem] gap-y-[0.2rem] pt-[0.2rem]">
         <div
-          class="px-[0.4rem] h-[0.6rem] text-color2 rounded-full text-[0.28rem] bg-color3 leading-[0.6rem]  ripple-btn"
+          class="px-[0.4rem] h-[0.6rem] text-color2 rounded-full text-[0.28rem] bg-white1 leading-[0.6rem]  ripple-btn"
           :class="{ 'active-day': param.days == item.days }" v-for="item in paraData" :key="item.days"
           @click="setParam(item)">
           {{ item.days }}{{ t('finance.portfolio_day_multi') }}
         </div>
       </div>
     </div>
-    <div class="bg-color3 mt-[0.1rem] p-[0.12rem] text-[0.28rem] rounded-[0.32rem]">
-      <div class="p-[0.16rem]">
+    <div class="bg-white1 mt-[0.32rem] p-[0.12rem] text-[0.28rem] rounded-[0.32rem]">
+      <div class="p-[0.12rem]">
         <div class="flex justify-between items-center leading-[0.44rem]">
           <span class="text-color2">{{ t('finance.defi_daily_interest') }}</span>
           <span class="text-color">{{ Math.round(param.interest * 1000) / 10 }}%</span>
@@ -80,7 +84,7 @@
           <span class="text-color">{{ fee }} <span class="text-[0.24rem]">{{ currIn.currency }}</span></span>
         </div>
       </div>
-      <div class="flex items-center justify-between h-[1.2rem] mt-[0.12rem] bg-color2 rounded-[0.32rem] px-[0.28rem]">
+      <div class="flex items-center justify-between h-[1.2rem] mt-[0.12rem] bg-white2 rounded-[0.32rem] px-[0.28rem]">
         <span class="text-color2">{{ t('finance.defi_repayment_due') }}</span>
         <span class="text-color text-[0.32rem]">{{ total }} <span class="text-[0.24rem]">{{ currIn.currency
             }}</span></span>
@@ -133,13 +137,13 @@
     <BottomPopup closeable v-model:show="visible" :title="t('finance.defi_borrow_confirm')">
       <PledgeConfirm :paramCurrency="currIn.currency" :numb="numb" :fee="fee"
         :interest="Math.round(param.interest * 1000) / 10" :totalInterest="totalInterest" :total="total" :loan="loan"
-        :days="param.days" @success="visible = false;" />
+        :days="param.days" @success="visible = false;" v-if="visible" />
     </BottomPopup>
   </div>
 </template>
 
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { ref, reactive, computed, nextTick, watch } from 'vue'
 import { Button, Loading, showToast } from 'vant'
 import SlideContainer from "@/components/SlideContainer.vue";
 import FormItem from "@/components/Form/FormItem.vue";
@@ -163,12 +167,22 @@ const currIn = ref({}); // 当前收到钱包
 const token = computed(() => store.state.token)
 const wallet = computed(() => {
   // 现金钱包列表
-  const data = store.state.wallet.filter((item) => item.type == "crypto");
-  if (!currIn.value.currency && data[0]) {
-    currIn.value = data[0]
-  }
+  const data = store.state.deWeightCurrencyList || []
   return filterSearchValue(data);
 });
+const initCurr = ()=>{
+  if(currIn.value.currency){
+    return
+  }
+  const data = store.state.deWeightCurrencyList
+  if(data && data[0]){
+    currIn.value = data[0]
+  }
+}
+initCurr()
+watch(()=>store.state.deWeightCurrencyList,()=>{
+  initCurr()
+})
 
 const tpp = computed(() => {
   const target = store.state.deWeightCurrencyList.find((item) => item.currency == currIn.value.currency);
@@ -176,14 +190,13 @@ const tpp = computed(() => {
   return 0
 });
 
-
 const { t } = useI18n();
 
 const visible = ref(false)
 const checked = ref(true)
 const walletAmount = computed(() => {
   // 钱包余额
-  const target = wallet.value.find(
+  const target = store.state.wallet.find(
     (item) => item.currency == currIn.value.currency
   );
   if (target) return target.amount;
@@ -244,6 +257,7 @@ const setParam = (par) => {
   param.interest = par.interest
   param.fee = par.fee
   param.lever = par.lever
+  changePercent2()
 }
 const paraData = ref([])
 
@@ -274,12 +288,18 @@ const step = computed(()=>{
     }
     return Number(d)
 })
+
 const sliderValue = ref(0);
 const sliderValue2 = ref(0);
 
 const onSliderChange = (newValue) => {
   sliderValue.value = newValue;
-  if (!maxLoan.value) return (sliderValue.value = 0);
+  if (!maxLoan.value) {
+    nextTick(()=>{
+      sliderValue.value = 0
+    })
+    return
+  }
   let v = new Decimal(maxLoan.value).mul(newValue).div(100);
   v = v.sub(v.mod(step.value));
   loan.value = v.toNumber();
@@ -289,37 +309,43 @@ const onSliderChange = (newValue) => {
 };
 
 const changePercent = () => {
-  if (!maxLoan.value || !loan.value){
+  if (!loan.value){
     sliderValue.value = 0
     sliderValue2.value = 0
     numb.value = ''
     return
   }
-  if(loan.value > maxLoan.value){
-    loan.value = maxLoan.value
-  }
+  
   let v = new Decimal(loan.value);
   loan.value = v.sub(v.mod(step.value));
 
   numb.value = new Decimal(loan.value).div(param.lever || 1);
   const v2 = new Decimal(numb.value)
   numb.value = v2.sub(v2.mod(step.value));
-
-  let p = new Decimal(loan.value)
-    .div(maxLoan.value)
-    .mul(100)
-    .toNumber();
-  if (p < 0) p = 0;
-  if (p > 100) p = 100;
-  sliderValue.value = Number(p);
+  
+  if(!token.value){
+    sliderValue.value = 0
+  }else{
+    let p = new Decimal(loan.value)
+        .div(maxLoan.value)
+        .mul(100)
+        .toNumber();
+    if (p < 0) p = 0;
+    if (p > 100) p = 100;
+    sliderValue.value = Number(p);
+  }
   sliderValue2.value = sliderValue.value
-
 };
 
 
 const onSliderChange2 = (newValue) => {
   sliderValue2.value = newValue;
-  if (!walletAmount.value) return (sliderValue2.value = 0);
+  if (!walletAmount.value){
+    nextTick(()=>{
+      sliderValue2.value = 0
+    })
+    return
+  }
   let v = new Decimal(walletAmount.value).mul(newValue).div(100);
   v = v.sub(v.mod(step.value));
   numb.value = v.toNumber();
@@ -329,7 +355,7 @@ const onSliderChange2 = (newValue) => {
 };
 
 const changePercent2 = () => {
-  if (!walletAmount.value || !numb.value){
+  if (!numb.value){
     sliderValue2.value = 0
     loan.value = ''
     sliderValue.value = 0
@@ -337,13 +363,19 @@ const changePercent2 = () => {
   }
   const v = new Decimal(numb.value)
   numb.value = v.sub(v.mod(step.value));
-  let p = new Decimal(numb.value)
-    .div(walletAmount.value)
-    .mul(100)
-    .toNumber();
-  if (p < 0) p = 0;
-  if (p > 100) p = 100;
-  sliderValue2.value = Number(p);
+ 
+  if(!token.value){
+    sliderValue2.value = 0;
+  }else{
+    let p = new Decimal(numb.value)
+        .div(walletAmount.value)
+        .mul(100)
+        .toNumber();
+    if (p < 0) p = 0;
+    if (p > 100) p = 100;
+    sliderValue2.value = Number(p)
+  }
+  
   loan.value = numb.value.mul(param.lever || 1)
   const v2 = new Decimal(loan.value)
   loan.value = v2.sub(v2.mod(step.value));
@@ -412,20 +444,41 @@ const openConfirm = () => {
   }
 
   .submit {
-    border-radius: 0.32rem;
+    border-radius: 0.7rem;
     height: 1.12rem;
     width: 100%;
   }
 }
 
 .yz-form-item {
-  height: 3.12rem;
+  height: 4.1rem;
 
   :deep(.form-item-box .form-item-con .item) {
-    padding-top: 1.12rem;
+    padding-top: 1rem !important;
+    padding-bottom: 2rem !important;
+    .mid-scroll{
+      height: 1.14rem;
+      bottom: 0.84rem;
+    }
+    .bottom_content{
+      height: 0.84rem;
+    }
+    .lt-box{
+      top:0.16rem;
+      transform: scale(1) !important;
+    }
+  }
+ 
+  
+}
+.item_box {
+  :deep(.van-slider.slider-dom::after){
+    border-color: #26272f;
+  }
+  :deep(.van-slider.slider-dom::before){
+    background-color: #26272f;
   }
 }
-
 .pledge_accounr_dialog {
   overflow: hidden;
   padding: 0.32rem 0.32rem 0 0.32rem;
@@ -437,9 +490,8 @@ const openConfirm = () => {
     padding: 0 0.4rem;
     margin-bottom: 0.15rem;
     height: 1rem;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white2);
     border-radius: 0.8rem;
-    border: 1px solid var(--ex-border-color);
 
     input {
       padding-top: 0.06rem;
@@ -501,7 +553,7 @@ const openConfirm = () => {
     display: flex;
     align-items: center;
     border-radius: 0.4rem;
-    background-color: rgb(var(--ex-bg-color3-rgb) / 0.6);
+    background-color: var(--ex-bg-white2);
     overflow: hidden;
     position: relative;
     padding: 0 0.28rem;
@@ -517,7 +569,7 @@ const openConfirm = () => {
 
   .swap_dialog_item_active {
     color: var(--ex-text-color);
-    background: var(--ex-bg-color3);
+    background: var(--ex-bg-white1);
 
     .check_icon {
       position: absolute;

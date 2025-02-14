@@ -2,14 +2,14 @@
     <div class="pledge_order_detail_page">
         <Top :title="$t('trade.ipo_detail_title')" />
         <div
-            class=" mt-[1.08rem] mx-[0.1rem] mb-[0.1rem] h-[2.1rem] bg-color6 rounded-[0.32rem] flex justify-center items-center ">
+            class=" mt-[1.08rem] mx-[0.32rem] mb-[0.2rem] h-[2.1rem] bg-color6 rounded-[0.32rem] flex justify-center items-center ">
             <div class="flex flex-col gap-[0.32rem] justify-between items-center">
-                <div class="text-color2 text-[0.32rem]">{{ t('finance.defi_borrow_est_due') }}({{ order.symbol }})</div>
-                <div class="text-[0.6rem] text-color font-[600]">{{ order.loan }}</div>
+                <div class="text-color2 text-[0.32rem]">{{ order.status == 'open' ? t('finance.defi_borrow_est_due') : t("已还总额") }}({{ order.symbol }})</div>
+                <div class="text-[0.6rem] text-color font-[600]">{{getTotalAmount(order.loan,order.fee,order.interest,order.symbol) }}</div>
             </div>
         </div>
         <div
-            class="mx-[0.1rem] bg-color6 rounded-[0.32rem] mb-[0.28rem] pb-[0.12rem] pt-[0.24rem] relative overflow-hidden">
+            class="mx-[0.32rem] bg-color6 rounded-[0.32rem] mb-[0.28rem] pb-[0.12rem] pt-[0.24rem] relative overflow-hidden">
             <div class="w-max h-[0.6rem] px-[0.28rem] absolute top-[0] right-[0] rounded-bl-[0.32rem] bg-primary"
                 v-if="false">
                 <div class="w-full h-full relative flex items-center justify-center">
@@ -29,7 +29,7 @@
                     <div class="text-[0.32rem]">{{ order.symbol }}</div>
                 </div>
             </div>
-            <div class="flex flex-col bg-color2 justify-between p-[0.28rem] rounded-[0.32rem] mx-[0.12rem]">
+            <div class="flex flex-col bg-white2 justify-between p-[0.28rem] rounded-[0.32rem] mx-[0.12rem]">
                 <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                     <div class="text-[0.28rem] text-color2">{{ t('finance.defi_borrow_stake_amount') }}</div>
                     <div class="text-[0.28rem]">{{ order.amount }} <span class="text-[0.24rem]">{{ order.symbol }}</span></div>
@@ -42,25 +42,15 @@
                     <div class="text-[0.28rem] text-color2">{{ t('finance.defi_borrow_period') }}</div>
                     <div class="text-[0.28rem]">{{ order.days }}{{ t('finance.portfolio_day_multi') }}</div>
                 </div>
-                <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
-                    <div class="text-[0.28rem] text-color2">{{ t('finance.defi_borrowed_day') }}</div>
-                    <div class="text-[0.28rem]">3{{ t('finance.portfolio_day_multi') }}</div>
-                </div>
+               
                 <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                     <div class="text-[0.28rem] text-color2">{{ t('finance.portfolio_order_finish_time') }}</div>
                     <div class="text-[0.28rem]">{{ order.expirydate }}</div>
                 </div>
-                <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
-                    <div class="text-[0.28rem] text-color2">{{ t('finance.defi_daily_interest') }}</div>
-                    <div class="text-[0.28rem]">{{ Math.round(order.interest * 1000) / 10 }}%</div>
-                </div>
-                <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
-                    <div class="text-[0.28rem] text-color2">{{ t('finance.defi_total_interest') }}</div>
-                    <div class="text-[0.28rem]">{{ order.totainterest }} <span class="text-[0.24rem]">{{ order.symbol }}</span></div>
-                </div>
+             
                 <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                     <div class="text-[0.28rem] text-color2">{{ t('finance.defi_borrow_cal_bill') }}</div>
-                    <div class="text-[0.28rem]">{{ order.total }} <span class="text-[0.24rem]">{{ order.symbol }}</span></div>
+                    <div class="text-[0.28rem]">{{ order.interest }} <span class="text-[0.24rem]">{{ order.symbol }}</span></div>
                 </div>
                 <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                     <div class="text-[0.28rem] text-color2">{{ t('finance.defi_service_charge') }}</div>
@@ -88,9 +78,9 @@
             </Button>
         </div>
         <BottomPopup closeable v-model:show="visible" :title="t('finance.defi_borrow_return_confirm')">
-            <div class="mt-[0.6rem] mx-[0.32rem]">
+            <div class="mt-[0.4rem] ">
                 <div
-                    class=" bg-color6 rounded-[0.32rem] mb-[0.28rem] pb-[0.12rem] pt-[0.24rem] relative overflow-hidden">
+                    class="mx-[0.32rem] bg-white2 rounded-[0.32rem] mb-[0.28rem] pb-[0.02rem] pt-[0.24rem] relative overflow-hidden">
                     <div class="w-max h-[0.6rem] px-[0.28rem] absolute top-[0] right-[0] rounded-bl-[0.32rem] bg-primary"
                         v-if="false">
                         <div class="w-full h-full relative flex items-center justify-center">
@@ -106,7 +96,7 @@
                             <div class="text-[0.32rem]">{{ order.symbol }}</div>
                         </div>
                     </div>
-                    <div class="flex flex-col bg-color2 justify-between p-[0.28rem] rounded-[0.32rem] mx-[0.12rem]">
+                    <div class="flex flex-col bg-color9 justify-between px-[0.4rem] py-[0.28rem] rounded-[0.32rem] mx-[0.02rem]">
                         <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                             <div class="text-[0.28rem] text-color2">{{ t('finance.defi_borrow_stake_amount') }}</div>
                             <div class="text-[0.28rem]">{{ order.amount }} <span class="text-[0.24rem]">{{ order.symbol }}</span></div>
@@ -115,22 +105,10 @@
                             <div class="text-[0.28rem] text-color2">{{ t('finance.defi_borrow_borrow_amount') }}</div>
                             <div class="text-[0.28rem]">{{ order.loan }} <span class="text-[0.24rem]">{{ order.symbol }}</span></div>
                         </div>
-                        <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
-                            <div class="text-[0.28rem] text-color2">{{ t('finance.defi_borrow_period') }}</div>
-                            <div class="text-[0.28rem]">7{{ t('finance.portfolio_day_multi') }}</div>
-                        </div>
-                        <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
-                            <div class="text-[0.28rem] text-color2">{{ t('finance.defi_daily_interest') }}</div>
-                            <div class="text-[0.28rem]">{{ Math.round(order.interest * 1000) / 10 }}%</div>
-                        </div>
-                        <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
-                            <div class="text-[0.28rem] text-color2">{{ t('finance.defi_borrowed_day') }}</div>
-                            <div class="text-[0.28rem]">3{{ t('finance.portfolio_day_multi') }}</div>
-                        </div>
-                    
+                        
                         <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                             <div class="text-[0.28rem] text-color2">{{ t('finance.defi_borrow_cal_bill') }}</div>
-                            <div class="text-[0.28rem]">200 <span class="text-[0.24rem]">{{ order.symbol }}</span></div>
+                            <div class="text-[0.28rem]">{{ order.interest }} <span class="text-[0.24rem]">{{ order.symbol }}</span></div>
                         </div>
                         <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                             <div class="text-[0.28rem] text-color2">{{ t('finance.defi_service_charge') }}</div>
@@ -152,8 +130,14 @@
                     </div>
 
                 </div>
-                <FormItem v-if="userInfo.role != 'guest'" size="large" class="mt-[0.4rem]" :placeholder="t('trade.stock_opening_trade_pw')" input-type="password" v-model="safeword" />
-                <div class="py-[0.6rem]">
+                <div
+                    class="flex items-center justify-center flex-col h-[1.4rem] mt-[0.2rem] bg-white2 rounded-[0.32rem] mx-[0.4rem]">
+                    <span class="text-color2">{{ t('finance.defi_borrow_total_due') }}({{ order.symbol }})</span>
+                    <span class="text-color mt-[0.06rem] text-[0.32rem]">{{ getTotalAmount(order.loan,order.fee,order.interest,order.symbol) }}</span>
+                </div>
+                <div class="h-[1px] bg-white2 mt-[0.4rem]"></div>
+                <FormItem v-if="userInfo.role != 'guest'" size="large" class="mt-[0.4rem] mx-[0.32rem]" :placeholder="t('trade.stock_opening_trade_pw')" input-type="password" v-model="safeword" />
+                <div class="pt-[0.4rem] pb-[0.6rem] px-[0.4rem]">
                     <Button :loading="isLoading" type="primary" @click="submit" class="submit ripple-btn">
                         <span class="text-[0.32rem] font-bold">{{ t('trade.stock_opening_confirm') }}</span>
                     </Button>
@@ -190,6 +174,16 @@ const userInfo = computed(() => store.state.userInfo || '')
 const getSessionToken = () => {
     store.dispatch('updateSessionToken')
 }
+const getTotalAmount = (loan,fee,interest,currency)=>{
+    const val = Number(loan) + Number(fee) + Number(interest)
+    const target = store.state.deWeightCurrencyList.find((item) => item.currency == currency);
+    if (target){
+        return Number(val.toFixed(target.tpp+1).slice(0,-1))
+    }else{
+        return val
+    }
+}
+
 
 const openConfirm = ()=>{
     getSessionToken()

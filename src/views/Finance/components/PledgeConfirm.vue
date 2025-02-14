@@ -1,13 +1,13 @@
 <template>
-    <div class="px-[0.4rem] py-[0.6rem]">
-        <div class="px-[0.12rem]  pb-[0.12rem] bg-color3 rounded-[0.32rem]">
-            <div class="h-[0.92rem] flex items-center text-color text-[0.32rem] px-[0.16rem] gap-[0.16rem]">
+    <div class="pt-[0.4rem]">
+        <div class="p-[0.02rem] mx-[0.4rem] bg-white2 rounded-[0.32rem]">
+            <div class="h-[0.92rem] flex items-center text-color text-[0.32rem] px-[0.26rem] gap-[0.16rem]">
                 <div v-if="paramCurrency" class="size-[0.4rem]">
                     <CryptoIcon :name="paramCurrency.toUpperCase()" />
                 </div>
                 {{ paramCurrency }}
             </div>
-            <div class="p-[0.28rem] rounded-[0.32rem] bg-color2">
+            <div class="p-[0.4rem] rounded-[0.32rem] bg-color9">
                 <div class="flex justify-between items-center leading-[0.44rem]">
                     <span class="text-color2">{{t('finance.defi_borrow_stake_amount') }}</span>
                     <span class="text-color">{{ numb }} <span class="text-[0.24rem]">{{ paramCurrency }}</span></span>
@@ -33,16 +33,17 @@
                     <span class="text-color">{{ fee }} <span class="text-[0.24rem]">{{ paramCurrency }}</span></span>
                 </div>
             </div>
-            <div
-                class="flex items-center justify-center flex-col h-[1.4rem] mt-[0.12rem] bg-color2 rounded-[0.32rem] px-[0.28rem]">
-                <span class="text-color2">{{ t('finance.defi_repayment_due') }}({{ paramCurrency }})</span>
-                <span class="text-color mt-[0.06rem] text-[0.32rem]">{{ total }}</span>
-            </div>
+            
         </div>
+        <div
+            class="flex items-center justify-center flex-col h-[1.4rem] mt-[0.2rem] bg-white2 rounded-[0.32rem] mx-[0.4rem]">
+            <span class="text-color2">{{ t('finance.defi_repayment_due') }}({{ paramCurrency }})</span>
+            <span class="text-color mt-[0.06rem] text-[0.32rem]">{{ total }}</span>
+        </div>
+        <div class="h-[1px] bg-white2 mt-[0.4rem]"></div>
+        <FormItem size="large" class="mt-[0.4rem] mx-[0.4rem]" :placeholder="t('trade.stock_opening_trade_pw')" input-type="password" v-model="safeword" v-if="userInfo.role != 'guest'" />
 
-        <FormItem size="large" class="mt-[0.4rem]" :placeholder="t('trade.stock_opening_trade_pw')" input-type="password" v-model="safeword" v-if="userInfo.role != 'guest'" />
-
-        <div class="pt-[0.6rem]">
+        <div class="pb-[0.6rem] pt-[0.4rem] px-[0.4rem]">
             <Button :loading="isLoading" size="large" round class="ripple-btn" @click="submit" type="primary">{{ t('trade.stock_opening_confirm') }}</Button>
         </div>
 
@@ -58,13 +59,13 @@ import store from "@/store";
 const { t } = useI18n();
 const props = defineProps({
     paramCurrency: String,
-    numb:Number,
-    loan:Number,
-    fee:Number,
-    interest:Number,
-    totalInterest:Number,
-    total:Number,
-    days:Number
+    numb:[Number,String],
+    loan:[Number,String],
+    fee:[Number,String],
+    interest:[Number,String],
+    totalInterest:[Number,String],
+    total:[Number,String],
+    days:[Number,String]
 })
 const isLoading = ref(false)
 const safeword = ref('')

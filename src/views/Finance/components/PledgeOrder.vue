@@ -1,20 +1,20 @@
 <template>
-    <div class="pledge_order_list_page">
+    <div class="pledge_order_list_page px-[0.32rem]">
        
-        <Tabs key="form" type="sub-stake" style="margin-top:0.2rem;" v-model:active="activeTab" @click-tab="onTabClick" :swipeable="false" shrink>
+        <Tabs key="form" type="sub-stake" style="margin-top:0.32rem;" v-model:active="activeTab" @click-tab="onTabClick" :swipeable="false" shrink>
             <Tab name="open" style="min-width: 2rem" :title="t('finance.defi_borrow_on')">
             </Tab>
             <Tab name="close" style="min-width: 2rem" :title="t('finance.defi_borrow_repay')">
             </Tab>
         </Tabs>
-        <div class="min-h-[10rem] mt-[0.2rem]">
+        <div class="min-h-[10rem] mt-[0.32rem]">
+           
+            <NoData v-if="!isLoading && !list.length"/>
+            <PledgeOrderList :list="list"/>
             <div class="flex items-center justify-center p-[0.4rem]" v-if="isLoading">
                 <Loading />
             </div>
-            <NoData v-if="!isLoading && !list.length"/>
-            <PledgeOrderList :list="list"/>
         </div>
-        <div class="h-[1.5rem]"></div>
     </div>
 </template>
 <script setup>
@@ -28,36 +28,50 @@ import { onBeforeUnmount, onMounted } from "vue";
 
 const activeTab = ref('open')
 const { t } = useI18n();
-const page = ref(0)
+const finish = ref(false)
 const list = ref([])
 const isLoading = ref(false)
-const getList = ()=>{
+const currentPage = ref(1)
+const getList = (page=1)=>{
+    finish.value = false
     isLoading.value = true
-    page.value ++
     _pledgeOrders({
-        page:page.value,
+        page,
         status:activeTab.value
     }).then(res=>{
         if(res.code == 200){
-            list.value = res.data || []
+            if(res.data && res.data.length){
+                currentPage.value = page
+                list.value = page > 1 ? list.value.concat(res.data || []) : res.data || []
+            }else{
+                finish.value = true
+            }
         }
     }).finally(()=>{
         isLoading.value = false
     })
 }
 getList()
+const onPledgeLoad = ()=>{
+    if(isLoading.value || finish.value){
+        return
+    }
+    getList(currentPage.value + 1)
+}
 const onTabClick = ()=>{
-    page.value = 0
     list.value = []
     getList()
 }
 const onPledgeSuccess = ()=>{
+    list.value = []
     getList()
 }
 onMounted(()=>{
     eventBus.on("pledgeSuccess",onPledgeSuccess)
+    eventBus.on("pledgeLoad",onPledgeLoad)
 })
 onBeforeUnmount(()=>{
     eventBus.off("pledgeSuccess",onPledgeSuccess)
+    eventBus.off("pledgeLoad",onPledgeLoad)
 })
 </script>

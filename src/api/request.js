@@ -87,7 +87,7 @@ instance.interceptors.response.use(
           showToast(params)
         }, 300)
       }
-      if(res.message == 'fund_password_wrong'){
+      if(res.message == 'fund_password_wrong' || res.message == 'Wrong fund password'){
         res.message = '交易密码错误'
       }
       if (custom.toast) {

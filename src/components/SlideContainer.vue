@@ -16,7 +16,6 @@
                 0%
             </div>
             <div v-for="percent in percentages" :key="percent" class="percentage">
-                <div class="line"></div>
                 {{ percent }}%
             </div>
         </div>
@@ -56,8 +55,8 @@ watch(() => props.modelValue, (newValue) => {
 const onSliderChange = (newValue) => {
     emit('update:modelValue', newValue)
     emit('change', newValue)
-
 }
+
 
 </script>
 <style lang="less" scoped>
@@ -70,8 +69,6 @@ const onSliderChange = (newValue) => {
     .slider-dom {
         // width: calc(100% - 1rem);
     }
-
-
 
 
 }
@@ -117,7 +114,7 @@ const onSliderChange = (newValue) => {
         position: absolute;
         right: -0.03rem;
         top: -0.44rem;
-        background: var(--bg-color);
+        background: #26272f;
         z-index: 88;
     }
 }

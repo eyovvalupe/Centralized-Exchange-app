@@ -24,8 +24,7 @@
         }" :style="{ background,  paddingBottom: props.hasBot ? '2.6rem' : '', paddingTop: (props.hasLT || props.hasRT) ? '0.5rem' : '' }">
           <!-- 左侧提示 -->
           <span class="ipt_tip ipt_tip--left" :class="from == 'withdraw' ? '!text-[0.28rem] top-[0.5rem]' : ''"
-            v-show="inputFocus">{{ placeholder
-            }}</span>
+            v-show="inputFocus">{{ placeholder }}</span>
           <!-- 右侧提示 -->
           <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip"
             v-show="inputFocus || props.hasScroll">{{ tip
@@ -38,59 +37,61 @@
           <div class="rt-box" :class="[inputFocus && tip ? 'rt-box-focus' : '', from == 'toTop' ? '-mt-[0.1rem]' : '']" v-if="hasRT">
             <slot name="rt" />
           </div>
+        
+          <div class="relative flex flex-1">
+              <!-- 自定义输入框 -->
+            <slot v-if="custom" />
+            <!-- 输入框 -->
+            <input :disabled="disabled" :style="{height:inputHeight}" v-else v-model="inputVal" @focus="
+              inputFocus = true;
+            emit('focus');
+            " @blur="
+              inputBlur();
+            " :type="inputType == 'digit' ? 'number' : inputType == 'password' && showPassword ? 'text' : inputType"
+              @keydown="validateKeydown" class="ipt" :class="from == 'withdraw' && inputFocus ? 'top-[0.1rem]' : ''"
+              @input="onInput" :placeholder="inputFocus ? '' : placeholder" />
 
-          <!-- 自定义输入框 -->
-          <slot v-if="custom" />
+            <!-- 密码图标 -->
+            <span class="pwd_icon" v-if="inputType == 'password'">
+              <img v-if="!showPassword" v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')"
+                @click="showPassword = true" alt="off" />
+              <img v-else v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
+                @click="showPassword = false" />
+            </span>
 
-          <!-- 输入框 -->
-          <input :disabled="disabled" :style="{height:inputHeight}" v-else v-model="inputVal" @focus="
-            inputFocus = true;
-          emit('focus');
-          " @blur="
-            inputBlur();
-          " :type="inputType == 'digit' ? 'number' : inputType == 'password' && showPassword ? 'text' : inputType"
-            @keydown="validateKeydown" class="ipt" :class="from == 'withdraw' && inputFocus ? 'top-[0.1rem]' : ''"
-            @input="onInput" :placeholder="inputFocus ? '' : placeholder" />
+            <!-- 百分比按钮 -->
+            <Transition name="opacity">
+              <div class="flex items-center" v-show="inputFocus" v-if="percentTags && percentTags.length">
+                <span class="percent_tag" v-for="(percent, i) in percentTags" :key="i"
+                  @click="percentTagClick(percent)">{{
+                    percent.label }}</span>
+              </div>
+            </Transition>
 
-          <!-- 密码图标 -->
-          <span class="pwd_icon" v-if="inputType == 'password'">
-            <img v-if="!showPassword" v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')"
-              @click="showPassword = true" alt="off" />
-            <img v-else v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
-              @click="showPassword = false" />
-          </span>
+            <!--  输入框右侧 全部按钮或提示 -->
+         
+            <span class="put_all put_all_place" v-if="
+              showBtn && btnPlaceholder && !inputFocus && btnShowMode == 'focus'
+            ">{{ btnPlaceholder }}</span>
 
-          <!-- 百分比按钮 -->
-          <Transition name="opacity">
-            <div class="flex items-center" v-show="inputFocus" v-if="percentTags && percentTags.length">
-              <span class="percent_tag" v-for="(percent, i) in percentTags" :key="i"
-                @click="percentTagClick(percent)">{{
-                  percent.label }}</span>
-            </div>
-          </Transition>
+            <span @click="emit('btnClick')" v-if="(showBtn && btnShowMode == 'focus') || props.hasScroll" :style="{
+              opacity: (inputFocus) ? '1' : '0',
+              visibility: (inputFocus) ? '' : 'hidden',
+            }" class="put_all">{{ btnText ? btnText : t('trade.stock_position_all') }}</span>
 
-          <!--  输入框右侧 全部按钮或提示 -->
-          <span class="put_all put_all_place" v-if="
-            showBtn && btnPlaceholder && !inputFocus && btnShowMode == 'focus'
-          ">{{ btnPlaceholder }}</span>
+            <span @click="emit('btnClick')" v-else-if="from != 'withdraw' && (showBtn || props.hasScroll)"
+              class="put_all">{{
+                btnText ? btnText : t('trade.stock_position_all')
+              }}</span>
 
-          <span @click="emit('btnClick')" v-if="(showBtn && btnShowMode == 'focus') || props.hasScroll" :style="{
-            opacity: (inputFocus) ? '1' : '0',
-            visibility: (inputFocus) ? '' : 'hidden',
-          }" class="put_all">{{ btnText ? btnText : t('trade.stock_position_all') }}</span>
-
-          <span @click="emit('btnClick')" v-else-if="from != 'withdraw' && (showBtn || props.hasScroll)"
-            class="put_all">{{
-              btnText ? btnText : t('trade.stock_position_all')
-            }}</span>
-
-          <div class="flex flex-col" v-else-if="from == 'withdraw' && (showBtn || props.hasScroll)">
-            <div class="flex text-end flex-col text-[0.28rem]" v-if="inputFocus" @click="emit('btnClick')">
-              <span class="mb-[0.15rem] text-color5">≤{{ balance }}</span>
-              <span class="text-primary">{{ t('trade.stock_position_all') }}</span>
-            </div>
-            <div class="text-[0.32rem]" v-else>
-              {{ cryptoCurrency }}
+            <div class="flex flex-col" v-else-if="from == 'withdraw' && (showBtn || props.hasScroll)">
+              <div class="flex text-end flex-col text-[0.28rem]" v-if="inputFocus" @click="emit('btnClick')">
+                <span class="mb-[0.15rem] text-color5">≤{{ balance }}</span>
+                <span class="text-primary">{{ t('trade.stock_position_all') }}</span>
+              </div>
+              <div class="text-[0.32rem]" v-else>
+                {{ cryptoCurrency }}
+              </div>
             </div>
           </div>
 
@@ -135,6 +136,7 @@ const emit = defineEmits([
   "btnClick",
   "focus",
   "blur",
+  "input"
 ]);
 const props = defineProps({
   rightContent: {
@@ -256,6 +258,7 @@ const onInput = () => {
     inputVal.value = props.max;
   }
   emit("update:modelValue", inputVal.value);
+  emit('input',inputVal.value)
 };
 const percentTagClick = (percent) => {
   emit("percentTagClick", percent);
@@ -268,7 +271,6 @@ const percentTagClick = (percent) => {
   flex-shrink: 0;
   margin-left: 0.24rem;
 }
-
 
 .form-item-box {
   display: flex;
@@ -283,7 +285,7 @@ const percentTagClick = (percent) => {
     position: relative;
     height: 1.12rem;
     border-radius: 0.32rem;
-    border: 1px solid var(--ex-border-color2);
+    border: 1px solid transparent;
     padding: 0 0.24rem;
     transition: 0.3s;
     flex-shrink: 0;
@@ -315,6 +317,7 @@ const percentTagClick = (percent) => {
       position: relative;
       z-index: 1;
       width: 100%;
+      height: 0.5rem;
     }
 
     .rt-box {
@@ -385,6 +388,9 @@ const percentTagClick = (percent) => {
     color: var(--ex-primary-color);
     position: absolute;
     right: 0.32rem;
+    top:50%;
+    line-height: 0.32rem;
+    margin-top: -0.16rem;
     font-size: 0.3rem;
     z-index: 9;
     transition: all ease-in 0.3s;
@@ -506,9 +512,6 @@ const percentTagClick = (percent) => {
           border-top: 1px solid var(--ex-bg-white2);
         }
 
-        .put_all {
-          transform: translateY(0.12rem);
-        }
       }
     }
   }
