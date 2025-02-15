@@ -1,5 +1,5 @@
 <template>
-  <div class=" bg-contain bg-no-repeat bg-center w-[6.86rem] h-[2.58rem] mt-[0.26rem] flex flex-col justify-center items-center mx-auto mb-[0.4rem]"  :style="{backgroundImage:'url('+getStaticImgUrl('/static/img/assets/wallet_bg.svg')+')'}">
+  <div class=" bg-contain bg-no-repeat bg-center w-[6.86rem] h-[2.58rem] mt-[0.26rem] flex flex-col justify-center items-center mx-auto mb-[0.4rem] bg-color3 rounded-[0.32rem]" :style="{backgroundImage:'url('+getStaticImgUrl('/static/img/assets/wallet_bg2.svg')+')'}">
     
       <div class="flex mb-[0.4rem]">
         <span class="text-[0.32rem] text-color2 mr-[0.1rem]">{{ name

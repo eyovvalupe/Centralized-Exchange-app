@@ -8,7 +8,7 @@
         @touchend.stop=""
       >
         <HeaderTabs
-          type="card"
+          type="line"
           v-model:active="activeTab"
           :tabs="[
             t('common.spot'),
@@ -20,28 +20,26 @@
           @change="changeActiveTab(activeTab)"
         />
       </div>
+      <div id="assets_order_center_body" ref="orderCenterRef">
+        <div class="tab" v-if="activeTab == 0">
+          <TradeOrderList  />
+        </div>
 
-      <div class="tab" v-if="activeTab == 0">
-        <div class="h-[0.32rem]"></div>
-        <TradeOrderList  />
-      </div>
+        <div class="tab" v-if="activeTab == 1">
+          <CryptoOrderList  />
+        </div>
 
-      <div class="tab" v-if="activeTab == 1">
-        <div class="h-[0.32rem]"></div>
-        <CryptoOrderList  />
-      </div>
+        <div class="tab" v-if="activeTab == 2">
+          <AIOrderList />
+        </div>
 
-      <div class="tab" v-if="activeTab == 2">
-        <div class="h-[0.32rem]"></div>
-        <AIOrderList />
-      </div>
+        <div class="tab" v-if="activeTab == 3">
+          <PledgeOrder />
+        </div>
 
-      <div class="tab" v-if="activeTab == 3">
-        <PledgeOrder />
-      </div>
-
-      <div class="tab" v-if="activeTab == 4">
-        <Order />
+        <div class="tab" v-if="activeTab == 4">
+          <Order />
+        </div>
       </div>
     </div>
   </div>
@@ -61,27 +59,20 @@ const activeTab = ref(0);
 const changeActiveTab = (val) => {
   activeTab.value = val;
 };
+
+const orderCenterRef = ref(null);
+const scrollData = useScroll(orderCenterRef, {
+  throttle: 200,
+  onScroll: () => { },
+});
+provide("scrollData", scrollData);
+
+
 </script>
 <style lang="less">
-.order_container {
-  width: 100%;
-  padding: 0.32rem 0.32rem 0 0.32rem;
-
-  .order_tabs {
-  }
-
-  .tab {
-    .page_ipo_stock {
-      padding: 0;
-    }
-
-    .btns {
-      padding: 0;
-    }
-
-    .tabs {
-      padding: 0 !important;
-    }
-  }
+#assets_order_center_body{
+  overflow-y: auto;
+  height: calc(var(--vh) * 100 - 2.52rem);
+  padding-bottom: 1rem
 }
 </style>

@@ -5,10 +5,10 @@
     <OverviewCard>
       <div class="flex flex-col items-center">
         <div
-          class=" bg-contain bg-no-repeat bg-center w-[6.86rem] h-[2.58rem] mt-[0.26rem] flex flex-col justify-center items-center"
-          :style="{ backgroundImage: 'url(' + getStaticImgUrl('/static/img/assets/wallet_bg.svg') + ')' }">
+          class=" bg-contain bg-no-repeat bg-center w-[6.86rem] h-[2.58rem] mt-[0.26rem] flex flex-col justify-center items-center bg-color3 rounded-[0.32rem]"
+          :style="{ backgroundImage: 'url(' + getStaticImgUrl('/static/img/assets/wallet_bg2.svg') + ')' }">
           <div class="top mt-[0.6rem]">
-            <div class="title">{{ $t("home.totalAssets") }} <span>(USDT)</span></div>
+            <div class="title">{{ $t("home.totalAssets") }}(USDT)</div>
             <div class="eyes" @click="click">
               <img v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" v-show="!hidden" />
               <img v-lazy="getStaticImgUrl('/static/img/common/close_eye_white.svg')" v-show="hidden" />
@@ -22,8 +22,7 @@
             }}</span>
           </div>
         </div>
-        <div class="navs mt-[0.24rem] bg-contain bg-no-repeat h-[1.6rem] w-[6.86rem] mb-[0.4rem]"
-          :style="{ background: '#23272D url(' + getStaticImgUrl('/static/img/assets/money_bg.svg') + ')' }">
+        <div class="navs mt-[0.24rem]  h-[1.6rem] w-[6.86rem] mb-[0.4rem] bg-color3">
           <div class="nav bg-opacity-10">
             <div class="nav_label">{{ $t("assets.info_cash") }}</div>
             <div class="num">
@@ -244,7 +243,7 @@ const jump = (name, check = false, query) => {
     font-style: normal;
     font-weight: 600;
     line-height: 0.48rem;
-    margin-top: 0.28rem;
+    margin-top: 0.4rem;
     margin-bottom: 0.28rem;
   }
 

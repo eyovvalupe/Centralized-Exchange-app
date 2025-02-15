@@ -2,7 +2,7 @@
   <div class="ai_order_list">
     <div class="ai_order_tabs">
       <span
-        class="ai_order_tab mr-[0.6rem]"
+        class="ai_order_tab mr-[0.12rem]"
         :class="activeTab == 0 ? 'actived' : ''"
         @click="changeActiveTab(0)"
         >{{ t("assets.order_current_position") }}</span
@@ -41,21 +41,28 @@ const changeActiveTab = (val) => {
 };
 </script>
 <style lang="less">
-.ai_order_list {
-  .ai_order_tabs {
-    width: 100%;
-    height: 0.52rem;
-    border-bottom: 0.02rem solid var(--ex-border-color);
 
+.ai_order_list {
+  padding: 0 0.32rem;
+  .ai_order_tabs {
+    height: 0.78rem;
+    display: flex;
+    margin-top:0.32rem;
     .ai_order_tab {
-      font-size: 0.24rem;
+      font-size: 0.3rem;
       color: var(--ex-text-color2);
+      background-color: var(--ex-bg-white2);
+      height: 0.78rem;
+      padding: 0 0.32rem;
+      display: flex;
+      align-items: center;
+      border-radius: 0.6rem;
     }
 
     .actived {
-      font-size: 0.32rem;
+      background-color: var(--ex-white);
       font-weight: 600;
-      color: var(--ex-text-color);
+      color: var(--ex-black);
     }
   }
 

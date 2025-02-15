@@ -141,8 +141,8 @@ onMounted(() => {
 </script>
 <style lang="less">
 .staking_item {
-    width: 100%;
-
+    padding: 0 0.32rem;
+    margin-top: 0.32rem;
     .submit {
         background-color: var(--ex-primary-color);
         border-radius: 0.2rem;

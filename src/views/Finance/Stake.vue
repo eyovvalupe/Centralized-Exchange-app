@@ -32,7 +32,5 @@ const onChange = (val) => {
 
 </script>
 <style lang="less">
-.staking_page {
-    padding: 0 0.1rem ;
-}
+
 </style>

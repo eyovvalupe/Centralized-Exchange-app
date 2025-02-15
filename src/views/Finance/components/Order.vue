@@ -1,6 +1,6 @@
 <template>
     <div class="">
-        <div class="order_page w-full mt-[0.1rem]" v-if="!earnLoading && !isEmpty(myEarn)">
+        <div class="order_page mt-[0.32rem] mx-[0.32rem]" v-if="!earnLoading && !isEmpty(myEarn)">
             <div class="flex w-full h-[1.74rem] bg-color6 rounded-[0.32rem]">
                 <div class="flex flex-col items-center justify-center w-1/2">
                     <div class="text-[0.3rem] text-color2 mb-[0.24rem]">{{ t('finance.portfolio_revenue') }}<span

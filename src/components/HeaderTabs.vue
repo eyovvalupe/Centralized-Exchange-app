@@ -119,13 +119,13 @@ onMounted(() => {
             flex: 1;
             display: flex;
             align-items: center;
-            margin: 0 0.2rem;
+            margin: 0 0.12rem;
         }
 
         .tab {
-            font-size: .3rem;
+            font-size: .4rem;
             color: var(--ex-text-color3);
-            padding: 0 .14rem 0 0.18rem;
+            padding: 0 .14rem 0 0.2rem;
             height: .66rem;
             line-height: 0;
             border-radius: .48rem;
@@ -139,7 +139,7 @@ onMounted(() => {
             .tab-name {
                 position: relative;
                 z-index: 1;
-                font-size: 0.3rem;
+                
             }
 
         }
@@ -149,9 +149,6 @@ onMounted(() => {
             // font-weight: 700;
             opacity: 1;
 
-            .tab-name {
-                font-size: 0.36rem;
-            }
 
             &::after {
                 opacity: 1;
@@ -180,6 +177,7 @@ onMounted(() => {
             color: var(--ex-text-color2);
             background: var(--ex-bg-color3);
             color: var(--ex-text-color2);
+            
         }
 
         .active_tab {
@@ -200,17 +198,26 @@ onMounted(() => {
 }
 
 .header_tabs--line {
-    height: 0.92rem;
-
+    height: 0.94rem;
+    position: relative;
+    &::after{
+        content: '';
+        width: 100%;
+        height: 1px;
+        position: absolute;
+        bottom: 0;
+        left:0;
+        background: rgba(255, 255, 255, 0.06);
+    }
     .tabs {
         .tab_body {
-            margin: 0;
+            margin: 0 0.16rem;
         }
 
         .tab {
-            font-size: .4rem;
+            font-size: .32rem;
             color: var(--ex-text-color2);
-            padding: 0 .22rem;
+            padding: 0 .16rem;
             height: 0.88rem;
             line-height: 0;
             border-radius: .48rem;
@@ -220,29 +227,26 @@ onMounted(() => {
             cursor: pointer;
             white-space: nowrap;
             position: relative;
-
             .tab-name {
                 position: relative;
                 z-index: 1;
                 transition: .3s;
-                font-size: 0.4rem;
             }
 
         }
 
         .active_tab {
             color: var(--ex-text-color) !important;
-            font-size: 0.4rem !important;
 
             &::after {
                 content: '';
                 position: absolute;
                 bottom: 0rem;
                 left: 50%;
-                width: 0.48rem;
+                width: 0.3rem;
                 margin: 0 auto;
-                height: 0.06rem;
-                border-radius: 0.2rem;
+                height: 0.04rem;
+                border-radius: 0.3rem;
                 transform: translateX(-50%);
                 background-color: var(--ex-primary-color);
             }

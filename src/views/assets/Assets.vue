@@ -2,20 +2,26 @@
 <template>
   <div class="page page_assets">
     <!-- 头部 -->
-    <HeaderTabs class="border-b-[0.02rem]" :type="'line'" v-model:active="activeTab" :tabs="[
-      t('assets.header_total'),
-      t('assets.wallet_cash_value'),
-      t('assets.wallet_header_contract')
-    ]" @change="changeActiveTab(activeTab, true)">
+    <HeaderTabs  v-model:active="headActiveTab" :tabs="[
+      t('资产中心'),
+      t('assets.header_order'),
+    ]">
 
       <template #after>
-        <div class="h-[0.68rem] text-[0.28rem] flex items-center px-[0.2rem] rounded-l-full bg-white2" :class="{'text-primary':activeTab == 3}" @click="changeActiveTab(3,true)">
-          <span class="size-[0.32rem] mr-[0.12rem]"><img :src="activeTab == 3 ? getStaticImgUrl('/static/img/assets/order_primary.svg') : getStaticImgUrl('/static/img/assets/order.svg')" /></span>
-          {{ t('assets.header_order') }}</div>
+        <div class="size-[0.72rem] rounded-full bg-white1 flex items-center justify-center mr-[0.32rem]">
+          <span class="size-[0.4rem]">
+            <img :src="getStaticImgUrl('/static/img/common/icon_user.svg')"/>
+          </span>
+        </div>
       </template>
-    </HeaderTabs>
+    </HeaderTabs> 
+    <Tabs v-model:active="activeTab" type="custom-card-stake" @change="changeActiveTab(activeTab, true)" v-if="headActiveTab == 0">
+      <Tab :title="t('assets.header_total')" />
+      <Tab :title="t('assets.wallet_cash_value')" />
+      <Tab :title="t('assets.wallet_header_contract')" />
+    </Tabs>
 
-    <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" :loop="false" ref="swipe" @change="swipeChange">
+    <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" :loop="false" ref="swipe" @change="swipeChange" v-if="headActiveTab == 0">
       <SwipeItem>
         <div class="assets_body pb-[0.32rem]">
           <Overview ref="overviewRef" @jumpToWallet="(val) => jumpToWallet(val)"
@@ -34,13 +40,11 @@
             @click="(val) => click(val)" />
         </div>
       </SwipeItem>
-      <SwipeItem>
-        <div class="assets_body" id="assets_order_center_body" ref="orderCenterRef">
-          <!-- 记录弹窗 -->
-          <OrderCenter/>
-        </div>
-      </SwipeItem>
     </Swipe>
+
+    <!-- 记录弹窗 -->
+    <OrderCenter v-else />
+    
 
     <BottomPopup closeable v-model:show="handle" position="bottom" :style="{
       height: '5.56rem',
@@ -138,7 +142,6 @@ import { Tab, Tabs, PullRefresh, Swipe, SwipeItem, Popup } from "vant";
 import { ref, onMounted, computed, onActivated } from "vue";
 import { useRoute } from "vue-router";
 import Overview from "./page/Overview.vue";
-import RecordList from "@/components/RecordList.vue";
 import store from "@/store";
 import router from "@/router";
 import HeaderTabs from "@/components/HeaderTabs.vue";
@@ -146,7 +149,6 @@ import Wallet from "./page/Wallet.vue";
 import OrderCenter from "./page/OrderCenter.vue";
 import { _cryptoCoin } from "@/api/api";
 import { useI18n } from "vue-i18n";
-import AiItem from "../Market/components/AiItem.vue";
 import { fiat } from "@/utils/dataMap";
 import BottomPopup from "@/components/BottomPopup.vue";
 
@@ -154,11 +156,8 @@ const { t } = useI18n();
 const handle = ref(false);
 // import HintBlock from "@/components/HintBlock.vue"
 const selectedItem = ref({});
-const route = useRoute();
-const hintNum = computed(() => store.state.hintNum || 0);
-const currSelectedWallet = computed(() => store.state.currSelectedWallet || -1);
+const headActiveTab = ref(0);
 
-const RecordListRef = ref();
 const activeTab = ref(0);
 const assetsActiveTab = localStorage.getItem('assetsActiveTab')
 if (assetsActiveTab > 0) {
@@ -183,12 +182,6 @@ const swipeChange = (val) => {
   changeActiveTab(val);
 };
 
-const orderCenterRef = ref(null);
-const scrollData = useScroll(orderCenterRef, {
-  throttle: 200,
-  onScroll: () => { },
-});
-provide("scrollData", scrollData);
 
 const jumpToWallet = (val) => {
   store.commit("setCurrSelectedWallet", val);
@@ -196,17 +189,9 @@ const jumpToWallet = (val) => {
 };
 
 const loading = ref(false);
-const disabled = ref(false);
+
 const pageLoading = ref(false);
 
-const openRecordPopup = () => {
-  router.push({
-    name: "recordList",
-    query: {
-      tab: 0,
-    },
-  });
-};
 
 const overviewRef = ref();
 const cashRef = ref();
@@ -288,7 +273,7 @@ getCoinMap();
     height: calc(var(--vh) * 100 - 2.52rem);
     padding-bottom: 1rem
   }
-
+  
 
 }
 </style>
