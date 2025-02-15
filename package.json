@@ -49,6 +49,7 @@
     "unplugin-auto-import": "^0.18.6",
     "vite": "^6.1.0",
     "vite-plugin-compression": "^0.5.1",
-    "vite-plugin-eslint": "^1.8.1"
+    "vite-plugin-eslint": "^1.8.1",
+    "vite-plugin-pwa": "^0.21.1"
   }
 }
