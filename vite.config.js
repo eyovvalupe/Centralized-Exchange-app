@@ -34,21 +34,36 @@ export default defineConfig({
         short_name: 'Lorna', // 短名称
         description: 'Lorna', // 描述
         theme_color: '#0E0F18', // 主题颜色
+        background_color: '#0E0F18',
         icons: [
           {
-            src: 'logo_192x192', // 图标路径
+            src: 'logo_192x192.png', // 图标路径
             sizes: '192x192',
             type: 'image/png',
           },
           {
-            src: 'logo_512x512', // 图标路径
+            src: 'logo_512x512.png', // 图标路径
             sizes: '512x512',
             type: 'image/png',
           },
         ],
+        "screenshots": [
+          {
+            "src": "screenshots/desktop.png", // 桌面设备截图路径
+            "sizes": "1920x1080", // 截图尺寸
+            "type": "image/png", // 截图格式
+            "form_factor": "wide" // 适用于桌面设备
+          },
+          {
+            "src": "screenshots/mobile.png", // 移动设备截图路径
+            "sizes": "1080x1920", // 截图尺寸
+            "type": "image/png", // 截图格式
+            "form_factor": "narrow" // 适用于移动设备
+          }
+        ]
       },
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}'], // 缓存文件类型
+        globPatterns: ['**/*.{js,css}'], // 缓存文件类型
         runtimeCaching: [
           {
             urlPattern: /\.(js|css|json|html)$/i, // 匹配静态资源
