@@ -13,7 +13,7 @@
                 </div>
                 
             </div>
-            <div class="px-[0.24rem] h-[0.6rem] min-w-[1.36rem] flex justify-center items-center bg-primary rounded-full ripple-btn" v-if="item.status == 'open'">
+            <div class="px-[0.24rem] h-[0.6rem] min-w-[1.36rem] flex justify-center items-center bg-primary rounded-full ripple-btn" v-if="item.status == 'open'" @click.stop="openConfirm(item)">
                 {{ t('finance.defi_borrow_repay') }}
             </div>
         </div>
@@ -45,7 +45,9 @@
 import store from '@/store'
 import router from "@/router";
 import { useI18n } from "vue-i18n";
+import { Popup } from 'vant';
 const {t} = useI18n();
+const emits = defineEmits(['repay'])
 const open = (item)=>{
     const query = {
         ...item
@@ -72,7 +74,11 @@ const getTotalAmount = (loan,fee,interest,currency)=>{
     }
 }
 
-
-
+const openConfirm = (item)=>{
+    emits('repay',{
+        order:item,
+        repayAmount:getTotalAmount(item.loan,item.fee,item.interest,item.symbol)
+    })
+}
 
 </script>

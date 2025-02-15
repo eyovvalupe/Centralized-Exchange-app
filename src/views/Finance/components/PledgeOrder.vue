@@ -11,12 +11,16 @@
            
             <UnLogin v-if="!isLoading && !list.length && !token" @loginfinish="getList()" />
             <NoData v-else-if="!isLoading && !list.length"/>
-            <PledgeOrderList :list="list"/>
+            <PledgeOrderList @repay="onRepay" :list="list"/>
             <div class="flex items-center justify-center p-[0.4rem]" v-if="isLoading">
                 <Loading />
             </div>
         </div>
     </div>
+    <BottomPopup closeable v-model:show="visible" :title="t('finance.defi_borrow_return_confirm')">
+        <RepayConfirm :order="order" v-if="visible" :repay-amount="repayAmount" @success="repaySuccess" />
+    </BottomPopup>
+    
 </template>
 <script setup>
 import { useI18n } from 'vue-i18n';
@@ -27,6 +31,9 @@ import {_pledgeOrders} from '@/api/api'
 import eventBus from "@/utils/eventBus";
 import store from '@/store'
 import UnLogin from "@/components/UnLogin.vue";
+import BottomPopup from '@/components/BottomPopup.vue'
+import RepayConfirm from "./RepayConfirm.vue"
+
 import { computed, onBeforeUnmount, onMounted } from "vue";
 
 const activeTab = ref('open')
@@ -36,6 +43,9 @@ const list = ref([])
 const isLoading = ref(false)
 const token = computed(()=>store.state.token)
 const currentPage = ref(1)
+const order = ref({})
+const visible = ref(false)
+const repayAmount = ref(0)
 const getList = (page=1)=>{
     if(!token.value){
         return
@@ -47,7 +57,7 @@ const getList = (page=1)=>{
         status:activeTab.value
     }).then(res=>{
         if(res.code == 200){
-            if(res.data && res.data.length){
+            if((res.data && res.data.length) || page == 1){
                 currentPage.value = page
                 list.value = page > 1 ? list.value.concat(res.data || []) : res.data || []
             }else{
@@ -59,6 +69,15 @@ const getList = (page=1)=>{
     })
 }
 getList()
+const onRepay = (data)=>{
+    order.value = data.order
+    repayAmount.value = data.repayAmount
+    visible.value = true
+}
+const repaySuccess = ()=>{
+    visible.value = false
+    getList()
+}
 const onPledgeLoad = ()=>{
     if(isLoading.value || finish.value){
         return
