@@ -12,42 +12,43 @@
           </div>
           <div style="flex: 1;">
             <div class="stock-info__head">
-            <div class="stock-info__hl">
-              <span class="stock-info__symbol" v-if="type == 'contract'">{{
-                currStock.name || "--"
-              }}</span>
-              <span class="stock-info__symbol" v-else>{{
-                currStock.symbol || "--"
-              }}</span>
-              <span class="stock-info__status">
-                <!-- {{ statusMap[currStock.status] || "--" }} -->
-                {{
-                  currStock.status == 'none' ? t('trade.stock_position_status_none') :
-                    currStock.status == 'lock' ? t('trade.stock_position_status_lock') :
-                      currStock.status == 'open' ? t('trade.stock_position_status_open') :
-                        currStock.status == 'done' ? t('trade.stock_position_status_done') :
-                          currStock.status == 'fail' ? t('trade.stock_position_status_fail') :
-                            currStock.status == 'cancel' ? t('trade.stock_position_status_cancel') :
-                              '--'
-                }}
-              </span>
+              <div class="stock-info__hl">
+                <span class="stock-info__symbol" v-if="type == 'contract'">{{
+                  currStock.name || "--"
+                  }}</span>
+                <span class="stock-info__symbol" v-else>{{
+                  currStock.symbol || "--"
+                  }}</span>
+                <span class="stock-info__status">
+                  <!-- {{ statusMap[currStock.status] || "--" }} -->
+                  {{
+                    currStock.status == 'none' ? t('trade.stock_position_status_none') :
+                      currStock.status == 'lock' ? t('trade.stock_position_status_lock') :
+                        currStock.status == 'open' ? t('trade.stock_position_status_open') :
+                          currStock.status == 'done' ? t('trade.stock_position_status_done') :
+                            currStock.status == 'fail' ? t('trade.stock_position_status_fail') :
+                              currStock.status == 'cancel' ? t('trade.stock_position_status_cancel') :
+                                '--'
+                  }}
+                </span>
+              </div>
+              <div class="stock-info__trend" @click="openStockModel(currStock)">
+                <img v-lazy="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
+              </div>
             </div>
-            <div class="stock-info__trend" @click="openStockModel(currStock)">
-              <img v-lazy="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
+            <div class="stock-info__order_no">
+              <span>{{ currStock.order_no || "--" }}</span>
+              <div class="stock-info__copy_icon" @click="copy(currStock.order_no)">
+                <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
+              </div>
             </div>
-          </div>
-          <div class="stock-info__order_no">
-            <span>{{ currStock.order_no || "--" }}</span>
-            <div class="stock-info__copy_icon" @click="copy(currStock.order_no)">
-              <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
-            </div>
-          </div>
           </div>
         </div>
         <div class="info_boxs" v-if="props.type == 'spot'">
           <div class="info_box">
             <div class="amount" :class="[currStock.offset == 'buy' ? 'up' : 'down']">
-              <div>{{ currStock.volume || "--" }}{{ currStock.symbol ? currStock.symbol.replace('usdt', '').toUpperCase() : '' }}</div>
+              <div>{{ currStock.volume || "--" }}{{ currStock.symbol ? currStock.symbol.replace('usdt',
+                '').toUpperCase() : '' }}</div>
             </div>
             <div>{{ currStock.offset == 'buy' ? '买入' : '卖出' }}</div>
           </div>
@@ -82,10 +83,10 @@
             <div>{{ t("trade.order_info_ratio") }}</div>
           </div>
         </div>
-        
+
 
         <div class="order_info_box">
-          
+
           <div class="info_item" v-if="props.type == 'spot'">
             <div class="name">{{ t("trade.stock_open") }}</div>
             <div class="val_box">
@@ -204,7 +205,7 @@
               <div class="text">{{ currStock.order_value || currStock.amount || "--" }}</div>
             </div>
           </div>
-          <div class="info_item" v-if="!finalStatus && props.type != 'spot'" >
+          <div class="info_item" v-if="!finalStatus && props.type != 'spot'">
             <div class="name">{{ t("trade.stock_opening_upfront") }}</div>
             <div class="val_box">
               <div class="text">{{ currStock.margin || "0" }}</div>
@@ -221,8 +222,9 @@
 
     </div>
 
-    <div v-if="props.type == 'spot'" class="btns" >
-      <div class="btn btn4 ripple-primary" @click="emit('cancel', currStock)" v-if="['open', 'none'].includes(currStock.status)">
+    <div v-if="props.type == 'spot'" class="btns">
+      <div class="btn btn4 ripple-primary" @click="emit('cancel', currStock)"
+        v-if="['open', 'none'].includes(currStock.status)">
         <div class="btn_icon">
           <img v-lazy="getStaticImgUrl('/static/img/trade/cancel.svg')" alt="img" />
         </div>
@@ -286,7 +288,7 @@ import Top from "@/components/Top.vue";
 import Decimal from "decimal.js";
 import StockPopup from "../../trade/StockPopup.vue";
 import { useI18n } from "vue-i18n";
-import BottomPopup from "@/components/BottomPopup"
+import BottomPopup from "@/components/BottomPopup.vue"
 
 const { t } = useI18n();
 const emit = defineEmits(["update", "sell", "cancel", "back"]);
@@ -537,13 +539,15 @@ const copy = (text) => {
       }
 
       .red_tag,
-      .tag_long, .tag_buy {
+      .tag_long,
+      .tag_buy {
         color: var(--ex-up-color);
         background-color: rgb(var(--ex-up-color-rgb) / 0.08);
       }
 
       .green_tag,
-      .tag_short, .tag_sell {
+      .tag_short,
+      .tag_sell {
         color: var(--ex-down-color);
         background-color: rgb(var(--ex-down-color-rgb) / 0.08);
       }

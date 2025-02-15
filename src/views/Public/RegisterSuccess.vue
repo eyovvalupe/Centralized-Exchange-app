@@ -22,7 +22,7 @@
 
     <Button round color="var(--ex-primary-color)" class="submit ripple-btn" type="primary" @click="next">{{
       $t("register.success_btn")
-      }}</Button>
+    }}</Button>
     <div @click="back">
       <span class="text-white text-[0.32rem]">{{
         $t('register.success_finish') }}</span>
@@ -149,7 +149,7 @@ const goChat = () => {
     font-weight: 400;
   }
 
-  :deep(span.van-button__text) {
+  :deep(.van-button__text) {
     color: var(--ex-black);
   }
 }

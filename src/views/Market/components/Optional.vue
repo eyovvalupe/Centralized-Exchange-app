@@ -354,7 +354,7 @@ const jump = (name) => {
     font-size: 0.28rem;
   }
 
-  :deep('span.van-button__text') {
+  :deep(.van-button__text) {
     margin-left: 0 !important;
   }
 }

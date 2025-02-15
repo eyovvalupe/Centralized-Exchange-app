@@ -17,7 +17,7 @@ import NoData from '@/components/NoData.vue';
 import LoadingMore from "@/components/LoadingMore.vue"
 import { ref, onMounted, onUnmounted } from 'vue'
 import { _withdrawList } from "@/api/api"
-import WithdrawItem from "./page/components/WithdrawItem"
+import WithdrawItem from "./page/components/WithdrawItem.vue"
 
 const loading = ref(false)
 const finish = ref(false)

@@ -55,7 +55,7 @@
             </div>
         </div>
         <div v-if="showDetail">
-            <AiBlock :customType="'custom-line-small'"/>
+            <AiBlock :customType="'custom-line-small'" />
         </div>
     </div>
 
@@ -97,7 +97,7 @@ import SafePassword from "@/components/SafePassword.vue";
 import FollowSubmit from "./FollowSubmit.vue"
 import { isEmpty } from "@/utils/isEmpty";
 import { computed } from "vue";
-import AiBlock from "@/views/Trade2/pages/AiBlock"
+import AiBlock from "@/views/Trade2/pages/AiBlock.vue"
 
 const emits = defineEmits(['openInfo', 'plus', 'cancel'])
 const myFollowList = computed(() => store.state.myCopy)

@@ -14,7 +14,6 @@ export default {
     spot: "Spot",
     option: "Option",
     second: "sec",
-    hour: "hours",
 
   },
   login: {
@@ -74,7 +73,6 @@ export default {
     agree_con4: "User Terms",
     register_success: "Registration successful",
     register_failed: "Registration failed",
-    network_error: "Network error",
     next: "Next",
     code_email: "Email",
     code_phone: "Phone",
@@ -1088,7 +1086,6 @@ export default {
     copy_apply_now: "Apply Now",
     copy_apply_con:
       "Earn up to 30% copy trading profit share + 10% rebate on copy trading fees",
-    copy_trade: "Copy Trading",
     copy_trade_con:
       "Top cryptocurrency traders worldwide lead you to earn profits by copying their trades with one click",
     copy_order_status: "Copy Trading Status",

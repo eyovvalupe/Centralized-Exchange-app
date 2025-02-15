@@ -119,9 +119,9 @@ const pageLoading = computed(() => store.state.pageLoading);
 store.commit("setPageLoading", true);
 Promise.all([
   import("@/views/Home/Home.vue"),
-  import("@/views/Market/Market.vue"),
-  import("@/views/User/NewUser.vue"),
-  import("@/views/Trade2/trade.vue"),
+  import("@/views/Trade3/Index.vue"),
+  import("@/views/Trade3/Info.vue"),
+  import("@/views/Finance/Index.vue"),
   import("@/views/assets/Assets.vue"),
 ]).finally(() => {
   store.commit("setPageLoading", false);

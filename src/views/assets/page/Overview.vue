@@ -4,7 +4,9 @@
     <!-- 总览 -->
     <OverviewCard>
       <div class="flex flex-col items-center">
-        <div class=" bg-contain bg-no-repeat bg-center w-[6.86rem] h-[2.58rem] mt-[0.26rem] flex flex-col justify-center items-center" :style="{backgroundImage:'url('+getStaticImgUrl('/static/img/assets/wallet_bg.svg')+')'}">
+        <div
+          class=" bg-contain bg-no-repeat bg-center w-[6.86rem] h-[2.58rem] mt-[0.26rem] flex flex-col justify-center items-center"
+          :style="{ backgroundImage: 'url(' + getStaticImgUrl('/static/img/assets/wallet_bg.svg') + ')' }">
           <div class="top mt-[0.6rem]">
             <div class="title">{{ $t("home.totalAssets") }} <span>(USDT)</span></div>
             <div class="eyes" @click="click">
@@ -20,7 +22,8 @@
             }}</span>
           </div>
         </div>
-        <div class="navs mt-[0.24rem] bg-contain bg-no-repeat h-[1.6rem] w-[6.86rem] mb-[0.4rem]" :style="{background:'#23272D url('+getStaticImgUrl('/static/img/assets/money_bg.svg')+')'}">
+        <div class="navs mt-[0.24rem] bg-contain bg-no-repeat h-[1.6rem] w-[6.86rem] mb-[0.4rem]"
+          :style="{ background: '#23272D url(' + getStaticImgUrl('/static/img/assets/money_bg.svg') + ')' }">
           <div class="nav bg-opacity-10">
             <div class="nav_label">{{ $t("assets.info_cash") }}</div>
             <div class="num">
@@ -116,7 +119,7 @@ import { useI18n } from "vue-i18n";
 import { _assets } from "@/api/api";
 import store from "@/store";
 import router from "@/router";
-import Btns from "./components/Btns";
+import Btns from "./components/Btns.vue";
 import OverviewCard from "./components/OverviewCard.vue";
 
 const { t } = useI18n();
@@ -215,12 +218,14 @@ const jump = (name, check = false, query) => {
     display: flex;
     height: 0.32rem;
     align-items: center;
+
     .title {
       color: var(--ex-text-color);
       margin-right: 0.12rem;
       font-size: 0.32rem;
       line-height: 0.32rem;
       font-weight: 500;
+
       span {
         font-size: 0.24rem;
       }
@@ -248,18 +253,22 @@ const jump = (name, check = false, query) => {
     padding: 0 0.28rem;
     justify-content: space-between;
     border-radius: 0.32rem;
+
     .nav {
       display: flex;
       justify-content: center;
       align-items: center;
       flex-direction: column;
     }
-    .nav:first-child{
+
+    .nav:first-child {
       align-items: self-start;
     }
-    .nav:last-child{
+
+    .nav:last-child {
       align-items: self-end;
     }
+
     .nav_label {
       color: var(--ex-text-color);
       font-size: 0.24rem;

@@ -56,7 +56,7 @@
     <div class="list">
       <Loading v-show="!searchList.length && loading" />
       <NoData v-if="!searchList.length && !loading" />
-      
+
       <div class="item" v-for="(item, i) in searchList" :key="i" @click="goItem(item)">
         <!-- <div @click.stop="collect(item)">
           <div class="size-[0.48rem]">
@@ -64,9 +64,9 @@
             <img v-else v-lazy="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
           </div>
         </div> -->
-        <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center" >
-            <CryptoIcon :name="item.name.split('/')[0]" />
-          </div>
+        <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center">
+          <CryptoIcon :name="item.name.split('/')[0]" />
+        </div>
         <div class="info">
           <div class="title flex items-center gap-1">
             {{ item.type == "stock" ? item.symbol || "--" : item.name || "--" }}
@@ -128,7 +128,7 @@
 
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
-import Top from "@/components/Top";
+import Top from "@/components/Top.vue";
 import {
   Icon,
   showToast,

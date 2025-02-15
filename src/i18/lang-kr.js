@@ -7,7 +7,6 @@ export default {
     closed: "마감",
     no_data: "데이터 없음",
     day: "일",
-    hour: "시간",
     min: "분",
     no_more: "더 이상 없습니다",
     no_wallet: "수금 계좌 없음",
@@ -73,7 +72,6 @@ export default {
     agree_con4: "이용약관에 동의합니다",
     register_success: "회원 가입 성공",
     register_failed: "가입 오류",
-    network_error: "네트워크 오류",
     next: "다음",
     code_email: "이메일",
     code_phone: "휴대폰",
@@ -1076,7 +1074,6 @@ export default {
     copy_apply_now: "지금 신청",
     copy_apply_con:
       "복사 거래자가 되어 최대 30% 복사 거래 수익 분배 + 10% 거래 수수료 리베이트를 받으세요",
-    copy_trade: "복사 거래",
     copy_trade_con:
       "전 세계 최고의 암호화폐 트레이더들이 당신을 이끌어 한 번의 클릭으로 거래를 복사하고 수익을 얻을 수 있습니다",
     copy_order_status: "복사 거래 상태",

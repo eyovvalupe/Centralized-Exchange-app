@@ -271,7 +271,7 @@
             </Tabs>
         </div>
 
-        
+
 
 
         <!-- 搜索列表 -->
@@ -343,7 +343,7 @@ import InquireAi from "@/views/Trade2/ai/Inquire.vue";
 // 详情
 import MarketInfo2 from "@/views/Market/MarketInfo2.vue"
 // 导航
-import Index from "./Index"
+import Index from "./Index.vue"
 
 const props = defineProps({
     type: {
@@ -811,6 +811,4 @@ const openMenu = () => {
     }
 
 }
-
-
 </style>

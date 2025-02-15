@@ -22,7 +22,7 @@
 
 
             <!-- banner -->
-            <view  class="banners wow fadeInUp" data-wow-duration="1s">
+            <view class="banners wow fadeInUp" data-wow-duration="1s">
                 <Swipe class="swipers" :autoplay="3000" indicator-color="white">
                     <SwipeItem class="swiper-item">
                         <img v-lazy="getStaticImgUrl('/static/home2/banner1.png')" alt="">
@@ -170,7 +170,7 @@ import FollowItem from "../components/FollowItem.vue"
 import Wow from "wow.js"
 import { isEmpty } from "@/utils/isEmpty";
 import { useRoute } from "vue-router";
-import Recommend from "./Recommend"
+import Recommend from "./Recommend.vue"
 
 const route = useRoute();
 
@@ -397,23 +397,23 @@ const followList = computed(() => store.state.followList || [])
 <style lang="less" scoped>
 @keyframes rotateShadow {
     0% {
-        box-shadow: 0.02rem 0 0.06rem rgba(0,166,9,0.5) inset;
+        box-shadow: 0.02rem 0 0.06rem rgba(0, 166, 9, 0.5) inset;
     }
 
     25% {
-        box-shadow: 0 0.02rem 0.06rem rgba(0,166,9,0.5) inset;
+        box-shadow: 0 0.02rem 0.06rem rgba(0, 166, 9, 0.5) inset;
     }
 
     50% {
-        box-shadow: -0.02rem 0 0.06rem rgba(0,166,9,0.5) inset;
+        box-shadow: -0.02rem 0 0.06rem rgba(0, 166, 9, 0.5) inset;
     }
 
     75% {
-        box-shadow: 0 -0.02rem 0.06rem rgba(0,166,9,0.5) inset;
+        box-shadow: 0 -0.02rem 0.06rem rgba(0, 166, 9, 0.5) inset;
     }
 
     100% {
-        box-shadow: 0.02rem 0 0.06rem rgba(0,166,9,0.5) inset;
+        box-shadow: 0.02rem 0 0.06rem rgba(0, 166, 9, 0.5) inset;
     }
 }
 
@@ -563,6 +563,7 @@ const followList = computed(() => store.state.followList || [])
                 position: relative;
                 animation: rotateShadow 3s linear infinite;
             }
+
             .follow-home-item {
                 position: relative;
                 animation: rotateShadow 3s linear infinite;
@@ -664,7 +665,7 @@ const followList = computed(() => store.state.followList || [])
                 height: auto;
                 right: 0;
                 bottom: 0;
-               
+
             }
 
             .title {
