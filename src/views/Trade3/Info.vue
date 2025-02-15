@@ -319,7 +319,6 @@ import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import store from "@/store";
 import { getStaticImgUrl, _formatNumber } from "@/utils/index.js"
-import { Tab, Tabs, Icon, Popup } from "vant";
 import { _futures, _basic, _add, _del } from "@/api/api";
 import BottomPopup from "@/components/BottomPopup.vue";
 import Loaidng from "@/components/Loaidng.vue"
