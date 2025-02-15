@@ -24,7 +24,7 @@
             </div>
 
             <!-- 欢迎 -->
-            <div class="welcome" @click="install">
+            <div class="welcome">
                 <div class="name mb-[0.42rem] " :data-wow-delay="'0.1s'" data-wow-duration="1s">{{ t('home.secure') }} |
                     {{ t('home.convinient') }} | {{ t('home.reliable') }}
                 </div>
@@ -169,10 +169,13 @@
     <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" :title="$t('home.fastTrading')">
     </ActionSheet>
     <NotifiModal v-if="notifiOpen" />
+
+
+    <!-- pwa -->
+    <PWA />
 </template>
 
 <script setup>
-import { ActionSheet, Swipe, SwipeItem } from "vant";
 import { computed, onActivated, onDeactivated, ref, onMounted, watch } from "vue";
 import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
@@ -187,6 +190,7 @@ import Wow from "wow.js"
 import { isEmpty } from "@/utils/isEmpty";
 import { useRoute } from "vue-router";
 import Recommend from "./Recommend.vue"
+import PWA from "@/components/PWA.vue"
 
 const route = useRoute();
 const fActive = ref(1)
@@ -200,20 +204,7 @@ const goRegister = () => {
     })
 }
 
-// 安装
-const install = () => {
-    alert(deferredPrompt)
-    if (!deferredPrompt || !deferredPrompt.prompt) return
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the install prompt');
-        } else {
-            console.log('User dismissed the install prompt');
-        }
-        deferredPrompt = null;
-    });
-}
+
 
 const { startSocket } = useSocket();
 const { t } = useI18n();

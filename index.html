@@ -128,7 +128,6 @@
   <script>
     var deferredPrompt;
     window.addEventListener('beforeinstallprompt', (e) => {
-      alert('pwa ready!')
       e.preventDefault(); // 阻止默认的安装提示
       deferredPrompt = e; // 保存事件对象
     });
