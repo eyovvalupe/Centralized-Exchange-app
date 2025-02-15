@@ -1,6 +1,6 @@
 <template>
     <div class="pledge_order_detail_page">
-        <Top :title="$t('trade.ipo_detail_title')" />
+        <Top :title="$t('trade.ipo_detail_title')" :backFunc="backFunc" />
         <div
             class=" mt-[1.08rem] mx-[0.32rem] mb-[0.2rem] h-[2.1rem] bg-color6 rounded-[0.32rem] flex justify-center items-center ">
             <div class="flex flex-col gap-[0.32rem] justify-between items-center">
@@ -93,8 +93,17 @@ import { useI18n } from "vue-i18n";
 import RepayConfirm from "./components/RepayConfirm.vue"
 import { reactive } from 'vue';
 import {useRoute } from 'vue-router'
+import eventBus from '@/utils/eventBus';
 const route = useRoute()
-const order = reactive(route.query)
+const props = defineProps({
+    backFunc:Function,
+    order:{
+        type:Object,
+        default:()=>{}
+    }
+    
+})
+const order = reactive(props.order || route.query)
 
 const { t } = useI18n();
 const visible = ref(false)
@@ -103,6 +112,7 @@ const copy = (text) => {
   _copyTxt(text);
   showToast(t('recharging.copied'));
 };
+
 
 const getTotalAmount = (loan,fee,interest,currency)=>{
     const val = Number(loan) + Number(fee) + Number(interest)
@@ -119,7 +129,9 @@ const openConfirm = ()=>{
 }
 const repaySuccess = ()=>{
     visible.value = false
-    order.value.status = 'close'
+    order.status = 'close'
+    eventBus.emit("pledgeSuccess")
+
 }
 </script>
 

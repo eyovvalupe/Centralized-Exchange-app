@@ -105,7 +105,7 @@
       </Button>
     </div>
     
-    <div class="h-[2.2rem]"></div>
+    <div class="h-[0.6rem]"></div>
 
     <!-- 售出币种 -->
     <BottomPopup v-model:show="showDialog" closeable :safe-area-inset-top="true" :safe-area-inset-bottom="true"

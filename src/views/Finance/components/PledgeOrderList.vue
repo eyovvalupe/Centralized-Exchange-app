@@ -40,23 +40,31 @@
             </div>
         </div>
     </div>
+    <Popup teleport="body" v-model:show="visible" position="right" :style="{ height: '100%', width: '100%' }">
+        <PledgeOrderDetail :order="order" :backFunc="backFunc" v-if="visible" />
+    </Popup>
 </template>
 <script setup>
+import PledgeOrderDetail from '../PledgeOrderDetail.vue'
 import store from '@/store'
-import router from "@/router";
 import { useI18n } from "vue-i18n";
 import { Popup } from 'vant';
 const {t} = useI18n();
 const emits = defineEmits(['repay'])
+
+const order = ref({})
+
+const visible = ref(false)
 const open = (item)=>{
-    const query = {
+    order.value = {
         ...item
     }
-    router.push({
-        path:'/pledge/orderDetail',
-        query
-    })
+    visible.value = true
 }
+const backFunc = ()=>{
+    visible.value = false
+}
+
 const props = defineProps({
     list: {
         type: Array,
