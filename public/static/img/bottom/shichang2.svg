@@ -1,6 +1,1 @@
-<svg width="28" height="28" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
-<g id="Frame">
-<rect id="Rectangle 1000001187" x="2" y="2" width="23.33" height="23.33" rx="6" fill="#00A609"/>
-<path id="Vector" d="M18.1762 10L20 11.8237L14.7895 17.0341L12.2104 14.4547L8.82372 17.8417L7 16.0179L12.2104 10.8076L14.7895 13.387L18.1762 10Z" fill="white"/>
-</g>
-</svg>
+<svg width="28" height="28" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="2" y="2" width="23.33" height="23.33" rx="6" fill="#00A609"/><path d="M18.176 10 20 11.824l-5.21 5.21-2.58-2.58-3.386 3.388L7 16.018l5.21-5.21 2.58 2.579L18.175 10Z" fill="#fff"/></svg>
