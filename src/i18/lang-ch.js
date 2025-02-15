@@ -7,14 +7,13 @@ export default {
     closed: "已收盤",
     no_data: "暫無數據",
     day: "天",
-    hour: "時",
     min: "分",
     no_more: "没有更多了",
     no_wallet: "暫無收款賬戶",
     spot: "現貨",
     option: "期貨",
     second: "秒",
-    hour: "小時",
+    hour: "時",
 
   },
   home: {
@@ -111,7 +110,6 @@ export default {
     agree_con4: "用戶條款",
     register_success: "註冊成功",
     register_failed: "註冊異常",
-    network_error: "網絡異常",
     next: "繼續",
     code_email: "電子郵件",
     code_phone: "手機",
@@ -388,7 +386,6 @@ export default {
     networkSelection: "網絡選擇",
     no_amount_msg: "請輸入金額",
     getting_rate_msg: "正在獲取匯率",
-    no_amount_msg: "請輸入金額",
     no_enough_balance: "餘額不足",
     no_account_msg: "請新增收款帳戶",
     success_msg: "操作成功",
@@ -458,7 +455,6 @@ export default {
     info_recharge_address: "儲值地址",
     info_recharge_order: "訂單編號",
     info_recharge_date: "儲值時間",
-    copy: "已複製",
   },
   transfer: {
     transferRecord: "劃轉記錄",
@@ -1076,7 +1072,6 @@ export default {
 
     copy_apply_now: "立即申請",
     copy_apply_con: "成為帶單交易員，享受高達30%的跟單分潤+10%的跟單手續費返佣",
-    copy_trade: "跟單交易",
     copy_trade_con: "世界頂級加密貨幣交易員，帶領你一鍵跟單賺取收益",
     copy_order_status: "帶單情況",
     copy_order_time1: "近一年",

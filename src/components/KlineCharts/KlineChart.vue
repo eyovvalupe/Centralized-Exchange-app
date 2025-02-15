@@ -28,7 +28,7 @@ import { Loading as L } from 'vant';
 import { useSocket } from '@/utils/ws'
 import store from "@/store";
 import { useRoute } from "vue-router"
-import Loading from "../LoadingMore"
+import Loading from "../LoadingMore.vue"
 import { _maxTail } from "@/utils/index"
 
 const route = useRoute()

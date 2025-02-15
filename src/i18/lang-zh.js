@@ -14,7 +14,6 @@ export default {
     spot: "现货",
     option: "交易机器人",
     second: "秒",
-    hour: "小时",
   },
   login: {
     login: "登录",
@@ -73,7 +72,6 @@ export default {
     agree_con4: "用户条款",
     register_success: "注册成功",
     register_failed: "注册异常",
-    network_error: "网络异常",
     next: "继续",
     code_email: "电子邮件",
     code_phone: "手机",
@@ -403,7 +401,6 @@ export default {
     networkSelection: "网络选择",
     no_amount_msg: "请输入金额",
     getting_rate_msg: "正在获取汇率",
-    no_amount_msg: "请输入金额",
     no_enough_balance: "余额不足",
     no_account_msg: "请添加收款账户",
     success_msg: "操作成功",
@@ -1071,7 +1068,6 @@ export default {
 
     copy_apply_now: "立即申请",
     copy_apply_con: "成为带单交易员，享受高达30%的跟单分润+10%的跟单手续费返佣",
-    copy_trade: "跟单交易",
     copy_trade_con: "世界顶级加密货币交易员，带领你一键跟单赚取收益",
     copy_order_status: "带单情况",
     copy_order_time1: "近一年",

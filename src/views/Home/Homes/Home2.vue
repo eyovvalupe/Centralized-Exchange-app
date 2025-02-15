@@ -25,17 +25,21 @@
 
             <!-- 欢迎 -->
             <div class="welcome" @click="install">
-                <div class="name mb-[0.42rem] " :data-wow-delay="'0.1s'" data-wow-duration="1s">{{ t('home.secure') }} | {{ t('home.convinient') }} | {{ t('home.reliable') }}
+                <div class="name mb-[0.42rem] " :data-wow-delay="'0.1s'" data-wow-duration="1s">{{ t('home.secure') }} |
+                    {{ t('home.convinient') }} | {{ t('home.reliable') }}
                 </div>
                 <div class="title mb-[0.16rem] " :data-wow-delay="'0.2s'" data-wow-duration="1s"><span
-                        style="color:#F19009;margin-right: 0.04rem;">{{ t('home.landing_con1') }}</span>{{ t('home.landing_con2') }}</div>
-                <div class="title mb-[0.42rem] " :data-wow-delay="'0.3s'" data-wow-duration="1s">{{ t('home.landing_con3') }}</div>
+                        style="color:#F19009;margin-right: 0.04rem;">{{ t('home.landing_con1') }}</span>{{
+                            t('home.landing_con2') }}</div>
+                <div class="title mb-[0.42rem] " :data-wow-delay="'0.3s'" data-wow-duration="1s">{{
+                    t('home.landing_con3') }}</div>
                 <div class="name " :data-wow-delay="'0.4s'" data-wow-duration="1s">{{ t('home.landing_con4') }}</div>
 
 
                 <div v-if="homeLoaded && !token" class="btns mt-[1rem] wow fadeIn" data-wow-duration="1s">
                     <div class="btn ripple-primary" @click="goLogin">{{ t('login.login') }}</div>
-                    <div class="btn btn2 ripple-btn" @click="goRegister">{{ t('trade.stock_opening_token_register') }}</div>
+                    <div class="btn btn2 ripple-btn" @click="goRegister">{{ t('trade.stock_opening_token_register') }}
+                    </div>
                 </div>
             </div>
 
@@ -55,7 +59,8 @@
             <!-- 理财 -->
             <div class="recommend-title">
                 <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">{{ t('home.finance') }}</div>
-                <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">{{ t('home.landing_more') }}</span>
+                <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">{{ t('home.landing_more')
+                    }}</span>
                 <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s"
                     @click="fActive == 1 ? jump('finance', true, 1) : jump('follow', false)">
                     <img v-lazy="getStaticImgUrl('/static/img/user/right_gray.svg')" alt="">
@@ -87,7 +92,8 @@
             <div class="recommend-title">
                 <div class="wow slideInLeft" style="flex: 1;" data-wow-duration="0.6s">{{ t('home.market_trend') }}
                 </div>
-                <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">{{ t('home.landing_more') }}</span>
+                <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">{{ t('home.landing_more')
+                    }}</span>
                 <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s">
                     <img v-lazy="getStaticImgUrl('/static/img/user/right_gray.svg')" alt="">
                 </div>
@@ -180,7 +186,7 @@ import FollowItem from "../components/FollowItem.vue"
 import Wow from "wow.js"
 import { isEmpty } from "@/utils/isEmpty";
 import { useRoute } from "vue-router";
-import Recommend from "./Recommend"
+import Recommend from "./Recommend.vue"
 
 const route = useRoute();
 const fActive = ref(1)
@@ -338,7 +344,7 @@ const onSelect = (item) => {
 const jump = (name, needToken, query) => {
     if (name == 'notification') {
         store.dispatch('updateNotifiList')
-        if (token.value) store.dispatch('updateNotifiJoinList') 
+        if (token.value) store.dispatch('updateNotifiJoinList')
     }
     if (needToken && !token.value) return store.commit("setIsLoginOpen", true);
 

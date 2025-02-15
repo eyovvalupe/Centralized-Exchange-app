@@ -6,8 +6,7 @@ import '@vant/touch-emulator'
 import 'vant/lib/index.css'
 import i18n from './i18'
 import lazyPlugin from 'vue3-lazy'
-import CryptoIcon from "@/components/CryptoIcon"
-import './registerServiceWorker'
+import CryptoIcon from "@/components/CryptoIcon.vue"
 
 const app = createApp(App)
 app.config.errorHandler = (err, instance, info) => {

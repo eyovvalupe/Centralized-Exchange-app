@@ -48,7 +48,7 @@
 
 
                             <div class="bar-box">
-                                <div class="up-box" :style="{width: winratePercentage}"></div>
+                                <div class="up-box" :style="{ width: winratePercentage }"></div>
                             </div>
 
                             <div class="navs">
@@ -302,7 +302,7 @@
 import Top from "@/components/Top.vue";
 import { getStaticImgUrl } from "@/utils/index.js"
 import { computed, ref, watch } from "vue"
-import NoData from "@/components/NoData"
+import NoData from "@/components/NoData.vue"
 import { Tab, Tabs, Button, showToast } from "vant";
 import { _copyGet, _copyOrders, _copyUsers } from "@/api/api"
 import SparkLine from "@/components/SparkLine.vue";
@@ -313,7 +313,7 @@ import { useI18n } from "vue-i18n";
 import { isEmpty } from "@/utils/isEmpty";
 import store from "@/store";
 import { getPoints } from "@/utils/index.js"
-import follow from "@/store/follow";
+import follow from "@/store/follow.js";
 import router from "@/router";
 const points = getPoints('id-123456', 100)
 const token = computed(() => store.state.token)
@@ -326,14 +326,14 @@ const showPlus = ref(false)
 const plus = () => {
     if (!token.value) {
         showToast('请先登录一下')
-        router.push({name: 'login'})
+        router.push({ name: 'login' })
         return;
     }
     showPlus.value = true
 }
 
 const percentageAxios = ['100.00', '80.00', '60.00', '40.00', '20.00', '0.00', '-20.00', '-40.00']
-const dateAxios = ['07/22','09/06','10/22','12/07','01/22']
+const dateAxios = ['07/22', '09/06', '10/22', '12/07', '01/22']
 const winratePercentage = computed(() => {
     const winDays = Number(info.value.windays) || 0;
     const lossDays = Number(info.value.lossdays) || 0;
@@ -640,7 +640,7 @@ watch(copyItem, (val) => {
             height: 1.28rem;
             padding: 0 0.24rem;
             background-color: var(--ex-bg-color3);
-            gap:0.1rem;
+            gap: 0.1rem;
         }
 
 
@@ -651,6 +651,7 @@ watch(copyItem, (val) => {
             flex-direction: column;
             align-items: start;
             justify-content: center;
+
             .name {
                 font-size: 0.28rem;
             }

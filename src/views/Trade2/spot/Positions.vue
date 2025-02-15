@@ -109,8 +109,8 @@
             :placeholder="t('trade.stock_opening_trade_pw')">
           </FormItem>
 
-          <Button class="submit ripple-btn" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"
-            color="var(--ex-primary-color)">
+          <Button class="submit ripple-btn" @click="goSellDialog" round :loading="sellLoading" type="primary"
+            size="large" color="var(--ex-primary-color)">
             <span style="color: var(--ex-white);">{{ t("trade.stock_position_btn") }}</span>
           </Button>
         </div>
@@ -163,8 +163,8 @@
             :placeholder="t('trade.stock_opening_trade_pw')">
           </FormItem>
 
-          <Button @click="goUpdateDialog" class="submit ripple-btn" round size="large" :loading="updateLoading" type="primary"
-            color="var(--ex-primary-color)">
+          <Button @click="goUpdateDialog" class="submit ripple-btn" round size="large" :loading="updateLoading"
+            type="primary" color="var(--ex-primary-color)">
             <span style="color: var(--ex-white);">{{ t('trade.stock_position_btn') }}</span>
           </Button>
         </div>
@@ -223,7 +223,7 @@ import OrderInfo from "../components/OrderInfo.vue";
 import FormItem from "@/components/Form/FormItem.vue";
 import { useI18n } from "vue-i18n";
 import Loaidng from "@/components/Loaidng.vue"
-import BottomPopup from "@/components/BottomPopup"
+import BottomPopup from "@/components/BottomPopup.vue"
 
 const props = defineProps({
   type: {
@@ -375,7 +375,7 @@ const sell = (item) => {
 const sellLoading = ref(false);
 const goSellDialog = () => {
   if (sellLoading.value) return;
-  if(userInfo.value.role == 'guest'){
+  if (userInfo.value.role == 'guest') {
     sellForm.value.safeword = '000000'
   }
   if (!sellForm.value.volume) return showToast(t('trade.contract_position_no_close_amount'));
@@ -431,7 +431,7 @@ const update = (item) => {
 const updateLoading = ref(false);
 const goUpdateDialog = () => {
   if (updateLoading.value) return;
-  if(userInfo.value.role == 'guest'){
+  if (userInfo.value.role == 'guest') {
     updateForm.value.safeword = '000000'
   }
   if (!updateForm.value.amount) return showToast(t("trade.stock_position_no_deposit"));
@@ -711,7 +711,8 @@ getSessionToken();
       margin: 0 auto;
     }
 
-    .state-short, .state-sell {
+    .state-short,
+    .state-sell {
       color: var(--ex-down-color);
       background: rgb(var(--ex-down-color-rgb) / 0.1);
     }
@@ -755,6 +756,7 @@ getSessionToken();
     flex: 4;
     text-align: right;
   }
+
   .td-2 {
     flex: 2;
   }

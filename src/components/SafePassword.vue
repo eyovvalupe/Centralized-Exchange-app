@@ -128,7 +128,7 @@ defineExpose({
       flex: 1;
       margin-left: 0.32rem;
 
-      :deep(span.van-button__text) {
+      :deep(.van-button__text) {
         font-size: 0.32rem;
       }
     }

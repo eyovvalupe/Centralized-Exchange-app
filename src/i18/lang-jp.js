@@ -7,7 +7,6 @@ export default {
     closed: "取引終了",
     no_data: "データがありません",
     day: "日",
-    hour: "時間",
     min: "分",
     no_more: "これ以上ありません",
     no_wallet: "受取アカウントがありません",
@@ -93,7 +92,7 @@ export default {
     login_pw_length_error: "パスワードは最小8文字です",
     no_trade_pw_error: "取引パスワードを入力してください",
     no_agree_error: "プライバシーポリシーと利用規約に同意してください",
-    network_error: "ネットワークエラー、再試行してください",
+    // network_error: "ネットワークエラー、再試行してください",
     guest_account: "ゲストアカウント",
     already_get_virtual: "仮想通貨が入金されました",
     user_already_exist: "このユーザーは既に登録されています",
@@ -1076,7 +1075,7 @@ export default {
     copy_apply_now: "今すぐ申請",
     copy_apply_con:
       "コピー取引者になり、最大30%のコピー取引利益分配 + 10%の取引手数料リベートを獲得",
-    copy_trade: "コピー取引",
+    // copy_trade: "コピー取引",
     copy_trade_con:
       "世界中のトップ暗号通貨トレーダーがあなたをリードし、ワンクリックでコピーして利益を得る",
     copy_order_status: "コピー取引状況",

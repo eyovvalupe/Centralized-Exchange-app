@@ -91,7 +91,7 @@ export default {
     no_trade_pw_error: "Bitte geben Sie das Handels-Passwort ein",
     no_agree_error:
       "Bitte stimmen Sie zuerst der Datenschutzerklärung und den Nutzungsbedingungen zu",
-    network_error: "Netzwerkfehler. Bitte versuchen Sie es erneut",
+    // network_error: "Netzwerkfehler. Bitte versuchen Sie es erneut",
     guest_account: "Gastkonto",
     already_get_virtual: "Virtuelles Guthaben wurde gutgeschrieben",
     user_already_exist: "Dieser Benutzer ist bereits registriert",
@@ -399,7 +399,6 @@ export default {
     networkSelection: "Netzwerkwahl",
     no_amount_msg: "Bitte Betrag eingeben",
     getting_rate_msg: "Wechselkurs wird abgerufen",
-    no_amount_msg: "Bitte Betrag eingeben",
     no_enough_balance: "Unzureichendes Guthaben",
     no_account_msg: "Bitte fügen Sie ein Zahlungskonto hinzu",
     success_msg: "Aktion erfolgreich",

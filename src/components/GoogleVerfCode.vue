@@ -1,7 +1,7 @@
 <!-- 谷歌验证弹窗 -->
 <template>
-  <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="show" position="bottom" closeable
-    teleport="body" :close-on-popstate="true" :close-on-click-overlay="false" class="self_van_popup">
+  <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="show" position="bottom"
+    closeable teleport="body" :close-on-popstate="true" :close-on-click-overlay="false" class="self_van_popup">
     <div class="google_dialog">
       <div class="text-center my-[0.36rem] text-[0.32rem] text-color">
         {{ $t("google_auth.google_input_title") }}
@@ -11,11 +11,12 @@
         :gutter="'0.16rem'" :mask="false" />
       <input style="opacity: 0" ref="iptRef" v-model="val" maxlength="6" enterkeyhint="done" @keydown.enter="submit" />
       <div class="btns">
-        <Button :disabled="disabled" round color="var(--ex-white)" class="btn ripple-primary" type="primary" @click="close">
+        <Button :disabled="disabled" round color="var(--ex-white)" class="btn ripple-primary" type="primary"
+          @click="close">
           <span class="text-black">{{ $t("google_auth.google_input_btn_cancel") }}</span>
         </Button>
-        <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="btn ripple-btn" type="primary"
-          @click="submit">
+        <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="btn ripple-btn"
+          type="primary" @click="submit">
           <span class="text-black">{{ $t("google_auth.google_input_btn_confirm") }}</span>
         </Button>
       </div>
@@ -104,7 +105,7 @@ defineExpose({
       border-radius: 0.96rem;
       width: 3.27rem;
 
-      :deep(span.van-button__text) {
+      :deep(.van-button__text) {
         font-size: 0.32rem;
       }
     }
