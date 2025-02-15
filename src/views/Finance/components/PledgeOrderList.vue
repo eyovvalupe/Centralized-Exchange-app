@@ -40,8 +40,8 @@
             </div>
         </div>
     </div>
-    <Popup teleport="body" v-model:show="visible" position="right" :style="{ height: '100%', width: '100%' }">
-        <PledgeOrderDetail :order="order" :backFunc="backFunc" v-if="visible" />
+    <Popup teleport="body" v-model:show="visible" @open="showOrderDetail=true" @closed="showOrderDetail=false" position="right" :style="{ height: '100%', width: '100%' }">
+        <PledgeOrderDetail :order="order" :backFunc="backFunc" v-if="showOrderDetail" />
     </Popup>
 </template>
 <script setup>
@@ -53,7 +53,7 @@ const {t} = useI18n();
 const emits = defineEmits(['repay'])
 
 const order = ref({})
-
+const showOrderDetail = ref(false)
 const visible = ref(false)
 const open = (item)=>{
     order.value = {
