@@ -24,15 +24,15 @@
         <div class="info-box">
             <div class="info-left">
                 <div class="text-[0.24rem] text-color2 mb-[0.2rem]">{{ $t('copy.total_revenue') }}</div>
-                <div class="text-[0.32rem] font-semibold mb-[0.2rem]" :class="[props.item.returnrate < 0 ? 'down' : 'up']">{{ (props.item.returnrate > 0
-                    ? '+' : '') }}{{ props.item.returnrate }}%</div>
+                <div class="text-[0.32rem] font-semibold mb-[0.2rem]"
+                    :class="[props.item.returnrate < 0 ? 'down' : 'up']">{{ (props.item.returnrate > 0
+                        ? '+' : '') }}{{ props.item.returnrate }}%</div>
                 <div class="text-[0.24rem]">
                     <b>{{ (props.item.returnamount > 0 ? '+' : '') }}{{ props.item.returnamount || '--' }}</b>
                 </div>
             </div>
             <div class="line-box">
-                <SparkLine :points="points"
-                    :ratio="item.returnrate > 0 ? 1 : -1" />
+                <SparkLine :points="points" :ratio="item.returnrate > 0 ? 1 : -1" />
             </div>
         </div>
 
@@ -47,7 +47,8 @@
             </div>
             <div class="icons">
                 <div class="icon" v-for="(item, i) in currencies" :key="i">
-                    <CryptoIcon :name="item" /></div>
+                    <CryptoIcon :name="item" />
+                </div>
             </div>
         </div>
     </div>
@@ -88,7 +89,7 @@ const goFollow = () => {
     width: 100%;
     height: 100%;
     border-radius: 0.32rem;
-    background: var(--ex-bg-color3);
+    background: var(--ex-bg-white2);
     flex-shrink: 0;
     padding: 0.12rem;
 
@@ -188,7 +189,7 @@ const goFollow = () => {
         width: 100%;
         height: 1.84rem;
         border-radius: 0.32rem;
-        background-color: var(--ex-bg-color);
+        background-color: var(--ex-bg-color3);
         display: flex;
         align-items: center;
         justify-content: space-between;

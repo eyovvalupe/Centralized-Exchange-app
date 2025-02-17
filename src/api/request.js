@@ -33,7 +33,7 @@ instance.interceptors.request.use(
       //   }
       // })
       router.replace({
-        name: 'user',
+        name: 'home',
       })
       store.commit('setIsLoginOpen', true)
       console.error(config)
@@ -77,7 +77,7 @@ instance.interceptors.response.use(
         //   }
         // })
         router.replace({
-          name: 'user',
+          name: 'home',
         })
         store.commit('setIsLoginOpen', true)
         return
@@ -87,7 +87,7 @@ instance.interceptors.response.use(
           showToast(params)
         }, 300)
       }
-      if(res.message == 'fund_password_wrong' || res.message == 'Wrong fund password'){
+      if (res.message == 'fund_password_wrong' || res.message == 'Wrong fund password') {
         res.message = '交易密码错误'
       }
       if (custom.toast) {

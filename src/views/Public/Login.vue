@@ -264,7 +264,7 @@ const submit = () => {
   _login(form.value)
     .then((res) => {
       if (res && res.code == 200) {
-        store.dispatch("reset");
+        // store.dispatch("reset");
 
         // setTimeout(() => {
         store.commit("setToken", res.data.auth);

@@ -313,7 +313,7 @@
 
 <script setup>
 import { ref, computed, onMounted } from "vue";
-import { Tabs, Tab, Icon } from "vant";
+import { Tabs, Tab, Icon, Popup } from "vant";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import store from "@/store";
@@ -567,7 +567,6 @@ const goDialogSearch = () => {
                     // 这里如果当前没有item的值 就设置下
                     if (!item.symbol) {
                         const obj = arr[0]
-                        console.error('?????', activeTab.value)
                         switch (activeTab.value) {
                             case 1:
                                 store.commit("setCurrConstract", obj || {});
@@ -720,7 +719,7 @@ const openMenu = () => {
 
                     .van-tabs__nav {
                         background: var(--ex-none);
-                        
+
                         .van-tab {
                             span {
                                 font-size: 16px;
