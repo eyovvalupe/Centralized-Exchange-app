@@ -255,7 +255,7 @@ defineExpose({
     color: var(--ex-text-color3);
     font-size: 0.22rem;
     border-bottom: 1px solid var(--ex-border-color);
-    padding: 0.48rem 0 0.24rem 0;
+    padding: 0.1rem 0 0.24rem 0;
     background: none;
     margin-top: 0px;
     border-radius: 0px;

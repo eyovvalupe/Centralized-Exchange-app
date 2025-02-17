@@ -16,15 +16,15 @@
       <div class="td td-5">
         <div class="name van-omit1">{{ item.name }}</div>
         <div class="lever">
-          <div class="status-color status">{{ item.lever }}X</div>
-          <div class="status-color status" :class="'status-' + item.status">
+          <div class="status-color status_lever">{{ item.lever }}X</div>
+          <div class="status-color status" :class="item.status == 'open' ? 'status_'  + item.status : 'status-' + item.status">
             {{
               item.status == "none"
                 ? t("trade.stock_position_status_none")
                 : item.status == "lock"
                   ? t("trade.stock_position_status_lock")
                   : item.status == "open"
-                    ? t("trade.stock_position_status_open")
+                    ? t("trade.stock_position_status_none")
                     : item.status == "done"
                       ? t("trade.stock_position_status_done")
                       : item.status == "fail"
@@ -666,7 +666,7 @@ getSessionToken();
     color: var(--ex-text-color3);
     font-size: 0.22rem;
     border-bottom: 1px solid var(--ex-border-color);
-    padding: 0.48rem 0 0.24rem 0;
+    padding: 0.1rem 0 0.24rem 0;
     background: none;
     margin-top: 0px;
     border-radius: 0px;
@@ -707,6 +707,19 @@ getSessionToken();
       justify-content: center;
       font-size: 0.22rem;
       margin-right: 0.08rem;
+    }
+    
+    .status_lever {
+      height: 0.3rem;
+      padding: 0 0.08rem;
+      border-radius: 0.3rem;
+      border-style: solid;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.22rem;
+      margin-right: 0.08rem;
+      background-color: var(--ex-bg-white2);
     }
 
     .state {

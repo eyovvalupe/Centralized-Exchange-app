@@ -3,7 +3,7 @@
   <div class="market-charts">
     <!-- 图表 -->
     <div class="chart_box" id="chart_box_c">
-      <div class="tabs">
+      <div class="tabs" :class="{'!p-[0]': from == 'constract'}">
         <div class="tab tab_ani" :class="{ active_tab: timeType == 'Time' }" @click="changeType('Time')">
           Time
         </div>
@@ -58,7 +58,7 @@
           </div>
         </div>
       </Teleport>
-      <div v-else v-show="!(props.mini && zipo)" class="chart_container" :class="{ fullscreen_container: fullWindow }">
+      <div v-else v-show="!(props.mini && zipo)" class="chart_container" :class="{ fullscreen_container: fullWindow, '!p-[0]': from == 'constract' }">
         <!-- 时区 -->
         <div v-if="showDate" class="chart_time">{{ showDate }}</div>
         <!-- 分时图 -->
@@ -105,6 +105,10 @@ const props = defineProps({
   mini: { // 如果事mini 就不要全屏了  换成折叠
     type: Boolean,
     default: false
+  },
+  from: {
+    type: String,
+    default: "",
   }
 });
 const periodType = computed(() => props.type);
