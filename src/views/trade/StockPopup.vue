@@ -1,6 +1,6 @@
 <template>
   <div class="stockPopup">
-    <MarketInfo :type="props.type" @back="back" :innerPage="true" />
+    <MarketInfo :from="'contract'" :type="props.type" @back="back" :innerPage="true" />
   </div>
 </template>
 
@@ -25,5 +25,6 @@ const back = () => {
 .stockPopup {
   height: 100%;
   width: 100%;
+  background-color: var(--ex-bg-color9);
 }
 </style>
