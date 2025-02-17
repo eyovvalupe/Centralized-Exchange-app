@@ -19,14 +19,14 @@
       </Tab>
     </Tabs> -->
     <div v-if="from == 'cash'">
-      <DefaultWallet :name="t('assets.wallet_cash_balance')" type="cash" />
+      <DefaultWallet v-model:showInfo="showInfo" :name="t('assets.wallet_cash_balance')" type="cash" />
       <Btns />
-      <Cash @click="(val) => click(val)" />
+      <Cash :showInfo="showInfo" @click="(val) => click(val)" />
     </div>
     <div v-if="from == 'futures'">
-      <DefaultWallet :name="t('assets.wallet_contract_balance')" type="futures" />
+      <DefaultWallet v-model:showInfo="showInfo" :name="t('assets.wallet_contract_balance')" type="futures" />
       <Btns />
-      <CryptoWallet @click="(val) => click(val)" />
+      <CryptoWallet :showInfo="showInfo" @click="(val) => click(val)" />
     </div>
 
   </div>
@@ -41,7 +41,7 @@ import StockMyWallet from "./StockWallet.vue";
 import CryptoWallet from "./CryptoWallet.vue";
 import HeaderTabs from "@/components/HeaderTabs.vue";
 import { useI18n } from "vue-i18n";
-import { Tabs, Tab } from "vant";
+const showInfo = ref(true)
 
 const emits = defineEmits(['click'])
 const props = defineProps({

@@ -12,11 +12,11 @@
       <div class="text-[0.48rem] font-semibold text-color leading-[0.66rem]">{{
         showInfo
           ? type == "cash"
-            ? parseFloat(assets.money).toLocaleString()
+            ? parseFloat(assets.money ? assets.money : 0).toLocaleString()
             : type == "futures"
-              ? parseFloat(assets.futures).toLocaleString()
+              ? parseFloat(assets.futures ? assets.futures : 0).toLocaleString()
               : type == "stock"
-                ? parseFloat(assets.stock).toLocaleString()
+                ? parseFloat(assets.stock ? assets.stock : 0).toLocaleString()
                 : "--"
           : "********"
       }}</div>
@@ -29,9 +29,9 @@ import DefaultWalletInfoContainer from "./DefaultWalletInfo/DefaultWalletInfoCon
 import { computed, ref } from "vue";
 import { useI18n } from "vue-i18n";
 import store from "@/store";
-
-const { t } = useI18n();
+const emits = defineEmits(['update:showInfo'])
 const props = defineProps({
+  showInfo:Boolean,
   name: {
     type: String,
     default: "",
@@ -48,10 +48,8 @@ const props = defineProps({
 
 const assets = computed(() => store.state.assets || {});
 
-const showInfo = ref(false);
-
 const toggleShow = () => {
-  showInfo.value = !showInfo.value;
+  emits('update:showInfo',!props.showInfo)
 };
 </script>
 

@@ -10,7 +10,7 @@
       </div>
 
       <!-- <CurrencyItem v-for="(item, i) in wallet" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" /> -->
-      <CurrencyList @click="(val) => click(val)" :list="wallet" :type="'contract'"/>
+      <CurrencyList :showInfo="showInfo" @click="(val) => click(val)" :list="wallet" :type="'contract'"/>
 
     </div>
   </div>
@@ -20,14 +20,14 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { Icon, Switch } from 'vant'
 import store from '@/store'
-import router from '@/router'
 import { _cryptoCoin } from '@/api/api'
-import CurrencyItem from './components/CurrencyItem.vue'
 import CurrencyList from './components/CurrencyList.vue'
 
 const emits = defineEmits(["setLoading", 'click']);
 const token = computed(() => store.state.token || "");
-
+const props = defineProps({
+  showInfo:Boolean
+})
 // 刷新现金钱包
 
 const elseWalletMap = computed(() => store.state.elseWalletMap || []);

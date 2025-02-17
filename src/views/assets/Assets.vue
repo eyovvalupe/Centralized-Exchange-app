@@ -8,8 +8,8 @@
     ]">
 
       <template #after>
-        <div class="size-[0.72rem] rounded-full bg-white1 flex items-center justify-center mr-[0.32rem]">
-          <span class="size-[0.4rem]">
+        <div class="size-[0.56rem] rounded-full bg-white1 flex items-center justify-center mr-[0.32rem]">
+          <span class="size-[0.32rem]">
             <img :src="getStaticImgUrl('/static/img/common/icon_user.svg')"/>
           </span>
         </div>

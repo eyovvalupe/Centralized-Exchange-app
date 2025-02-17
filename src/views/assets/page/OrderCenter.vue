@@ -14,8 +14,9 @@
             t('common.spot'),
             t('assets.order_title_contract'),
             t('common.option'),
-            t('finance.defi_borrow'),
-            t('finance.portfolio_title'),
+            t('copy.title'),
+            t('借币'),
+            t('质押'),
           ]"
           @change="changeActiveTab(activeTab)"
         />
@@ -32,12 +33,14 @@
         <div class="tab" v-if="activeTab == 2">
           <AIOrderList />
         </div>
-
         <div class="tab" v-if="activeTab == 3">
+          
+        </div>
+        <div class="tab" v-if="activeTab == 4">
           <PledgeOrder />
         </div>
 
-        <div class="tab" v-if="activeTab == 4">
+        <div class="tab" v-if="activeTab == 5">
           <Order />
         </div>
       </div>

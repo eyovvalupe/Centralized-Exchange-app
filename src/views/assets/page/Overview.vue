@@ -18,7 +18,7 @@
             <span class="text-[0.48rem] font-semibold">{{
               hidden
                 ? "********"
-                : parseFloat(assets.total).toLocaleString() || "0"
+                : parseFloat(assets.total ? assets.total : 0).toLocaleString() || "0"
             }}</span>
           </div>
         </div>
@@ -29,7 +29,7 @@
               {{
                 hidden
                   ? "********"
-                  : parseFloat(assets.money).toLocaleString() || "0"
+                  : parseFloat(assets.money ? assets.money : 0).toLocaleString() || "0"
               }}
             </div>
           </div>
@@ -57,7 +57,7 @@
         </div>
         <div class="name">{{ $t("assets.over_view_cash") }}</div>
         <div class="amount" :class="hidden ? '!pt-[0.2rem]' : ''">
-          {{ hidden ? '******' : (parseFloat(assets.money).toLocaleString() || "0") }}
+          {{ hidden ? '******' : (parseFloat(assets.money ? assets.money : 0).toLocaleString() || "0") }}
         </div>
         <div class="more">
           <div style="width: 0.2rem;height: 0.32rem;">
@@ -92,7 +92,7 @@
         <div class="name">{{ $t("assets.wallet_header_contract") }}</div>
         <div class="amount" :class="hidden ? '!pt-[0.2rem]' : ''">
           {{
-            hidden ? '******' : parseFloat(assets && assets.futures ? assets.futures : 0).toLocaleString()
+            hidden ? '******' : parseFloat(assets.futures ? assets.futures : 0).toLocaleString()
           }}
         </div>
         <div class="more">
@@ -149,7 +149,7 @@ const jumpToWallet = (val) => {
 }
 
 const token = computed(() => store.state.token || "");
-const hidden = ref(true); // 隐藏数字
+const hidden = ref(false); // 隐藏数字
 
 const click = () => {
   hidden.value = !hidden.value

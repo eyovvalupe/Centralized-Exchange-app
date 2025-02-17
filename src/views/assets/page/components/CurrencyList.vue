@@ -50,7 +50,7 @@
       <div class="flex mr-[0.4rem] items-center" :style="item.block ? 'max-width: 40%;' : ''">
         <div class="flex-1 flex items-center flex-wrap justify-end">
           <div class="text-[0.32rem] text-color2 mr-[0.08rem]">{{ $t('assets.wallet_available_sim') }}</div>
-          <div class="text-[0.32rem] font-semibold">{{ item.amount }}</div>
+          <div class="text-[0.32rem] font-semibold">{{ showInfo ? item.amount : "********" }}</div>
         </div>
         <div class="ml-[0.24rem] w-[0.28rem] h-[0.28rem]">
           <img v-lazy="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" class=" rounded-full" alt="">
@@ -72,7 +72,8 @@ const props = defineProps({
   type: {
     type: String,
     default: ''
-  }
+  },
+  showInfo:Boolean
 });
 const { t } = useI18n();
 

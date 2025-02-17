@@ -107,7 +107,7 @@ onMounted(() => {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    height: 0.88rem;
+    height: 0.92rem;
     .tabs {
         flex: 1;
         display: flex;
@@ -123,7 +123,7 @@ onMounted(() => {
         }
 
         .tab {
-            font-size: .4rem;
+            font-size: .3rem;
             color: var(--ex-text-color3);
             padding: 0 .14rem 0 0.2rem;
             height: .66rem;
@@ -146,10 +146,9 @@ onMounted(() => {
 
         .active_tab {
             color: var(--ex-text-color);
-            // font-weight: 700;
             opacity: 1;
-
-
+            font-size: 0.36rem;
+            font-weight: 500;
             &::after {
                 opacity: 1;
                 transform: scale(1);

@@ -9,7 +9,7 @@
         }}</span>
       </div>
 
-      <CurrencyList @click="(val) => click(val)" :list="showList" :type="'cash'" />
+      <CurrencyList :showInfo="showInfo" @click="(val) => click(val)" :list="showList" :type="'cash'" />
     </div>
   </div>
 </template>
@@ -25,7 +25,9 @@ import CurrencyList from "./components/CurrencyList.vue";
 const { t } = useI18n();
 const emits = defineEmits(["setLoading", "click"]);
 const token = computed(() => store.state.token || "");
-
+const props = defineProps({
+  showInfo:Boolean
+})
 
 // 刷新现金钱包
 const wallet = computed(() => store.state.wallet || []); // 钱包

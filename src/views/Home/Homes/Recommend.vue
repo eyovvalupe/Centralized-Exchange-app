@@ -17,7 +17,6 @@
                     </div>
                     <div v-if="!token" class="flex flex-col pt-[0.32rem] pb-[0.32rem]">
 
-
                         <div class="w-full flex justify-between border-b-[0.02rem] pb-[0.2rem] mb-[0.6rem] px-[0.32rem] border-b-color2">
                             <div class="text-color2">{{ $t('copy.copy_order_name') }}</div>
                             <div class="text-color2">{{ $t('market.market_optional_crypto_price') + ' / ' +
