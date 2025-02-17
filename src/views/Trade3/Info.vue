@@ -3,7 +3,7 @@
     <div class="page-marketinfo2">
 
         <div class="left-icon" @click="openMenu">
-            <div class="size-[0.4rem]">
+            <div class="w-[0.48rem] h-[0.52rem]">
                 <img v-lazy="getStaticImgUrl('/static/img/trade/open.svg')" alt="">
             </div>
         </div>
@@ -17,8 +17,6 @@
                 :color="'var(--ex-primary-color)'" v-model:active="activeTab" animated shrink>
                 <!-- 现货 -->
                 <Tab :name="1" :title="'现货'">
-
-
                     <div class="dialog-market-box" v-if="activeTab == 1 && !chartLoading">
 
                         <div class="top-box">
@@ -128,7 +126,7 @@
                             </div>
                         </div>
                         <div class="charts-box" v-if="!showInfoDialog">
-                            <Chart :type="'constract'" :mini="true" />
+                            <Chart :from="'constract'" :type="'constract'" :mini="true" />
                         </div>
                         <!-- 内容1 -->
                         <div style="margin: 0.1rem;background-color:var(--ex-bg-color3);border-radius: 0.32rem;">
@@ -277,7 +275,7 @@
         <!-- 搜索列表 -->
         <BottomPopup round v-model:show="showSearchDialog" position="bottom" closeable teleport="body">
             <div class="van-popup-custom-title">
-                {{ t("trade.stock_opening_search") }}
+                {{ t("合约选择") }}
             </div>
             <div class="search_dialog_trade">
                 <!-- 搜索 -->
@@ -314,7 +312,8 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from "vue"
+import { ref, computed, onMounted } from "vue";
+import { Tabs, Tab, Icon } from "vant";
 import { useI18n } from "vue-i18n";
 import { useRoute } from "vue-router";
 import store from "@/store";
@@ -627,6 +626,7 @@ setTimeout(() => {
 const showNavDialog = ref(false)
 const IndexRef = ref()
 const openMenu = () => {
+    console.log('hii')
     showNavDialog.value = true
     setTimeout(() => {
         IndexRef.value && IndexRef.value.act()
@@ -642,18 +642,17 @@ const openMenu = () => {
         height: calc(var(--vh) * 60);
         overflow-y: auto;
         margin-top: 0.32rem;
-        padding: 0 0.32rem;
     }
 
     .search_box {
-        height: 0.8rem;
+        height: 1rem;
         padding: 0 0.32rem;
         margin: 0.4rem 0.3rem 0 0.3rem;
         display: flex;
         align-items: center;
         background-color: var(--ex-bg-white1);
         border-radius: 0.6rem;
-        border: 1px solid var(--ex-border-color2);
+        // border: 1px solid var(--ex-border-color2);
 
         .search_icon {
             width: 0.48rem;
@@ -690,9 +689,12 @@ const openMenu = () => {
     }
 
     .left-icon {
+        height: 43px;
+        display: flex;
+        align-items: center;
         position: absolute;
         left: 0.24rem;
-        top: 0.28rem;
+        top: 0rem;
         z-index: 99;
     }
 
@@ -711,7 +713,7 @@ const openMenu = () => {
             margin-top: 0.1rem;
             height: calc(var(--vh) * 100 - 1rem);
             overflow-y: auto;
-            padding-bottom: 1.26rem;
+            padding-bottom: 50px;
 
             :deep(.van-tabs--market2) {
                 &>.van-tabs__wrap {
@@ -719,6 +721,12 @@ const openMenu = () => {
 
                     .van-tabs__nav {
                         background: var(--ex-none);
+                        
+                        .van-tab {
+                            span {
+                                font-size: 16px;
+                            }
+                        }
                     }
                 }
             }
@@ -736,6 +744,7 @@ const openMenu = () => {
 
             .charts-box {
                 padding: 0 0.1rem;
+                height: 250px;
             }
 
             .dialog-market-bg {

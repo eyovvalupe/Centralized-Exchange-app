@@ -69,7 +69,8 @@ const pageKeys = {
         'marketStockMalaysiaDataList'
     ],
     'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList', 'marketForeignList', 'marketCommoditiesList', 'contractList', 'searchList'],
-    'search':['marketSearchList']
+    'search':['marketSearchList'],
+    'tradeInfo': ['futuresSearchList']
 }
 
 

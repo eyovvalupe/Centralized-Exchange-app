@@ -16,15 +16,15 @@
       <div class="td td-5">
         <div class="name van-omit1">{{ item.name }}</div>
         <div class="lever">
-          <div class="status-color status">{{ item.lever }}X</div>
-          <div class="status-color status" :class="'status-' + item.status">
+          <div class="status-color status_lever">{{ item.lever }}X</div>
+          <div class="status-color status" :class="item.status == 'open' ? 'status_'  + item.status : 'status-' + item.status">
             {{
               item.status == "none"
                 ? t("trade.stock_position_status_none")
                 : item.status == "lock"
                   ? t("trade.stock_position_status_lock")
                   : item.status == "open"
-                    ? t("trade.stock_position_status_open")
+                    ? t("trade.stock_position_status_none")
                     : item.status == "done"
                       ? t("trade.stock_position_status_done")
                       : item.status == "fail"
@@ -262,30 +262,6 @@ const stockWalletAmount = computed(() => {
   return 0;
 });
 
-const statusMap = ref({
-  // 仓位状态
-  none: t("trade.stock_position_status_none"),
-  lock: t("trade.stock_position_status_lock"),
-  open: t("trade.stock_position_status_open"),
-  done: t("trade.stock_position_status_done"),
-  fail: t("trade.stock_position_status_fail"),
-  cancel: t("trade.stock_position_status_cancel"),
-});
-const offsetMap = ref({
-  // 涨跌状态
-  long: t("trade.stock_position_offset_long"),
-  short: t("trade.stock_position_offset_short"),
-});
-const leverTypeap = ref({
-  // 仓位
-  cross: t('trade.stock_opening_position_mode_cross'),
-  isolated: t('trade.stock_opening_position_mode_isolated'),
-});
-const priceTypeMap = ref({
-  // 价格类型
-  market: t('trade.stock_opening_price_market'),
-  limit: t('trade.stock_opening_price_limit'),
-});
 const stopMap = ref({
   // 止损类型
   price: t("trade.stock_position_stop_price"),
@@ -707,6 +683,19 @@ getSessionToken();
       justify-content: center;
       font-size: 0.22rem;
       margin-right: 0.08rem;
+    }
+    
+    .status_lever {
+      height: 0.3rem;
+      padding: 0 0.08rem;
+      border-radius: 0.3rem;
+      border-style: solid;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.22rem;
+      margin-right: 0.08rem;
+      background-color: var(--ex-bg-white2);
     }
 
     .state {
