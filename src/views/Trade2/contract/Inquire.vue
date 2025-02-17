@@ -116,36 +116,6 @@ const contractInquireList = computed(
 );
 const token = computed(() => store.state.token);
 
-const statusMap = ref({
-  // 仓位状态
-  none: "开仓",
-  lock: "锁定",
-  open: "持仓",
-  done: "平仓",
-  fail: "失败",
-  cancel: "已取消",
-});
-const offsetMap = ref({
-  // 涨跌状态
-  long: "买涨",
-  short: "买跌",
-});
-const leverTypeap = ref({
-  // 仓位
-  cross: "全仓",
-  isolated: "逐仓",
-});
-const priceTypeMap = ref({
-  // 价格类型
-  market: "市价",
-  limit: "限价",
-});
-const stopMap = ref({
-  // 止损类型
-  price: "价格",
-  amount: "金额",
-  ratio: "百分比",
-});
 const getRatio = (num) => {
   if (!num) return "--";
   return new Decimal(num) + "%";
@@ -255,7 +225,7 @@ defineExpose({
     color: var(--ex-text-color3);
     font-size: 0.22rem;
     border-bottom: 1px solid var(--ex-border-color);
-    padding: 0.1rem 0 0.24rem 0;
+    padding: 0.4rem 0 0.24rem 0;
     background: none;
     margin-top: 0px;
     border-radius: 0px;

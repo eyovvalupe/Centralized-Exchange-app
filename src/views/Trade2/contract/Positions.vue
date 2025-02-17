@@ -262,30 +262,6 @@ const stockWalletAmount = computed(() => {
   return 0;
 });
 
-const statusMap = ref({
-  // 仓位状态
-  none: t("trade.stock_position_status_none"),
-  lock: t("trade.stock_position_status_lock"),
-  open: t("trade.stock_position_status_open"),
-  done: t("trade.stock_position_status_done"),
-  fail: t("trade.stock_position_status_fail"),
-  cancel: t("trade.stock_position_status_cancel"),
-});
-const offsetMap = ref({
-  // 涨跌状态
-  long: t("trade.stock_position_offset_long"),
-  short: t("trade.stock_position_offset_short"),
-});
-const leverTypeap = ref({
-  // 仓位
-  cross: t('trade.stock_opening_position_mode_cross'),
-  isolated: t('trade.stock_opening_position_mode_isolated'),
-});
-const priceTypeMap = ref({
-  // 价格类型
-  market: t('trade.stock_opening_price_market'),
-  limit: t('trade.stock_opening_price_limit'),
-});
 const stopMap = ref({
   // 止损类型
   price: t("trade.stock_position_stop_price"),
@@ -666,7 +642,7 @@ getSessionToken();
     color: var(--ex-text-color3);
     font-size: 0.22rem;
     border-bottom: 1px solid var(--ex-border-color);
-    padding: 0.1rem 0 0.24rem 0;
+    padding: 0.4rem 0 0.24rem 0;
     background: none;
     margin-top: 0px;
     border-radius: 0px;

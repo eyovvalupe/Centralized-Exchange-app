@@ -668,7 +668,7 @@ getSessionToken();
   .th {
     color: var(--ex-text-color3);
     font-size: 0.22rem;
-    padding: 0.48rem 0 0.24rem 0;
+    padding: 0.4rem 0 0.24rem 0;
   }
 
   .td {

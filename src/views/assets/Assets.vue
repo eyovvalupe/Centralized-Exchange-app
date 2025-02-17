@@ -45,7 +45,6 @@
     <!-- 记录弹窗 -->
     <OrderCenter v-else />
     
-
     <BottomPopup closeable v-model:show="handle" position="bottom" :style="{
       height: '5.56rem',
       borderTopRightRadius: '0.36rem',
