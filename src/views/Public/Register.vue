@@ -117,7 +117,8 @@
 
       <!-- 按钮 -->
       <div class="submit_box">
-        <Button @click="submit" :loading="loading" round color="var(--ex-primary-color)" class="submit ripple-btn" type="primary">
+        <Button @click="submit" :loading="loading" round color="var(--ex-primary-color)" class="submit ripple-btn"
+          type="primary">
           <span style="color: var(--ex-white);">{{
             $t("register.next") }}</span></Button>
       </div>
@@ -237,6 +238,7 @@ const goLang = () => {
 // 进入页面则重置登录状态信息
 store.commit("setToken", "");
 store.commit("setUserInfo", {});
+store.dispatch("reset");
 
 const route = useRoute();
 const routerApi = useRouter();
@@ -286,7 +288,6 @@ const next = () => {
       .then((res) => {
         if (res.code == 200) {
           setTimeout(() => {
-            store.dispatch("reset");
             setTimeout(() => {
               store.commit("setToken", res.data.auth);
               store.commit("setUserInfo", res.data);
@@ -376,7 +377,6 @@ const submit = async () => {
     .then((res) => {
       if (res.code == 200) {
         setTimeout(() => {
-          store.dispatch("reset");
           setTimeout(() => {
             store.commit("setToken", res.data.auth);
             store.commit("setUserInfo", res.data);

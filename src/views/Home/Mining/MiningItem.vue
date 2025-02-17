@@ -49,7 +49,7 @@ onMounted(() => {
     width: 4.6rem;
     height: 4.92rem;
     border-radius: 0.32rem;
-    background-color: var(--ex-bg-color3);
+    background-color: var(--ex-bg-white2);
     flex-shrink: 0;
     padding: 0.24rem 0.12rem 0.2rem 0.12rem;
 
@@ -84,7 +84,7 @@ onMounted(() => {
         width: 100%;
         height: 2.48rem;
         border-radius: 0.32rem;
-        background-color: var(--ex-bg-color);
+        background-color: var(--ex-bg-color3);
         overflow: hidden;
 
         .info-con {

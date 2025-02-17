@@ -69,8 +69,7 @@ const pageKeys = {
         'marketStockMalaysiaDataList'
     ],
     'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList', 'marketForeignList', 'marketCommoditiesList', 'contractList', 'searchList'],
-    'search':['marketSearchList'],
-    'tradeInfo': ['futuresSearchList']
+    'search': ['marketSearchList']
 }
 
 
@@ -90,15 +89,6 @@ const setCurr = (keyName, state, data) => {
         }
     }
     state[keyName] = Object.assign({}, state[keyName], data);
-    // 当前股票有更新，则同步到列表里去
-    // setTimeout(() => {
-    //     (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
-    //         const index = state[ck].findIndex(item => item.symbol == data.symbol)
-    //         if (index >= 0) {
-    //             state[ck][index] = Object.assign({}, state[ck][index], data);
-    //         }
-    //     })
-    // }, 300)
 }
 
 export default {
@@ -467,7 +457,7 @@ export default {
 
             //先从已获取过的实时数据里拿数据
             (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
-                const arr = state[ck].map(item => { 
+                const arr = state[ck].map(item => {
                     const target = state.realtimeData.find(a => a.symbol == item.symbol)
                     if (target) {
                         return {
@@ -553,11 +543,10 @@ export default {
                                 points
                             })
                         }
-                        // 根据不同页面，同步页面内模块的数据
+                        // // 根据不同页面，同步页面内模块的数据
                         (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
                             const target = state[ck].find(item => item.symbol == res.symbol)
                             if (target) {
-
                                 target.points = points
                             }
                         })

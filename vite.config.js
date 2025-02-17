@@ -62,27 +62,13 @@ export default defineConfig({
           }
         ]
       },
+      // workbox: false, // 完全禁用 Service Worker
       workbox: {
-        globPatterns: ['**/*.{js,css}'], // 缓存文件类型
+        globPatterns: [], // 缓存文件类型
         runtimeCaching: [
           {
-            urlPattern: /\.(js|css|json|html)$/i, // 匹配静态资源
-            handler: 'CacheFirst', // 优先从缓存获取
-            options: {
-              cacheName: 'static-assets-cache',
-              expiration: {
-                maxEntries: 100, // 最大缓存条目数
-                maxAgeSeconds: 60 * 60 * 24 * 7, // 缓存 30 天
-              },
-            },
-          },
-          {
-            urlPattern: /.*/i, // 匹配所有其他请求
-            handler: 'NetworkFirst', // 优先从网络获取
-            options: {
-              cacheName: 'fallback-cache',
-              networkTimeoutSeconds: 30, // 网络请求超时时间
-            },
+            urlPattern: /.*/, // 匹配所有请求
+            handler: 'NetworkOnly', // 强制从网络获取
           },
         ],
       },

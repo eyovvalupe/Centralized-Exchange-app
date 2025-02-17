@@ -9,6 +9,7 @@ import follow from "./follow";
 import finance from "./finance";
 import serviceC2C from "./serviceC2C";
 import { getStaticImgUrl } from "@/utils/index.js"
+import { useSocket } from '@/utils/ws'
 
 // 这几个数据需要缓存 但不缓存其中的 points 字段
 const onlySaveSymbols = ['currStock', 'currConstact', 'currAi', 'currForeign', 'currCommodities']
@@ -85,6 +86,7 @@ const store = createStore({
       state.transitionName = data;
     },
     setToken(state, data) {
+      console.error('???', data)
       state.token = data;
     },
     setUserInfo(state, data) {
@@ -117,22 +119,27 @@ const store = createStore({
   },
   actions: {
     reset({ commit }) {
-      // 重置相关数据
-      commit("setToken", "");
-      commit("setUserInfo", {});
-      commit("setMarketWatchList", []);
-      commit("setPositionsList", []);
-      commit("setContractPositionsList", []);
-      commit("setAiPositionsList", []);
-      commit("setIpoDataList", []);
-      commit("setIpoStockList", []);
-      commit("setInquireList", []);
-      commit("setContractInquireList", []);
-      commit("setAiInquireList", []);
-      commit("setFollowList", []);
-      commit("setMyCopy", []);
-      commit("setMyCopyData", []);
-      commit("setNotifiJoinList", []);
+      try {
+        useSocket().disConnect()
+      } catch { }
+      setTimeout(() => {
+        // 重置相关数据
+        commit("setToken", "");
+        commit("setUserInfo", {});
+        commit("setMarketWatchList", []);
+        commit("setPositionsList", []);
+        commit("setContractPositionsList", []);
+        commit("setAiPositionsList", []);
+        commit("setIpoDataList", []);
+        commit("setIpoStockList", []);
+        commit("setInquireList", []);
+        commit("setContractInquireList", []);
+        commit("setAiInquireList", []);
+        commit("setFollowList", []);
+        commit("setMyCopy", []);
+        commit("setMyCopyData", []);
+        commit("setNotifiJoinList", []);
+      }, 100)
       // commit('setMarketSearch', {
       //   search: '',
       //   market: '',
@@ -186,9 +193,9 @@ const store = createStore({
           .catch(() => resolve(false));
       });
     },
-    updateNotifiList({commit}) {
+    updateNotifiList({ commit }) {
       return new Promise((resolve) => {
-        _notifiList({page: 1})
+        _notifiList({ page: 1 })
           .then(res => {
             if (res.code == 200 && res.data) {
               commit('setNotifiList', res.data)
@@ -200,9 +207,9 @@ const store = createStore({
           .catch(() => resolve(false))
       })
     },
-    updateNotifiJoinList({commit}) {
+    updateNotifiJoinList({ commit }) {
       return new Promise((resolve) => {
-        _notifiJoinList({page: 1})
+        _notifiJoinList({ page: 1 })
           .then(res => {
             if (res.code == 200 && res.data) {
               commit('setNotifiJoinList', res.data)
@@ -230,22 +237,22 @@ const store = createStore({
     createPersistedState({
       key: "sunx",
       paths: ['token', 'userInfo', ...onlySaveSymbols, ...onlySaveSymbolsList],
-      storage: window.localStorage,
-      setState: (path, state) => {
-        onlySaveSymbols.forEach(key => { // 这几个数据只缓存symbol字段
-          if (state[key]) {
-            delete state[key].points
-          }
-        })
-        onlySaveSymbolsList.forEach(key => {
-          if (state[key] && state[key].length) {
-
-          } state[key].map(item => {
-            delete item.points
-          })
-        })
-        window.localStorage.setItem(path, JSON.stringify(state));
-      }
+      // storage: window.localStorage,
+      // setState: (path, state) => {
+      //   onlySaveSymbols.forEach(key => { // 这几个数据只缓存symbol字段
+      //     if (state[key]) {
+      //       delete state[key].points
+      //     }
+      //   })
+      //   onlySaveSymbolsList.forEach(key => {
+      //     if (state[key] && state[key].length) {
+      //       state[key].map(item => {
+      //         delete item.points
+      //       })
+      //     }
+      //   })
+      //   window.localStorage.setItem(path, JSON.stringify(state));
+      // }
     }),
   ],
 });
