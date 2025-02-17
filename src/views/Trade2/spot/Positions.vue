@@ -2,22 +2,27 @@
 <template>
   <div v-if="token" class="positions">
     <div class="tr th">
-      <div class="td td-5">{{ t("trade.contract_opening_contract") }}</div>
-      <div class="td td-2">{{ t('trade.trade_orders_status') }}</div>
-      <div class="td td-2">{{ t('trade.stock_open') }}</div>
+      <div class="td td-5">{{ t("common.spot")+'/'+t('trade.trade_orders_status') }}</div>
+      <div class="td td-3">{{ t('trade.trade_deal_price') }}</div>
       <div class="td td-4" style="text-align: end !important; margin-right: 0.2rem !important">
-        {{ t('trade.stock_opening_price') }}
+        {{ t('market.market_buy_list_amount') }}
       </div>
     </div>
     <NoData v-if="!contractPositionsList.length && !loading" />
     <Loaidng size="0.32rem" :loading="loading" v-if="!contractPositionsList.length && loading" />
-
     <div class="tr mask-btn" @click="OpeningForm(item)" v-for="(item, i) in contractPositionsList" :key="i">
       <div class="td td-5">
         <div class="name van-omit1">{{ item.name }}</div>
-      </div>
-      <div class="td td-2">
-        <div class="lever">
+        <div class="flex items-center pt-[0.16rem] gap-[0.08rem]">
+          <div class="state" :class="'state-' + item.offset">
+            {{
+              item.offset == "buy"
+                ? t('market.market_buy_fast_buy')
+                : item.offset == "sell"
+                  ? t('market.market_buy_fast_sell')
+                  : "--"
+            }}
+          </div>
           <div class="status-color status" :class="'status-' + item.status">
             {{
               item.status == "none"
@@ -37,19 +42,12 @@
           </div>
         </div>
       </div>
-      <div class="td td-2">
-        <div class="state" :class="'state-' + item.offset">
-          {{
-            item.offset == "buy"
-              ? t('market.market_buy_fast_buy')
-              : item.offset == "sell"
-                ? t('market.market_buy_fast_sell')
-                : "--"
-          }}
-        </div>
+      <div class="td td-3">
+        <div>{{ item.price || "--" }}</div>
       </div>
+      
       <div class="td td-4">
-        <div class="price">{{ item.price || "--" }}</div>
+        <div>{{ item.volume || "--" }}</div>
       </div>
     </div>
 
@@ -656,7 +654,7 @@ getSessionToken();
     color: var(--ex-text-color3);
     font-size: 0.22rem;
     border-bottom: 1px solid var(--ex-border-color);
-    padding: 0.48rem 0 0.24rem 0;
+    padding: 0.4rem 0 0.24rem 0;
     background: none;
     margin-top: 0px;
     border-radius: 0px;
@@ -699,16 +697,15 @@ getSessionToken();
     }
 
     .state {
-      width: 0.68rem;
+      padding: 0 0.12rem;
       height: 0.36rem;
-      border-radius: 0.12rem;
+      border-radius: 0.24rem;
       color: var(--ex-up-color);
       background-color: rgb(var(--ex-up-color-rgb) / 0.08);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.24rem;
-      margin: 0 auto;
     }
 
     .state-short,
@@ -751,7 +748,9 @@ getSessionToken();
     flex: 5;
     text-align: left;
   }
-
+  .td-3 {
+    flex: 3;
+  }
   .td-4 {
     flex: 4;
     text-align: right;

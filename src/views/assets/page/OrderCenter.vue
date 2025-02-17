@@ -34,7 +34,7 @@
           <AIOrderList />
         </div>
         <div class="tab" v-if="activeTab == 3">
-          
+          <CopyOrders />
         </div>
         <div class="tab" v-if="activeTab == 4">
           <PledgeOrder />
@@ -56,6 +56,8 @@ import Order from "@/views/Finance/components/Order.vue";
 import PledgeOrder from "@/views/Finance/components/PledgeOrder.vue";
 import { useI18n } from "vue-i18n";
 import AIOrderList from './components/AIOrderList.vue'
+import CopyOrders from "../../Home/components/CopyOrders.vue";
+import eventBus from "@/utils/eventBus";
 
 const { t } = useI18n();
 const activeTab = ref(0);
@@ -66,7 +68,12 @@ const changeActiveTab = (val) => {
 const orderCenterRef = ref(null);
 const scrollData = useScroll(orderCenterRef, {
   throttle: 200,
-  onScroll: () => { },
+  onScroll: (e) => {
+    if (e.target.offsetHeight + e.target.scrollTop + 20 > e.target.scrollHeight && activeTab.value == 4 ) {
+        eventBus.emit("pledgeLoad")
+        
+    }
+   },
 });
 provide("scrollData", scrollData);
 

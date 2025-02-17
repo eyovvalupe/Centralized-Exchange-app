@@ -2,10 +2,10 @@
 <template>
   <div class="inquire" v-if="token">
     <div class="tr th">
-      <div class="td td-5">{{ t("trade.contract_opening_contract") }}</div>
-      <div class="td td-2">{{ t('trade.stock_open') }}</div>
-      <div class="td td-6" style="text-align: end !important; margin-right: 0.2rem !important">
-        {{ t('market.market_buy_list_wait_amount') + '/' + t('trade.trade_deal_price') }}
+      <div class="td td-5">{{ t("common.spot")+'/'+t('trade.trade_orders_status') }}</div>
+      <div class="td td-3">{{ t('trade.trade_deal_price') }}</div>
+      <div class="td td-4" style="text-align: end !important; margin-right: 0.2rem !important">
+        {{ t('market.market_buy_list_amount') }}
       </div>
     </div>
     <NoData v-if="!loading && !contractInquireList.length" />
@@ -14,22 +14,42 @@
       <div class="tr mask-btn" @click="OpeningForm(item)">
         <div class="td td-5">
           <div class="name">{{ item.name }}</div>
-        </div>
-        <div class="td td-2">
-          <div class="state" :class="'state-' + item.offset">
-            <!-- {{ offsetMap[item.offset] || "--" }} -->
-            {{
-              item.offset == "buy"
-                ? '买入'
-                : item.offset == "sell"
-                  ? '卖出'
-                  : "--"
-            }}
+          <div class="flex items-center pt-[0.16rem] gap-[0.08rem]">
+            <div class="state" :class="'state-' + item.offset">
+              <!-- {{ offsetMap[item.offset] || "--" }} -->
+              {{
+                item.offset == "buy"
+                  ? t('market.market_buy_optional_buy')
+                  : item.offset == "sell"
+                    ? t('market.market_buy_optional_sell')
+                    : "--"
+              }}
+            </div>
+            <div class="status-color status" :class="'status-' + item.status">
+              {{
+                item.status == "none"
+                  ? t("trade.stock_position_status_none")
+                  : item.status == "lock"
+                    ? t("trade.stock_position_status_lock")
+                    : item.status == "open"
+                      ? t("trade.stock_position_status_open")
+                      : item.status == "done"
+                        ? t("trade.stock_position_status_done")
+                        : item.status == "fail"
+                          ? t("trade.stock_position_status_fail")
+                          : item.status == "cancel"
+                            ? t("trade.stock_position_status_cancel")
+                            : "--"
+              }}
+            </div>
           </div>
         </div>
-        <div class="td td-6" style="text-align: right;">
-          <div class="price">{{ item.volume || "--" }}</div>
-          <div class="price">{{ item.settled_price || "--" }}</div>
+        <div class="td td-3">
+          {{ item.settled_price || "--" }}
+        </div>
+       
+        <div class="td td-4">
+          {{ item.volume || "--" }}
         </div>
       </div>
     </SwipeCell>
@@ -224,7 +244,7 @@ defineExpose({
     color: var(--ex-text-color3);
     font-size: 0.22rem;
     border-bottom: 1px solid var(--ex-border-color);
-    padding: 0.48rem 0 0.24rem 0;
+    padding: 0.4rem 0 0.24rem 0;
     background: none;
     margin-top: 0px;
     border-radius: 0px;
@@ -238,14 +258,13 @@ defineExpose({
     white-space: nowrap;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
+    justify-content: center;
     line-height: 0.3rem;
 
     .name {
       font-size: 0.32rem;
       color: var(--ex-text-color);
       line-height: 0.32rem;
-      margin-bottom: 0.28rem;
     }
 
     .lever {
@@ -257,17 +276,17 @@ defineExpose({
       height: 0.3rem;
       padding: 0 0.08rem;
       border-radius: 0.3rem;
+      border-width: 1px;
+      border-style: solid;
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 0.22rem;
       margin-right: 0.08rem;
-      border-width: 1px;
-      border-style: solid;
     }
 
     .state {
-      width: 0.68rem;
+      padding: 0 0.12rem;
       height: 0.36rem;
       border-radius: 0.12rem;
       color: var(--ex-up-color);
@@ -276,7 +295,6 @@ defineExpose({
       align-items: center;
       justify-content: center;
       font-size: 0.24rem;
-      margin: 0 auto;
     }
 
     .state-short, .state-sell {
@@ -314,15 +332,16 @@ defineExpose({
     flex: 5;
     text-align: left;
   }
-
-  .td-2 {
-    flex: 2;
+  .td-3 {
+    flex: 3;
   }
   .td-4 {
     flex: 4;
+    text-align: right;
   }
-  .td-6 {
-    flex: 6;
+
+  .td-2 {
+    flex: 2;
   }
 }
 </style>
