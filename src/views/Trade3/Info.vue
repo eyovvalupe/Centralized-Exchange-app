@@ -275,7 +275,7 @@
         <!-- 搜索列表 -->
         <BottomPopup round v-model:show="showSearchDialog" position="bottom" closeable teleport="body">
             <div class="van-popup-custom-title">
-                {{ t("trade.stock_opening_search") }}
+                {{ t("合约选择") }}
             </div>
             <div class="search_dialog_trade">
                 <!-- 搜索 -->
@@ -642,18 +642,17 @@ const openMenu = () => {
         height: calc(var(--vh) * 60);
         overflow-y: auto;
         margin-top: 0.32rem;
-        padding: 0 0.32rem;
     }
 
     .search_box {
-        height: 0.8rem;
+        height: 1rem;
         padding: 0 0.32rem;
         margin: 0.4rem 0.3rem 0 0.3rem;
         display: flex;
         align-items: center;
         background-color: var(--ex-bg-white1);
         border-radius: 0.6rem;
-        border: 1px solid var(--ex-border-color2);
+        // border: 1px solid var(--ex-border-color2);
 
         .search_icon {
             width: 0.48rem;
