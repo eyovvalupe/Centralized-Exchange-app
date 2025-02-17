@@ -626,7 +626,6 @@ setTimeout(() => {
 const showNavDialog = ref(false)
 const IndexRef = ref()
 const openMenu = () => {
-    console.log('hii')
     showNavDialog.value = true
     setTimeout(() => {
         IndexRef.value && IndexRef.value.act()

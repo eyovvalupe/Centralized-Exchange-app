@@ -44,6 +44,7 @@
   --ex-status-color7-rgb: 255 138 36; //#ff8a24
   --ex-status-color8-rgb: 70 193 255; //#46C1FF
   --ex-status-color9-rgb: 241 144 9; //#F19009
+  --ex-status-color10-rgb: 88 148 218; //#5894DA
 
   --ex-none: rgb(var(--ex-black-rgb) / 0);
   --ex-white: rgb(var(--ex-white-rgb));
@@ -108,6 +109,8 @@
   --ex-status-bg8: rgb(var(--ex-status-color8-rgb) / 0.1);
   --ex-status-color9: rgb(var(--ex-status-color9-rgb));
   --ex-status-bg9: rgb(var(--ex-status-color9-rgb) / 0.1);
+  --ex-status-color10: rgb(var(--ex-status-color10-rgb));
+  --ex-status-bg10: rgb(var(--ex-status-color10-rgb) / 0.1);
 
   *,
   ::before,
@@ -500,7 +503,10 @@
   border-color: var(--ex-status-color9);
 }
 
-.status-done,
+.status-done {
+  color: var(--ex-status-color10);
+  border-color: var(--ex-status-color10);
+}
 .status-cancel {
   color: var(--ex-text-color3);
   border-color: var(--ex-text-color3);

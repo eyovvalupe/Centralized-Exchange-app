@@ -18,6 +18,7 @@
           <div class="lever">
             <div class="status-color status">{{ item.lever }}X</div>
             <div class="status-color status" :class="'status-' + item.status">
+
               <!-- {{ statusMap[item.status] || "--" }} -->
               {{
                 item.status == "none"
@@ -48,7 +49,8 @@
                   : "--"
             }}
           </div>
-          <div class="amount">{{ item.unsold_volume || "--" }}</div>
+          {{ console.log(item) }}
+          <div class="amount">{{ !isEmpty(item) ? item.unsold_volume : "--" }}</div>
         </div>
         <div class="td td-4">
           <div class="price">{{ item.settled_price || "--" }}</div>
@@ -87,6 +89,7 @@ import UnLogin from "@/components/UnLogin.vue";
 import OrderInfo from "../components/OrderInfo.vue";
 import Decimal from "decimal.js";
 import { useI18n } from "vue-i18n";
+import {isEmpty} from "@/utils/isEmpty";
 
 const props = defineProps({
   type: {
@@ -214,7 +217,7 @@ defineExpose({
 .inquire {
   .tr {
     padding: 0.24rem;
-    background-color: var(--ex-bg-color3);
+    background-color: var(--ex-bg-white2);
     display: flex;
     align-items: stretch;
     border-radius: 0.32rem;

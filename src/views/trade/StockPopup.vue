@@ -8,6 +8,7 @@
 import { ref, computed } from "vue";
 import store from "@/store";
 import MarketInfo from "../Market/MarketInfo.vue"
+import Chart from "../Market/Chart.vue";
 
 const props = defineProps({
   type: {
