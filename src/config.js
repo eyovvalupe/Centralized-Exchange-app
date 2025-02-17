@@ -4,7 +4,7 @@
  *  颜色_日期_字母 
  *  wb  白底蓝色
  */
-export const VERSION = 'wb_1216_a'
+export const VERSION = 'bg2_0217_a'
 
 
 /* 首页模板 */
