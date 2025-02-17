@@ -1669,7 +1669,7 @@
         width: 0.6rem;
         height: 0.4rem;
         border-radius: 0 0 0 0.32rem;
-        background-color: var(--ex-bg-color);
+        background-color: var(--ex-bg-white2);
         position: absolute;
         top: 0;
         right: 0;
