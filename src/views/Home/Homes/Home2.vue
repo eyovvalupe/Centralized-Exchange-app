@@ -112,15 +112,15 @@
             <div class="ad wow fadeInUp" data-wow-duration="0.6s">
 
                 <div class="ad-bg"
-                    :style="{ 'background-image': `url(${getStaticImgUrl('/static/home2/ad-bg.svg')})` }"></div>
+                    :style="{ 'background-image': `url(${getStaticImgUrl('/static/home2/ad-tip.png')})` }"></div>
                 <div class="ad-content">
                     <div class="title">{{ t('home.ad_title') }}</div>
                     <div>{{ t('home.ad_con') }}</div>
                     <div class="btn ripple-btn" @click="jump('trade')">{{ t('home.ad_btn') }}</div>
                 </div>
-                <div class="ad-tip">
+                <!-- <div class="ad-tip">
                     <img v-lazy="getStaticImgUrl('/static/home2/ad-tip.png')" alt="">
-                </div>
+                </div> -->
             </div>
 
             <!-- links -->
@@ -678,6 +678,7 @@ const followList = computed(() => store.state.followList || [])
                 z-index: 0;
                 width: 100%;
                 height: 100%;
+                background-size: 100% 100%;
             }
 
             .ad-content {
