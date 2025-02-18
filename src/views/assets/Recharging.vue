@@ -22,7 +22,7 @@
               {{ form.amount }}<span>{{ form.currency }}</span>
             </div>
             <div class="network-tag">
-              <span style="color: var(--ex-text-color2); background-color: var(--ex-bg-color9);">${{ ratePrice
+              <span class="!text-white" style="background-color: var(--ex-bg-color9);">${{ ratePrice
                 }}</span>
             </div>
           </div>

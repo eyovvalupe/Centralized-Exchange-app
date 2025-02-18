@@ -20,7 +20,7 @@
         v-if="((finish && list.length) || !finish) && active == 3" />
     </div>
 
-    <Tabs type="custom-card" v-else v-model:active="active" :swipeable="false" animated shrink @change="init()">
+    <Tabs type="custom-tab" v-else v-model:active="active" :swipeable="false" animated shrink @change="init()">
       <Tab :title="t('recordList.rechargeRecord')" name="0">
         <div class="w-full justify-center" v-if="active == 0">
           <NoData v-if="!loading && !list.length" />

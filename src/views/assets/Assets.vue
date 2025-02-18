@@ -8,7 +8,7 @@
     ]">
 
       <template #after>
-        <div class="size-[0.56rem] rounded-full bg-white1 flex items-center justify-center mr-[0.32rem]">
+        <div class="size-[0.56rem] rounded-full bg-white1 flex items-center justify-center mr-[0.32rem]" @click="LeftRef.open()">
           <span class="size-[0.32rem]">
             <img :src="getStaticImgUrl('/static/img/common/icon_user.svg')"/>
           </span>
@@ -132,6 +132,8 @@
     </BottomPopup>
     <!-- 充提记录 -->
     <!-- <HintBlock v-if="route.name == 'assets' && hintNum" /> -->
+     <!-- 左侧弹窗 -->
+    <LeftMenu :jump="jump" ref="LeftRef" />
   </div>
 </template>
 
@@ -150,9 +152,11 @@ import { _cryptoCoin } from "@/api/api";
 import { useI18n } from "vue-i18n";
 import { fiat } from "@/utils/dataMap";
 import BottomPopup from "@/components/BottomPopup.vue";
+import LeftMenu from "../Home/components/LeftMenu.vue";
 
 const { t } = useI18n();
 const handle = ref(false);
+const LeftRef = ref()
 // import HintBlock from "@/components/HintBlock.vue"
 const selectedItem = ref({});
 const headActiveTab = ref(0);
@@ -165,6 +169,24 @@ if (assetsActiveTab > 0) {
 const initialSwipe = ref(activeTab.value);
 const loadedTab = ref([activeTab.value]);
 const swipe = ref(null);
+
+const token = computed(() => store.state.token)
+
+// 跳转
+const jump = (name, needToken, query) => {
+    if (needToken && !token.value) {
+        LeftRef.value.close()
+        setTimeout(() => {
+            store.commit("setIsLoginOpen", true);
+        }, 0)
+        return
+    }
+
+    router.push({
+        name,
+        query
+    });
+};
 const changeActiveTab = (val, slideSwipe = false) => {
   activeTab.value = val;
   if (loadedTab.value.indexOf(val) == -1) {

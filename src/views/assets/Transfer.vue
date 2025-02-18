@@ -13,23 +13,19 @@
 
     <!-- 表单 -->
     <div class="form">
-      <div class="form_box" :class="{ form_box_active: clickKey == 'from' }">
-        <div class="flex w-full justify-between">
-          <div class="mb-[0.32rem] min-w-[1.52rem] h-[0.6rem] flex justify-center items-center">
+      <div class="form_box mt-[0.4rem] mb-[0.2rem]">
+        <div class="flex w-full flex-col">
+          <div class="min-w-[1.52rem] h-[0.3rem] flex justify-start items-center mb-[0.28rem] ml-[0.08rem]">
             <span class="text-[0.28rem] text-color2 text-center">{{ $t("transfer.out") }}</span>
           </div>
           <div
-            class="flex justify-between items-center bg-color3 w-[3.6rem] h-[0.88rem] rounded-[0.32rem] px-[0.2rem] mb-[0.2rem] ripple-btn"
+            class="flex justify-between items-center bg-color3 w-full h-[1.12rem] rounded-[0.32rem] px-[0.28rem] mb-[0.2rem] bg-white1 ripple-btn"
             @click="openDialog('from')">
             <div class="flex items-center w-full justify-between">
               <div class="account_item  flex-shrink-0">
-
-                <div class="item_content">
+                <div class="item_content mr-[0.4rem]">
                   <span>{{ _accountMap[form.from] }}</span>
                 </div>
-              </div>
-
-              <div class="account_item relative">
                 <div class="account_item_icon" v-if="!isEmpty(form.fromCurrency)">
                   <CryptoIcon :name="form.fromCurrency.name" />
                 </div>
@@ -38,6 +34,10 @@
                     !isEmpty(form.fromCurrency) ? form.fromCurrency.name : ""
                   }}</span>
                 </div>
+              </div>
+
+              <div class="account_item relative">
+                
                 <div class="w-[0.36rem] h-[0.36rem]">
                   <img v-lazy="getStaticImgUrl(`/static/img/common/more.svg`)" alt="" />
                 </div>
@@ -45,42 +45,43 @@
             </div>
           </div>
         </div>
-        <div class="w-full flex gap-[0.24rem] justify-between items-center">
+        <div class="w-full flex bg-white1 justify-between items-center h-[1.12rem] rounded-[0.32rem] px-[0.28rem] relative border-[0.02rem] transition" :class="{ form_box_active: clickKey == 'from' }">
           <div class="flex-2">
-            <input v-model="form.amount" type="text" class="text-[0.6rem] w-full font-[600]" placeholder="0"
+            <input v-model="form.amount" type="text" class="text-[0.32rem] w-full" :placeholder="$t('trade.stock_position_amount')"
               @focus="clickKey = 'from'" @blur="clickKey = ''" />
           </div>
-          <div class="flex-1 text-end h-full items-center text-color3">
+          <div class="absolute text-white text-[0.28rem] right-[0.28rem]">
             {{ !isEmpty(form.fromCurrency) ? form.fromCurrency.name : '--' }}
           </div>
         </div>
       </div>
 
-      <div class="form_box" :class="{ form_box_active: clickKey == 'to' }">
+      <div class="form_box !h-[3.66rem]">
         <div class="trans_icon" @click="transAccount" :class="[transing ? 'transing_icon' : 'transing_stop']">
           <img v-lazy="getStaticImgUrl('/static/img/assets/convert.svg')" alt="img" />
         </div>
-        <div class="flex justify-between">
-          <div class="mb-[0.32rem] min-w-[1.52rem] h-[0.6rem] flex justify-center items-center">
+        <div class="flex flex-col w-full">
+          <div class="min-w-[1.52rem] h-[0.3rem] flex justify-start items-center mb-[0.28rem] ml-[0.08rem]">
             <span class="text-[0.28rem] text-color2 text-center">{{ $t("transfer.in") }}</span>
           </div>
           <div
-            class="flex justify-between items-centerw-full w-[3.6rem] h-[0.88rem] rounded-[0.32rem] px-[0.2rem] mb-[0.2rem] bg-color3 ripple-btn"
+            class="flex justify-between items-center bg-color3 w-full h-[1.12rem] rounded-[0.32rem] px-[0.28rem] mb-[0.2rem] bg-white1 ripple-btn"
             @click="openDialog('to')">
             <div class="flex items-center w-full justify-between">
               <div class="account_item flex-shrink-0">
-                <div class="item_content">
+                <div class="item_content mr-[0.4rem]">
                   <span>{{ _accountMap[form.to] }}</span>
                 </div>
-              </div>
-
-              <div class="account_item">
                 <div class="account_item_icon" v-if="!isEmpty(form.toCurrency)">
                   <CryptoIcon :name="form.toCurrency.name" />
                 </div>
                 <div class="item_content mr-[0.1rem]">
                   <span class="monty_span">{{ !isEmpty(form.toCurrency) ? form.toCurrency.name : "" }}</span>
                 </div>
+              </div>
+
+              <div class="account_item">
+                
                 <div class="w-[0.36rem] h-[0.36rem]">
                   <img v-lazy="getStaticImgUrl(`/static/img/common/more.svg`)" alt="" />
                 </div>
@@ -89,12 +90,12 @@
           </div>
         </div>
 
-        <div class="w-full flex  gap-[0.24rem] justify-between items-center">
+        <div class="w-full flex bg-white1 justify-between items-center h-[1.12rem] rounded-[0.32rem] px-[0.28rem] relative border-[0.02rem] transition" :class="{ form_box_active: clickKey == 'to' }">
           <div class="flex-2">
-            <input v-model="form.amount" type="text" class="text-[0.6rem] w-full font-[600]" placeholder="0"
+            <input v-model="form.amount" type="text" class="text-[0.32rem] w-full" :placeholder="$t('trade.stock_position_amount')"
               @focus="clickKey = 'to'" @blur="clickKey = ''" />
           </div>
-          <div class="flex-1 text-end h-full items-center text-color3">
+          <div class="absolute text-white text-[0.28rem] right-[0.28rem]">
             {{ form.toCurrency ? form.toCurrency.name : '--' }}
           </div>
         </div>
@@ -496,11 +497,10 @@ watch(wallet, (val) => {
   .form {
     .form_box {
       border-radius: 0.32rem;
-      background-color: var(--ex-bg-color2);
-      padding: 0.42rem 0.32rem 0.4rem 0.32rem;
-      margin-top: 0.52rem;
+      background-color: var(--ex-bg-white2);
+      padding: 0.24rem 0.28rem;
       position: relative;
-      height: 2.6rem;
+      height: 4.06rem;
       border: 1px solid var(--ex-border-color);
       transition: .3s;
 
@@ -542,12 +542,12 @@ watch(wallet, (val) => {
     }
 
     .trans_icon {
-      width: 1rem;
-      height: 1rem;
+      width: 0.84rem;
+      height: 0.84rem;
       position: absolute;
       left: 50%;
       margin-left: -0.5rem;
-      top: -0.76rem;
+      top: -0.52rem;
     }
 
     .transing_icon {
@@ -585,7 +585,7 @@ watch(wallet, (val) => {
   .submit {
     width: 100%;
     height: 1.12rem;
-    margin-top: 0.84rem;
+    margin-top: 0.6rem;
     font-size: 0.36rem;
     border-radius: 0.4rem;
   }

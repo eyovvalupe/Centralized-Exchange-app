@@ -42,13 +42,13 @@
 
             <!-- 导航 -->
             <div class="navs">
-                <div class="nav-item" @click="props.jump('account', true)">
+                <div class="nav-item" @click="jump('account', true)">
                     <div class="nav-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/nav-1.svg')" alt="">
                     </div>
                     <div>收款账户</div>
                 </div>
-                <div class="nav-item" @click="props.jump('kyc', true)">
+                <div class="nav-item" @click="jump('kyc', true)">
                     <div class="nav-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/nav-2.svg')" alt="">
                     </div>
@@ -67,7 +67,7 @@
                         <span style="width: max-content;" v-else>{{ $t("user_page.already_verified") }}</span>
                     </div>
                 </div>
-                <div class="nav-item" @click="props.jump('googleCode', true)">
+                <div class="nav-item" @click="jump('googleCode', true)">
                     <div class="nav-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/nav-3.svg')" alt="">
                     </div>
@@ -79,7 +79,7 @@
                         <span v-else>{{ $t("user_page.already_set") }}</span>
                     </div>
                 </div>
-                <div class="nav-item" @click="props.jump('inviteFriends', true)">
+                <div class="nav-item" @click="jump('inviteFriends', true)">
                     <div class="nav-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/nav-4.svg')" alt="">
                     </div>
@@ -93,25 +93,25 @@
                 <div class="tab-box">
                     <div class="tab-title">资产管理</div>
                     <div class="tabs">
-                        <div class="tab" @click="props.jump('topUpCrypto', true)">
+                        <div class="tab" @click="jump('topUpCrypto', true)">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-1.svg')" alt="">
                             </div>
                             <div>充值</div>
                         </div>
-                        <div class="tab" @click="props.jump('withdraw', true)">
+                        <div class="tab" @click="jump('withdraw', true)">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-2.svg')" alt="">
                             </div>
                             <div>提现</div>
                         </div>
-                        <div class="tab" @click="props.jump('transfer', true)">
+                        <div class="tab" @click="jump('transfer', true)">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-3.svg')" alt="">
                             </div>
                             <div>划转</div>
                         </div>
-                        <div class="tab" @click="props.jump('recordList', true)">
+                        <div class="tab" @click="jump('recordList', true)">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-4.svg')" alt="">
                             </div>
@@ -129,26 +129,26 @@
                             </div>
                             <div>模拟交易</div>
                         </div>
-                        <div class="tab" @click="props.jump('tradeInfo', false, { tradeType: 'spot' })">
+                        <div class="tab" @click="jump('tradeInfo', false, { tradeType: 'spot' })">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-6.svg')" alt="">
                             </div>
                             <div>现货</div>
                         </div>
-                        <div class="tab" @click="props.jump('tradeInfo', false, { tradeType: 'constract' })">
+                        <div class="tab" @click="jump('tradeInfo', false, { tradeType: 'constract' })">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-7.svg')" alt="">
                             </div>
                             <div>合约</div>
                         </div>
-                        <div class="tab" @click="props.jump('tradeInfo', false, { tradeType: 'ai' })">
+                        <div class="tab" @click="jump('tradeInfo', false, { tradeType: 'ai' })">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-8.svg')" alt="">
                             </div>
                             <div>交易机器人</div>
                         </div>
                         <div class="tab" style="margin-top: 0.4rem;"
-                            @click="props.jump('tradeInfo', false, { tradeType: 'ai' })">
+                            @click="jump('tradeInfo', false, { tradeType: 'ai' })">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-9.svg')" alt="">
                             </div>
@@ -160,19 +160,19 @@
                 <div class="tab-box">
                     <div class="tab-title">理财</div>
                     <div class="tabs">
-                        <div class="tab" @click="props.jump('follow')">
+                        <div class="tab" @click="jump('follow')">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-10.svg')" alt="">
                             </div>
                             <div>跟单</div>
                         </div>
-                        <div class="tab" @click="props.jump('loan', true)">
+                        <div class="tab" @click="jump('loan', true)">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-11.svg')" alt="">
                             </div>
                             <div>DeFi借币</div>
                         </div>
-                        <div class="tab" @click="props.jump('finance', true, { activeTab: 1 })">
+                        <div class="tab" @click="jump('finance', true, { activeTab: 1 })">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-12.svg')" alt="">
                             </div>
@@ -185,31 +185,31 @@
                 <div class="tab-box">
                     <div class="tab-title">用户功能</div>
                     <div class="tabs">
-                        <div class="tab" @click="props.jump('chat')">
+                        <div class="tab" @click="jump('chat')">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-13.svg')" alt="">
                             </div>
                             <div>客服</div>
                         </div>
-                        <div class="tab" @click="props.jump('notification')">
+                        <div class="tab" @click="jump('notification')">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-14.svg')" alt="">
                             </div>
                             <div>消息</div>
                         </div>
-                        <div class="tab" @click="props.jump('language')">
+                        <div class="tab" @click="jump('language')">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-15.svg')" alt="">
                             </div>
                             <div>语言</div>
                         </div>
-                        <div class="tab" @click="props.jump('safety', true)">
+                        <div class="tab" @click="jump('safety', true)">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-16.svg')" alt="">
                             </div>
                             <div>安全</div>
                         </div>
-                        <div class="tab" style="margin-top: 0.4rem;" @click="props.jump('about')">
+                        <div class="tab" style="margin-top: 0.4rem;" @click="jump('about')">
                             <div class="tab-icon">
                                 <img v-lazy="getStaticImgUrl('/static/home2/tab-17.svg')" alt="">
                             </div>
@@ -234,10 +234,26 @@ import { Popup } from "vant"
 import { ref, computed } from "vue"
 import store from "@/store"
 import { getStaticImgUrl } from "@/utils/index.js"
+import router from "@/router";
 
-const props = defineProps({
-    jump: Function
-})
+// const props = defineProps({
+//     jump: Function
+// })
+// 跳转
+const jump = (name, needToken, query) => {
+    if (needToken && !token.value) {
+        LeftRef.value.close()
+        setTimeout(() => {
+            store.commit("setIsLoginOpen", true);
+        }, 0)
+        return
+    }
+
+    router.push({
+        name,
+        query
+    });
+};
 
 const token = computed(() => store.state.token)
 const userInfo = computed(() => store.state.userInfo || {});

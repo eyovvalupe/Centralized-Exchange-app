@@ -14,8 +14,8 @@
       <FormItem :placeholder="$t('assets.safety_trade_pw')" v-model="val" input-type="password" />
 
       <div class="btns">
-        <Button round class="btn ripple-primary" @click="close">
-          <span style="color: var(--ex-text-color2)"><span style="color: var(--ex-white);">{{
+        <Button round class="btn ripple-primary" style="background-color: var(--ex-bg-white1);" @click="close">
+          <span style="color: var(--ex-text-white)"><span>{{
             $t("assets.safety_trade_cancel") }}</span></span>
         </Button>
         <Button :loading="loading" round class="btn ripple-btn" type="primary" @click="submit"><span

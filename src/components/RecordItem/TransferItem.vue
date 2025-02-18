@@ -85,7 +85,7 @@ const formatDate = (date) => {
   padding: 0.28rem 0.12rem 0.12rem 0.12rem;
 
   .item_box {
-    background-color: var(--ex-bg-color);
+    background-color: var(--ex-bg-white2);
     border: 1px solid var(--ex-border-color);
     align-items: center;
     padding: 0.3rem 0.32rem;

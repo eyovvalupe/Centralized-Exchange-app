@@ -29,9 +29,9 @@
         <div class="status_desc">{{ $t("withdrawInfo.failurePrompt") }}</div>
       </div>
       <div class="status" v-else>
-        <div class="status_icon">
+        <div class="status_icon rotating">
           <!-- <LoadEffect class="status_loading" color="var(--ex-white)" /> -->
-          <img v-lazy="getStaticImgUrl('/static/img/assets/status_wait.svg')" alt="img" />
+          <img v-lazy="getStaticImgUrl('/static/img/assets/status_wait.png')" alt="img" />
         </div>
         <div class="status_name">{{ $t("withdrawInfo.processing") }}</div>
         <div class="status_desc">{{ $t("withdrawInfo.processingTip") }}</div>
@@ -49,7 +49,7 @@
           :
           '--' }}</div>
       </div>
-      <div class="rounded-[0.32rem] px-[0.28rem] mx-[0.12rem] mb-[0.12rem] flex flex-col bg-color2">
+      <div class="rounded-[0.32rem] px-[0.28rem] mx-[0.12rem] mb-[0.12rem] flex flex-col bg-white2">
         <div class="bottom_item">
           <div class="name">{{ $t("withdrawInfo.withdrawalAmount") }}</div>
           <div class="value">
