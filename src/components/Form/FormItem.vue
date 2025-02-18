@@ -19,7 +19,7 @@
       <div style="flex: 1;display: flex" class="form-item-con">
         <div class="item" :class="{
           disabled_item: disabled,
-          item_focus: from != 'transfer' ? inputFocus : '',
+          item_focus: from != 'transfer' ? inputFocus : '', '!h-[1.28rem]': height
           // item_focus2: inputFocus && !tip,
         }" :style="{ background,  paddingBottom: props.hasBot ? '2.6rem' : '', paddingTop: (props.hasLT || props.hasRT) ? '0.5rem' : '' }">
           <!-- 左侧提示 -->
@@ -200,6 +200,10 @@ const props = defineProps({
   balance: {
     type: Number,
     default: 0
+  },
+  height: {
+    type: Boolean,
+    default: false
   }
 });
 const inputFocus = ref(false);
@@ -275,13 +279,13 @@ const percentTagClick = (percent) => {
     box-sizing: border-box;
     justify-content: space-between;
     position: relative;
-    height: 1.12rem;
     border-radius: 0.32rem;
     border: 1px solid transparent;
     padding: 0 0.24rem;
     transition: 0.3s;
     flex-shrink: 0;
     background-color: var(--ex-bg-white1);
+    height: 1.12rem;
 
     .ipt_tip {
       color: var(--ex-text-color4);
