@@ -18,6 +18,7 @@
           <div class="lever">
             <div class="status-color status">{{ item.lever }}X</div>
             <div class="status-color status" :class="'status-' + item.status">
+
               <!-- {{ statusMap[item.status] || "--" }} -->
               {{
                 item.status == "none"
@@ -48,7 +49,8 @@
                   : "--"
             }}
           </div>
-          <div class="amount">{{ item.unsold_volume || "--" }}</div>
+          {{ console.log(item) }}
+          <div class="amount">{{ !isEmpty(item) ? item.unsold_volume : "--" }}</div>
         </div>
         <div class="td td-4">
           <div class="price">{{ item.settled_price || "--" }}</div>
@@ -59,13 +61,13 @@
             {{ item.profit || "--" }}
           </div>
           <div class="num" :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'">
-            {{ getRatio(item.ratio) }}
+            {{ parseFloat(getRatio(item.ratio)) > 0 ? '+' + parseFloat(getRatio(item.ratio)).toFixed(7) + '%' : parseFloat(getRatio(item.ratio)).toFixed(8) + '%' }}
           </div>
         </div>
       </div>
     </SwipeCell>
-    <div style="height:0.56rem"></div>
-    <LoadingMore :loading="loading" :finish="finish" v-if="(finish && contractInquireList.length) || !finish" />
+    <!-- <div style="height:0.56rem"></div> -->
+    <!-- <LoadingMore :loading="loading" :finish="finish" v-if="(finish && contractInquireList.length) || !finish" /> -->
   </div>
 
   <!-- 订单详情 -->
@@ -87,6 +89,7 @@ import UnLogin from "@/components/UnLogin.vue";
 import OrderInfo from "../components/OrderInfo.vue";
 import Decimal from "decimal.js";
 import { useI18n } from "vue-i18n";
+import {isEmpty} from "@/utils/isEmpty";
 
 const props = defineProps({
   type: {
@@ -214,7 +217,7 @@ defineExpose({
 .inquire {
   .tr {
     padding: 0.24rem;
-    background-color: var(--ex-bg-color3);
+    background-color: var(--ex-bg-white2);
     display: flex;
     align-items: stretch;
     border-radius: 0.32rem;
@@ -225,7 +228,7 @@ defineExpose({
     color: var(--ex-text-color3);
     font-size: 0.22rem;
     border-bottom: 1px solid var(--ex-border-color);
-    padding: 0.4rem 0 0.24rem 0;
+    padding: 0.1rem 0 0.24rem 0;
     background: none;
     margin-top: 0px;
     border-radius: 0px;

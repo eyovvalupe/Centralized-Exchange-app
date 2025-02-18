@@ -3,15 +3,9 @@
   <div ref="root" style="overflow: visible;" class="w-full mask-btn-stock ">
     <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
       <div class="stock_item_bg"
-        :class="[`${' stock_item_' + updownStatus} px-[0.28rem]`]"
+        :class="[`${' stock_item_' + updownStatus} ${props.page == 'home' ? 'px-[0.2rem]' : 'px-[0.28rem]'}`]"
         @click="goInfo(props.item.type)">
         <div :class="['stock_item']">
-          <!-- <div class="size-[0.96rem] rounded-full bg-white mr-[0.18rem] flex justify-center items-center"
-            v-if="showIcon">
-            <span class="text-[0.56rem] font-semibold text-color--bg-light" v-if="item.type == 'stock'">{{
-              props.item.symbol[0] }}</span>
-            <span class="text-[0.56rem] font-semibold text-color--bg-light" v-else>{{ props.item.name[0] }}</span>
-          </div> -->
           <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center" v-if="showIcon">
             <CryptoIcon :name="item.name.split('/')[0]" />
           </div>
@@ -35,7 +29,7 @@
 
             <!-- <div v-if="item.type != 'stock'" class="flex items-center"> -->
             <div class="flex items-center">
-              <span style="color:var(--ex-white)"
+              <span style=""
                 :class="`${marketStyle[props.item.type]
                   } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center ]`">
                 {{
@@ -471,6 +465,7 @@ const removeStock = (item) => {
   position: relative;
   overflow: visible;
   border-radius: 0.12rem;
+
   &::after {
     position: absolute;
     content: "";

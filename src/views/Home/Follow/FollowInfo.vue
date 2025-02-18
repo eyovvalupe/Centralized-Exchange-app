@@ -1,13 +1,13 @@
 <!-- 带单详情 -->
- <template>
+<template>
     <div class="page-followinfo">
         <Top :backFunc="backFunc" :title="$t('copy.copy_order_detail_title')"></Top>
 
         <MyFollowItem :item="info" :stopJump="true" :showDetail="true" />
     </div>
- </template>
+</template>
 
- <script setup>
+<script setup>
 import Top from "@/components/Top.vue";
 import MyFollowItem from "../components/MyFollowItem.vue"
 import { computed } from "vue";

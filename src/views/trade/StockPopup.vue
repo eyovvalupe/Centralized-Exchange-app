@@ -1,6 +1,6 @@
 <template>
   <div class="stockPopup">
-    <MarketInfo :type="props.type" @back="back" :innerPage="true" />
+    <MarketInfo :from="'contract'" :type="props.type" @back="back" :innerPage="true" />
   </div>
 </template>
 
@@ -8,6 +8,7 @@
 import { ref, computed } from "vue";
 import store from "@/store";
 import MarketInfo from "../Market/MarketInfo.vue"
+import Chart from "../Market/Chart.vue";
 
 const props = defineProps({
   type: {
@@ -25,5 +26,6 @@ const back = () => {
 .stockPopup {
   height: 100%;
   width: 100%;
+  background-color: var(--ex-bg-color9);
 }
 </style>

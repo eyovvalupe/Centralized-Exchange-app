@@ -758,7 +758,9 @@ export default {
     trade_orders_status: "状态",
     trade_deal_price: "成交价",
 
-    trade_search_item: "输入品种名称/代码"
+    trade_search_item: "输入品种名称/代码",
+
+    contract_position_profit: "持仓利息",
   },
   inviteFriends: {
     invite: "推荐朋友",

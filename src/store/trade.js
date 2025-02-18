@@ -22,6 +22,7 @@ export default {
       state.currStockItem = data
     },
     setCurrConstractItem(state, data) {
+      console.error('????', data)
       state.currConstractItem = data
     },
     setPositionsList(state, data) {
