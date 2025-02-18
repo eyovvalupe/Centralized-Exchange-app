@@ -15,7 +15,7 @@
 
       <div class="btns">
         <Button round class="btn ripple-primary" @click="close">
-          <span style="color: var(--ex-text-color2)"><span style="color: var(--ex-white);">{{
+          <span style="color: var(--ex-text-color2)"><span>{{
             $t("assets.safety_trade_cancel") }}</span></span>
         </Button>
         <Button :loading="loading" round class="btn ripple-btn" type="primary" @click="submit"><span
