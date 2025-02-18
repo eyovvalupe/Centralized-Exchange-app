@@ -12,7 +12,7 @@
                             <StockItem :handleClick="props.innerPage ? handleClick : null"
                                 :page="from == 'home' ? 'home' : ''" :padding="true"
                                 :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
-                                :showIcon="true" :item=item v-for="(item, i) in watchList" :key="'c_' + i"
+                                :showIcon="true" :item=item v-for="(item, i) in (watchList)" :key="'c_' + i"
                                 menuType="option" marketType="crypto" />
                         </div>
                         <NoData v-if="!watchListLoading && !watchList.length" />
@@ -52,8 +52,9 @@
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
                             :page="from == 'home' ? 'home' : ''" :padding="true"
                             :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
-                            :showIcon="true" :item="{ ...item, type: 'spot' }" v-for="(item, i) in contractList"
-                            :key="'c_' + i" menuType="spot" marketType="crypto" page="home" />
+                            :showIcon="true" :item="{ ...item, type: 'spot' }"
+                            v-for="(item, i) in filterList(contractList)" :key="'c_' + i" menuType="spot"
+                            marketType="crypto" page="home" />
                     </div>
                     <NoData v-if="!commendLoading && !contractList.length" />
                 </div>
@@ -66,7 +67,7 @@
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
                             :page="from == 'home' ? 'home' : ''" :padding="true"
                             :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
-                            :showIcon="true" :item="item" v-for="(item, i) in contractList" :key="'c_' + i"
+                            :showIcon="true" :item="item" v-for="(item, i) in filterList(contractList)" :key="'c_' + i"
                             menuType="constract" marketType="crypto" page="home" />
                     </div>
                     <NoData v-if="!commendLoading && !contractList.length" />
@@ -224,6 +225,11 @@ defineExpose({
     activeTab
 })
 
+
+const filterList = list => {
+    if (props.from == 'home') return list.slice(0, 10)
+    return list
+}
 </script>
 
 <style lang="less" scoped>
