@@ -26,9 +26,8 @@
         <div class="status_desc">{{ $t("recharging.info_recharge_failure_con") }}</div>
       </div>
       <div class="status" v-else>
-        <div class="status_icon">
-          <!-- <LoadEffect class="status_loading" color="var(--ex-white)" /> -->
-          <img v-lazy="getStaticImgUrl('/static/img/assets/status_wait.svg')" alt="img" />
+        <div class="status_icon rotating">
+          <img v-lazy="getStaticImgUrl('/static/img/assets/status_wait.png')" alt="img" />
         </div>
         <div class="status_name">{{ $t("recharging.info_recharge_pending") }}</div>
         <div class="status_desc">{{ $t("recharging.info_recharge_pending_con") }}</div>
@@ -46,7 +45,7 @@
         <div class="text-color5 text-end text-[0.24rem] flex-1 text-end">{{ orderData.date ? orderData.date.slice(0, -3)
           : '--' }}</div>
       </div>
-      <div class="h-[4rem] rounded-[0.32rem] px-[0.28rem] mx-[0.12rem] mb-[0.12rem] bg-color2">
+      <div class="h-[4rem] rounded-[0.32rem] px-[0.28rem] mx-[0.12rem] mb-[0.12rem] bg-white2">
         <div class="bottom_item">
           <div class="name">{{ $t("recharging.info_recharge_balance") }}</div>
           <div class="value">
