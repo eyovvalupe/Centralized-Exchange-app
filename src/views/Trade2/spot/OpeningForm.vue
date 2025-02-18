@@ -120,8 +120,8 @@
         " @percentTagClick="percentTagClick" v-if="props.activeTab == 1" />
     <FormItem class="mb-[0.2rem]" v-else input-type="number" :placeholder="'以当前市场最优价格下单'" :tip="''" :disabled="true" />
 
-    <FormItem class="mb-[0.2rem]" input-type="number" :placeholder="`成交额(${currName.split('/')[1]})`" :tip="''" v-model="form1.amount"
-      @input="changeAmount" />
+    <FormItem class="mb-[0.2rem]" input-type="number" :placeholder="`成交额(${currName.split('/')[1]})`" :tip="''"
+      v-model="form1.amount" @input="changeAmount" />
 
 
     <!-- 保证金模式 -->
@@ -153,12 +153,13 @@
       </div>
     </div> -->
 
-    <!-- 张数 -->
+    <!-- 数量 -->
     <div class="item_box">
       <div class="item_box_right">
-        <FormItem :hasScroll="true" :placeholder="t('trade.stock_position_amount') + `(${currName.split('/')[0]})`" @focus="volumeFocus"
-          v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll"
-          @change="changePercent" :tip="'≤' + maxStockNum" :max="maxStockNum" tip-align="right" input-type="digit">
+        <FormItem :hasScroll="true" :placeholder="t('trade.stock_position_amount') + `(${currName.split('/')[0]})`"
+          @focus="volumeFocus" v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
+          @btnClick="putAll" @change="changePercent" :tip="'≤' + maxStockNum" :max="maxStockNum" tip-align="right"
+          input-type="digit">
           <!-- <template #title-icon v-if="amountper && paramCurrency">
             <div style="width: 0.2rem; height: 0.2rem; margin-left: 0.06rem" @click="() =>
               showToast(
@@ -319,7 +320,7 @@
       </div>
       <Button :loading="submitLoading" @click="submitFormDialog" size="large" class="submit ripple-btn"
         color="var(--ex-primary-color)" round><span style="color: var(--ex-white);">{{ t("trade.stock_open")
-          }}</span></Button>
+        }}</span></Button>
     </div>
   </BottomPopup>
 
@@ -999,10 +1000,8 @@ const inputStop = (key) => {
 
 const submit1 = () => {
   if (!currStock.value.trade) return showToast(t('trade.stock_opening_closed'));
-  if (!currStock.value.symbol)
-    return showToast(t("trade.contract_opening_err_contract"));
   if (!form1.value.volume || form1.value.volume < min.value)
-    return showToast(t("trade.contract_opening_err_amount"));
+    return showToast('请输入数量');
   if (form1.value.volume > maxStockNum.value) return showToast(t("trade.stock_opening_no_balance"))
   // 限价校验
   if (props.activeTab == 1) {
@@ -1033,7 +1032,8 @@ const onSliderChange = (newValue) => {
   sliderValue.value = newValue;
   if (maxStockNum.value == "--") return (sliderValue.value = 0);
   let v = new Decimal(maxStockNum.value || 0).mul(newValue).div(100);
-  // v = v.sub(v.mod(step.value));
+  console.error(step.value)
+  v = v.sub(v.mod(step.value));
   form1.value.volume = v.toNumber();
   setTimeout(() => {
     changePercent();
@@ -1130,6 +1130,12 @@ const paramHandle = (data) => {
     if (levers.value[0]) {
       form1.value.lever = levers.value[0];
     }
+  }
+
+  if (!currStock.value.pip || !Number(currStock.value.pip)) {
+    step.value = 1;
+  } else {
+    step.value = Number(currStock.value.pip);
   }
 };
 
