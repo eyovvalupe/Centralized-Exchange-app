@@ -49,7 +49,7 @@
 
     <!-- 列表 -->
     <div class="tabs">
-      <div ref="tab1" :key="1" class="tab ripple-btn" @click="jumpToWallet('0')">
+      <div ref="tab1" :key="1" class="tab ripple-btn" @click="jumpToWallet('1')">
         <div class="tab_icon">
           <div style="width: 0.32rem;height: 0.32rem;">
             <img v-lazy="getStaticImgUrl(`/static/img/assets/cash.svg`)" alt="">
@@ -83,7 +83,7 @@
           </div>
         </div>
       </div> -->
-      <div ref="tab3" :key="3" class="tab" :class="{ open_tab: rightSwitch3 == true }" @click="jumpToWallet('2')">
+      <div ref="tab3" :key="3" class="tab ripple-btn" :class="{ open_tab: rightSwitch3 == true }" @click="jumpToWallet('2')">
         <div class="tab_icon">
           <div style="width: 0.28rem;height: 0.28rem;">
             <img v-lazy="getStaticImgUrl(`/static/img/assets/future.svg`)" alt="">

@@ -184,7 +184,7 @@ const swipeChange = (val) => {
 
 const jumpToWallet = (val) => {
   store.commit("setCurrSelectedWallet", val);
-  changeActiveTab(1, true);
+  changeActiveTab(Number(val), true);
 };
 
 const loading = ref(false);
