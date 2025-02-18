@@ -22,7 +22,7 @@
 
 
             <!-- banner -->
-            <view class="banners wow fadeInUp" data-wow-duration="1s">
+            <div class="banners wow fadeInUp" data-wow-duration="1s">
                 <Swipe class="swipers" :autoplay="3000" indicator-color="white">
                     <SwipeItem class="swiper-item">
                         <img v-lazy="getStaticImgUrl('/static/home2/banner1.png')" alt="">
@@ -31,10 +31,62 @@
                         <img v-lazy="getStaticImgUrl('/static/home2/banner2.png')" alt="">
                     </SwipeItem>
                 </Swipe>
-            </view>
+            </div>
+
+
+            <!-- 导航 -->
+            <div class="dirs">
+                <div class="dir-b"
+                    :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-b-bg2.png')})` }">
+                    <div class="dir-b-box">
+                        <div class="dir-b-icon">
+                            <img v-lazy="getStaticImgUrl('/static/home2/dir-ai.svg')" alt="">
+                        </div>
+                        <div>交易机器人</div>
+                    </div>
+                </div>
+                <div class="dir-b"
+                    :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-b-bg1.png')})` }">
+                    <div class="dir-b-box">
+                        <div class="dir-b-icon">
+                            <img v-lazy="getStaticImgUrl('/static/home2/dir-follow.svg')" alt="">
+                        </div>
+                        <div>跟单</div>
+                    </div>
+                </div>
+                <div class="dir-s"
+                    :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-s-bg.png')})` }">
+                    <div class="dir-s-icon">
+                        <img v-lazy="getStaticImgUrl('/static/home2/dir-s-1.svg')" alt="">
+                    </div>
+                    <div>现货</div>
+                </div>
+                <div class="dir-s"
+                    :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-s-bg.png')})` }">
+                    <div class="dir-s-icon">
+                        <img v-lazy="getStaticImgUrl('/static/home2/dir-s-2.svg')" alt="">
+                    </div>
+                    <div>合约</div>
+                </div>
+                <div class="dir-s"
+                    :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-s-bg.png')})` }">
+                    <div class="dir-s-icon">
+                        <img v-lazy="getStaticImgUrl('/static/home2/dir-s-3.svg')" alt="">
+                    </div>
+                    <div>DeFi借币</div>
+                </div>
+                <div class="dir-s"
+                    :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-s-bg.png')})` }">
+                    <div class="dir-s-icon">
+                        <img v-lazy="getStaticImgUrl('/static/home2/dir-s-4.svg')" alt="">
+                    </div>
+                    <div>质押挖矿</div>
+                </div>
+            </div>
+
 
             <!-- 质押挖矿 -->
-            <div class="home-box">
+            <!-- <div class="home-box">
                 <div class="recommend-title" @click="jump('finance', true, { activeTab: 1 })">
                     <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">{{
                         t('finance.portfolio_title')
@@ -52,7 +104,7 @@
                         <div style="width: 0.2rem;display: inline-block;">&nbsp;</div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
             <div class="sub-banner wow fadeInUp" data-wow-duration="0.6s">
@@ -67,7 +119,7 @@
 
 
             <!-- 跟单 -->
-            <div class="home-box">
+            <!-- <div class="home-box">
                 <div class="recommend-title" @click="jump('follow', false)">
                     <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">{{ t('copy.title') }}</div>
                     <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">{{ t('home.landing_more')
@@ -76,9 +128,6 @@
                         <img v-lazy="getStaticImgUrl('/static/img/user/right_gray.svg')" alt="">
                     </div>
                 </div>
-                <!-- <div>
-                <div class="follow-btn wow slideInLeft">{{ t('copy.copy_option') }}</div>
-            </div> -->
                 <div class="scroll-box">
                     <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
                         <div class="scroll-item-follow" v-for="(item, i) in followList" :key="i">
@@ -87,16 +136,16 @@
                         <div style="width: 0.2rem;display: inline-block;">&nbsp;</div>
                     </div>
                 </div>
-            </div>
+            </div> -->
 
 
             <!-- 市场推荐 -->
-            <div class="home-box" style="margin-top: 0.28rem;">
+            <div class="home-box">
                 <div class="recommend-title">
                     <div class="wow slideInLeft" style="flex: 1;" data-wow-duration="0.6s">{{ t('home.market_trend') }}
                     </div>
                     <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">{{ t('home.landing_more')
-                    }}</span>
+                        }}</span>
                     <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s">
                         <img v-lazy="getStaticImgUrl('/static/img/user/right_gray.svg')" alt="">
                     </div>
@@ -104,6 +153,38 @@
 
                 <!-- Tabs -->
                 <Recommend :from="'home'" :activated="activated" />
+            </div>
+
+
+            <!-- 理财 -->
+            <div class="recommend-title">
+                <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">{{ t('home.finance') }}</div>
+                <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">{{ t('home.landing_more')
+                }}</span>
+                <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s"
+                    @click="fActive == 1 ? jump('finance', true, 1) : jump('follow', false)">
+                    <img v-lazy="getStaticImgUrl('/static/img/user/right_gray.svg')" alt="">
+                </div>
+            </div>
+            <div class="f-tabs">
+                <div class="f-tab" :class="{ 'f-tab-active': fActive == 1 }" @click="fActive = 1">{{
+                    t('finance.portfolio_title') }}</div>
+                <div class="f-tab" :class="{ 'f-tab-active': fActive == 2 }" @click="fActive = 2">{{ t('copy.title') }}
+                </div>
+            </div>
+            <!-- 质押挖矿 -->
+            <div class="scroll-box" v-if="homeLoaded && fActive == 1">
+                <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
+                    <MiningItem class="mining-home-item" v-for="i in 10" :key="i" />
+                </div>
+            </div>
+            <!-- 跟单 -->
+            <div class="scroll-box" v-if="homeLoaded && fActive == 2">
+                <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
+                    <div class="scroll-item-follow" v-for="(item, i) in followList" :key="i">
+                        <FollowItem class="follow-home-item" :item="item" />
+                    </div>
+                </div>
             </div>
 
 
@@ -200,20 +281,8 @@ import LeftMenu from "../components/LeftMenu.vue"
 
 const route = useRoute();
 const LeftRef = ref()
+const fActive = ref(1)
 
-// 安装
-const install = () => {
-    if (!deferredPrompt || !deferredPrompt.prompt) return
-    deferredPrompt.prompt();
-    deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-            console.log('User accepted the install prompt');
-        } else {
-            console.log('User dismissed the install prompt');
-        }
-        deferredPrompt = null;
-    });
-}
 
 const { startSocket } = useSocket();
 const { t } = useI18n();
@@ -393,7 +462,11 @@ watch(() => (token.value), (val) => {
     }
 })
 
+const homeLoaded = ref(false)
 onMounted(() => {
+    setTimeout(() => {
+        homeLoaded.value = true
+    }, 500)
     if (token.value && canExecuteToday()) getNotifiData();
     store.commit("setMarketWatchKeys", []);
     activated.value = true;
@@ -507,7 +580,7 @@ const followList = computed(() => store.state.followList || [])
         }
 
         .banners {
-            margin: 0.24rem 0 0.28rem 0;
+            margin: 0.1rem 0 0.2rem 0;
 
             .swipers {
                 width: 100%;
@@ -542,10 +615,65 @@ const followList = computed(() => store.state.followList || [])
             }
         }
 
+        .dirs {
+            background-color: var(--ex-bg-color3);
+            border-radius: 0.32rem;
+            padding: 0.16rem;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+
+            .dir-b {
+                width: 3.42rem;
+                height: 2.16rem;
+                border-radius: 0.32rem;
+                margin-bottom: 0.12rem;
+                background-color: var(--ex-bg-white2);
+                background-size: 100% 100%;
+                padding: 0.24rem;
+
+                .dir-b-box {
+                    display: flex;
+                    align-items: center;
+                    justify-content: flex-start;
+                    font-size: 0.32rem;
+                    color: var(--ex-white);
+
+                    .dir-b-icon {
+                        width: 0.48rem;
+                        height: 0.48rem;
+                        margin-right: 0.16rem;
+                    }
+                }
+            }
+
+            .dir-s {
+                width: 1.64rem;
+                height: 1.54rem;
+                border-radius: 0.32rem;
+                background-color: var(--ex-bg-white2);
+                background-size: 100% 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                font-size: 0.24rem;
+                color: var(--ex-white);
+                text-align: center;
+
+                .dir-s-icon {
+                    width: 0.6rem;
+                    height: 0.6rem;
+                    margin-bottom: 0.12rem;
+                }
+            }
+        }
+
         .sub-banner {
             width: 100%;
             height: 2.54rem;
-            margin: 0.28rem 0;
+            margin: 0.2rem 0;
             position: relative;
             background-color: var(--ex-bg-color3);
             border-radius: 0.32rem;
@@ -580,6 +708,32 @@ const followList = computed(() => store.state.followList || [])
                     background-color: var(--ex-white);
                     display: inline-flex;
                 }
+            }
+        }
+
+        .f-tabs {
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            margin-bottom: 0.24rem;
+
+            .f-tab {
+                height: 0.68rem;
+                border-radius: 1rem;
+                margin-right: 0.12rem;
+                padding: 0 0.32rem;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background-color: var(--ex-bg-white1);
+                color: rgba(255, 255, 255, 0.7);
+                font-size: 0.28rem;
+                transition: all ease-in .2s;
+            }
+
+            .f-tab-active {
+                background-color: var(--ex-primary-color);
+                color: var(--ex-white);
             }
         }
 
