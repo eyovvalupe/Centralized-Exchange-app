@@ -37,8 +37,8 @@
     <div class="w-full rounded-[0.32rem] flex flex-col bg-color3">
       <div class="flex items-center px-[0.28rem] py-[0.2rem] border-b-[0.02rem] border-color5 mb-[0.2rem]">
         <div class="flex items-center">
-          <div class="text-color5 mr-[0.05rem]">{{ orderData.order_no }}</div>
-          <div class="w-[0.32rem] h-[0.32rem]" @click="copy(orderData.order_no)">
+          <div class="text-color5">{{ orderData.order_no }}</div>
+          <div class="w-[0.32rem] h-[0.32rem] ml-[0.05rem]" @click="copy(orderData.order_no)">
             <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
           </div>
         </div>
@@ -225,7 +225,7 @@ const goChat = () => {
     .copy_icon {
       width: 0.32rem;
       height: 0.32rem;
-      margin-left: 0.16rem;
+      margin-left: 0.05rem;
     }
   }
 }
