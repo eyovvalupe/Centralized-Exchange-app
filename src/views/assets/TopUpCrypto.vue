@@ -86,7 +86,7 @@
             :placeholder="$t('topUpCrypto.searchPlaceholder')" />
         </div>
         <div class="lists">
-          <div @click="clickItem(keyStr)" class="swap_dialog_item px-[0.28rem]"
+          <div @click="clickItem(keyStr)" class="swap_dialog_item"
             :class="{ swap_dialog_item_active: form.currency == keyStr }" v-for="(val, keyStr) in networkMapList"
             :key="keyStr" v-show="!searchDialogStr ||
               keyStr.toUpperCase().indexOf(searchDialogStr) > -1
@@ -97,7 +97,7 @@
             <span>{{ keyStr.toUpperCase() }}</span>
 
             <div v-if="form.currency == keyStr" class="check_icon">
-              <img v-lazy="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
+              <img v-lazy="getStaticImgUrl('/static/img/assets/check_green.svg')" />
             </div>
           </div>
         </div>
@@ -114,7 +114,7 @@
           <span class="w-full text-start">{{ item.network }}</span>
 
           <div v-if="form.network == item.network" class="check_icon">
-            <img v-lazy="getStaticImgUrl('/static/img/assets/actived_check.svg')" />
+            <img v-lazy="getStaticImgUrl('/static/img/assets/check_green.svg')" />
           </div>
         </div>
       </div>
@@ -550,8 +550,8 @@ onBeforeUnmount(() => {
     margin: 0.52rem 0.3rem 0 0.3rem;
     display: flex;
     align-items: center;
-    background-color: var(--ex-bg-color2);
-    border: 1px solid var(--ex-border-color);
+    background-color: var(--ex-bg-white2);
+    // border: 1px solid var(--ex-border-color);
     border-radius: 0.6rem;
 
     .search_icon {
@@ -571,17 +571,15 @@ onBeforeUnmount(() => {
   }
 
   .swap_dialog_item {
-    height: 1.12rem;
+    height: 0.92rem;
     display: flex;
     align-items: center;
     overflow: hidden;
     position: relative;
     font-size: 0.3rem;
-    margin: 0 0.32rem;
-    background-color: var(--ex-bg-color3);
-    border-radius: 0.32rem;
-    margin-top: 0.2rem;
+    background-color: var(--ex-bg-color9);
     color: var(--ex-text-color2);
+    padding: 0 0.32rem;
 
     .icon {
       width: 0.64rem;

@@ -14,16 +14,15 @@
         <div class="time_box w-full">
           <div class="time_label">{{ $t("recharging.countdown") }}</div>
           <CountDown v-model:time="s" class="time_show" />
-          <div class="w-full h-[2.34rem] rounded-[0.4rem] pt-[0.4rem] mt-[0.68rem] relative"
-            style="background-color: var(--ex-bg-color);">
+          <div class="w-full h-[2.34rem] rounded-[0.4rem] pt-[0.4rem] mt-[0.68rem] relative">
             <div class="network-tag w-[6.46rem] h-[0.6rem] mx-auto absolute top-[-0.6rem]">
-              <span>{{ form.network }} · {{ form.currency }}</span>
+              <span class="!text-white">{{ form.network }} · {{ form.currency }}</span>
             </div>
             <div class="amount">
               {{ form.amount }}<span>{{ form.currency }}</span>
             </div>
             <div class="network-tag">
-              <span style="color: var(--ex-text-color2); background-color: var(--ex-bg-color2);">${{ ratePrice
+              <span style="color: var(--ex-text-color2); background-color: var(--ex-bg-color9);">${{ ratePrice
                 }}</span>
             </div>
           </div>
@@ -79,7 +78,7 @@
               $t("recharging.fail") }}</span></Button>
         <Button v-else @click="jumpWithQuery('rechargeInfo')" :loading="loading" round color="var(--ex-primary-color)"
           style="width: 100%" class="submit ripple-btn" type="info"><span style="color: var(--ex-text-color--bg-primary)">{{
-            $t("recharging.finish")
+            $t("market.market_buy_optional_confirm")
           }}</span></Button>
       </div>
     </template>
@@ -298,7 +297,7 @@ const copyPrice = () => {
   .recharge_box {
     border-radius: 0.32rem;
     margin-top: 0.2rem;
-    background: var(--ex-bg-color2);
+    background: var(--ex-bg-white2);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -429,7 +428,7 @@ const copyPrice = () => {
       text-align: center;
       width: max-content;
       padding: 0 0.5rem;
-      background-color: var(--ex-bg-color);
+      background-color: var(--ex-bg-color9);
     }
 
     .address_copy_btn {
