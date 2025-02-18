@@ -380,20 +380,23 @@
 
     <!-- 行情弹窗 -->
     <BottomPopup
-      teleport="body"
+      round
       v-model:show="showStockModel"
       position="bottom"
-      round
       closeable
+      teleport="body"
     >
-      <StockPopup style="height: calc(var(--vh) * 90)" v-if="showStockModel" />
+      <div class="page_trade_info" style="max-height: calc(var(--vh) * 90);overflow-y: auto;" v-if="showStockModel && openInfoStatus">
+                <div style="height: 0.32rem;"></div>
+                <MarketInfo2 :innerPage="true" />
+            </div>
     </BottomPopup>
   </div>
 </template>
 
 <script setup>
   import { getStaticImgUrl } from '@/utils/index.js';
-  import { ref, computed } from 'vue';
+  import { ref, computed, watch } from 'vue';
   import { _copyTxt } from '@/utils/index';
   import { showToast, Popup } from 'vant';
   import store from '@/store';
@@ -402,6 +405,7 @@
   import StockPopup from '../../trade/StockPopup.vue';
   import { useI18n } from 'vue-i18n';
   import BottomPopup from '@/components/BottomPopup.vue';
+import MarketInfo2 from '../../Market/MarketInfo2.vue';
 
   const { t } = useI18n();
   const emit = defineEmits(['update', 'sell', 'cancel', 'back']);
@@ -417,6 +421,7 @@
       },
     },
   });
+  const openInfoStatus = computed(() => store.state.openInfoStatus)
   const title = computed(() => {
     if (props.type == 'spot') return '现货订单';
     if (props.type == 'stock') return t('trade.order_info_title_stock');
@@ -435,7 +440,7 @@
 
   const showStockModel = ref(false);
   const openStockModel = (currStock) => {
-    store.commit('setCurrStock', currStock);
+    store.commit('setCurrConstract', currStock);
     showStockModel.value = true;
   };
   const statusMap = ref({
@@ -480,6 +485,12 @@
     _copyTxt(text);
     showToast(t('trade.order_info_copy'));
   };
+
+  watch(showStockModel, (val) => {
+    if (!val) {
+      store.commit('setOpenInfoStatus', false);
+    }
+  })
 </script>
 
 <style lang="less" scoped>

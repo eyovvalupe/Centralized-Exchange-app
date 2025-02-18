@@ -334,6 +334,7 @@ const getRatio = (num) => {
 const showInfo = ref(false);
 const currStock = ref({});
 const OpeningForm = (item) => {
+  store.commit('setOpenInfoStatus', true)
   currStock.value = item;
   showInfo.value = true;
 };

@@ -113,14 +113,14 @@
             <Chart ref="chartRef" v-if="!chartLoading" :type="'constract'" />
           </div>
         </Tab>
-        <Tab :name="3" :title="'订单薄'" v-if="item.type == 'crypto' && !props.innerPage">
+        <Tab :name="3" :title="'订单薄'" v-if="item.type == 'crypto'">
           <div class="market-box">
-            <OrderingSpot v-if="activeTab == 3" :key="'o'" type="nomal" />
+            <OrderingSpot :innerPage="innerPage" v-if="activeTab == 3" :key="'o'" type="nomal" />
           </div>
         </Tab>
-        <Tab :name="4" :title="'最新成交'" v-if="item.type == 'crypto' && !props.innerPage">
+        <Tab :name="4" :title="'最新成交'" v-if="item.type == 'crypto'">
           <div class="market-box">
-            <OrderingSpot v-if="activeTab == 4" :key="'n'" type="news" />
+            <OrderingSpot :innerpage="innerPage" v-if="activeTab == 4" :key="'n'" type="news" />
           </div>
         </Tab>
       </Tabs>

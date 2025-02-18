@@ -16,8 +16,12 @@ export default {
     c2cUnread: {}, // 未读消息
     c2cUnreadTotal: 0, // 总未读消息
     c2cLasttime: {}, // 列表已读时间记录   { order_no: lasttime }
+    openInfoStatus: false,
   },
   mutations: {
+    setOpenInfoStatus(state, data) {
+      state.openInfoStatus = data
+    },
     setCurrStockItem(state, data) {
       state.currStockItem = data
     },

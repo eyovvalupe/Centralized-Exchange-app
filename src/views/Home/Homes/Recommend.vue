@@ -7,7 +7,6 @@
                     :style="{ borderTop: '1px solid var(--ex-border-color)' }">
                     <div v-if="token">
                         <Loaidng v-if="watchListLoading" :loading="watchListLoading" />
-                        {{ console.log(watchList) }}
                         <div style="padding-bottom: 0.2rem;overflow: visible;"
                             v-if="activeTab == 0 && !watchListLoading">
                             <StockItem :handleClick="props.innerPage ? handleClick : null"

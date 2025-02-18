@@ -4,7 +4,7 @@
 
         <!-- 竖排 -->
         <div style="display: flex;flex: 1;" v-if="props.type == 'infinite'">
-            <div class="ordering-box" style="height: 100%;">
+            <div class="ordering-box" :style="{background: innerPage ? 'none' : ''}" style="height: 100%;">
                 <div class="lists-tr lists-title" v-if="currStock.symbol">
                     <div class="lists-td">价格(USDT)</div>
                     <div class="lists-td">数量({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
@@ -177,6 +177,10 @@ const props = defineProps({
     type: {
         type: String,
         default: 'nomal'
+    },
+    innerPage: {
+        type: Boolean,
+        default: false
     }
 })
 
@@ -337,7 +341,6 @@ onUnmounted(() => {
         display: flex;
         flex-direction: column;
         border-radius: 0.32rem;
-        background-color: var(--ex-bg-color3);
         padding: 0.32rem;
 
         .title {

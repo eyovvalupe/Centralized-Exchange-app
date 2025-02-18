@@ -190,6 +190,7 @@
             <div
               class="tab tab_ani"
               :class="{ active_tab: timeType == 'Time' }"
+              :style="{backgroundColor: from == 'contract' && timeType != 'Time' ? 'var(--ex-bg-white2)' : '', color: from == 'contract' && timeType != 'Time' ? 'var(--ex-white)' : ''}"
               @click="changeType('Time')"
             >
               Time
@@ -198,6 +199,7 @@
               class="tab tab_ani"
               @click="showPicker = true"
               :class="{ active_tab: minList.includes(timeType) }"
+              :style="{backgroundColor: from == 'contract' && !minList.includes(timeType) ? 'var(--ex-bg-white2)' : '', color: from == 'contract' && !minList.includes(timeType) ? 'var(--ex-white)' : ''}"
             >
               {{ currMin }}
               <Icon
@@ -211,6 +213,7 @@
               class="tab tab_ani"
               :class="{ active_tab: timeType == '1h' }"
               @click="changeType('1h')"
+              :style="{backgroundColor: from == 'contract' && timeType != '1h' ? 'var(--ex-bg-white2)' : '', color: from == 'contract' && timeType != '1h' ? 'var(--ex-white)' : ''}"
             >
               1h
             </div>
@@ -219,6 +222,7 @@
               v-if="!['stocks', 'forex'].includes(periodType)"
               :class="{ active_tab: timeType == '4h' }"
               @click="changeType('4h')"
+              :style="{backgroundColor: from == 'contract' && timeType != '4h' ? 'var(--ex-bg-white2)' : '', color: from == 'contract' && timeType != '4h' ? 'var(--ex-white)' : ''}"
             >
               4h
             </div>
@@ -226,6 +230,7 @@
               class="tab tab_ani"
               :class="{ active_tab: timeType == '1D' }"
               @click="changeType('1D')"
+              :style="{backgroundColor: from == 'contract' && timeType != '1D' ? 'var(--ex-bg-white2)' : '', color: from == 'contract' && timeType != '1D' ? 'var(--ex-white)' : ''}"
             >
               1D
             </div>
@@ -233,6 +238,7 @@
               class="tab tab_ani"
               :class="{ active_tab: timeType == '1W' }"
               @click="changeType('1W')"
+              :style="{backgroundColor: from == 'contract' && timeType != '1W' ? 'var(--ex-bg-white2)' : '', color: from == 'contract' && timeType != '1W' ? 'var(--ex-white)' : ''}"
             >
               1W
             </div>
@@ -240,6 +246,7 @@
               class="tab tab_ani"
               :class="{ active_tab: timeType == '1M' }"
               @click="changeType('1M')"
+              :style="{backgroundColor: from == 'contract' && timeType != '1M' ? 'var(--ex-bg-white2)' : '', color: from == 'contract' && timeType != '1M' ? 'var(--ex-white)' : ''}"
             >
               1M
             </div>
@@ -248,6 +255,7 @@
               v-if="!['stocks', 'forex'].includes(periodType)"
               :class="{ active_tab: timeType == '1Y' }"
               @click="changeType('1Y')"
+              :style="{backgroundColor: from == 'contract' && timeType != '1Y' ? 'var(--ex-bg-white2)' : '', color: from == 'contract' && timeType != '1Y' ? 'var(--ex-white)' : ''}"
             >
               1Y
             </div>
@@ -265,7 +273,9 @@
             :class="{ fullscreen_container: fullWindow }"
           >
             <!-- 时区 -->
-            <div v-if="showDate" class="chart_time">{{ showDate }}</div>
+            <div v-if="showDate" class="chart_time"
+            :style="{backgroundColor: from == 'contract' ? 'var(--ex-bg-white2)' : '', color: from == 'contract' ? 'var(--ex-white)' : ''}"
+            >{{ showDate }}</div>
             <!-- 分时图 -->
             <AreaChart
               ref="AreaChartRef"
