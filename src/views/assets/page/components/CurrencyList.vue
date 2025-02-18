@@ -33,7 +33,7 @@
       </div>
     </div> -->
     <div
-      class="w-full h-[1.04rem] flex items-center rounded-[0.32rem] bg-color3 mb-[0.12rem] justify-between"
+      class="w-full h-[1.04rem] flex items-center rounded-[0.32rem] bg-color3 mb-[0.12rem] justify-between ripple-btn"
       @click="click(item)"
     >
       <div class="ml-[0.32rem] flex items-center relative mr-[0.08rem]">

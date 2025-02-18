@@ -49,7 +49,7 @@
 
     <!-- 列表 -->
     <div class="tabs">
-      <div ref="tab1" :key="1" class="tab" @click="jumpToWallet('0')">
+      <div ref="tab1" :key="1" class="tab ripple-btn" @click="jumpToWallet('0')">
         <div class="tab_icon">
           <div style="width: 0.32rem;height: 0.32rem;">
             <img v-lazy="getStaticImgUrl(`/static/img/assets/cash.svg`)" alt="">
@@ -304,9 +304,6 @@ const jump = (name, check = false, query) => {
         padding-top: 0.025rem;
       }
 
-      &:active {
-        background-color: rgba(237, 237, 237, 0.87);
-      }
 
       .tab_icon {
         width: 0.52rem;
