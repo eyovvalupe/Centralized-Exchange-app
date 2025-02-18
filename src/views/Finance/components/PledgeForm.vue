@@ -4,10 +4,10 @@
       <Loading :type="'circular'" :size="44" color="var(--ex-primary-color)" />
     </div>
 
-    <!-- 验资数量 -->
+    <!-- 质押数量 -->
     <div class="item_box mt-[0.32rem]">
       <div class="item_box_right">
-        <FormItem :hasLT="true" :hasScroll="true" :hasBot="true" :placeholder="t('finance.defi_verif_qty')"
+        <FormItem :hasLT="true" :hasScroll="true" :hasBot="true" :placeholder="t('finance.defi_borrow_stake_amount')"
            v-model="numb"
           @input="changePercent2" @btnClick="onSliderChange2(100)"
           class="yz-form-item" input-type="number">
@@ -137,7 +137,7 @@
     <BottomPopup closeable v-model:show="visible" :title="t('finance.defi_borrow_confirm')">
       <PledgeConfirm :paramCurrency="currIn.currency" :numb="numb" :fee="fee"
         :interest="Math.round(param.interest * 1000) / 10" :totalInterest="totalInterest" :total="total" :loan="loan"
-        :days="param.days" @success="visible = false;" v-if="visible" />
+        :days="param.days" @success="onPledgeSuccess" v-if="visible" />
     </BottomPopup>
   </div>
 </template>
@@ -308,6 +308,12 @@ const onSliderChange = (newValue) => {
   }, 0);
 };
 
+const onPledgeSuccess = ()=>{
+  visible.value = false
+  numb.value = ''
+  changePercent2()
+}
+
 const changePercent = () => {
   if (!loan.value){
     sliderValue.value = 0
@@ -392,7 +398,7 @@ const openConfirm = () => {
     }, 50);
     return;
   } else if (!numb.value) {
-    return showToast("请先输入验资数量")
+    return showToast("请先输入质押数量")
   }
   visible.value = true
 }
