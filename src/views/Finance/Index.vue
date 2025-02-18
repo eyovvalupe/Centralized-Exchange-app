@@ -8,8 +8,8 @@
             t('finance.portfolio_title'),
         ]" @change="changeActiveTab(activeTab, true)" />
 
-        <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" :touchable="true" :loop="false"
-            :duration="300" ref="swipe" @change="swipeChange">
+        <Swipe v-if="pageLoaded" :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" :touchable="true"
+            :loop="false" :duration="300" ref="swipe" @change="swipeChange">
             <SwipeItem>
                 <div style="height: calc(100vh - 2rem);">
                     <Follow :from="'finance'" />
@@ -31,7 +31,7 @@
 
 <script setup>
 import { Swipe, SwipeItem } from "vant";
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import HeaderTabs from "@/components/HeaderTabs.vue";
 import { useI18n } from "vue-i18n";
@@ -65,6 +65,13 @@ const swipeChange = (val) => {
     changeActiveTab(val);
 };
 
+
+const pageLoaded = ref(false)
+onMounted(() => {
+    setTimeout(() => {
+        pageLoaded.value = true
+    }, 300)
+})
 </script>
 <style lang="less">
 .page_finance {

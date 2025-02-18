@@ -60,10 +60,10 @@
                             : `${userInfo.kycl2 == 1 ? 'bg-warning' : 'bg-primary'}`,
                     ]">
                         <span style="width: max-content;" v-if="userInfo.kycl2 == 0">{{ $t("user_page.not_verified")
-                            }}</span>
+                        }}</span>
                         <span style="width: max-content;" v-else-if="userInfo.kycl2 == 1">{{
                             $t("user_page.pending_verified")
-                            }}</span>
+                        }}</span>
                         <span style="width: max-content;" v-else>{{ $t("user_page.already_verified") }}</span>
                     </div>
                 </div>
@@ -259,7 +259,8 @@ const close = () => {
 }
 
 defineExpose({
-    open
+    open,
+    close,
 })
 </script>
 

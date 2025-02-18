@@ -66,7 +66,6 @@ try {
 
 const route = useRoute();
 const from = ref(route.query.from); // 'register'-表示从注册来
-console.error('???-->', route)
 </script>
 
 <style lang="less" scoped>
@@ -83,6 +82,7 @@ console.error('???-->', route)
     justify-content: center;
     margin-bottom: 0.2rem;
   }
+
   .icon {
     width: 2rem;
     height: 2rem;
