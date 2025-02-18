@@ -13,7 +13,7 @@
 
     <div class="form ">
       <div
-        class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem] border-[1px] bg-color2" @click="showDialog = true">
+        class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.24rem] border-[1px] bg-white1" @click="showDialog = true">
         <div class="flex flex-col justify-between">
           <div class="text-[0.28rem] text-color5">
             <span>{{ $t("topUpCrypto.currency") }}</span>
@@ -35,7 +35,7 @@
       </div>
 
       <div
-        class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.4rem] border-[1px] bg-color2" @click="showNetDialog = true">
+        class="h-[1.28rem] px-[0.24rem] py-[0.16rem] flex rounded-[0.32rem] justify-between items-center mb-[0.24rem] border-[1px] bg-white1" @click="showNetDialog = true">
         <div class="h-full flex flex-col">
           <div class="text-[0.28rem] text-color5" style="width: max-content;">
             <span>{{ t("topUpCrypto.network") }}</span>
@@ -52,7 +52,7 @@
           <img v-lazy="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="" />
         </div>
       </div>
-      <div class="w-full h-[1.28rem] flex justify-between items-center rounded-[0.32rem] px-[0.28rem]  border-[1px] bg-color2"
+      <div class="w-full h-[1.28rem] flex justify-between items-center rounded-[0.32rem] px-[0.28rem]  border-[1px] bg-white1 mb-[0.2rem]"
         :class="{ err_ipt: errStatus }" >
         <div class="item_content">
           <input class="ipt" @blur="
@@ -62,13 +62,12 @@
         </div>
         <div>{{ topUpMode == 1 ? form.currency : "USDT" }}</div>
       </div>
-      <!-- <div>
-                    <Checkbox v-model="form.swap" shape="square" name="a">到账自动兑换</Checkbox>
-                </div> -->
-      <!-- <div class="tip" v-if="topUpMode == 2">
-                    <span style="margin: 0 0.1rem">≈ {{targetAmount}}{{form.currency}}</span>
-                    <Loading v-show="rateLoading" type="circular" size="12px" />
-                </div> -->
+      <div class="flex gap-[0.1rem] mb-[0.3rem]">
+        <div class="w-[66px] h-[30px] text-[14px] text-color2 flex items-center justify-center rounded-[0.4rem] bg-white1 ripple-btn" @click="form.amount = 100">100</div>
+        <div class="w-[66px] h-[30px] text-[14px] text-color2 flex items-center justify-center rounded-[0.4rem] bg-white1 ripple-btn" @click="form.amount = 200">200</div>
+        <div class="w-[66px] h-[30px] text-[14px] text-color2 flex items-center justify-center rounded-[0.4rem] bg-white1 ripple-btn" @click="form.amount = 300">300</div>
+      </div>
+      <div class="text-[0.24rem] text-color2">1 {{ form.currency }} ≈ {{ rate || "--" }} USD</div>
     </div>
     <Button @click="goTopUp" :loading="loading" round class="submit ripple-btn" type="primary">{{
       $t("topUpCrypto.confirm") }}</Button>
@@ -527,8 +526,8 @@ onBeforeUnmount(() => {
     width: 100%;
     height: 1.12rem;
     font-size: 0.36rem;
-    margin-top: 0.8rem;
-    border-radius: 0.4rem;
+    margin-top: 0.6rem;
+    border-radius: 0.32rem;
   }
 }
 
