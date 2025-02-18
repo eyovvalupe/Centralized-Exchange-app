@@ -52,6 +52,7 @@ const props = defineProps({
     }
 })
 const active = ref(1) // 1-跟单  2-订单
+const showInfo = ref(false)
 
 const activeTab = ref(0)
 
@@ -70,7 +71,7 @@ onMounted(() => {
     if (token.value) {
         store.dispatch('updateMyFollowList')
     }
-    
+
 })
 
 </script>
@@ -112,69 +113,70 @@ onMounted(() => {
     //     margin-top: 0.32rem;
     //     overflow-y: auto;
 
-        .list-i {
-            margin-bottom: 0.24rem;
+    .list-i {
+        margin-bottom: 0.24rem;
+    }
+
+    .my-total {
+        border-radius: 0.32rem;
+        background: var(--ex-bg-color3);
+        padding: 0.12rem;
+        margin-bottom: 0.2rem;
+
+        .info-flex {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 0.16rem 0;
+
+            .info-item {
+                text-align: left;
+                padding: 0 0.16rem;
+
+                .name {
+                    color: var(--ex-placeholder-color);
+                    font-size: 0.28rem;
+                    margin-bottom: 0.24rem;
+                }
+
+                .val {
+                    color: var(--ex-white);
+                    font-weight: bold;
+                    font-size: 0.36rem;
+                }
+            }
         }
 
-        .my-total {
+        .info-box {
+            width: 100%;
             border-radius: 0.32rem;
-            background: var(--ex-bg-color3);
-            padding: 0.12rem;
-            margin-bottom: 0.2rem;
+            background-color: var(--ex-bg-white2);
+            padding: 0.28rem;
 
-            .info-flex {
+            .info-item {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                margin: 0.16rem 0;
+                height: 0.52rem;
 
-                .info-item {
-                    text-align: left;
-                    padding: 0 0.16rem;
-
-                    .name {
-                        color: var(--ex-placeholder-color);
-                        font-size: 0.28rem;
-                        margin-bottom: 0.24rem;
-                    }
-
-                    .val {
-                        color: var(--ex-white);
-                        font-weight: bold;
-                        font-size: 0.36rem;
-                    }
+                .name {
+                    color: var(--ex-placeholder-color);
                 }
-            }
 
-            .info-box {
-                width: 100%;
-                border-radius: 0.32rem;
-                background-color: var(--ex-bg-white2);
-                padding: 0.28rem;
-
-                .info-item {
+                .val {
                     display: flex;
                     align-items: center;
-                    justify-content: space-between;
-                    height: 0.52rem;
 
-                    .name {
-                        color: var(--ex-placeholder-color);
-                    }
-
-                    .val {
-                        display: flex;
-                        align-items: center;
-
-                        .plus {
-                            width: 0.4rem;
-                            height: 0.4rem;
-                            margin-left: 0.12rem;
-                        }
+                    .plus {
+                        width: 0.4rem;
+                        height: 0.4rem;
+                        margin-left: 0.12rem;
                     }
                 }
             }
         }
+    }
+
     // }
 }
 </style>

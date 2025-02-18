@@ -36,7 +36,7 @@
 
             <!-- 导航 -->
             <div class="dirs">
-                <div class="dir-b"
+                <div class="dir-b wow fadeInUp" @click="jump('tradeInfo', false, { tradeType: 'ai' })"
                     :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-b-bg2.png')})` }">
                     <div class="dir-b-box">
                         <div class="dir-b-icon">
@@ -45,7 +45,7 @@
                         <div>交易机器人</div>
                     </div>
                 </div>
-                <div class="dir-b"
+                <div class="dir-b wow fadeInUp" @click="jump('finance', false)"
                     :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-b-bg1.png')})` }">
                     <div class="dir-b-box">
                         <div class="dir-b-icon">
@@ -54,28 +54,28 @@
                         <div>跟单</div>
                     </div>
                 </div>
-                <div class="dir-s"
+                <div class="dir-s wow fadeInUp" @click="jump('tradeInfo', false, { tradeType: 'spot' })"
                     :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-s-bg.png')})` }">
                     <div class="dir-s-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/dir-s-1.svg')" alt="">
                     </div>
                     <div>现货</div>
                 </div>
-                <div class="dir-s"
+                <div class="dir-s wow fadeInUp" @click="jump('tradeInfo', false, { tradeType: 'constract' })"
                     :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-s-bg.png')})` }">
                     <div class="dir-s-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/dir-s-2.svg')" alt="">
                     </div>
                     <div>合约</div>
                 </div>
-                <div class="dir-s"
+                <div class="dir-s wow fadeInUp" @click="jump('finance', false, { activeTab: 1 })"
                     :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-s-bg.png')})` }">
                     <div class="dir-s-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/dir-s-3.svg')" alt="">
                     </div>
                     <div>DeFi借币</div>
                 </div>
-                <div class="dir-s"
+                <div class="dir-s" @click="jump('finance', false, { activeTab: 2 })"
                     :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-s-bg.png')})` }">
                     <div class="dir-s-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/dir-s-4.svg')" alt="">
@@ -144,11 +144,11 @@
                 <div class="recommend-title">
                     <div class="wow slideInLeft" style="flex: 1;" data-wow-duration="0.6s">{{ t('home.market_trend') }}
                     </div>
-                    <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">{{ t('home.landing_more')
+                    <!-- <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">{{ t('home.landing_more')
                         }}</span>
                     <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s">
                         <img v-lazy="getStaticImgUrl('/static/img/user/right_gray.svg')" alt="">
-                    </div>
+                    </div> -->
                 </div>
 
                 <!-- Tabs -->
@@ -157,35 +157,39 @@
 
 
             <!-- 理财 -->
-            <div class="recommend-title">
-                <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">{{ t('home.finance') }}</div>
-                <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">{{ t('home.landing_more')
-                }}</span>
-                <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s"
-                    @click="fActive == 1 ? jump('finance', true, 1) : jump('follow', false)">
-                    <img v-lazy="getStaticImgUrl('/static/img/user/right_gray.svg')" alt="">
+            <div class="home-box" style="margin-top: 0.2rem;">
+                <div class="recommend-title" style="padding-left: 0.24rem;">
+                    <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">{{ t('home.finance') }}</div>
+                    <!-- <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">{{ t('home.landing_more')
+                    }}</span>
+                    <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s"
+                        @click="fActive == 1 ? jump('finance', true, 1) : jump('follow', false)">
+                        <img v-lazy="getStaticImgUrl('/static/img/user/right_gray.svg')" alt="">
+                    </div> -->
                 </div>
-            </div>
-            <div class="f-tabs">
-                <div class="f-tab" :class="{ 'f-tab-active': fActive == 1 }" @click="fActive = 1">{{
-                    t('finance.portfolio_title') }}</div>
-                <div class="f-tab" :class="{ 'f-tab-active': fActive == 2 }" @click="fActive = 2">{{ t('copy.title') }}
+                <div class="f-tabs">
+                    <div class="f-tab" :class="{ 'f-tab-active': fActive == 1 }" @click="fActive = 1">{{
+                        t('finance.portfolio_title') }}</div>
+                    <div class="f-tab" :class="{ 'f-tab-active': fActive == 2 }" @click="fActive = 2">{{ t('copy.title')
+                        }}
+                    </div>
                 </div>
-            </div>
-            <!-- 质押挖矿 -->
-            <div class="scroll-box" v-if="homeLoaded && fActive == 1">
-                <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
-                    <MiningItem class="mining-home-item" v-for="i in 10" :key="i" />
+                <!-- 质押挖矿 -->
+                <div class="scroll-box" v-if="homeLoaded && fActive == 1">
+                    <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
+                        <MiningItem class="mining-home-item" v-for="i in 10" :key="i" />
+                    </div>
                 </div>
-            </div>
-            <!-- 跟单 -->
-            <div class="scroll-box" v-if="homeLoaded && fActive == 2">
-                <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
-                    <div class="scroll-item-follow" v-for="(item, i) in followList" :key="i">
-                        <FollowItem class="follow-home-item" :item="item" />
+                <!-- 跟单 -->
+                <div class="scroll-box" v-if="homeLoaded && fActive == 2">
+                    <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
+                        <div class="scroll-item-follow" v-for="(item, i) in followList" :key="i">
+                            <FollowItem class="follow-home-item" :item="item" />
+                        </div>
                     </div>
                 </div>
             </div>
+
 
 
 
@@ -406,7 +410,13 @@ const onSelect = (item) => {
 
 // 跳转
 const jump = (name, needToken, query) => {
-    if (needToken && !token.value) return store.commit("setIsLoginOpen", true);
+    if (needToken && !token.value) {
+        LeftRef.value.close()
+        setTimeout(() => {
+            store.commit("setIsLoginOpen", true);
+        }, 0)
+        return
+    }
 
     router.push({
         name,
@@ -716,6 +726,7 @@ const followList = computed(() => store.state.followList || [])
             align-items: center;
             justify-content: flex-start;
             margin-bottom: 0.24rem;
+            padding-left: 0.24rem;
 
             .f-tab {
                 height: 0.68rem;

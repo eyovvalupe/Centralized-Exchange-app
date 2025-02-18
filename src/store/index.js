@@ -86,7 +86,6 @@ const store = createStore({
       state.transitionName = data;
     },
     setToken(state, data) {
-      console.error('???', data)
       state.token = data;
     },
     setUserInfo(state, data) {
