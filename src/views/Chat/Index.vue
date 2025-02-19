@@ -120,7 +120,7 @@ watch(
 <style lang="less">
 .layout-chat {
   display: flex;
-  max-height: calc(100vh - 1.12rem);
+  max-height: calc(var(--vh) * 100 - 1.12rem);
   flex-direction: column;
   margin-top: 1.12rem;
   overflow: hidden;

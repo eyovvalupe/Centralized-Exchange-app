@@ -122,7 +122,7 @@ const props = defineProps({
     type: Object,
     default: () => { },
   },
-  scrollBox: {
+  scrollDom: {
     // 滚动的父级
     type: String,
     default: ".page",

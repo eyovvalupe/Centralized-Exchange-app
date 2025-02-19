@@ -3,7 +3,7 @@
     <div class="ai-block">
 
         <Ai @clickItems="clickItem" :show-tabs="false" v-if="!pageLoading"></Ai>
-        
+
         <div style="height:calc(var(--vh) * 50)" v-else></div>
 
         <!-- 下单弹窗 -->
@@ -14,7 +14,7 @@
 </template>
 
 <script setup>
-import {  Popup } from "vant";
+import { Popup } from "vant";
 import { ref, onMounted, computed } from "vue"
 import Opening from "../ai/Opening.vue"
 import Ai from "../../Market/components/Ai.vue"
@@ -89,7 +89,7 @@ defineExpose({
                 height: 1px;
                 background-color: var(--ex-primary-color);
                 position: absolute;
-                bottom: 16px;
+                bottom: 0.32rem;
                 left: 0;
                 opacity: 0.3;
             }

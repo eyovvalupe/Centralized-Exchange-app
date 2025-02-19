@@ -5,7 +5,7 @@
     <div class="tr" v-for="(item, i) in props.list" :key="i">
       <StockItemForList :marketType="props.marketType" :theme="theme" :handleClick="props.handleClick"
         :deleteItem="props.deleteItem" :showSparkLine="showSparkLine" :type="props.type" @remove="remove"
-        :scrollBox="props.scrollBox" :item="item" />
+        :scrollDom="props.scrollDom" :item="item" />
     </div>
     <NoData v-if="!props.loading && !props.list.length" />
   </div>
@@ -30,7 +30,7 @@ const props = defineProps({
     type: Array,
     default: () => [],
   },
-  scrollBox: {
+  scrollDom: {
     type: String,
     default: ".page",
   },

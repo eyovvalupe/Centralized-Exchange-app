@@ -43,12 +43,12 @@ export default {
 
 .tabs-wrapper {
   display: flex;
-  gap: 15px;
+  gap: 0.3rem;
 }
 
 .tab {
-  padding: 10px 20px;
-  border-radius: 20px;
+  padding: 0.2rem 0.4rem;
+  border-radius: 0.4rem;
   /* Rounded rectangular */
   cursor: pointer;
   transition: background-color 0.3s ease-in;

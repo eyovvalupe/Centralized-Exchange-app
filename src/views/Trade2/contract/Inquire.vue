@@ -61,7 +61,8 @@
             {{ item.profit || "--" }}
           </div>
           <div class="num" :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'">
-            {{ parseFloat(getRatio(item.ratio)) > 0 ? '+' + parseFloat(getRatio(item.ratio)).toFixed(7) + '%' : parseFloat(getRatio(item.ratio)).toFixed(8) + '%' }}
+            {{ parseFloat(getRatio(item.ratio)) > 0 ? '+' + parseFloat(getRatio(item.ratio)).toFixed(7) + '%' :
+              parseFloat(getRatio(item.ratio)).toFixed(8) + '%' }}
           </div>
         </div>
       </div>
@@ -89,7 +90,7 @@ import UnLogin from "@/components/UnLogin.vue";
 import OrderInfo from "../components/OrderInfo.vue";
 import Decimal from "decimal.js";
 import { useI18n } from "vue-i18n";
-import {isEmpty} from "@/utils/isEmpty";
+import { isEmpty } from "@/utils/isEmpty";
 
 const props = defineProps({
   type: {
@@ -100,7 +101,7 @@ const props = defineProps({
     type: String,
     default: 'constract'
   },
-  scrollBox: { // 滚动的父级
+  scrollDom: { // 滚动的父级
     type: String,
     default: '.page'
   }
@@ -194,7 +195,7 @@ onMounted(() => {
     try {
       moreDom = document.querySelector(".loading_more");
       document
-        .querySelector(props.scrollBox)
+        .querySelector(props.scrollDom)
         .addEventListener("scroll", scrolHandle);
     } catch { }
   }, 500);
@@ -202,7 +203,7 @@ onMounted(() => {
 onUnmounted(() => {
   try {
     document
-      .querySelector(props.scrollBox)
+      .querySelector(props.scrollDom)
       .removeEventListener("scroll", scrolHandle);
   } catch { }
 });

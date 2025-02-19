@@ -19,9 +19,7 @@
         </div>
 
         <div class="sparkLine">
-          <SparkLine :xtimes="2.55"
-          :ytimes="1.4" v-if="item.points" :points="item.points"
-            :ratio="item.ratio" />
+          <SparkLine :xtimes="2.55" :ytimes="1.4" v-if="item.points" :points="item.points" :ratio="item.ratio" />
         </div>
 
         <div class="check_ticket" v-if="checkedList[i]">
@@ -154,8 +152,9 @@ const disabled = computed(
     justify-content: space-between;
     flex-wrap: wrap;
     gap: 0.2rem;
+
     .list_item {
-      background-color:var(--ex-bg-color3);
+      background-color: var(--ex-bg-color3);
       height: 2.18rem;
       border-radius: 0.4rem;
       width: calc(50% - 0.1rem);
@@ -219,8 +218,8 @@ const disabled = computed(
         transition: background-color linear 2s;
 
         .checkmark {
-          width: 11px;
-          height: 7px;
+          width: 0.22rem;
+          height: 0.14rem;
           position: relative;
           transition: background-color linear 2s;
         }
@@ -250,7 +249,7 @@ const disabled = computed(
         height: 0.4rem;
         position: absolute;
         transition: background-color linear 2s;
-        
+
       }
     }
   }

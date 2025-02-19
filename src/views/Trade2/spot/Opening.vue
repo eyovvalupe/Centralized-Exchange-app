@@ -13,26 +13,27 @@
 
     <!-- Tabs -->
     <div class="open_tab_box" :class="{ 'trade-dialog': props.from == 'trade' }">
-      
-      <div style="border-radius: 0.32rem;background-color: var(--ex-bg-color3);padding: 0.2rem 0.16rem 0.4rem 0.16rem;border-bottom:1px solid var(--ex-bg-white2);">
-        <Tabs animated key="form" class="van-tabs--sub_line van-tabs--sub_bg" @change="(e) => (activeTab = e)" v-model="activeTab"
-        :swipeable="false" :color="'var(--ex-primary-color)'" >
-        <Tab :title="t('trade.stock_market_price')" name="0">
-          <OpeningForm :tradeType="props.tradeType" :mode="props.mode" @showNavDialog="showNavDialog"
-            v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType"
-            @success="emits('success')" />
-        </Tab>
-        <Tab :title="t('trade.stock_limit_price')" name="1">
-          <OpeningForm :tradeType="props.tradeType" :mode="props.mode" @showNavDialog="showNavDialog"
-            v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :activeTab="activeTab" :activeType="activeType"
-            @success="emits('success')" />
-        </Tab>
-        <!-- <Tab :title="t('trade.stock_take_stop')" name="2">
+
+      <div
+        style="border-radius: 0.32rem;background-color: var(--ex-bg-color3);padding: 0.2rem 0.16rem 0.4rem 0.16rem;border-bottom:1px solid var(--ex-bg-white2);">
+        <Tabs animated key="form" class="van-tabs--sub_line van-tabs--sub_bg" @change="(e) => (activeTab = e)"
+          v-model="activeTab" :swipeable="false" :color="'var(--ex-primary-color)'">
+          <Tab :title="t('trade.stock_market_price')" name="0">
+            <OpeningForm :tradeType="props.tradeType" :mode="props.mode" @showNavDialog="showNavDialog"
+              v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType"
+              @success="emits('success')" />
+          </Tab>
+          <Tab :title="t('trade.stock_limit_price')" name="1">
+            <OpeningForm :tradeType="props.tradeType" :mode="props.mode" @showNavDialog="showNavDialog"
+              v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :activeTab="activeTab" :activeType="activeType"
+              @success="emits('success')" />
+          </Tab>
+          <!-- <Tab :title="t('trade.stock_take_stop')" name="2">
           <OpeningForm :tradeType="props.tradeType" :mode="props.mode" @showNavDialog="showNavDialog"
             v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :activeTab="activeTab" :activeType="activeType"
             @success="emits('success')" />
         </Tab> -->
-      </Tabs>
+        </Tabs>
       </div>
 
       <div class="account-box" v-if="token">
@@ -48,7 +49,8 @@
           <div>{{ $t('trade.spot_trade_available') }}</div>
           <div>
             <span style="font-size: 0.32rem;color:var(--ex-primary-color)">{{ currencyAmount || '0' }}</span>
-            <span style="color:var(--ex-white)">&nbsp;{{ props.item.symbol ? props.item.symbol.replace('usdt', '').toUpperCase() : '' }}</span>
+            <span style="color:var(--ex-white)">&nbsp;{{ props.item.symbol ? props.item.symbol.replace('usdt',
+              '').toUpperCase() : '' }}</span>
           </div>
         </div>
 
@@ -73,7 +75,7 @@ import router from "@/router";
 import store from "@/store";
 
 const token = computed(() => store.state.token)
-const jump = name => router.push({name})
+const jump = name => router.push({ name })
 
 const props = defineProps({
   type: {
@@ -151,15 +153,17 @@ defineExpose({
     :deep(.van-tabs__wrap) {
       padding-left: 3.4rem;
     }
+
     :deep(.van-tabs__nav) {
       background-color: var(--ex-none);
       position: relative;
+
       &::after {
         content: '';
         width: 100%;
         height: 1px;
-        background-color: rgba(255,255,255,0.06);
-        bottom: 15px;
+        background-color: rgba(255, 255, 255, 0.06);
+        bottom: 0.3rem;
         left: 0;
         position: absolute;
       }
@@ -189,6 +193,7 @@ defineExpose({
         align-items: center;
         justify-content: space-between;
         margin-top: 0.52rem;
+
         .btn {
           width: 3rem;
           height: 0.68rem;
