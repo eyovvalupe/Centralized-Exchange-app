@@ -690,6 +690,7 @@ onMounted(() => {
       border-radius: 0.32rem;
       padding: 0 0.28rem;
       background-color: var(--ex-bg-color6);
+      border: 0.02rem solid var(--ex-bg-color);
 
       .form_item_clear {
         width: 0.32rem;

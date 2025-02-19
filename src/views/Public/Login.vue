@@ -552,7 +552,7 @@ onMounted(() => {
     .form_item {
       display: flex;
       align-items: center;
-      // border: 0.02rem solid var(--ex-border-color2);
+      border: 0.02rem solid var(--ex-bg-color);
       background-color: var(--ex-bg-color6);
       height: 1.12rem;
       border-radius: 0.32rem;
