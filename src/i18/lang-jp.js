@@ -48,6 +48,7 @@ export default {
     security_result_success: "確認成功",
     security_result_failed: "確認失敗",
     security_result_pending: "スライダーを移動して確認してください",
+    security_result_move: "スライド認証中",
     create_user_account: "アカウントを作成",
     create_guest_account: "ゲストアカウントを作成",
     has_account: "アカウントをお持ちですか？",

@@ -48,6 +48,7 @@ export default {
     security_result_success: "인증 성공",
     security_result_failed: "인증 실패",
     security_result_pending: "슬라이더 인증 대기 중",
+    security_result_move: "슬라이딩 인증 중",
     create_user_account: "회원 가입",
     create_guest_account: "게스트 계정 만들기",
     has_account: "계정이 있나요?",

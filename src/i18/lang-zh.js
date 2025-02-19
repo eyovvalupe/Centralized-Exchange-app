@@ -48,6 +48,7 @@ export default {
     security_result_success: "验证成功",
     security_result_failed: "验证失败",
     security_result_pending: "待滑动验证",
+    security_result_move: "滑动验证中",
     create_user_account: "创建您的账户",
     create_guest_account: "创建模拟账户",
     has_account: "有账号？",

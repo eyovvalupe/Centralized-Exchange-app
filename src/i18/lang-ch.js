@@ -86,6 +86,7 @@ export default {
     security_result_success: "驗證成功",
     security_result_failed: "驗證失敗",
     security_result_pending: "待滑動驗證",
+    security_result_move: "滑動驗證中",
     create_user_account: "創建您的賬戶",
     create_guest_account: "創建模擬賬戶",
     has_account: "有賬號？",
