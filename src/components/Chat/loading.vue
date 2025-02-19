@@ -11,7 +11,7 @@
     </div>
 </template>
 <style scoped>
-.loading{
+.loading {
     width: 100vw;
     height: 100%;
     position: fixed;
@@ -22,13 +22,15 @@
     justify-content: center;
     z-index: 19;
 }
-.loading-mask{
+
+.loading-mask {
     width: 100vw;
     height: 100%;
     position: fixed;
     background: rgb(var(--ex-bg-color-rgb) / 0.7);
     z-index: 20;
 }
+
 .lds-ring,
 .lds-ring div {
     position: relative;
@@ -41,18 +43,18 @@
 .lds-ring {
     display: inline-block;
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 1.6rem;
+    height: 1.6rem;
 }
 
 .lds-ring div {
     box-sizing: border-box;
     display: block;
     position: absolute;
-    width: 64px;
-    height: 64px;
-    margin: 8px;
-    border: 8px solid var(--ex-primary-color);
+    width: 1.28rem;
+    height: 1.28rem;
+    margin: 0.16rem;
+    border: 0.16rem solid var(--ex-primary-color);
     border-radius: 50%;
     animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
     border-color: var(--ex-primary-color) transparent transparent transparent;

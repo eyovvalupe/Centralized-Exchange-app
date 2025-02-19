@@ -11,17 +11,17 @@
         <Swipe v-if="pageLoaded" :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" :touchable="true"
             :loop="false" :duration="300" ref="swipe" @change="swipeChange">
             <SwipeItem>
-                <div style="height: calc(100vh - 2rem);">
+                <div style="height: calc(var(--vh) * 100 - 2rem);">
                     <Follow :from="'finance'" />
                 </div>
             </SwipeItem>
             <SwipeItem>
-                <div style="height: calc(100vh - 2rem);">
+                <div style="height: calc(var(--vh) * 100 - 2rem);">
                     <Pledge />
                 </div>
             </SwipeItem>
             <SwipeItem>
-                <div style="height: calc(100vh - 2rem);">
+                <div style="height: calc(var(--vh) * 100 - 2rem);">
                     <Stake />
                 </div>
             </SwipeItem>

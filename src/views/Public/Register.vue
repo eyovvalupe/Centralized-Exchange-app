@@ -514,8 +514,8 @@ onMounted(() => {
 
     .top_back_container {
       .arrow_icon {
-        width: 20px;
-        height: 20px;
+        width: 0.4rem;
+        height: 0.4rem;
         clip-path: path("M13.4 2L5 10.4L13.4 18.8");
         background-color: var(--ex-text-color);
       }
@@ -707,11 +707,11 @@ onMounted(() => {
         display: flex;
         align-items: center;
         margin-right: 0.12rem;
-        gap: 5px;
+        gap: 0.1rem;
 
         .flag_icon {
-          width: 32px;
-          height: 32px;
+          width: 0.64rem;
+          height: 0.64rem;
         }
 
         .more_icon {
@@ -896,16 +896,16 @@ onMounted(() => {
     align-items: center;
     justify-content: start;
     border-bottom: 1px solid var(--ex-border-color);
-    gap: 10px;
+    gap: 0.2rem;
 
     .flag_icon {
-      width: 32px !important;
-      height: 32px !important;
+      width: 0.64rem !important;
+      height: 0.64rem !important;
     }
 
     .cross {
       position: absolute;
-      right: 5px;
+      right: 0.1rem;
     }
   }
 

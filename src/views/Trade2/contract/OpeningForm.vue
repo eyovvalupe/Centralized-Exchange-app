@@ -34,19 +34,19 @@
     <template v-if="props.activeTab == 2">
       <!-- 简单模式 -->
       <FormItem :placeholder="activeType == 1
-          ? t('trade.stock_opening_take')
-          : t('trade.stock_opening_stop')
+        ? t('trade.stock_opening_take')
+        : t('trade.stock_opening_stop')
         " class="mb-[0.2rem]" input-type="number" v-model="form1.stop_loss_price" :percent-tags="props.activeType == 1
-            ? [
-              { label: '-20%', value: 20 },
-              { label: '-15%', value: 15 },
-              { label: '-10%', value: 10 },
-            ]
-            : [
-              { label: '+20%', value: 20 },
-              { label: '+15%', value: 15 },
-              { label: '+10%', value: 10 },
-            ]
+          ? [
+            { label: '-20%', value: 20 },
+            { label: '-15%', value: 15 },
+            { label: '-10%', value: 10 },
+          ]
+          : [
+            { label: '+20%', value: 20 },
+            { label: '+15%', value: 15 },
+            { label: '+10%', value: 10 },
+          ]
           " @percentTagClick="setPriceStop" v-if="mode == 1" />
 
       <!-- 价格 -->
@@ -73,14 +73,14 @@
 
           <FormItem :placeholder="t('trade.stock_opening_price')" v-model="form1.price" input-type="number"
             :percent-tags="props.activeType == 1
-                ? [
-                  { label: '-3%', value: 3 },
-                  { label: '-1%', value: 1 },
-                ]
-                : [
-                  { label: '+3%', value: 3 },
-                  { label: '+1%', value: 1 },
-                ]
+              ? [
+                { label: '-3%', value: 3 },
+                { label: '-1%', value: 1 },
+              ]
+              : [
+                { label: '+3%', value: 3 },
+                { label: '+1%', value: 1 },
+              ]
               " v-else @percentTagClick="percentTagClick">
             <template #right-con>
               <!-- 市价/限价 -->
@@ -104,18 +104,18 @@
     <!-- 价格 -->
     <FormItem class="mb-[0.2rem]" input-type="number" :placeholder="t('trade.stock_opening_price_title')"
       :tip="t('trade.stock_opening_price_tip')" v-model="form1.price" :percent-tags="props.activeType == 1
-          ? [
-            { label: '-3%', value: 3 },
-            { label: '-2%', value: 2 },
-            { label: '-1%', value: 1 },
-            { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
-          ]
-          : [
-            { label: '+3%', value: 3 },
-            { label: '+2%', value: 2 },
-            { label: '+1%', value: 1 },
-            { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
-          ]
+        ? [
+          { label: '-3%', value: 3 },
+          { label: '-2%', value: 2 },
+          { label: '-1%', value: 1 },
+          { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
+        ]
+        : [
+          { label: '+3%', value: 3 },
+          { label: '+2%', value: 2 },
+          { label: '+1%', value: 1 },
+          { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
+        ]
         " @percentTagClick="percentTagClick" v-if="props.activeTab == 1" />
 
     <!-- 保证金模式 -->
@@ -242,8 +242,8 @@
               v-if="currStock.name && currStock.name.replace('/USDT', '')">
               <CryptoIcon :name="currStock.name.replace('/USDT', '').toUpperCase()" />
             </div>
-            <span class="mr-[6px]">{{ currStock.name }}</span>
-            <div class="text-[11px] h-[0.3rem] w-max px-[5px] rounded-[4px] tag-crypto flex items-center">
+            <span class="mr-[0.12rem]">{{ currStock.name }}</span>
+            <div class="text-[0.22rem] h-[0.3rem] w-max px-[0.1rem] rounded-[0.08rem] tag-crypto flex items-center">
               {{ t('market.market_optional_contract') }}
             </div>
           </div>
@@ -1629,8 +1629,8 @@ defineExpose({
   .confirm-item-box {
     border-radius: 0.32rem;
     background-color: var(--ex-bg-color9);
-    padding: 14px 20px;
-    height: 207px;
+    padding: 0.28rem 0.4rem;
+    height: 4.14rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;

@@ -92,7 +92,7 @@ const uploadImg = (event) => {
 
 <style lang="less">
 .msg-input {
-  height: 47px;
+  height: 0.94rem;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -100,12 +100,12 @@ const uploadImg = (event) => {
 
   .textarea {
     width: 5.1rem;
-    height: 47px;
-    line-height: 47px;
+    height: 0.94rem;
+    line-height: 0.94rem;
     flex-shrink: 0;
-    border-radius: 16px;
-    text-indent: 16px;
-    font-size: 15px;
+    border-radius: 0.32rem;
+    text-indent: 0.32rem;
+    font-size: 0.3rem;
     border: 0.5px solid var(--ex-text-color2);
     overflow-y: hidden;
     background-color: var(--ex-bg-color2);
@@ -113,8 +113,8 @@ const uploadImg = (event) => {
   }
 
   #fileInput {
-    width: 30px;
-    height: 30px;
+    width: 0.6rem;
+    height: 0.6rem;
     position: absolute;
     z-index: 9;
     opacity: 0;
@@ -130,7 +130,7 @@ const uploadImg = (event) => {
     height: 0.4rem;
 
     img {
-      max-height: 30px;
+      max-height: 0.6rem;
       flex-shrink: 0;
       vertical-align: middle;
     }
@@ -138,7 +138,7 @@ const uploadImg = (event) => {
 
   .icon-right {
     img {
-      max-height: 30px;
+      max-height: 0.6rem;
       flex-shrink: 0;
       vertical-align: middle;
     }

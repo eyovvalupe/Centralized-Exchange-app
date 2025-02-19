@@ -128,6 +128,10 @@ const activeTab = ref(0);
 if (!token.value) {
     activeTab.value = 1
 }
+if (sessionStorage.getItem(`rec_tab_${props.from}`)) {
+    activeTab.value = Number(sessionStorage.getItem(`rec_tab_${props.from}`))
+}
+
 
 // 订阅
 const subs = () => {
@@ -149,6 +153,8 @@ const tabChange = (val) => {
             ipoRef.value && ipoRef.value.init();
         });
     }
+    // 缓存
+    sessionStorage.setItem(`rec_tab_${props.from}`, val)
 };
 
 
@@ -244,6 +250,7 @@ const filterList = list => {
             &>.van-tabs__nav {
                 padding-left: 0.2rem;
                 padding-right: 1.2rem;
+                height: 0.4rem;
             }
         }
     }

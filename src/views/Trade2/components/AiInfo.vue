@@ -55,7 +55,7 @@
       </div>
       <div class="stock-info">
         <div style="display: flex;align-items: center;">
-         <div style="width: 0.88rem;height: 0.88rem;margin-left: 0.2rem;"
+          <div style="width: 0.88rem;height: 0.88rem;margin-left: 0.2rem;"
             v-if="currItem.name && currItem.name.replace('/USDT', '')">
             <CryptoIcon :name="currItem.name.replace('/USDT', '').toUpperCase()" />
           </div>
@@ -345,17 +345,17 @@ defineExpose({
   }
 
   .circle-wrap {
-    width: 182px;
+    width: 3.64rem;
     position: relative;
   }
 
   .circle-mid {
-    width: 136px;
-    height: 136px;
+    width: 2.72rem;
+    height: 2.72rem;
     border-radius: 50%;
     position: absolute;
-    left: 23px;
-    top: 23px;
+    left: 0.46rem;
+    top: 0.46rem;
     border-radius: 50%;
     z-index: 1;
     display: flex;

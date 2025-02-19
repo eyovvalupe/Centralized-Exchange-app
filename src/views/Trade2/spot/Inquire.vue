@@ -2,7 +2,7 @@
 <template>
   <div class="inquire" v-if="token">
     <div class="tr th">
-      <div class="td td-5">{{ t("common.spot")+'/'+t('trade.trade_orders_status') }}</div>
+      <div class="td td-5">{{ t("common.spot") + '/' + t('trade.trade_orders_status') }}</div>
       <div class="td td-3">{{ t('trade.trade_deal_price') }}</div>
       <div class="td td-4" style="text-align: end !important; margin-right: 0.2rem !important">
         {{ t('market.market_buy_list_amount') }}
@@ -47,7 +47,7 @@
         <div class="td td-3">
           {{ item.settled_price || "--" }}
         </div>
-       
+
         <div class="td td-4">
           {{ item.volume || "--" }}
         </div>
@@ -86,7 +86,7 @@ const props = defineProps({
     type: String,
     default: 'constract'
   },
-  scrollBox: { // 滚动的父级
+  scrollDom: { // 滚动的父级
     type: String,
     default: '.page'
   }
@@ -210,7 +210,7 @@ onMounted(() => {
     try {
       moreDom = document.querySelector(".loading_more");
       document
-        .querySelector(props.scrollBox)
+        .querySelector(props.scrollDom)
         .addEventListener("scroll", scrolHandle);
     } catch { }
   }, 500);
@@ -218,7 +218,7 @@ onMounted(() => {
 onUnmounted(() => {
   try {
     document
-      .querySelector(props.scrollBox)
+      .querySelector(props.scrollDom)
       .removeEventListener("scroll", scrolHandle);
   } catch { }
 });
@@ -297,7 +297,8 @@ defineExpose({
       font-size: 0.24rem;
     }
 
-    .state-short, .state-sell {
+    .state-short,
+    .state-sell {
       background: rgb(var(--ex-down-color-rgb) / 0.1);
       color: var(--ex-down-color);
     }
@@ -332,9 +333,11 @@ defineExpose({
     flex: 5;
     text-align: left;
   }
+
   .td-3 {
     flex: 3;
   }
+
   .td-4 {
     flex: 4;
     text-align: right;

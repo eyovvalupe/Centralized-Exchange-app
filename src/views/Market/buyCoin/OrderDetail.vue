@@ -138,7 +138,7 @@
                     <IconSvg name="clock" />
                   </div>
                   <span>{{ currItem.merchant_avetime
-                    }}{{ t("market.market_buy_optional_duaration") }}</span>
+                  }}{{ t("market.market_buy_optional_duaration") }}</span>
                 </div>
               </div>
             </div>
@@ -191,7 +191,7 @@
             <div>{{ currItem.date }}</div>
           </div>
           <div class="flex items-center bg-color rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
-         
+
             <div
               class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-buy bg-buy-text-color flex items-center justify-center text-[0.3rem] font-[600] "
               v-if="currItem.offset == 'buy'">
@@ -519,6 +519,7 @@ getSessionToken();
     display: flex;
     margin-bottom: 0.4rem;
     gap: 0.2rem;
+
     .tab {
       flex: 1;
       height: 100%;
@@ -533,6 +534,7 @@ getSessionToken();
       height: 100%;
       font-size: 0.36rem;
       border-radius: 0.4rem;
+
       .hint {
         min-width: 0.26rem;
         height: 0.26rem;
@@ -560,6 +562,7 @@ getSessionToken();
     background-color: var(--ex-bg-color3);
     border-radius: 0.32rem;
     padding: 0 0.12rem 0.12rem 0.12rem;
+
     .status {
       min-height: 1rem;
       padding: 0.32rem;
@@ -612,7 +615,7 @@ getSessionToken();
       bottom: -1px;
       background-color: var(--ex-bg-color);
       width: calc(100% + 2px);
-      left:-1px;
+      left: -1px;
 
       .bank {
         background-color: var(--ex-bg-color3);
@@ -798,9 +801,9 @@ getSessionToken();
       justify-content: center;
       color: var(--ex-text-color);
       text-align: center;
-      font-size: 16px;
+      font-size: 0.32rem;
       font-weight: 400;
-      line-height: 24px;
+      line-height: 0.48rem;
     }
 
     .active_btn {

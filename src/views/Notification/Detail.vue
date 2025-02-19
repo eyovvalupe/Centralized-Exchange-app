@@ -14,9 +14,9 @@
         {{ notifiDetailItem.content }}
       </div>
       <div class="flex gap-[0.2rem]" v-if="notifiDetailItem.images && notifiDetailItem.images.split(';').length">
-        <div class="flex-1 h-[2.5rem] rounded-[0.2rem] overflow-hidden mb-[0.32rem]"
+        <div class="flex-1  rounded-[0.2rem] overflow-hidden mb-[0.32rem]"
           v-for="(url, i) in notifiDetailItem.images.split(';')" @click="showPreview(notifiDetailItem.images, i)">
-          <img class="!object-fill" v-lazy="getStaticImgUrl(url)" />
+          <img style="height: auto;" class="!object-fill" v-lazy="getStaticImgUrl(url)" />
         </div>
       </div>
       <div class="w-full text-[0.32rem] text-color mb-[0.32rem] leading-[0.52rem]">
@@ -26,7 +26,8 @@
         {{ notifiDetailItem.content }}
       </div>
       <Button v-if="token && notifiDetailItem.marke" class="submit"
-        :class="notifiDetailItem.join ? 'joined ripple-primary' : 'unjoined ripple-btn'" @click="join(notifiDetailItem)"><span class="text-[0.32rem]">{{
+        :class="notifiDetailItem.join ? 'joined ripple-primary' : 'unjoined ripple-btn'"
+        @click="join(notifiDetailItem)"><span class="text-[0.32rem]">{{
           notifiDetailItem.join ? $t('notifi.notifi_joined') : $t('notifi.notifi_join') }}</span></Button>
     </div>
     <ImagePreview v-model:show="isPreview" :images="previewImages" :startPosition="index" :loop="true"

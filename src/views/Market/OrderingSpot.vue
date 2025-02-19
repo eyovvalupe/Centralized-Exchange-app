@@ -4,7 +4,7 @@
 
         <!-- 竖排 -->
         <div style="display: flex;flex: 1;" v-if="props.type == 'infinite'">
-            <div class="ordering-box" :style="{background: innerPage ? 'none' : ''}" style="height: 100%;">
+            <div class="ordering-box" :style="{ background: innerPage ? 'none' : '' }" style="height: 100%;">
                 <div class="lists-tr lists-title" v-if="currStock.symbol">
                     <div class="lists-td">价格(USDT)</div>
                     <div class="lists-td">数量({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
@@ -234,7 +234,6 @@ const max = ref(0)
 const listBox = ref()
 const reset = () => {
     if (!listBox.value) return
-    console.error('listBox.value.clientHeight', listBox.value.clientHeight)
     const h = Math.floor(listBox.value.clientHeight / 20)
     if (currNav.value != 1 || props.type == 'infinite') {
         max.value = h
@@ -398,7 +397,7 @@ onUnmounted(() => {
 
         .lists-item {
             position: relative;
-            height: 20px;
+            height: 0.4rem;
 
             .bg {
                 position: absolute;

@@ -168,7 +168,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 2,
-       title: '提交成功'
+      title: '提交成功'
     },
   },
   {
@@ -287,7 +287,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 2,
-       title: '通知'
+      title: '通知'
     },
   },
   {
@@ -299,7 +299,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 6,
-       title: '详情'
+      title: '详情'
     },
   },
   {
@@ -415,7 +415,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: "child",
-      pageDeep: 1,
+      pageDeep: 5,
       title: '客服'
     },
   },
@@ -685,7 +685,7 @@ const routes = [
     meta: {
       keepAlive: false,
       pageType: "child",
-      pageDeep: 1,
+      pageDeep: 3,
       title: '记录列表'
     },
   },
@@ -699,7 +699,7 @@ const routes = [
       keepAlive: false,
       pageType: "child",
       pageDeep: 1,
-       title: '认购'
+      title: '认购'
     },
   },
   {

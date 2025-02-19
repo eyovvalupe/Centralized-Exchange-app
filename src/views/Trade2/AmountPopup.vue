@@ -105,7 +105,7 @@ defineExpose({
         display: flex;
         align-items: center;
         color: var(--ex-text-color);
-        font-size: 15px;
+        font-size: 0.3rem;
         font-weight: 400;
 
         .currency_icon {

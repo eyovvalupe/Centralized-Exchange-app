@@ -113,6 +113,7 @@ const { t } = useI18n();
 const route = useRoute();
 const loadTab = ref([]);
 const active = ref(0);
+const activeTab = ref(0)
 const onChange = async (val) => {
   // active.value = val;
   // if (loadTab.value.indexOf(val) == -1) {

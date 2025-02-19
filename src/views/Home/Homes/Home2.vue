@@ -75,7 +75,7 @@
                     </div>
                     <div>DeFi借币</div>
                 </div>
-                <div class="dir-s" @click="jump('finance', false, { activeTab: 2 })"
+                <div class="dir-s wow fadeInUp" @click="jump('finance', false, { activeTab: 2 })"
                     :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-s-bg.png')})` }">
                     <div class="dir-s-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/dir-s-4.svg')" alt="">
@@ -171,7 +171,7 @@
                     <div class="f-tab" :class="{ 'f-tab-active': fActive == 1 }" @click="fActive = 1">{{
                         t('finance.portfolio_title') }}</div>
                     <div class="f-tab" :class="{ 'f-tab-active': fActive == 2 }" @click="fActive = 2">{{ t('copy.title')
-                        }}
+                    }}
                     </div>
                 </div>
                 <!-- 质押挖矿 -->
