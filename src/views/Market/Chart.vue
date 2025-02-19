@@ -3,7 +3,7 @@
   <div class="market-charts">
     <!-- 图表 -->
     <div class="chart_box" id="chart_box_c">
-      <div class="tabs" :class="{'!p-[0]': from == 'constract'}">
+      <div class="tabs" :class="{ '!p-[0]': from == 'constract' }">
         <div class="tab tab_ani" :class="{ active_tab: timeType == 'Time' }" @click="changeType('Time')">
           Time
         </div>
@@ -37,7 +37,7 @@
           <img v-lazy="getStaticImgUrl('/static/img/common/full.svg')" alt="" />
         </div>
         <!-- 折叠 -->
-        <div class="full-tab mini-tab" v-if="props.mini" @click="zipo = !zipo"
+        <div class="full-tab mini-tab" v-if="props.mini" @click="switchZipo"
           :style="{ transform: `rotate(${zipo ? 180 : 0}deg)` }">
           <img v-lazy="getStaticImgUrl('/static/img/common/switch.svg')" alt="" />
         </div>
@@ -58,7 +58,8 @@
           </div>
         </div>
       </Teleport>
-      <div v-else v-show="!(props.mini && zipo)" class="chart_container" :class="{ fullscreen_container: fullWindow, '!p-[0]': from == 'constract' }">
+      <div v-else v-show="!(props.mini && zipo)" class="chart_container"
+        :class="{ fullscreen_container: fullWindow, '!p-[0]': from == 'constract' }">
         <!-- 时区 -->
         <div v-if="showDate" class="chart_time">{{ showDate }}</div>
         <!-- 分时图 -->
@@ -112,8 +113,13 @@ const props = defineProps({
   }
 });
 const periodType = computed(() => props.type);
+const emits = defineEmits(['switch'])
 
 const zipo = ref(false) // 折叠状态
+const switchZipo = () => {
+  zipo.value = !zipo.value
+  emits('switch', zipo.value)
+}
 
 // 股票信息
 const item = computed(() => {
@@ -179,7 +185,8 @@ const fullScreen = (key) => {
 };
 
 defineExpose({
-  timeType
+  timeType,
+  zipo,
 })
 </script>
 

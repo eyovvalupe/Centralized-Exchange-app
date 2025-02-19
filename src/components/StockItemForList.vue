@@ -85,7 +85,7 @@
           </div>
           <div class="text-center w-1/3">
             <span :class="updown === 0 ? '' : updown > 0 ? 'up' : 'down'">{{ item.ratio > 0 ? "+" : ""
-              }}{{ (item.ratio || 0) }}%</span><br />
+            }}{{ (item.ratio || 0) }}%</span><br />
             <span class="text-[0.22rem] text-color3 font-normal">涨跌比</span>
           </div>
         </div>
@@ -94,7 +94,7 @@
       <template #right v-if="props.deleteItem">
         <div :class="props.marketType != 'crypto'
           ? 'delete_content'
-          : 'delete_content_crypto ml-[1px]'
+          : 'delete_content_crypto ml-[0.02rem]'
           " @click="removeStock(item)">
           <div class="delete_icon">
             <img v-lazy="getStaticImgUrl('/static/img/common/delete.svg')" alt="">
@@ -120,7 +120,7 @@ const props = defineProps({
     type: Object,
     default: () => { },
   },
-  scrollBox: {
+  scrollDom: {
     // 滚动的父级
     type: String,
     default: ".page",
@@ -263,8 +263,8 @@ const removeStock = (item) => {
     align-items: center;
     justify-content: center;
     background-color: var(--ex-border-color2);
-    border-top-right-radius: 16px;
-    border-bottom-right-radius: 16px;
+    border-top-right-radius: 0.32rem;
+    border-bottom-right-radius: 0.32rem;
   }
 
   .delete_content_crypto {
@@ -294,6 +294,7 @@ const removeStock = (item) => {
     flex: 5;
     flex-shrink: 0;
     overflow: hidden;
+
     .item_name {
       font-size: 0.32rem;
       color: var(--ex-text-color);
@@ -331,6 +332,7 @@ const removeStock = (item) => {
       height: 0.48rem;
       display: flex;
       justify-content: flex-end;
+
       .item_percent {
         width: 1.14rem;
         height: 0.48rem;

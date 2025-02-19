@@ -2,7 +2,7 @@
 <template>
     <div class="page-marketinfo2">
         <div class="left-icon" @click="openMenu">
-            <div class="w-[0.48rem] h-[0.52rem]">
+            <div class="w-[0.48rem] h-[0.48rem]">
                 <img v-lazy="getStaticImgUrl('/static/img/trade/open.svg')" alt="" />
             </div>
         </div>
@@ -11,7 +11,7 @@
             <div style="height: 2rem"></div>
             <Loaidng :loading="true" />
         </div>
-        <div class="market-trade-body" v-if="item.symbol">
+        <div class="market-trade-body" v-if="item.symbol && !chartLoading">
             <Tabs @change="changeTab2" :key="'main'" class="van-tabs--top" :sticky="true"
                 :color="'var(--ex-primary-color)'" v-model:active="activeTab" animated shrink>
                 <!-- 现货 -->
@@ -41,8 +41,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="charts-box" v-if="!showInfoDialog">
-                            <Chart :type="'constract'" :mini="true" />
+                        <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']" v-if="!showInfoDialog">
+                            <Chart @switch="e => hideChart = e" :type="'constract'" :mini="true" />
                         </div>
                         <!-- 内容1 -->
                         <div style="
@@ -75,7 +75,7 @@
                                 <Tab :title="t('trade.trade_order_history')" :name="55">
                                     <div style="height: 0.2rem"></div>
                                     <div class="dialog-market-bg" v-if="activeTab2 == 55">
-                                        <InquireSpot :scrollBox="'.dialog-market-box'" :type="'constract'"
+                                        <InquireSpot :scrollDom="'.dialog-market-box'" :type="'constract'"
                                             ref="InquireRef" />
                                     </div>
                                 </Tab>
@@ -95,7 +95,7 @@
                                 <Tab :title="t('trade.trade_order_history')" :name="55">
                                     <div style="height: 0.2rem;"></div>
                                     <div class="dialog-market-bg" v-if="activeTab3 == 55">
-                                        <InquireSpot :scrollBox="'.dialog-market-box'" :type="'constract'" ref="InquireRef" />
+                                        <InquireSpot :scrollDom="'.dialog-market-box'" :type="'constract'" ref="InquireRef" />
                                     </div>
                                 </Tab>
                             </Tabs>
@@ -129,8 +129,9 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="charts-box" v-if="!showInfoDialog && !openInfoStatus">
-                            <Chart :from="'constract'" :type="'constract'" :mini="true" />
+                        <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']"
+                            v-if="!showInfoDialog && !openInfoStatus">
+                            <Chart @switch="e => hideChart = e" :from="'constract'" :type="'constract'" :mini="true" />
                         </div>
                         <!-- 内容1 -->
                         <div style="
@@ -163,7 +164,7 @@
                                 <Tab :title="t('trade.trade_order_history')" :name="55">
                                     <div style="height: 0.2rem"></div>
                                     <div class="dialog-market-bg" v-if="activeTab2 == 55">
-                                        <InquireContract :scrollBox="'.dialog-market-box'" :type="'constract'"
+                                        <InquireContract :scrollDom="'.dialog-market-box'" :type="'constract'"
                                             ref="InquireRef" />
                                     </div>
                                 </Tab>
@@ -183,7 +184,7 @@
                                 <Tab :title="t('trade.trade_order_history')" :name="55">
                                     <div style="height: 0.2rem;"></div>
                                     <div class="dialog-market-bg" v-if="activeTab3 == 55">
-                                        <InquireContract :scrollBox="'.dialog-market-box'" :type="'constract'" ref="InquireRef" />
+                                        <InquireContract :scrollDom="'.dialog-market-box'" :type="'constract'" ref="InquireRef" />
                                     </div>
                                 </Tab>
                             </Tabs>
@@ -217,8 +218,8 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="charts-box" v-if="!showInfoDialog">
-                            <Chart :type="'ai'" :mini="true" />
+                        <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']" v-if="!showInfoDialog">
+                            <Chart @switch="e => hideChart = e" :type="'ai'" :mini="true" />
                         </div>
                         <!-- 内容1 -->
                         <div style="
@@ -374,15 +375,20 @@ const goMaret = () => {
 const activeTab = ref(1); // 一级
 if (route.query.tradeType == 'constract') {
     activeTab.value = 2;
-}
-if (route.query.tradeType == 'ai') {
+} else if (route.query.tradeType == 'ai') {
     activeTab.value = 3;
+} else {
+    if (sessionStorage.getItem('tradeinfo-tab')) {
+        activeTab.value = Number(sessionStorage.getItem('tradeinfo-tab'))
+    }
 }
 const activeTab2 = ref(11); // 二级
-const activeTab3 = ref(44); // 三级
+const hideChart = ref(false) // 折叠图表
+
 
 const lastTab = ref(activeTab.value); // 上一次的分类，切换时同步数据用的
 const changeTab2 = (e) => {
+    hideChart.value = false
     if (e == 3) {
         // 切换到交易机器人
         store.commit(
@@ -398,6 +404,8 @@ const changeTab2 = (e) => {
         );
     }
     lastTab.value = e;
+
+    sessionStorage.setItem('tradeinfo-tab', e)
 };
 
 // 股票信息
@@ -698,11 +706,11 @@ const openMenu = () => {
     }
 
     .left-icon {
-        height: 43px;
+        height: 0.88rem;
         display: flex;
         align-items: center;
         position: absolute;
-        left: 0.24rem;
+        left: 0.1rem;
         top: 0rem;
         z-index: 99;
     }
@@ -722,7 +730,7 @@ const openMenu = () => {
             margin-top: 0.1rem;
             height: calc(var(--vh) * 100 - 1rem);
             overflow-y: auto;
-            padding-bottom: 50px;
+            padding-bottom: 1rem;
 
             :deep(.van-tabs--market2) {
                 &>.van-tabs__wrap {
@@ -733,7 +741,7 @@ const openMenu = () => {
 
                         .van-tab {
                             span {
-                                font-size: 16px;
+                                font-size: 0.32rem;
                             }
                         }
                     }
@@ -753,7 +761,11 @@ const openMenu = () => {
 
             .charts-box {
                 padding: 0 0.1rem;
-                height: 250px;
+                height: 5rem;
+            }
+
+            .hide-charts-box {
+                height: 1rem;
             }
 
             .dialog-market-bg {

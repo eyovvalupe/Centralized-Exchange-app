@@ -1,8 +1,8 @@
 <!-- ai -->
 <template>
   <div class="ai-block">
-    <Tabs :type="customType"  animated v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
-      @change="onChange">
+    <Tabs :type="customType" animated v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'"
+      shrink @change="onChange">
       <!-- <Tab :title="t('trade.stock_open')" name="0">
         <div class="ai-block-content" style="padding-top: 0.4rem">
           <Opening :tradeType="props.activeTab" @showNavDialog="showNavDialog" mode="page" ref="OpeningRef"
@@ -140,7 +140,7 @@ defineExpose({
         height: 1px;
         background-color: var(--ex-primary-color);
         position: absolute;
-        bottom: 16px;
+        bottom: 0.32rem;
         left: 0;
         opacity: 0.3;
       }

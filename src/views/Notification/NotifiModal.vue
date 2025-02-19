@@ -14,7 +14,7 @@
         <div class="w-full text-[0.28rem] leading-[0.48rem] text-color mb-[0.32rem]">
           {{ notifiData.content || '--' }}
         </div>
-        <div class="flex gap-[4px]">
+        <div class="flex gap-[0.08rem]">
           <div class="flex-1 h-[2rem] rounded-[0.2rem] overflow-hidden mb-[0.32rem]"
             v-for="(url, i) in notifiData.images.split(';')">
             <img class="!object-fill" v-lazy="getStaticImgUrl(url)" @click="showPreview(i)" />

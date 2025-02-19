@@ -98,7 +98,7 @@
                         <div class="detail_item">
                             <div>{{ t('trade.ipo_detail_market_price') }}</div>
                             <div class="val">{{ currDetail.listing_price || '--' }} <span>{{ currDetail.currency
-                                    }}</span>
+                            }}</span>
                             </div>
                         </div>
 
@@ -265,8 +265,8 @@ const copy = text => {
     }
 
     .status_fail {
-        width: 60px;
-        height: 60px;
+        width: 1.2rem;
+        height: 1.2rem;
         background-color: var(--ex-bg-color3);
         border-radius: 0.32rem;
         display: flex;

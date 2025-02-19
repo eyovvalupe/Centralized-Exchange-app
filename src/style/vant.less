@@ -65,6 +65,19 @@ body .van-popup--bottom:not(.ex-bottom-popup) {
 }
 
 body {
+
+  .van-tab {
+    font-size: 0.28rem;
+    line-height: 1;
+  }
+  .van-tab--shrink {
+    padding: 0 0.16rem;
+  }
+
+  .van-tabs--line .van-tabs__wrap {
+    height: 0.88rem;
+  }
+  
   .van-swipe__track {
     transition-duration: 200ms !important;
     transition-timing-function: ease-in;
@@ -279,6 +292,7 @@ body .van-dialog {
       transition: all ease-in 0.2s;
       padding: 0 0.2rem;
       flex: initial;
+      line-height: 1;
       .van-tab__text {
         font-size: 0.32rem;
       }
@@ -290,6 +304,7 @@ body .van-dialog {
       .van-tab__text {
         font-weight: 600;
         color: var(--ex-text-color--bg-primary);
+        
       }
       &::after{
         content: '';
@@ -549,6 +564,7 @@ body .van-dialog {
     }
   }
 }
+
 
 /*自定义选项卡样式1*/
 .van-tabs--line-card {

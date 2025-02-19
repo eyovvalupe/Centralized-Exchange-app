@@ -10,7 +10,7 @@
         @click="changeTab('contactTheMerchant')">
         {{ $t("market.market_buy_list_contact") }}
         <!-- <div v-if="form.unread"
-          class="absolute right-[40px] top-[3px] flex size-4 items-center justify-center rounded-50 bg-unread-msg text-8 bg-unread-msg-text-color">
+          class="absolute right-[0.8rem] top-[0.06rem] flex size-4 items-center justify-center rounded-50 bg-unread-msg text-8 bg-unread-msg-text-color">
           {{ form.unread > 99 ? '+99' : form.unread }}
         </div> -->
         <div
@@ -67,7 +67,7 @@
                 <IconSvg name="clock" />
               </div>
               <span>{{ form.merchant_avetime
-                }}{{ $t("market.market_buy_optional_duaration") }}</span>
+              }}{{ $t("market.market_buy_optional_duaration") }}</span>
             </template>
           </div>
 

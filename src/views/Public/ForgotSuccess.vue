@@ -94,8 +94,8 @@ const goChat = () => {
 
     .top_back_container {
       .arrow_icon {
-        width: 20px;
-        height: 20px;
+        width: 0.4rem;
+        height: 0.4rem;
         clip-path: path("M13.4 2L5 10.4L13.4 18.8");
         background-color: var(--ex-text-color);
       }

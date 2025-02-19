@@ -1,18 +1,10 @@
 <template>
   <div class="crypto_order_list">
     <div class="crypto_order_tabs">
-      <span
-        class="crypto_order_tab mr-[0.12rem]"
-        :class="activeTab == 0 ? 'actived' : ''"
-        @click="changeActiveTab(0)"
-        >{{ t('assets.order_current_position') }}</span
-      >
-      <span
-        class="crypto_order_tab"
-        :class="activeTab == 1 ? 'actived' : ''"
-        @click="changeActiveTab(1)"
-        >{{ t('assets.order_history') }}</span
-      >
+      <span class="crypto_order_tab mr-[0.12rem]" :class="activeTab == 0 ? 'actived' : ''"
+        @click="changeActiveTab(0)">{{ t('assets.order_current_position') }}</span>
+      <span class="crypto_order_tab" :class="activeTab == 1 ? 'actived' : ''" @click="changeActiveTab(1)">{{
+        t('assets.order_history') }}</span>
     </div>
     <div class="tab" v-if="activeTab == 0">
       <Positions />
@@ -41,13 +33,14 @@ const changeActiveTab = (val) => {
 };
 </script>
 <style lang="less">
-
 .crypto_order_list {
   padding: 0 0.32rem;
+
   .crypto_order_tabs {
     height: 0.78rem;
     display: flex;
-    margin-top:0.32rem;
+    margin-top: 0.32rem;
+
     .crypto_order_tab {
       font-size: 0.3rem;
       color: var(--ex-text-color2);
@@ -70,6 +63,7 @@ const changeActiveTab = (val) => {
     .positions {
       padding: 0;
     }
+
     .inquire {
       padding: 0;
     }

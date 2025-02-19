@@ -152,7 +152,7 @@ function formatDate(date) {
 
 <style lang="less" scoped>
 .msg-content {
-  padding: 0 16px;
+  padding: 0 0.32rem;
 
   .service_first {
     position: relative;
@@ -177,15 +177,15 @@ function formatDate(date) {
     display: flex;
 
     .avatar {
-      width: 40px;
-      height: 40px;
-      border-radius: 20px;
+      width: 0.8rem;
+      height: 0.8rem;
+      border-radius: 0.4rem;
       overflow: hidden;
-      margin-left: 16px;
+      margin-left: 0.32rem;
 
       img {
-        max-width: 40px;
-        max-height: 40px;
+        max-width: 0.8rem;
+        max-height: 0.8rem;
       }
     }
 
@@ -193,12 +193,12 @@ function formatDate(date) {
       .con {
         display: flex;
         align-items: center;
-        padding: 0 15px;
+        padding: 0 0.3rem;
         max-width: 5.84rem;
         min-height: 1rem;
-        line-height: 22px;
-        font-size: 15px;
-        border-radius: 6px;
+        line-height: 0.44rem;
+        font-size: 0.3rem;
+        border-radius: 0.12rem;
         position: relative;
 
         :deep(p) {
@@ -225,7 +225,7 @@ function formatDate(date) {
 
         &.img {
           padding: 0 !important;
-          margin-right: 6px;
+          margin-right: 0.12rem;
         }
       }
 
@@ -238,7 +238,7 @@ function formatDate(date) {
           height: 0.8rem;
           border-radius: 0.4rem;
           overflow: hidden;
-          margin-left: 7px;
+          margin-left: 0.14rem;
 
           .user-avatar-img {
             width: 0.8rem !important;
@@ -252,14 +252,14 @@ function formatDate(date) {
           border-left: 15px solid var(--ex-primary-color);
           border-top: 15px solid transparent;
           border-bottom: 15px solid transparent;
-          margin-left: -9px;
-          margin-top: 8px;
+          margin-left: -0.18rem;
+          margin-top: 0.16rem;
         }
       }
 
       .time {
-        font-size: 12px;
-        padding: 5px 0 0 10px;
+        font-size: 0.24rem;
+        padding: 0.1rem 0 0 0.2rem;
         color: var(--ex-text-color2);
       }
 
@@ -272,8 +272,8 @@ function formatDate(date) {
           border-right: 15px solid var(--ex-border-color);
           border-top: 15px solid transparent;
           border-bottom: 15px solid transparent;
-          margin-left: 7px;
-          margin-top: 8px;
+          margin-left: 0.14rem;
+          margin-top: 0.16rem;
         }
 
         .user-avatar {
@@ -281,7 +281,7 @@ function formatDate(date) {
           height: 0.8rem;
           border-radius: 0.4rem;
           overflow: hidden;
-          margin-left: 7px;
+          margin-left: 0.14rem;
 
           .receive-avatar-img {
             width: 0.8rem !important;
@@ -298,10 +298,10 @@ function formatDate(date) {
 
         &.img {
           padding: 0 !important;
-          margin-left: 6px;
+          margin-left: 0.12rem;
         }
 
-        
+
       }
     }
 
@@ -309,7 +309,7 @@ function formatDate(date) {
       justify-content: flex-end;
 
       .msg-item-con {
-        margin: 0 5px 30px 5px;
+        margin: 0 0.1rem 0.6rem 0.1rem;
         text-align: right;
       }
 
@@ -348,8 +348,8 @@ function formatDate(date) {
   #hasNewMessage {
     text-align: center;
     background: var(--ex-white);
-    padding: 10px 0;
-    margin-bottom: 10px;
+    padding: 0.2rem 0;
+    margin-bottom: 0.2rem;
     color: var(--ex-text-color3);
   }
 

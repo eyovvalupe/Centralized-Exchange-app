@@ -189,14 +189,14 @@
       top: 0;
       background-color: var(--ex-bg-color);
 
-      .top_back_container {
-        .arrow_icon {
-          width: 20px;
-          height: 20px;
-          clip-path: path('M13.4 2L5 10.4L13.4 18.8');
-          background-color: var(--ex-text-color);
-        }
+    .top_back_container {
+      .arrow_icon {
+        width: 0.4rem;
+        height: 0.4rem;
+        clip-path: path("M13.4 2L5 10.4L13.4 18.8");
+        background-color: var(--ex-text-color);
       }
+    }
 
       .language_icon_container {
         width: 0.72rem;

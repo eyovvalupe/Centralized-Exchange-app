@@ -14,7 +14,7 @@
         <Carousel :autoplay="5000" :wrap-around="true" :mouseDrag="true" v-model="currentSlide">
           <Slide v-for="(list, index) in recomendedCryptoList" :key="index">
             <div @click="goInfo(list)" class="carousel__item p-[0.08rem]">
-              <div class="text-[font-bold] text-[15px] mb-[0.32rem] mt-[0.12rem]">
+              <div class="text-[font-bold] text-[0.3rem] mb-[0.32rem] mt-[0.12rem]">
                 {{ list.symbol }}
               </div>
               <div class="flex justify-between mb-[0.3rem]" :class="[

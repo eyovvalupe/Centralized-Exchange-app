@@ -34,7 +34,7 @@
                                     <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                         <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
                                     </div>
-                                    <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_order_status') }}
+                                    <div class="right_left_effect text-[0.3rem]">{{ $t('copy.copy_order_status') }}
                                     </div>
                                 </div>
                                 <div class="w-[2.4rem] h-[0.6rem] rounded-[0.32rem] flex items-center justify-between px-[0.28rem] mr-[0.28rem] mt-[0.28rem] mask-btn"
@@ -84,7 +84,7 @@
                             <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                 <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
                             </div>
-                            <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_leader_overview') }}</div>
+                            <div class="right_left_effect text-[0.3rem]">{{ $t('copy.copy_leader_overview') }}</div>
                         </div>
                         <div class="w-full pt-[0.6rem] flex flex-col">
                             <div class="h-[2.4rem] flex flex-col justify-between mb-[0.6rem]">
@@ -92,12 +92,14 @@
                                     <div class="flex-1 flex flex-col">
                                         <div class="text-[0.28rem] text-color2 text-center mb-[0.1rem]">{{
                                             $t('copy.copy_belong_days') }}</div>
-                                        <div class="text-[0.4rem] font-semibold text-center">{{ info.days }}</div>
+                                        <div class="text-[0.3rem] mt-[0.1rem] font-semibold text-center">{{ info.days }}
+                                        </div>
                                     </div>
                                     <div class="flex-1 flex flex-col">
                                         <div class="text-[0.28rem] text-color2 text-center mb-[0.1rem]">{{
                                             $t('copy.copy_leader_order_size') }}</div>
-                                        <div class="text-[0.4rem] font-semibold text-center">{{ info.amount }}</div>
+                                        <div class="text-[0.3rem] mt-[0.1rem] font-semibold text-center">{{ info.amount
+                                            }}</div>
                                     </div>
                                 </div>
                                 <div class="w-full flex">
@@ -105,13 +107,15 @@
                                     <div class="flex-1 flex flex-col">
                                         <div class="text-[0.28rem] text-color2 text-center mb-[0.1rem]">{{
                                             $t('copy.copy_leader_followers_profit') }}</div>
-                                        <div class="text-[0.4rem] font-semibold text-center">{{ info.returnamount }}
+                                        <div class="text-[0.3rem] mt-[0.1rem] font-semibold text-center">{{
+                                            info.returnamount }}
                                         </div>
                                     </div>
                                     <div class="flex-1 flex flex-col">
                                         <div class="text-[0.28rem] text-color2 text-center mb-[0.1rem]">{{
                                             $t('copy.copy_leader_followers_num') }}</div>
-                                        <div class="text-[0.4rem] font-semibold text-center">{{ info.followers }}</div>
+                                        <div class="text-[0.3rem] mt-[0.1rem] font-semibold text-center">{{
+                                            info.followers }}</div>
                                     </div>
                                 </div>
                             </div>
@@ -119,7 +123,7 @@
                                 style="background-color: var(--ex-bg-white2);">
                                 <div class="text-[0.28rem] text-color2 text-center">{{
                                     $t('copy.copy_profit_divide_ratio') }}</div>
-                                <div class="text-[0.4rem] font-semibold text-center">{{ info.profitratio * 100 }}%</div>
+                                <div class="text-[0.3rem] font-semibold text-center">{{ info.profitratio * 100 }}%</div>
                             </div>
                         </div>
                     </div>
@@ -130,7 +134,7 @@
                                 <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                     <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
                                 </div>
-                                <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_belong_profit_rate') }}
+                                <div class="right_left_effect text-[0.3rem]">{{ $t('copy.copy_belong_profit_rate') }}
                                 </div>
                             </div>
                             <div class="flex">
@@ -184,7 +188,7 @@
                                 <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                     <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
                                 </div>
-                                <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_belong_tab3') }}
+                                <div class="right_left_effect text-[0.3rem]">{{ $t('copy.copy_belong_tab3') }}
                                 </div>
                             </div>
                             <div class="w-[0.48rem] h-[0.48rem] rounded-[0.1rem] mask-btn" @click="active = '2'">
@@ -196,7 +200,7 @@
                             <div class="flex flex-col items-center">
                                 <div class="text-[0.28rem] text-color2 mb-[0.1rem]">{{ $t('copy.copy_follower_amount')
                                     }}</div>
-                                <div class="text-[0.4rem] font-semibold">{{ follows.length }}</div>
+                                <div class="text-[0.3rem] font-semibold">{{ follows.length }}</div>
                             </div>
                         </div>
                         <div class="w-full rounded-[0.32rem] h-[0.96rem] flex items-center px-[0.28rem] justify-between mb-[0.12rem]"
