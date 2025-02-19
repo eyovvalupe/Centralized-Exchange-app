@@ -32,7 +32,7 @@
                             <div style="width:1.12rem;height:1.12rem;margin: 0 auto 0.2rem auto;">
                                 <img v-lazy="getStaticImgUrl('/static/img/user/unlogin-user.png')" alt="">
                             </div>
-                            <div>请先登录再查看自选哦</div>
+                            <div>{{ $t('market.market_login_first') }}</div>
                         </div>
                         <div class="flex justify-center gap-[0.4rem]">
                             <div style="min-width: 2rem;"

@@ -140,6 +140,12 @@ export default {
     message_box_confirm: "確認",
     message_box_cancel: "キャンセル",
     get_demo_coin: "受け取る",
+
+    manage_assets: "資産管理",
+    user_func: "ユーザー機能",
+    support: "カスタマーサポート",
+    news: "ニュース",
+    setting: "個人設定",
   },
   kyc: {
     page_title: "本人確認",
@@ -763,8 +769,9 @@ export default {
     trade_orders_current: "現在のデリゲート",
     trade_orders_status: "状態",
     trade_deal_price: "成交価格",
-    trade_search_item: "品種名/コードを入力してください"
-    
+    trade_search_item: "品種名/コードを入力してください",
+    spot_trade_market_price: "現在の市場最良価格で注文",
+    spot_time: "時間",
   },
   inviteFriends: {
     invite: "友達を招待",
@@ -783,6 +790,8 @@ export default {
     details: "紹介詳細",
     user: "ユーザー",
     performance: "実績",
+
+   
   },
   market: {
     market_header_optional: "自選",
@@ -943,6 +952,14 @@ export default {
     market_order_details_for_seller: "商人確認待機",
     market_order_details_con1: "総額に従い",
     market_order_details_con2: "商人の提供した銀行口座に振込してください",
+
+    market_item_detail: "市場",
+    market_item_order: "注文書",
+    market_item_news: "最新取引",
+
+    market_input_crypto_set: "取引ペアを入力",
+    market_login_first: "ログインしてお気に入りを見る",
+
   },
   finance: {
     portfolio: "ファイナンシャルプランニング ",

@@ -10,7 +10,7 @@
           </div>
           <div class="text-[0.32rem] text-color2 leading-[0.5rem]  flex-1 px-[0.1rem]">
             <input style="flex:1;width: 100%;" v-model.trim="searchRef" class="text-white"
-              :placeholder="'输入币对'" @input="inputHandle" @focus="focusRef = true"
+              :placeholder="$t('market.market_input_crypto_set')" @input="inputHandle" @focus="focusRef = true"
               @blur="focusRef = false" />
           </div>
         </div>

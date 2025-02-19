@@ -233,7 +233,7 @@ defineExpose({
 .inquire {
   .tr {
     padding: 0.24rem;
-    background-color: var(--ex-bg-color3);
+    background-color: var(--ex-bg-white2);
     display: flex;
     align-items: stretch;
     border-radius: 0.32rem;

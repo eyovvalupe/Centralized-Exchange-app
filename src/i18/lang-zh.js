@@ -139,6 +139,12 @@ export default {
     message_box_confirm: "确认",
     message_box_cancel: "取消",
     get_demo_coin: "去领取",
+
+    manage_assets: "管理资产",
+    user_func: "用户功能",
+    support: "客服",
+    news: "消息",
+    setting: "个人设置",
   },
   kyc: {
     page_title: "身份认证",
@@ -521,7 +527,7 @@ export default {
     left_mine: "自选",
     left_stock: "股票",
     left_contract: "合约",
-    left_bot: "期货",
+    left_bot: "交易机器人",
     left_forex: "外汇",
     left_all: "全部",
 
@@ -761,6 +767,9 @@ export default {
     trade_search_item: "输入品种名称/代码",
 
     contract_position_profit: "持仓利息",
+
+    spot_trade_market_price: "以当前市场最优价格下单",
+    spot_time: "时间",
   },
   inviteFriends: {
     invite: "推荐朋友",
@@ -937,6 +946,13 @@ export default {
     market_order_details_for_seller: "卖家确认",
     market_order_details_con1: "请根据总价",
     market_order_details_con2: "向商家提供的银行卡转账",
+
+    market_item_detail: "行情",
+    market_item_order: "订单簿",
+    market_item_news: "最新成交",
+
+    market_input_crypto_set: "输入币对",
+    market_login_first: "请先登录再查看自选哦",
   },
   finance: {
     portfolio: "金融理财",

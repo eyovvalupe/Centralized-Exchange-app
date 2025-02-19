@@ -6,8 +6,8 @@
         <div style="display: flex;flex: 1;" v-if="props.type == 'infinite'">
             <div class="ordering-box" :style="{ background: innerPage ? 'none' : '' }" style="height: 100%;">
                 <div class="lists-tr lists-title" v-if="currStock.symbol">
-                    <div class="lists-td">价格(USDT)</div>
-                    <div class="lists-td">数量({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
+                    <div class="lists-td">{{ $t('market.market_buy_list_price') }}(USDT)</div>
+                    <div class="lists-td">{{ $t('market.market_buy_list_amount') }}({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
                 </div>
                 <Loaidng :loading="loading" v-if="loading" />
                 <div class="lists-box" ref="listBox">
@@ -24,8 +24,8 @@
             </div>
             <div class="ordering-box" style="height: 100%;margin-left: 0.1rem;">
                 <div class="lists-tr lists-title" v-if="currStock.symbol">
-                    <div class="lists-td">价格(USDT)</div>
-                    <div class="lists-td">数量({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
+                    <div class="lists-td">{{ $t('market.market_buy_list_price') }}(USDT)</div>
+                    <div class="lists-td">{{ $t('market.market_buy_list_amount') }}({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
                 </div>
                 <Loaidng :loading="loading" v-if="loading" />
                 <div class="lists-box" ref="listBox">
@@ -95,8 +95,8 @@
                 </div>
             </div>
             <div class="lists-tr lists-title" v-if="currStock.symbol">
-                <div class="lists-td">价格(USDT)</div>
-                <div class="lists-td">数量({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
+                <div class="lists-td">{{ $t('market.market_buy_list_price') }}(USDT)</div>
+                <div class="lists-td">{{ $t('market.market_buy_list_amount') }}({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
             </div>
             <Loaidng :loading="loading" v-if="loading" />
             <div class="lists-box" ref="listBox">
@@ -131,9 +131,9 @@
         <!-- 最新 -->
         <div class="ordering-box bbo-box" v-if="props.type == 'news'">
             <div class="lists-tr lists-title" v-if="currStock.symbol">
-                <div class="lists-td">价格(USDT)</div>
-                <div class="lists-td">数量({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
-                <div class="lists-td">时间</div>
+                <div class="lists-td">{{ $t('market.market_buy_list_price') }}(USDT)</div>
+                <div class="lists-td">{{ $t('market.market_buy_list_amount') }}({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
+                <div class="lists-td">{{ $t('trade.spot_time') }}</div>
             </div>
             <div class="lists-box" style="overflow-y: auto;">
                 <Loaidng :loading="loading2" v-if="loading2" />

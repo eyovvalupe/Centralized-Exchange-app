@@ -69,7 +69,7 @@
       </div>
     </div>
 
-    <div class="ripple-btn submit">去交易</div>
+    <div class="ripple-btn submit">{{ t("trade.ai_opening_trade") }}</div>
 
      <!-- 交易弹窗 -->
      <Popup class="trade-popup" teleport="body" v-model:show="showDialog" :title="''" position="bottom" close-on-popstate  >

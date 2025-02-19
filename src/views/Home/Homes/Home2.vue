@@ -42,7 +42,7 @@
                         <div class="dir-b-icon">
                             <img v-lazy="getStaticImgUrl('/static/home2/dir-ai.svg')" alt="">
                         </div>
-                        <div>交易机器人</div>
+                        <div>{{ t('trade.left_bot') }}</div>
                     </div>
                 </div>
                 <div class="dir-b wow fadeInUp" @click="jump('finance', false)"
@@ -51,7 +51,7 @@
                         <div class="dir-b-icon">
                             <img v-lazy="getStaticImgUrl('/static/home2/dir-follow.svg')" alt="">
                         </div>
-                        <div>跟单</div>
+                        <div>{{ t('copy.title') }}</div>
                     </div>
                 </div>
                 <div class="dir-s wow fadeInUp" @click="jump('tradeInfo', false, { tradeType: 'spot' })"
@@ -59,28 +59,28 @@
                     <div class="dir-s-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/dir-s-1.svg')" alt="">
                     </div>
-                    <div>现货</div>
+                    <div>{{ t('common.spot') }}</div>
                 </div>
                 <div class="dir-s wow fadeInUp" @click="jump('tradeInfo', false, { tradeType: 'constract' })"
                     :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-s-bg.png')})` }">
                     <div class="dir-s-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/dir-s-2.svg')" alt="">
                     </div>
-                    <div>合约</div>
+                    <div>{{ t('common.crypto') }}</div>
                 </div>
                 <div class="dir-s wow fadeInUp" @click="jump('finance', false, { activeTab: 1 })"
                     :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-s-bg.png')})` }">
                     <div class="dir-s-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/dir-s-3.svg')" alt="">
                     </div>
-                    <div>DeFi借币</div>
+                    <div>{{ t('finance.defi_borrow') }}</div>
                 </div>
                 <div class="dir-s wow fadeInUp" @click="jump('finance', false, { activeTab: 2 })"
                     :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-s-bg.png')})` }">
                     <div class="dir-s-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/dir-s-4.svg')" alt="">
                     </div>
-                    <div>质押挖矿</div>
+                    <div class="mx-[0.1rem]">{{ t('finance.portfolio_title') }}</div>
                 </div>
             </div>
 
@@ -111,9 +111,9 @@
                 <img v-lazy="getStaticImgUrl('/static/home2/subBanner.png')" alt="">
 
                 <div class="sub-box">
-                    <div class="title">领取模拟金</div>
+                    <div class="title">{{ t('home.simulatedTradingTitle') }}</div>
                     <div class="amount">$100000</div>
-                    <div class="btn ripple-primary">模拟交易</div>
+                    <div class="btn ripple-primary">{{ t('home.simulatedTradingButton') }}</div>
                 </div>
             </div>
 

@@ -108,17 +108,17 @@
               :from="'trade'" />
           </div>
         </Tab> -->
-        <Tab :name="2" :title="'行情'">
+        <Tab :name="2" :title="$t('market.market_item_detail')">
           <div class="market-box">
             <Chart ref="chartRef" v-if="!chartLoading" :type="'constract'" />
           </div>
         </Tab>
-        <Tab :name="3" :title="'订单薄'" v-if="item.type == 'crypto'">
+        <Tab :name="3" :title="$t('market.market_item_order')" v-if="item.type == 'crypto'">
           <div class="market-box">
             <OrderingSpot :innerPage="innerPage" v-if="activeTab == 3" :key="'o'" type="nomal" />
           </div>
         </Tab>
-        <Tab :name="4" :title="'最新成交'" v-if="item.type == 'crypto'">
+        <Tab :name="4" :title="$t('market.market_item_news')" v-if="item.type == 'crypto'">
           <div class="market-box">
             <OrderingSpot :innerpage="innerPage" v-if="activeTab == 4" :key="'n'" type="news" />
           </div>
@@ -133,8 +133,8 @@
         <div class="type" v-if="chartRef">{{ chartRef.timeType }}</div>
       </div>
       <div style="flex: 1;"></div>
-      <div class="data" @click="showInfo = true">数据</div>
-      <div class="btn" @click="gotrade">交易</div>
+      <div class="data" @click="showInfo = true">{{ $t('market.market_marketinfo_data') }}</div>
+      <div class="btn" @click="gotrade">{{ $t('market.market_marketinfo_trade') }}</div>
     </div>
     <div v-else style="height:0.12rem"></div>
 

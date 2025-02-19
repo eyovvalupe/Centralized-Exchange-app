@@ -15,7 +15,7 @@
             <Tabs @change="changeTab2" :key="'main'" class="van-tabs--top" :sticky="true"
                 :color="'var(--ex-primary-color)'" v-model:active="activeTab" animated shrink>
                 <!-- 现货 -->
-                <Tab :name="1" :title="'现货'">
+                <Tab :name="1" :title="$t('common.spot')">
                     <div class="dialog-market-box" v-if="activeTab == 1 && !chartLoading">
                         <div class="top-box">
                             <!-- 标题 -->
@@ -52,16 +52,16 @@
               ">
                             <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg van-tabs--market2"
                                 :color="'var(--ex-primary-color)'" v-model:active="activeTab2" animated shrink>
-                                <Tab :name="11" :title="'开仓'">
+                                <Tab :name="11" :title="$t('trade.stock_open')">
                                     <OpeningSpot :item="item" ref="openingRef2" :from="'trade'" />
                                 </Tab>
-                                <Tab :name="22" :title="'订单薄'" v-if="item.type == 'crypto'">
+                                <Tab :name="22" :title="$t('market.market_item_order')" v-if="item.type == 'crypto'">
                                     <div style="height: 0.08rem"></div>
                                     <div class="market-box">
                                         <OrderingSpot v-if="activeTab2 == 22" :key="'o'" type="nomal" />
                                     </div>
                                 </Tab>
-                                <Tab :name="33" :title="'最新成交'" v-if="item.type == 'crypto'">
+                                <Tab :name="33" :title="$t('market.market_item_news')" v-if="item.type == 'crypto'">
                                     <div class="market-box">
                                         <OrderingSpot v-if="activeTab2 == 33" :key="'n'" type="news" />
                                     </div>
@@ -103,7 +103,7 @@
                         <div style="height: 0.4rem"></div>
                     </div>
                 </Tab>
-                <Tab :name="2" :title="'合约'">
+                <Tab :name="2" :title="$t('common.crypto')">
                     <div class="dialog-market-box" v-if="activeTab == 2 && !chartLoading">
                         <div class="top-box">
                             <!-- 标题 -->
@@ -141,16 +141,16 @@
               ">
                             <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg van-tabs--market2"
                                 :color="'var(--ex-primary-color)'" v-model:active="activeTab2" animated shrink>
-                                <Tab :name="11" :title="'开仓'">
+                                <Tab :name="11" :title="$t('trade.stock_open')">
                                     <OpeningContract :item="item" ref="openingRef2" :from="'trade'" />
                                 </Tab>
-                                <Tab :name="22" :title="'订单薄'" v-if="item.type == 'crypto'">
+                                <Tab :name="22" :title="$t('market.market_item_order')" v-if="item.type == 'crypto'">
                                     <div style="height: 0.08rem"></div>
                                     <div class="market-box">
                                         <OrderingSpot v-if="activeTab2 == 22" :key="'o'" type="nomal" />
                                     </div>
                                 </Tab>
-                                <Tab :name="33" :title="'最新成交'" v-if="item.type == 'crypto'">
+                                <Tab :name="33" :title="$t('market.market_item_news')" v-if="item.type == 'crypto'">
                                     <div class="market-box">
                                         <OrderingSpot v-if="activeTab2 == 33" :key="'n'" type="news" />
                                     </div>
@@ -192,7 +192,7 @@
                         <div style="height: 0.4rem"></div>
                     </div>
                 </Tab>
-                <Tab :name="3" :title="'交易机器人'">
+                <Tab :name="3" :title="$t('trade.left_bot')">
                     <div class="dialog-market-box" v-if="activeTab == 3 && !chartLoading">
                         <div class="top-box">
                             <!-- 标题 -->
@@ -229,17 +229,17 @@
               ">
                             <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg van-tabs--market2"
                                 :color="'var(--ex-primary-color)'" v-model:active="activeTab2" animated shrink>
-                                <Tab :name="11" :title="'开仓'">
+                                <Tab :name="11" :title="$t('trade.stock_open')">
                                     <div style="height: 0.32rem"></div>
                                     <OpeningAi :tradeType="3" ref="openingRef2" />
                                 </Tab>
-                                <Tab :name="22" :title="'订单薄'" v-if="item.type == 'crypto'">
+                                <Tab :name="22" :title="$t('market.market_item_order')" v-if="item.type == 'crypto'">
                                     <div style="height: 0.08rem"></div>
                                     <div class="market-box">
                                         <OrderingSpot v-if="activeTab2 == 22" :key="'o'" type="nomal" />
                                     </div>
                                 </Tab>
-                                <Tab :name="33" :title="'最新成交'" v-if="item.type == 'crypto'">
+                                <Tab :name="33" :title="$t('market.market_item_news')" v-if="item.type == 'crypto'">
                                     <div class="market-box">
                                         <OrderingSpot v-if="activeTab2 == 33" :key="'n'" type="news" />
                                     </div>

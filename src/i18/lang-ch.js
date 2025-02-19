@@ -177,6 +177,12 @@ export default {
     message_box_confirm: "確認",
     message_box_cancel: "取消",
     get_demo_coin: "去領取",
+
+    manage_assets: "管理資產",
+    user_func: "用戶功能",
+    support: "客服",
+    news: "消息",
+    setting: "個人設置",
   },
   kyc: {
     page_title: "身份認證",
@@ -759,8 +765,9 @@ export default {
     trade_orders_current: "當前委託",
     trade_orders_status: "狀態",
     trade_deal_price: "成交價",
-    trade_search_item: "輸入品種名稱/代碼"
-
+    trade_search_item: "輸入品種名稱/代碼",
+    spot_trade_market_price: "以當前市場最優價格下單",
+    spot_time: "時間",
 
   },
   inviteFriends: {
@@ -780,6 +787,8 @@ export default {
     details: "推薦明細",
     user: "用戶",
     performance: "業績",
+
+    
   },
   market: {
     market_header_optional: "自選",
@@ -939,6 +948,14 @@ export default {
     market_order_details_for_seller: "賣家確認",
     market_order_details_con1: "請依總價",
     market_order_details_con2: "向商家提供的銀行卡轉帳",
+
+    market_item_detail: "行情",
+    market_item_order: "訂單簿",
+    market_item_news: "最新成交",
+
+    market_input_crypto_set: "輸入幣對",
+    market_login_first: "請先登入再查看自選哦",
+
   },
   finance: {
     portfolio: "金融理財",

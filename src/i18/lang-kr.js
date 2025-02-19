@@ -138,6 +138,12 @@ export default {
     message_box_confirm: "확인",
     message_box_cancel: "취소",
     get_demo_coin: "받으러 가기",
+
+    manage_assets: "자산 관리",
+    user_func: "사용자 기능",
+    support: "고객 지원",
+    news: "뉴스",
+    setting: "개인 설정",
   },
   kyc: {
     page_title: "신원 인증",
@@ -761,8 +767,9 @@ export default {
     trade_orders_current: "현재 주문",
     trade_orders_status: "상태",
     trade_deal_price: "체결가격",
-    trade_search_item: "종목명/코드를 입력하세요"
-
+    trade_search_item: "종목명/코드를 입력하세요",
+    spot_trade_market_price: "현재 시장 최적 가격으로 주문",
+    spot_time: "시간",
   },
   inviteFriends: {
     invite: "친구 초대",
@@ -941,6 +948,12 @@ export default {
     market_order_details_for_seller: "판매자 확인",
     market_order_details_con1: "전체 금액에 맞춰",
     market_order_details_con2: "판매자가 제공한 은행 계좌로 이체해 주세요",
+    market_item_detail: "시장",
+    market_item_order: "주문서",
+    market_item_news: "최신 체결",
+    market_input_crypto_set: "거래 쌍 입력",
+    market_login_first: "먼저 로그인 후 즐겨찾기를 확인하세요",
+
   },
   finance: {
     portfolio: "재무관리",

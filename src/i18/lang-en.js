@@ -139,6 +139,12 @@ export default {
     message_box_confirm: "Confirm",
     message_box_cancel: "Cancel",
     get_demo_coin: "Get it",
+
+    manage_assets: "Manage assets",
+    user_func: "User",
+    support: "Help & Support",
+    news: "News",
+    setting: "Settings",
   },
   kyc: {
     page_title: "Identity Verification",
@@ -287,7 +293,7 @@ export default {
     recharge: "Deposit",
     withdraw: "Withdraw",
     transfer: "Transfer",
-    financialRecords: "History",
+    financialRecords: "Transaction",
     header_total: "Overview",
     header_wallet: "Wallets",
     header_order: "Orders",
@@ -773,7 +779,9 @@ export default {
     trade_orders_current: "Open Orders",
     trade_orders_status: "Status",
     trade_deal_price: "Price",
-    trade_search_item: "Enter the asset name/code"
+    trade_search_item: "Enter the asset name/code",
+    spot_trade_market_price: "Place order at the current market price",
+    spot_time: "Time",
   },
   inviteFriends: {
     invite: "Invite",
@@ -792,6 +800,8 @@ export default {
     details: "Recommending History",
     user: "User",
     performance: "Performance",
+
+    
   },
   market: {
     market_header_optional: "Favorites",
@@ -826,7 +836,7 @@ export default {
     market_marketinfo_amount: "Quantity",
     market_marketinfo_close: "Close",
     market_marketinfo_low: "Low",
-    market_marketinfo_value: "Value",
+    market_marketinfo_value: "Transaction volume",
 
     market_buy_title1: "Quick Buy",
     market_buy_title2: "Favorites",
@@ -953,6 +963,14 @@ export default {
     market_order_details_con1: "Please base on the total price",
     market_order_details_con2:
       "Transfer to the bank card provided by the merchant",
+
+    market_item_detail: "Overview",
+    market_item_order: "Order Book",
+    market_item_news: "Latest Trades",
+
+    market_input_crypto_set: "Enter trading pair",
+    market_login_first: "Log in to view favorites",
+
   },
   finance: {
     portfolio: "Finance",
