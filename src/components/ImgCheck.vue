@@ -70,7 +70,7 @@
     </div>
     <div class="status_text font-standard" style="color: var(--ex-text-color6);" v-if="slider && sliderStatus == 'default'">
       <span class="check_result">{{
-        $t('滑动验证中')
+        $t('register.security_result_move')
       }}</span>
     </div>
   </div>
