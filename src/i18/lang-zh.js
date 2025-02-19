@@ -370,6 +370,7 @@ export default {
     order_title_ipo: "IPO",
     order_current_position: "当前持仓",
     order_history: "历史查询",
+    assets_center: "资产中心",
   },
   withdraw: {
     withdraw: "提现",
@@ -1028,6 +1029,9 @@ export default {
     defi_borrow_cal_bill: "应计利息",
 
     defi_borrow_return_confirm: "归还确认",
+
+    borrow_crypto: "借币",
+    staking_crypto: "质押",
 
   },
   copy: {

@@ -374,6 +374,8 @@ export default {
     order_title_ipo: "IPO",
     order_current_position: "現在のポジション",
     order_history: "履歴照会",
+    assets_center: "資産センター",
+
   },
   withdraw: {
     withdraw: "出金",
@@ -1033,6 +1035,9 @@ export default {
     defi_borrowed_day: "借入日数",
     defi_borrow_cal_bill: "累積利息",
     defi_borrow_return_confirm: "返済確認",
+
+    borrow_crypto: "借り入れ",
+    staking_crypto: "ステーキング",
   },
   copy: {
     title: "注文をフォロー",

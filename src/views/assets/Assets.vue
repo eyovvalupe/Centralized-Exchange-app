@@ -3,7 +3,7 @@
   <div class="page page_assets">
     <!-- 头部 -->
     <HeaderTabs  v-model:active="headActiveTab" :tabs="[
-      t('资产中心'),
+      t('assets.assets_center'),
       t('assets.header_order'),
     ]">
 

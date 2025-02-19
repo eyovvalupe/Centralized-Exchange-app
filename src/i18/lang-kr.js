@@ -374,6 +374,8 @@ export default {
     order_title_ipo: "IPO",
     order_current_position: "현재 보유 중",
     order_history: "내역 조회",
+    assets_center: "자산 센터",
+
   },
   withdraw: {
     withdraw: "출금",
@@ -1027,6 +1029,8 @@ export default {
     defi_borrowed_day: "대출 일수",
     defi_borrow_cal_bill: "누적 이자",
     defi_borrow_return_confirm: "상환 확인",
+    borrow_crypto: "대출",
+    staking_crypto: "스테이킹",
   },
 
   copy: {

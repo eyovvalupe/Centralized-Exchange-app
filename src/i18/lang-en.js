@@ -339,6 +339,8 @@ export default {
     order_title_ipo: "IPO",
     order_current_position: "Positions",
     order_history: "History",
+    assets_center: "Overview",
+
   },
   topUpCrypto: {
     recharge: "Deposit Funds",
@@ -1045,6 +1047,9 @@ export default {
     defi_borrowed_day: "Borrowed Days",
     defi_borrow_cal_bill: "Accrued Interest",
     defi_borrow_return_confirm: "Repay Confirmation",
+
+    borrow_crypto: "Loan",
+    staking_crypto: "Staking",
   },
   copy: {
     title: "Follow Orders",

@@ -15,8 +15,8 @@
             t('assets.order_title_contract'),
             t('common.option'),
             t('copy.title'),
-            t('借币'),
-            t('质押'),
+            t('finance.borrow_crypto'),
+            t('finance.staking_crypto'),
           ]"
           @change="changeActiveTab(activeTab)"
         />

@@ -4,7 +4,7 @@
         <Tabs key="form" type="sub-stake" style="margin-top:0.32rem;" v-model:active="activeTab" @click-tab="onTabClick" :swipeable="false" shrink>
             <Tab name="open" style="min-width: 2rem" :title="t('finance.defi_borrow_on')">
             </Tab>
-            <Tab name="close" style="min-width: 2rem" :title="t('finance.defi_borrow_repay')">
+            <Tab name="close" style="min-width: 2rem" :title="t('finance.defi_borrow_repaid')">
             </Tab>
         </Tabs>
         <div class="min-h-[10rem] mt-[0.32rem]">

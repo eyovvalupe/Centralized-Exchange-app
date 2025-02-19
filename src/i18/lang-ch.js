@@ -375,6 +375,8 @@ export default {
     order_title_ipo: "IPO",
     order_current_position: "目前持倉",
     order_history: "歷史查詢",
+    assets_center: "資產中心",
+
   },
   topUpCrypto: {
     recharge: "儲值",
@@ -1032,6 +1034,8 @@ export default {
     defi_borrowed_day: "已借天數",
     defi_borrow_cal_bill: "應計利息",
     defi_borrow_return_confirm: "歸還確認",
+    borrow_crypto: "借幣",
+    staking_crypto: "質押",
   },
   copy: {
     title: "跟單",
