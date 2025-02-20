@@ -31,7 +31,7 @@ const props = defineProps({
 
 <style lang="less" scoped>
 .loading_more {
-  height: 0.8rem;
+  line-height: 0.8rem;
   display: flex;
   align-items: center;
   justify-content: center;

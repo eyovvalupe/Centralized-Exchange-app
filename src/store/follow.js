@@ -30,7 +30,7 @@ export default {
     updateFollowList({ commit }) {
       // 更新跟单列表
       return new Promise(resolve => {
-        _copyList({page:1})
+        _copyList({ page: 1 })
           .then(res => {
             if (res.code == 200 && res.data) {
               commit('setFollowList', res.data || [])

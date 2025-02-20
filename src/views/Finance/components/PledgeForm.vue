@@ -8,11 +8,10 @@
     <div class="item_box mt-[0.32rem]">
       <div class="item_box_right">
         <FormItem :hasLT="true" :hasScroll="true" :hasBot="true" :placeholder="t('finance.defi_borrow_stake_amount')"
-           v-model="numb"
-          @input="changePercent2" @btnClick="onSliderChange2(100)"
-          class="yz-form-item" input-type="number">
+          v-model="numb" @input="changePercent2" @btnClick="onSliderChange2(100)" class="yz-form-item"
+          input-type="number">
 
-          <template #lt>            
+          <template #lt>
             <div
               class="flex w-[6.3rem] items-center bg-white2 h-[0.8rem] rounded-[0.32rem] justify-between px-[0.28rem] ripple-btn"
               @click="showDialog = true;">
@@ -30,14 +29,14 @@
           <template #scroll>
             <!-- 拖动 -->
             <SlideContainer v-model="sliderValue2" @change="onSliderChange2" />
-            
+
           </template>
           <template #bottom-con>
             <div class="h-[0.84rem] text-color2 flex items-center justify-between px-[0.28rem] text-[0.28rem]">
               <span>{{ t('finance.defi_verifiable_qty') }}</span>
               <span>
-                  <span class="text-primary mx-[0.08rem]">{{ walletAmount || '--' }} </span>
-                  <span class="text-white">{{ currIn.currency }}</span>
+                <span class="text-primary mx-[0.08rem]">{{ walletAmount || '--' }} </span>
+                <span class="text-white">{{ currIn.currency }}</span>
               </span>
             </div>
           </template>
@@ -47,9 +46,10 @@
     <!-- 可借数量 -->
     <div class="item_box mt-[0.32rem]">
       <div class="item_box_right">
-        <FormItem :hasScroll="true" :placeholder="t('finance.defi_avail_qty')"  v-model="loan" @input="changePercent"  input-type="number">
+        <FormItem :hasScroll="true" :placeholder="t('finance.defi_avail_qty')" v-model="loan" @input="changePercent"
+          input-type="number">
           <template #right-con>
-            {{ currIn.currency }} 
+            {{ currIn.currency }}
           </template>
           <template #scroll>
             <!-- 拖动 -->
@@ -87,7 +87,7 @@
       <div class="flex items-center justify-between h-[1.2rem] mt-[0.12rem] bg-white2 rounded-[0.32rem] px-[0.28rem]">
         <span class="text-color2">{{ t('finance.defi_repayment_due') }}</span>
         <span class="text-color text-[0.32rem]">{{ total }} <span class="text-[0.24rem]">{{ currIn.currency
-            }}</span></span>
+        }}</span></span>
       </div>
     </div>
     <div class="px-[0.1rem]">
@@ -99,12 +99,12 @@
         </div>
         {{ t('finance.defi_borrow_agreement1') }}<span>“{{ t('finance.defi_borrow_agreement2') }}”</span>
       </label>
-      
+
       <Button type="primary" class="submit ripple-btn" @click="openConfirm">
         <span class="text-[0.32rem] font-bold">{{ t('finance.defi_borrow_now') }}</span>
       </Button>
     </div>
-    
+
     <div class="h-[0.6rem]"></div>
 
     <!-- 售出币种 -->
@@ -170,17 +170,17 @@ const wallet = computed(() => {
   const data = store.state.deWeightCurrencyList || []
   return filterSearchValue(data);
 });
-const initCurr = ()=>{
-  if(currIn.value.currency){
+const initCurr = () => {
+  if (currIn.value.currency) {
     return
   }
   const data = store.state.deWeightCurrencyList
-  if(data && data[0]){
+  if (data && data[0]) {
     currIn.value = data[0]
   }
 }
 initCurr()
-watch(()=>store.state.deWeightCurrencyList,()=>{
+watch(() => store.state.deWeightCurrencyList, () => {
   initCurr()
 })
 
@@ -273,20 +273,20 @@ const getPara = () => {
 
 getPara()
 
-const maxLoan = computed(()=>{
-    return walletAmount.value * (param.lever || 1)
+const maxLoan = computed(() => {
+  return walletAmount.value * (param.lever || 1)
 })
 
-const step = computed(()=>{
-    let d = '1'
-    if(tpp.value > 0){
-        let s = ''
-        for(let i=1;i<tpp.value;i++){
-            s += '0'
-        }
-        d = '0.'+s+'1'
+const step = computed(() => {
+  let d = '1'
+  if (tpp.value > 0) {
+    let s = ''
+    for (let i = 1; i < tpp.value; i++) {
+      s += '0'
     }
-    return Number(d)
+    d = '0.' + s + '1'
+  }
+  return Number(d)
 })
 
 const sliderValue = ref(0);
@@ -295,7 +295,7 @@ const sliderValue2 = ref(0);
 const onSliderChange = (newValue) => {
   sliderValue.value = newValue;
   if (!maxLoan.value) {
-    nextTick(()=>{
+    nextTick(() => {
       sliderValue.value = 0
     })
     return
@@ -308,34 +308,34 @@ const onSliderChange = (newValue) => {
   }, 0);
 };
 
-const onPledgeSuccess = ()=>{
+const onPledgeSuccess = () => {
   visible.value = false
   numb.value = ''
   changePercent2()
 }
 
 const changePercent = () => {
-  if (!loan.value){
+  if (!loan.value) {
     sliderValue.value = 0
     sliderValue2.value = 0
     numb.value = ''
     return
   }
-  
+
   let v = new Decimal(loan.value);
   loan.value = v.sub(v.mod(step.value));
 
   numb.value = new Decimal(loan.value).div(param.lever || 1);
   const v2 = new Decimal(numb.value)
-  numb.value = v2.sub(v2.mod(step.value));
-  
-  if(!token.value){
+  numb.value = v2.sub(v2.mod(step.value)).toNumber();
+
+  if (!token.value) {
     sliderValue.value = 0
-  }else{
+  } else {
     let p = new Decimal(loan.value)
-        .div(maxLoan.value)
-        .mul(100)
-        .toNumber();
+      .div(maxLoan.value)
+      .mul(100)
+      .toNumber();
     if (p < 0) p = 0;
     if (p > 100) p = 100;
     sliderValue.value = Number(p);
@@ -346,8 +346,8 @@ const changePercent = () => {
 
 const onSliderChange2 = (newValue) => {
   sliderValue2.value = newValue;
-  if (!walletAmount.value){
-    nextTick(()=>{
+  if (!walletAmount.value) {
+    nextTick(() => {
       sliderValue2.value = 0
     })
     return
@@ -361,30 +361,30 @@ const onSliderChange2 = (newValue) => {
 };
 
 const changePercent2 = () => {
-  if (!numb.value){
+  if (!numb.value) {
     sliderValue2.value = 0
     loan.value = ''
     sliderValue.value = 0
-    return 
+    return
   }
   const v = new Decimal(numb.value)
-  numb.value = v.sub(v.mod(step.value));
- 
-  if(!token.value){
+  numb.value = v.sub(v.mod(step.value)).toNumber();
+
+  if (!token.value) {
     sliderValue2.value = 0;
-  }else{
+  } else {
     let p = new Decimal(numb.value)
-        .div(walletAmount.value)
-        .mul(100)
-        .toNumber();
+      .div(walletAmount.value)
+      .mul(100)
+      .toNumber();
     if (p < 0) p = 0;
     if (p > 100) p = 100;
     sliderValue2.value = Number(p)
   }
-  
-  loan.value = numb.value.mul(param.lever || 1)
+
+  loan.value = new Decimal(numb.value).mul(param.lever || 1)
   const v2 = new Decimal(loan.value)
-  loan.value = v2.sub(v2.mod(step.value));
+  loan.value = v2.sub(v2.mod(step.value)).toNumber();
   sliderValue.value = sliderValue2.value
 };
 
@@ -462,29 +462,35 @@ const openConfirm = () => {
   :deep(.form-item-box .form-item-con .item) {
     padding-top: 1rem !important;
     padding-bottom: 2rem !important;
-    .mid-scroll{
+
+    .mid-scroll {
       height: 1.14rem !important;
       bottom: 0.84rem !important;
     }
-    .bottom_content{
+
+    .bottom_content {
       height: 0.84rem !important;
     }
-    .lt-box{
-      top:0.16rem;
+
+    .lt-box {
+      top: 0.16rem;
       transform: scale(1) !important;
     }
   }
- 
-  
+
+
 }
+
 .item_box {
-  :deep(.van-slider.slider-dom::after){
+  :deep(.van-slider.slider-dom::after) {
     border-color: #26272f;
   }
-  :deep(.van-slider.slider-dom::before){
+
+  :deep(.van-slider.slider-dom::before) {
     background-color: #26272f;
   }
 }
+
 .pledge_accounr_dialog {
   overflow: hidden;
   padding: 0.32rem 0.32rem 0 0.32rem;

@@ -1,13 +1,12 @@
 <template>
     <div class="staking_page">
-        <Tabs type="custom-card-stake" @change="onChange" v-model="activeTab"
-            style="height: calc(var(--vh) * 100 - 0.88rem);" :swipeable="false" animated>
+        <Tabs type="custom-card-stake" @change="onChange" v-model="activeTab" :swipeable="false" animated>
             <Tab :title="t('finance.portfolio_title')" :active="activeTab == 0" :name="'0'">
-                <StakingList />
+                <StakingList v-if="activeTab == 0" />
             </Tab>
             <Tab class="mb-[1.2rem]" :title="t('finance.portfolio_order')" :active="activeTab == 1" :name="'1'">
-                    <Order v-if="token"/>
-                    <NoData v-if="!token"/>
+                <Order v-if="token && activeTab == 1" />
+                <NoData v-if="!token" />
             </Tab>
         </Tabs>
     </div>
@@ -32,5 +31,8 @@ const onChange = (val) => {
 
 </script>
 <style lang="less">
-
+.staking_page {
+    height: 100%;
+    overflow-y: auto;
+}
 </style>

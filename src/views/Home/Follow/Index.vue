@@ -10,13 +10,11 @@
             <div class="tab" :class="{ 'active_tab': active == 2 }" @click="changeTab(2)">{{ $t('copy.copy_tab_tab2') }}
             </div>
         </div> -->
-
-        <Tabs type="custom-card-stake" id="follow-tabs" @change="onChange" v-model="activeTab"
-            style="height: calc(var(--vh) * 100 - 0.88rem); overflow-y: auto;" :swipeable="false" animated>
+        <Tabs type="custom-card-stake" @change="onChange" v-model="activeTab" :swipeable="false" animated>
             <Tab :title="$t('copy.copy_portfolio')" :active="activeTab == 0" :name="'0'">
-                <div class="pt-[0.32rem] px-[0.32rem] pb-[1.6rem]">
-                    <NoData v-if="!loading && !followList.length" />
-                    <div class="list-i" v-for="(item, i) in followList" :key="i">
+                <div class="pt-[0.32rem] px-[0.32rem] ">
+                    <NoData v-if="!loading && !showList.length" />
+                    <div class="list-i" v-for="(item, i) in showList" :key="i">
                         <FollowItem :item="item" :showDetail="true" />
                     </div>
                 </div>
@@ -25,6 +23,7 @@
                 <CopyOrders />
             </Tab>
         </Tabs>
+        <LoadingMore :loading="loading" :finish="finish" v-if="(finish && showList.length) || !finish" />
     </div>
 
     <!-- 详情 -->
@@ -39,7 +38,7 @@ import NoData from '@/components/NoData.vue';
 import LoadingMore from "@/components/LoadingMore.vue"
 import FollowItem from "../components/FollowItem.vue"
 import { _copyMyList, _copyList } from '@/api/api'
-import { ref, computed, onMounted, onUnmounted } from "vue"
+import { ref, computed, onMounted, onBeforeUnmount } from "vue"
 import store from "@/store";
 import { Popup, Tabs, Tab } from "vant"
 import FollowInfo from "../Follow/FollowInfo.vue"
@@ -62,16 +61,69 @@ const onChange = (val) => {
 const token = computed(() => store.state.token)
 // 我的跟单统计
 const followList = computed(() => store.state.followList)
-
+const followList2 = ref([])
+const showList = computed(() => {
+    return [...followList.value, ...followList2.value]
+})
 const loading = ref(false)
+const finish = ref(false)
 
 
+// 获取从第二页开始的数据
+const page = ref(2)
+const getMoreData = () => {
+    if (activeTab.value == 0) { // 跟单
+        if (loading.value || finish.value) return;
+        loading.value = true;
+        _copyList({
+            page: page.value
+        })
+            .then((res) => {
+                page.value++
+                res.data = res.data || [];
+                followList2.value.concat(res.data)
+                if (!res.data.length) {
+                    finish.value = true;
+                }
+            })
+            .finally(() => {
+                setTimeout(() => {
+                    loading.value = false;
+                }, 300)
+            });
+    }
+}
+
+
+let moreDom = null;
+const totalHeight = window.innerHeight || document.documentElement.clientHeight;
+const scrolHandle = () => {
+    const rect = moreDom.getBoundingClientRect();
+    if (rect.top <= totalHeight) {
+        // 加载更多
+        getMoreData();
+    }
+};
 onMounted(() => {
     store.dispatch('updateFollowList')
     if (token.value) {
         store.dispatch('updateMyFollowList')
     }
-
+    setTimeout(() => {
+        try {
+            moreDom = document.querySelector(".loading_more");
+            document
+                .querySelector('.page-follow')
+                .addEventListener("scroll", scrolHandle);
+        } catch { }
+    }, 500);
+})
+onBeforeUnmount(() => {
+    try {
+        document
+            .querySelector('.page-follow')
+            .removeEventListener("scroll", scrolHandle);
+    } catch { }
 })
 
 </script>
@@ -81,7 +133,7 @@ onMounted(() => {
     height: 100%;
     display: flex;
     flex-direction: column;
-    overflow: hidden;
+    overflow-y: auto;
 
     .tabs {
         height: 0.96rem;

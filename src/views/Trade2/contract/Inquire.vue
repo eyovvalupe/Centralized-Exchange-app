@@ -68,7 +68,7 @@
       </div>
     </SwipeCell>
     <!-- <div style="height:0.56rem"></div> -->
-    <!-- <LoadingMore :loading="loading" :finish="finish" v-if="(finish && contractInquireList.length) || !finish" /> -->
+    <LoadingMore :loading="loading" :finish="finish" v-if="(finish && contractInquireList.length) || !finish" />
   </div>
 
   <!-- 订单详情 -->
