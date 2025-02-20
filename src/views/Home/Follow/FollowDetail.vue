@@ -4,6 +4,7 @@
 
         <Top :title="$t('copy.copy_belong_title')"></Top>
 
+        <!-- 头部用户信息 -->
         <div class="title-box">
             <div class="avatar overflow-hidden">
                 <img v-lazy="getStaticImgUrl(`static/avatar/${info.avatar}.png`)" alt="" />
@@ -27,7 +28,9 @@
             shrink>
             <Tab :title="$t('copy.copy_belong_tab1')" name="0">
                 <div class="follow-box">
+                    <!-- 带单情况 -->
                     <div class="follow-info-box mb-[0.1rem] mx-[0.1rem]">
+
                         <div class="info-box pb-[0.12rem]">
                             <div class="flex justify-between mb-[0.48rem]">
                                 <div class="flex ml-[0.28rem] mt-[0.28rem] items-center">
@@ -37,13 +40,13 @@
                                     <div class="right_left_effect text-[0.3rem]">{{ $t('copy.copy_order_status') }}
                                     </div>
                                 </div>
-                                <div class="w-[2.4rem] h-[0.6rem] rounded-[0.32rem] flex items-center justify-between px-[0.28rem] mr-[0.28rem] mt-[0.28rem] mask-btn"
+                                <!-- <div class="w-[2.4rem] h-[0.6rem] rounded-[0.32rem] flex items-center justify-between px-[0.28rem] mr-[0.28rem] mt-[0.28rem] mask-btn"
                                     style="background-color: var(--ex-bg-white2);">
                                     <div class="text-[0.24rem] text-color">{{ $t('copy.copy_order_time1') }}</div>
                                     <div class="w-[0.32rem] h-[0.32rem]">
                                         <img v-lazy="getStaticImgUrl('static/img/common/down.svg')" alt="" />
                                     </div>
-                                </div>
+                                </div> -->
                             </div>
 
 
@@ -64,8 +67,9 @@
                                         $t('finance.portfolio_day_multi') }}
                                     </div>
                                 </div>
+
                             </div>
-                            <div class="mx-[0.12rem] h-[1.8rem] rounded-[0.32rem] px-[0.28rem] py-[0.42rem] flex flex-col justify-between"
+                            <div class="mx-[0.12rem] h-[2.4rem] rounded-[0.32rem] px-[0.28rem] py-[0.42rem] flex flex-col justify-between"
                                 style="background-color: var(--ex-bg-white2);">
                                 <div class="w-full flex justify-between">
                                     <div class="text-[0.28rem] text-color2">{{ $t('copy.copy_profit_rate') }}</div>
@@ -75,9 +79,17 @@
                                     <div class="text-[0.28rem] text-color2">{{ $t('copy.copy_belong_pl_rate') }}</div>
                                     <div class="text-[0.28rem] text-color">{{ info.profitlossratio }}:1</div>
                                 </div>
+                                <div class="w-full flex justify-between">
+                                    <div class="text-[0.28rem] text-color2">{{ $t('copy.copy_belong_profit_rate') }}
+                                    </div>
+                                    <div class="text-[0.28rem] text-color">{{ info.returnrate > 0 ? '+' +
+                                        info.returnrate :
+                                        info.returnrate }}%</div>
+                                </div>
                             </div>
                         </div>
                     </div>
+                    <!-- 带单员总览 -->
                     <div class="rounded-[0.32rem] p-[0.28rem] mb-[0.1rem] mx-[0.1rem]"
                         style="background-color: var(--ex-bg-white);">
                         <div class="flex items-center">
@@ -127,9 +139,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="h-[7.9rem] rounded-[0.32rem] mb-[0.1rem] p-[0.28rem] mx-[0.1rem]"
+                    <!-- 收益率 -->
+                    <!-- <div class="h-[7.9rem] rounded-[0.32rem] mb-[0.1rem] p-[0.28rem] mx-[0.1rem]"
                         style="background-color: var(--ex-bg-white);">
-                        <div class="flex justify-between items-center mb-[0.1rem]">
+                        <div class="flex justify-between items-center mb-[0.1rem] h-[0.6rem]">
                             <div class="flex items-center">
                                 <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                     <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
@@ -153,7 +166,7 @@
                             </div>
                         </div>
                         <div class="flex items-center justify-between mb-[0.36rem]">
-                            <div class="text-[0.6rem] font-semibold" :class="true ? 'text-up' : 'text-down'">
+                            <div class="text-[0.4rem] font-semibold" :class="true ? 'text-up' : 'text-down'">
                                 {{ info.returnrate > 0 ? '+' + info.returnrate : info.returnrate }}%
                             </div>
                             <div class="flex items-center">
@@ -180,10 +193,12 @@
                                 <div class="text-[0.24rem] text-color2" v-for="(item, i) in dateAxios">{{ item }}</div>
                             </div>
                         </div>
-                    </div>
-                    <div class="rounded-[0.32rem] mb-[0.1rem] p-[0.28rem] mx-[0.1rem]"
+                    </div> -->
+
+                    <!-- 跟单用户 -->
+                    <div class="rounded-[0.32rem] mb-[0.1rem] p-[0.28rem] pt-[0.2rem] mx-[0.1rem]"
                         style="background-color: var(--ex-bg-white);">
-                        <div class="flex justify-between items-center mb-[0.1rem]">
+                        <div class="flex justify-between items-center mb-[0.2rem]">
                             <div class="flex items-center">
                                 <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
                                     <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
@@ -195,10 +210,10 @@
                                 <img v-lazy="getStaticImgUrl('static/img/common/next.svg')" alt="" />
                             </div>
                         </div>
-                        <div class="rounded-[0.32rem] h-[1.72rem] flex items-center justify-center mb-[0.1rem]"
+                        <div class="rounded-[0.32rem] h-[1.5rem] flex items-center justify-center mb-[0.1rem]"
                             style="background-color: var(--ex-bg-white2);">
                             <div class="flex flex-col items-center">
-                                <div class="text-[0.28rem] text-color2 mb-[0.1rem]">{{ $t('copy.copy_follower_amount')
+                                <div class="text-[0.28rem] text-color2 mb-[0.2rem]">{{ $t('copy.copy_follower_amount')
                                     }}</div>
                                 <div class="text-[0.3rem] font-semibold">{{ follows.length }}</div>
                             </div>
@@ -329,7 +344,7 @@ const activeRatio = ref(0)
 const showPlus = ref(false)
 const plus = () => {
     if (!token.value) {
-        showToast('请先登录一下')
+        showToast('请先登录')
         router.push({ name: 'login' })
         return;
     }

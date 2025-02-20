@@ -122,7 +122,8 @@
                                 <div class="mb-[0.16rem] w-[0.4rem] h-[0.4rem] relative"
                                     :class="i ? '-ml-[0.1rem]' : ''" v-if="!isEmpty(stakeInfo)" :key="i"
                                     v-for="(item, i) in stakeInfo.items">
-                                    <CryptoIcon :name="item.name.split('/')[0]" /></div>
+                                    <CryptoIcon :name="item.name.split('/')[0]" />
+                                </div>
                             </div>
                             <div class="text-[0.32rem]">{{ stakeInfo.name ? stakeInfo.name : '--' }}</div>
                         </div>
@@ -162,7 +163,8 @@
                                 }}</span><span class="text-white">&nbsp;{{ stakeInfo.fee }}</span></div>
                     </div>
                 </div>
-                <div class="border-[0.02rem] rounded-[0.32rem] border-color2 overflow-hidden mb-[0.6rem] relative" v-if="userInfo.role != 'guest'">
+                <div class="border-[0.02rem] rounded-[0.32rem] border-color2 overflow-hidden mb-[0.6rem] relative"
+                    v-if="userInfo.role != 'guest'">
                     <input class="w-full h-[1.2rem] bg-color2 px-[0.32rem] text-[0.32rem]" v-model="form1.safeword"
                         :type="showPw ? 'text' : 'password'" :placeholder="t('trade.stock_opening_trade_pw')" />
                     <div class="w-[0.4rem] h-[0.4rem] absolute top-[0.36rem] right-[0.24rem]" v-if="!showPw"
@@ -174,7 +176,7 @@
                         <img v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="" />
                     </div>
                 </div>
-                <Button
+                <Button :loading="loading"
                     style="width: 100%; height: 1.12rem; background-color: var(--ex-primary-color); border-radius: 1.3rem;"
                     class="ripple-btn" @click="submit"><span class="text-[0.36rem]">{{ t('trade.stock_opening_confirm')
                         }}</span></Button>
@@ -245,7 +247,7 @@
                 position: relative;
                 top: -0.02rem;
               ">
-              <CryptoIcon :name="'USDT'" />
+                                <CryptoIcon :name="'USDT'" />
                             </div>
 
                             <span style="
@@ -303,7 +305,7 @@
 import Top from '@/components/Top.vue';
 import { useI18n } from 'vue-i18n';
 import { getStaticImgUrl } from "@/utils/index.js";
-import { Stepper, Button, showToast, Popup } from 'vant';
+import { Button, showToast, Popup } from 'vant';
 import Decimal from "decimal.js";
 import BottomPopup from '@/components/BottomPopup.vue';
 import { computed, onMounted, watch } from 'vue';
@@ -314,6 +316,7 @@ import { _realtime, _stake, _stakeGet } from '@/api/api';
 import store from '@/store';
 import router from '@/router';
 import { isEmpty } from '@/utils/isEmpty';
+
 
 const route = useRoute();
 const { t } = useI18n();
@@ -454,9 +457,13 @@ const getStakeData = async () => {
     }
 }
 
+const resetForm = () => {
+    form1.value.amount = ''
+    form1.value.safeword = ''
+}
 const submit = () => {
     if (loading.value) return;
-    if(userInfo.value.role == 'guest'){
+    if (userInfo.value.role == 'guest') {
         form1.value.safeword = '000000'
     }
     if (!form1.value.safeword || !Number(form1.value.amount)) {
@@ -473,6 +480,8 @@ const submit = () => {
             if (res.code == 200) {
                 console.log("then data ==========>", res.data)
                 showConfirm.value = false
+                resetForm()
+                showToast('申购成功')
             }
         })
         .catch(err => console.error(err))
