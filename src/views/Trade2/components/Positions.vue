@@ -652,8 +652,6 @@ getSessionToken();
 
 <style lang="less" scoped>
 .positions {
-  padding: 0 0.32rem;
-
   .tr {
     padding: 0.05rem 0;
     // border-bottom: 1px solid var(--ex-border-color);

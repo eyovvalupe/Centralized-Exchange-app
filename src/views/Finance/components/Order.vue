@@ -1,7 +1,7 @@
 <template>
     <div class="">
         <div class="order_page mt-[0.32rem] mx-[0.32rem]" v-if="!earnLoading && !isEmpty(myEarn)">
-            <div class="flex w-full h-[1.74rem] bg-color6 rounded-[0.32rem]">
+            <div class="flex w-full h-[1.74rem] bg-color6 rounded-[0.32rem]" v-if="from != 'order'">
                 <div class="flex flex-col items-center justify-center w-1/2">
                     <div class="text-[0.3rem] text-color2 mb-[0.24rem]">{{ t('finance.portfolio_revenue') }}<span
                             class="text-[0.24rem] text-color2">(USDT)</span></div>
@@ -52,6 +52,13 @@ import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { _myEarn, _stakeOrder } from '@/api/api';
 import { isEmpty } from '@/utils/isEmpty';
 // import LoadingMore from '@/components/LoadingMore.vue';
+
+const props = defineProps({
+    from: {
+        type: String,
+        default: ''
+    }
+})
 
 const { t } = useI18n();
 const activeTab = ref(0);

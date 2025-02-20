@@ -226,7 +226,7 @@ defineExpose({
 
 <style lang="less" scoped>
 .inquire {
-  padding: 0 0.32rem 1.6rem 0.32rem;
+  padding-bottom: 1.6rem;
 
   .tr {
     padding: 0.24rem 0;

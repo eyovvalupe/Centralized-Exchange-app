@@ -713,6 +713,75 @@ body .van-dialog {
   }
 }
 
+.van-tabs--custom-sub {
+  margin-top: 0.32rem;
+
+  >.van-tabs__wrap {
+    height: 0.8rem;
+    padding: 0 0.32rem;
+
+    .van-tabs__nav {
+      margin: 0 !important;
+      padding: 0;
+
+      .van-tabs__line {
+        display: none;
+      }
+
+      .van-tab {
+        height: 0.8rem;
+        border: 1px solid var(--ex-border-color);
+        margin-right: 0.12rem;
+        border-radius: 1rem;
+        padding: 0 0.24rem;
+        background-color: var(--ex-bg-white1);
+        transition: all ease-in 0.2s;
+      }
+
+      .van-tab--active {
+        background-color: var(--ex-white);
+        color: var(--ex-black);
+      }
+    }
+
+    .van-tabs__nav--line {
+      padding-bottom: 0;
+    }
+  }
+
+  .van-sticky {
+    >div>.van-tabs__wrap {
+      background-color: var(--ex-bg-color);
+
+      .van-tabs__nav {
+        margin: 0 !important;
+        padding: 0;
+
+        .van-tabs__line {
+          display: none;
+        }
+
+        .van-tab {
+          height: 0.8rem;
+          border: 1px solid var(--ex-border-color);
+          margin-right: 0.12rem;
+          border-radius: 1rem;
+          transition: all ease-in 0.2s;
+        }
+
+        .van-tab--active {
+          background-color: var(--ex-white);
+          color: var(--ex-black);
+        }
+      }
+
+      .van-tabs__nav--line {
+        padding-bottom: 0;
+      }
+    }
+  }
+}
+
 .van-tabs--sub_line {
   .van-sticky {
     >div>.van-tabs__wrap {

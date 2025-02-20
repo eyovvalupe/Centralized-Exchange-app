@@ -8,7 +8,7 @@
       <Tab :title="t('trade.ipo_lottery_title3')" name="success"> </Tab>
       <Tab :title="t('trade.ipo_lottery_title4')" name="failure"> </Tab>
     </Tabs>
-    <div class="list">
+    <div class="list" :class="from == 'order' ? '!px-[0]' : ''">
       <div class="item " v-for="(item, i) in ipoStockList" :key="i" @click="ipoOrderDetail(item)">
         <div class="item_box">
           <div class="name_box">

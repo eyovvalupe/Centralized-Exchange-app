@@ -1,21 +1,21 @@
 <!-- 股票 -->
 <template>
     <div class="stock_block">
-        <Tabs animated type="custom-line" v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
+        <Tabs animated :type="from == 'order' ? 'sub' : 'custom-line'" v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
             @change="onChange">
-            <Tab :title="t('trade.stock_open')" name="0">
+            <Tab :title="t('trade.stock_open')" name="0" v-if="from != 'order'">
                 <div class="stock_tab-body">
                     <Opening :tradeType="props.activeTab" @showNavDialog="showNavDialog" @success="onChange('1')"
                         ref="OpeningRef" v-if="loadTab.indexOf('0') > -1" />
                 </div>
             </Tab>
             <Tab :title="t('trade.stock_position')" name="1">
-                <div class="stock_tab-body">
+                <div class="stock_tab-body" :class="from == 'order' ? '!px-[0]' : 'px-[0.32rem]'">
                     <Positions v-if="loadTab.indexOf('1') > -1" />
                 </div>
             </Tab>
             <Tab :title="t('trade.trade_order_history')" name="2">
-                <div class="stock_tab-body">
+                <div class="stock_tab-body" :class="from == 'order' ? '!px-[0]' : 'px-[0.32rem]'">
                     <Inquire ref="InquireRef" v-if="loadTab.indexOf('2') > -1" />
                 </div>
             </Tab>
@@ -40,6 +40,10 @@ import { useI18n } from "vue-i18n";
 const props = defineProps({
     activeTab: {
         type: [String, Number],
+        default: ''
+    },
+    from: {
+        type: String,
         default: ''
     }
 })
