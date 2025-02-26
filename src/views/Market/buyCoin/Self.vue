@@ -287,7 +287,6 @@ defineExpose({
 .buycoin_self {
   width: 7.5rem;
   padding: 0 0.32rem;
-  margin-top: -0.32rem;
 
   .tabs-buy {
     display: flex;
@@ -297,6 +296,7 @@ defineExpose({
 
     .tab {
       color: var(--ex-text-color2);
+      background:var(--ex-bg-white1);
       margin: 0;
       width: 1.6rem;
       text-align: center;
@@ -304,15 +304,14 @@ defineExpose({
       height: 100%;
       display: flex;
       align-items: center;
-      border: 1px solid var(--ex-border-color);
       justify-content: center;
       margin-right: 0.2rem;
     }
 
     .active_tab {
       font-weight: bold;
-      color: var(--ex-text-color--bg-light);
-      background: var(--ex-white);
+      background: var(--ex-primary-color);
+      color:var(--ex-text-color);
       border: 0px;
     }
   }
@@ -370,16 +369,14 @@ defineExpose({
   .list {
     .item {
       margin-top: 0.24rem;
-      padding: 0.12rem;
       color: var(--ex-text-color2);
       background-color: var(--ex-bg-color3);
       border-radius: 0.4rem;
-      border-bottom: 1px solid var(--ex-border-color);
 
       .top {
         display: flex;
         align-items: flex-start;
-        padding: 0.12rem 0.16rem;
+        padding: 0.24rem 0.28rem 0.26rem 0.28rem;
 
         .avatar {
           width: 0.64rem;
@@ -411,8 +408,8 @@ defineExpose({
           // padding-top: 0.16rem;
 
           .name {
-            margin-bottom: 0.2rem;
             font-style: 0.32rem;
+            line-height:0.44rem;
             color: var(--ex-text-color);
           }
 
@@ -421,6 +418,8 @@ defineExpose({
             display: flex;
             align-items: center;
             color: var(--ex-text-color3);
+            line-height:0.34rem;
+            margin-top:0.12rem;
 
             span {
               margin-right: 0.1rem;
@@ -436,9 +435,8 @@ defineExpose({
       }
 
       .bottom {
-        background-color: var(--ex-bg-color);
+        background-color: var(--ex-bg-white2);
         padding: 0.24rem 0.3rem;
-        margin-top: 0.24rem;
         border-radius: 0.4rem;
         display: flex;
         align-items: center;
@@ -468,7 +466,7 @@ defineExpose({
 
         .btn--sell {
           background-color: var(--ex-down-color);
-          color: var(--ex-text-color--bg-light);
+          color: var(--ex-text-color);
         }
       }
     }

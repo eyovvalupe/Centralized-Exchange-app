@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full">
-    <div class="page-trade3">
+    <div class="page-trade3" ref="tradePageRef">
       <div class="z-[1]  pt-[0.4rem] pb-[0.4rem] bg-color" v-if="props.innerPage">
         <div
           class="transition flex justify-between  px-[0.32rem] py-[0.18rem] rounded-[1rem] gap-[0.2rem] h-[0.8rem] mx-[0.4rem] items-center border-[0.02rem]"
@@ -146,6 +146,13 @@ const unact = () => {
     socket && socket.off("snapshot");
   });
 }
+
+const tradePageRef = ref(null);
+const scrollData = useScroll(tradePageRef, {
+  throttle: 200
+});
+provide('scrollData', scrollData);
+
 onActivated(() => {
   act()
 });

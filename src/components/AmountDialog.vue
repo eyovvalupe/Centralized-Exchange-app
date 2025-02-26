@@ -2,7 +2,6 @@
 <!-- 余额提示 -->
 <BottomPopup  v-model:show="showAmountDialog" :title="$t('trade.ai_opening_pop_title')" @closed="close()" closeable >
 
-
       <!-- 内容 -->
       <div
         class="bg-color3 rounded-[0.4rem] px-[0.12rem] pb-[0.12rem]"

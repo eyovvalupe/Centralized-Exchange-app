@@ -16,8 +16,16 @@
       <Tab :title="t('market.market_buy_title2')" name="1">
         <Self ref="selfRef" />
       </Tab>
-      <Tab :title="t('账户闪兑')" name="2">
-        
+      <Tab :title="t('market.market_buy_title3')" name="2">
+        <List ref="listRef" />
+        <template #title>
+          <div class="tab_item">
+            <span>{{ t("market.market_buy_title3") }}</span>
+            <div v-if="store.state.c2cUnreadTotal > 0" class="nav_num">
+              {{ store.state.c2cUnreadTotal }}
+            </div>
+          </div>
+        </template>
       </Tab>
     </Tabs>
   </div>

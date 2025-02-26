@@ -44,6 +44,9 @@
                     </div>
                 </div>
             </Tab>
+            <Tab :name="5" v-if="from != 'home'" :title="t('market.market_header_buy')">
+                <BuyCoin v-if="activeTab == 5" />
+            </Tab>
             <Tab :name="1" :title="t('common.spot')">
                 <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
                     :style="{ borderTop: '1px solid var(--ex-border-color)' }">
@@ -101,6 +104,7 @@ import store from "@/store";
 import { useI18n } from "vue-i18n";
 import router from "@/router";
 import { getStaticImgUrl } from "@/utils/index.js"
+import BuyCoin from "@/views/Market/buyCoin/index.vue";
 
 const emits = defineEmits(['handleClick'])
 const handleClick = (item, type) => {

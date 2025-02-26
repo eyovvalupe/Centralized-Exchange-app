@@ -17,83 +17,127 @@
       </div>
       <div class="flex" :class="[form1.offset == 'buy' ? 'flex-col' : 'flex-col-reverse']">
         <!-- 支付 -->
-        <div class="item item_box">
-          <div class="flex justify-between">
-            <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center mt-[0.06rem]"
-              :class="[form1.offset == 'buy' ? ' bg-buy bg-buy-text-color' : 'bg-white text-color--bg-light']">{{
-                form1.offset == "buy" ? t('market.market_buy_fast_pay') : t('market.market_buy_fast_receive')
-              }}</div>
-            <div class="flex items-center bg-color h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]"
-              @click="openDialog(2)">
-              <div class="flex items-center">
-                <div v-if="currIn.name" class="size-[0.52rem] mr-[0.16rem]">
-                  <CryptoIcon class="rounded-50" :name="currIn.name" />
-                </div>
-                <span class="text-[0.3rem] w-[1rem]">{{ currIn.name || "--" }}</span>
-              </div>
-              <div class="more_icon">
-                <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
-              </div>
+        <div class="flex mt-[0.4rem] gap-[0.1rem]">
+          <div class="item item_box flex-1">
+            <div class="text-[0.32rem] leading-[0.32rem]">
+                {{
+                  form1.offset == "buy" ? t('market.market_buy_fast_pay') : t('market.market_buy_fast_receive')
+                }}
+            </div>
+            <div class="flex items-center justify-center flex-1">
+              <input v-model="money" placeholder="0" :disabled="!rate" @input="moneyInput" @blur="moneyBlur" type="number"
+                class="ipt" :class="{'ipt--smalltext':money && money.toString().length > 7}" />
             </div>
           </div>
-          <div class="h-[1.54rem] py-[0.2rem]">
-            <input v-model="money" placeholder="0" :disabled="!rate" @input="moneyInput" @blur="moneyBlur" type="number"
-              class="ipt" />
+
+          <div class="flex items-center w-[2.46rem] bg-white1 h-[2rem] rounded-[0.32rem] justify-between px-[0.2rem]"
+            @click="openDialog(2)">
+            <div class="flex items-center">
+              <div v-if="currIn.name" class="size-[0.52rem] mr-[0.16rem]">
+                <CryptoIcon class="rounded-50" :name="currIn.name" />
+              </div>
+              <span class="text-[0.3rem] w-[1rem]">{{ currIn.name || "--" }}</span>
+            </div>
+            <div class="more_icon">
+              <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+            </div>
           </div>
         </div>
-
-        <!-- 收到 -->
-        <div class="item item_box">
-          <div class="flex justify-between">
-            <div class="w-[1.52rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center  mt-[0.06rem]"
-              :class="[form1.offset == 'buy' ? 'bg-white text-color--bg-light' : 'bg-sell bg-sell-text-color']">{{
-                form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
-              }}</div>
-
-
-            <div class="flex items-center bg-color h-[0.88rem] rounded-[0.32rem] justify-between px-[0.2rem]"
-              @click="openDialog(1)">
-              <div class="flex items-center">
-                <div v-if="currOut.name" class="size-[0.52rem] mr-[0.16rem]">
-                  <CryptoIcon class="rounded-50" :name="currOut.name" />
-                </div>
-                <span class="text-[0.3rem] w-[1rem]">{{ currOut.name || "--" }}</span>
-              </div>
-              <div class="more_icon">
-                <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
-              </div>
-            </div>
-
+        <div class="flex items-center justify-between mt-[0.24rem]"
+            v-if="form1.offset == 'sell' && currWallet.amount > 0">
+          <div>
+            {{ t('assets.wallet_cash_value') }}
           </div>
-
-          <div class="flex items-center h-[1.94rem] justify-center">
-            <div class="h-[0.96rem] flex-1">
-              <input v-model="form1.volume" :disabled="!rate" type="number" @focus="volumeIsFocus = true;"
-                placeholder="0" @input="volumeInput" @blur="volumeBlur" class="ipt" />
-
-            </div>
-            <!-- <span class="text-primary text-[0.3rem] px-[0.1rem]" @click="putAll" :style="{opacity:volumeIsFocus ? 1 : 0}" v-if="form1.offset == 'sell' && currWallet.amount > 0">{{
-                t('trade.stock_position_all')
-                }}</span> -->
-            <div class="ml-[0.2rem] flex items-center px-[0.2rem] h-[0.72rem] bg-color rounded-[0.32rem] bg-color"
-              v-if="form1.offset == 'sell' && currWallet.amount > 0">
+          <div class="flex items-center">
               <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox">
-                <span class="text-color3">{{ t('assets.wallet_available_sim') }}</span>
-                {{ currWallet.amount }}
-                <span class="text-color">{{ currOut.name }}</span>
-              </span>
-              <Icon name="arrow" class="ml-[0.1rem]" color="var(--ex-text-color2)" size="0.22rem" />
+              <span class="text-color3">{{ t('assets.wallet_available_sim') }}</span>
+              {{ currWallet.amount }}
+              {{ currOut.name }}
+            </span>
+            <Icon name="arrow" class="ml-[0.1rem]" color="var(--ex-text-color2)" size="0.22rem" />
+          </div>
+        </div>
+        <!-- 收到 -->
+        <div class="flex mt-[0.4rem] gap-[0.1rem]">
+          <div class="item item_box flex-1">
+            <div class="text-[0.32rem] leading-[0.32rem]">
+              {{
+                  form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
+                }}
+            </div>
+            <div class="flex items-center justify-center flex-1">
+                <input v-model="form1.volume" :disabled="!rate" type="number" @focus="volumeIsFocus = true;"
+                  placeholder="0" @input="volumeInput" @blur="volumeBlur" class="ipt" :class="{'ipt--smalltext':form1.volume && form1.volume.toString().length > 7}" />
+              <!-- <span class="text-primary text-[0.3rem] px-[0.1rem]" @click="putAll" :style="{opacity:volumeIsFocus ? 1 : 0}" v-if="form1.offset == 'sell' && currWallet.amount > 0">{{
+                  t('trade.stock_position_all')
+                  }}</span> -->
+              
+            </div>
+
+          </div>
+          
+          <div class="flex items-center w-[2.46rem] bg-white1 h-[2rem] rounded-[0.32rem] justify-between px-[0.2rem]"
+                @click="openDialog(1)">
+            <div class="flex items-center">
+              <div v-if="currOut.name" class="size-[0.52rem] mr-[0.16rem]">
+                <CryptoIcon class="rounded-50" :name="currOut.name" />
+              </div>
+              <span class="text-[0.3rem] w-[1rem]">{{ currOut.name || "--" }}</span>
+            </div>
+            <div class="more_icon">
+              <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
             </div>
           </div>
-
+          
         </div>
+        
       </div>
 
-      <div v-if="rate" class="tip absolute">
+      <div v-if="rate" class="tip">
         1&nbsp;{{ currOut.name }} ≈
         {{ rate || "--" }}&nbsp;{{ currIn.name }}
       </div>
+      <template v-if="form1.offset == 'sell'">
+      <div class="h-[1px] bg-white2 mt-[0.4rem]"></div>
+      <div class="mt-[0.4rem] bg-white1 rounded-[0.32rem] flex flex-col">
+        <div class="text-[0.32rem] text-color3 pt-[0.24rem] px-[0.28rem] flex justify-between items-center">
+          收款账号
+          <span class="text-primary text-[0.28rem]" @click="showAccountDialog = true;" v-if="currentAccount.channel">{{
+            t('重新选择')
+          }}</span>
+        </div>
+        <div
+          class="dialog_account_item  mt-[0.28rem] mx-[0.28rem] mb-[0.2rem] px-[0.28rem] bg-color3 rounded-[0.32rem] h-[2.16rem]"
+          :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/bank/card_bg.svg')})` }"
+          v-if="currentAccount.channel">
+          <div>
+            <div class="right-[0.24rem] top-[0.24rem] absolute text-[0.28rem] text-color2"
+              v-if="currentAccount.accountName">
+              户主姓名：{{ currentAccount.accountName }}</div>
+            <div class="flex items-center">
+              <div class="card_icon">
+                <CryptoIcon v-if="currentAccount.channel === 'crypto'" class="rounded-50" :name="currentAccount.symbol?.toUpperCase()" />
+                <img v-else class="!size-[0.44rem]" v-lazy="getStaticImgUrl('/static/img/bank/card_icon.svg')"
+                  alt="img" />
+              </div>
+              <div class="text-color text-[0.32rem]">{{ currentAccount.symbol ?
+                `${currentAccount.symbol}-${currentAccount.network}` : `${currentAccount.bankName}` }}</div>
 
+            </div>
+            <div class="card">
+              <div class="code">{{ _hiddenAccount(currentAccount.bankCardNumber || currentAccount.address) }}</div>
+
+            </div>
+          </div>
+        </div>
+        <div class="h-[1.8rem] flex flex-col items-center justify-center" @click="showAccountDialog = true;" v-else>
+            <div class="size-[0.48rem]">
+              <img v-lazy="getStaticImgUrl('/static/img/common/add_gray.svg')" />
+            </div>
+            <span class="text-[0.28rem] text-color3 mt-[0.08rem]">{{ t('market.market_buy_fast_account_add') }}</span>
+        </div>
+      </div>
+      </template>
       <Button size="large" class="submit" :class="['submit--' + form1.offset]" round :loading="loading" @click="sell">
         <span style="color: var(--ex-white);">{{
           form1.offset == "sell" ?
@@ -107,7 +151,7 @@
     :title="t('market.market_buy_fast_search_title')">
     <div class="withdraw_accounr_dialog">
 
-      <div class="search_box">
+      <div class="search_box mx-[0.32rem]">
         <div class="icon">
           <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
         </div>
@@ -136,23 +180,27 @@
   </BottomPopup>
 
   <BuyCoinConfirm ref="safeRef" :offset="form1.offset" :loading="loading" :volume="form1.volume"
-    :currency="currOut.name" :pay-currency="currIn.name" :price="rate" :money="money" @submit="submitSell" />
+    :currency="currOut.name" :currentAccount="currentAccount" :pay-currency="currIn.name" :price="rate" :money="money" @submit="submitSell" />
 
   <!-- 余额提示 -->
   <AmountDialog v-model:show="showAmountDialog" :currency="currOut.name" :account="t('assets.wallet_cash_value')"
     :amount="currWallet.amount" />
 
+  <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="currentAccount" currency-type="bank"
+  @on-add-collection="clickAccountItem" />
+
+
 </template>
 
 <script setup>
-import { getStaticImgUrl } from "@/utils/index.js"
+import { getStaticImgUrl,_hiddenAccount } from "@/utils/index.js"
 import { ref, computed, onBeforeUnmount, onMounted } from "vue";
 import { Button, Popup, Icon, showToast, showConfirmDialog, Loading } from "vant";
 import Decimal from "decimal.js";
 import store, { useMapState } from "@/store";
 import { _swapRate, _orderFast } from "@/api/api";
 import AmountDialog from "@/components/AmountDialog.vue";
-import eventBus from "@/utils/eventBus";
+import AccountSelectionPopUp from "./components/AccountSelectionPopUp.vue";
 import BuyCoinConfirm from './components/BuyCoinConfirm.vue'
 import BottomPopup from "@/components/BottomPopup.vue";
 import { useBuyCoinState } from "./state";
@@ -190,6 +238,7 @@ const currIn = ref({}); // 当前收到钱包
 // 币种弹窗
 const showDialog = ref(false);
 const showDialogType = ref(1); // 1-售出 2-收到
+const currentAccount = ref({})
 
 //  获取汇率
 const rateLoading = ref(false);
@@ -238,6 +287,9 @@ const sell = () => {
         });
       return;
     }
+    if (form1.value.offset == 'sell' && !currentAccount.value.id) {
+      return showToast("请选择收款账户");
+    }
     safeRef.value.open();
   } else {
     safeRef.value.open();
@@ -250,7 +302,7 @@ const submitSell = (obj) => {
       const params = {
         offset: form1.value.offset,
         account_id:
-          form1.value.offset == "sell" ? obj.account_id : null,
+          form1.value.offset == "sell" ? currentAccount.value.id : null,
         volume: form1.value.volume,
         crypto: currOut.value.currency,
         currency: currIn.value.currency,
@@ -392,21 +444,12 @@ const getRate = () => {
 };
 
 
-// 跳转添加
-// const goAddAccount = () => {
-//   // google检测
-//   if (!userInfo.value.googlebind) {
-//     return showConfirmDialog({
-//       title: '谷歌验证器',
-//       message: '你还未绑定谷歌验证器，是否去绑定?',
-//     }).then(() => {
-//       jump('google')
-//     })
-//   }
-//   router.push({
-//     name: 'account',
-//   })
-// }
+const showAccountDialog = ref(false)
+const clickAccountItem = (item) => {
+  currentAccount.value = item
+  showAccountDialog.value = false
+
+};
 
 const onInit = () => {
   if (!currOut.value.currency) {
@@ -430,36 +473,33 @@ watch(() => store.state.deWeightCurrencyList, () => {
 <style lang="less" scoped>
 .page_fasters {
   width: 7.5rem;
-  margin-top: -0.32rem;
 
   .form {
-    padding: 0 0.32rem;
+    padding: 0.4rem 0.32rem;
 
     .tabs {
       display: flex;
       align-items: center;
-      height: 0.8rem;
-      margin-top: 0.32rem;
-
+      height: 0.96rem;
+      background-color: var(--ex-bg-white1);
+      border-radius: 0.32rem;
+      padding: 0 0.08rem;
       .tab {
         color: var(--ex-text-color2);
-        margin: 0;
-        height: 100%;
-        width: 1.6rem;
+        flex:1;
         display: flex;
         align-items: center;
         justify-content: center;
         text-align: center;
-        border-radius: 0.68rem;
-        font-size: 0.3rem;
-        border: 1px solid var(--ex-border-color2);
-        margin-right: 0.2rem;
+        border-radius: 0.32rem;
+        font-size: 0.32rem;
+        height: 0.8rem;
       }
 
       .active_tab {
         font-weight: bold;
-        color: var(--ex-text-color--bg-light);
-        background: var(--ex-white);
+        color: var(--ex-text-color);
+        background: var(--ex-primary-color);
         border: 0px;
         text-align: center;
       }
@@ -468,7 +508,7 @@ watch(() => store.state.deWeightCurrencyList, () => {
     .tip {
       color: var(--ex-text-color2);
       font-size: 0.24rem;
-      margin-top: 0.3rem;
+      margin-top: 0.24rem;
     }
 
     .subtitle {
@@ -485,13 +525,13 @@ watch(() => store.state.deWeightCurrencyList, () => {
     }
 
     .item_box {
-
-      margin-top: 0.2rem;
-      background-color: var(--ex-bg-color3);
-      border-radius: 0.4rem;
-      padding: 0.18rem 0.32rem;
+      background-color: var(--ex-bg-white1);
+      border-radius: 0.32rem;
+      padding: 0.4rem 0.4rem 0 0.4rem;
       border: 1px solid rgba(0, 0, 0, 0);
-
+      height:2rem;
+      display: flex;
+      flex-direction: column;
       .ipt {
         height: 100%;
         width: 100%;
@@ -501,8 +541,11 @@ watch(() => store.state.deWeightCurrencyList, () => {
         color: var(--ex-text-color);
         position: relative;
         z-index: 1;
+        flex:1;
       }
-
+      .ipt--smalltext{
+        font-size: 0.4rem;
+      }
       .more_icon {
         width: 0.36rem;
         height: 0.36rem;
@@ -513,13 +556,13 @@ watch(() => store.state.deWeightCurrencyList, () => {
   }
 
   .submit {
-    margin-top: 1.12rem;
+    margin-top: 0.6rem;
     color: var(--ex-text-color--bg-light);
     font-weight: 600;
-    border-radius: 0.4rem;
   }
 
   .submit--sell {
+    margin-top:0.5rem;
     background-color: var(--ex-down-color);
   }
 
@@ -528,12 +571,46 @@ watch(() => store.state.deWeightCurrencyList, () => {
 
   }
 }
+
+.dialog_account_item {
+    border-radius: 0.4rem;
+    height: 2.16rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: relative;
+    padding: 0 0.4rem 0 0.36rem;
+    background-size: cover;
+    border: 1px solid rgba(0, 0, 0, 0);
+    background-color: var(--ex-bg-white2);
+
+    .card_icon {
+      background-color: var(--ex-white);
+      width: 0.68rem;
+      height: 0.68rem;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 0.16rem;
+    }
+
+    .card {
+      margin-top: 0.32rem;
+
+      .code {
+        font-size: 0.4rem;
+        font-weight: 600;
+        color: var(--ex-text-color);
+      }
+    }
+  }
 </style>
 
 <style lang="less" scoped>
 .withdraw_accounr_dialog {
   overflow: hidden;
-  padding: 0.32rem 0.32rem 0 0.32rem;
+  padding: 0.32rem 0 0;
   position: relative;
 
   .search_box {
@@ -541,13 +618,10 @@ watch(() => store.state.deWeightCurrencyList, () => {
     align-items: center;
     padding: 0 0.4rem;
     margin-bottom: 0.15rem;
-    height: 1rem;
-    background-color: var(--ex-bg-color);
+    height: 0.9rem;
+    background-color: var(--ex-bg-white1);
     border-radius: 0.8rem;
 
-    input {
-      padding-top: 0.06rem;
-    }
 
     input::placeholder {
       // color: var(--ex-primary-color); /* 占位符颜色 */
@@ -601,30 +675,26 @@ watch(() => store.state.deWeightCurrencyList, () => {
   }
 
   .swap_dialog_item {
-    height: 1rem;
+    height: 0.92rem;
     line-height: 0;
     display: flex;
     align-items: center;
-    border-radius: 0.4rem;
-    background-color: var(--ex-bg-color3);
     overflow: hidden;
     position: relative;
-    padding: 0 0.28rem;
-    margin-top: 0.2rem;
+    padding: 0 0.32rem;
+    margin-top: 0.08rem;
     color: var(--ex-text-color);
-    border: 1px solid rgba(0, 0, 0, 0);
 
     .icon {
-      width: 0.64rem;
-      height: 0.64rem;
-      margin-right: 0.2rem;
+      width: 0.48rem;
+      height: 0.48rem;
+      margin-right: 0.16rem;
     }
   }
 
   .swap_dialog_item_active {
     color: var(--ex-text-color);
-    border-color: var(--ex-primary-color);
-    background: none;
+    background-color: var(--ex-bg-white2);
 
     .check_icon {
       position: absolute;
