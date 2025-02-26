@@ -292,6 +292,7 @@
         </div>
     </div>
 
+    <Ai style="display: none;" />
 </template>
 
 <script setup>
@@ -312,6 +313,7 @@ import { useRoute } from "vue-router";
 import Recommend from "./Recommend.vue"
 import LeftMenu from "../components/LeftMenu.vue"
 import AiItem from "@/views/Market/components/AiItem.vue";
+import Ai from "@/views/Market/components/Ai.vue";
 
 const token = computed(() => store.state.token || "");
 const route = useRoute();
