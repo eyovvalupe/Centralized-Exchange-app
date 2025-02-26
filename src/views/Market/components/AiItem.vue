@@ -1,6 +1,7 @@
 <!-- ai交易元素 -->
 <template>
-  <div class="ai_item " @click="clickItem">
+  <div class="ai_item" :class="['ai_item_' + props.from]" @click="clickItem"
+    :style="{ backgroundImage: props.from == 'home' ? `url(${getStaticImgUrl('/static/home2/ai-bg.png')})` : '' }">
     <div class="top">
       <div class="tl">
         <div class="name">{{ item.name }}</div>
@@ -17,19 +18,20 @@
         </div>
       </div>
       <div class="tr" style="text-align: right;font-size: 0.24rem;">
-        <div class="time-title f" style="color: var(--ex-placeholder-color);">{{ t("trade.ai_opening_perform_time") }}</div>
-          <div class="time">
-            {{
-              formatSec(item.runtime)[0] +
-              t("common.day") +
-              " " +
-              formatSec(item.runtime)[1] +
-              t("common.hour") +
-              " " +
-              formatSec(item.runtime)[2] +
-              t("common.min")
-            }}
-          </div>
+        <div class="time-title f" style="color: var(--ex-placeholder-color);">{{ t("trade.ai_opening_perform_time") }}
+        </div>
+        <div class="time">
+          {{
+            formatSec(item.runtime)[0] +
+            t("common.day") +
+            " " +
+            formatSec(item.runtime)[1] +
+            t("common.hour") +
+            " " +
+            formatSec(item.runtime)[2] +
+            t("common.min")
+          }}
+        </div>
       </div>
     </div>
     <div class="content">
@@ -42,7 +44,7 @@
         </div>
         <div class="mr">
           <SparkLine :style="['width: 100%; height: 0.6rem;']" v-if="props.item.points" :points="props.item.points"
-          :ratio="props.item.ratio" />
+            :ratio="props.item.ratio" />
         </div>
       </div>
       <div class="bot">
@@ -71,8 +73,9 @@
 
     <div class="ripple-btn submit">{{ t("trade.ai_opening_trade") }}</div>
 
-     <!-- 交易弹窗 -->
-     <Popup class="trade-popup" teleport="body" v-model:show="showDialog" :title="''" position="bottom" close-on-popstate  >
+    <!-- 交易弹窗 -->
+    <Popup class="trade-popup" teleport="body" v-model:show="showDialog" :title="''" position="bottom"
+      close-on-popstate>
       <div style="padding: 1.14rem 0.32rem 0 0.32rem">
         <div class="trade-popup-title">
           <div class="back" @click="showDialog = false">
@@ -108,7 +111,7 @@ const props = defineProps({
     type: Object,
     default: () => { },
   },
-  page: {
+  from: {
     type: String,
     default: "",
   },
@@ -158,34 +161,37 @@ const formatSec = (seconds, t) => {
 
 <style lang="less">
 .trade-popup {
-    height: 100%;
-    overflow-x: hidden;
-    overflow-y: auto;
-    border-radius: 0;
-    .trade-popup-title {
-      width: 100%;
-      top: 0.18rem;
-      position: absolute;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  border-radius: 0;
+
+  .trade-popup-title {
+    width: 100%;
+    top: 0.18rem;
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .back {
+      width: 0.6rem;
+      height: 0.6rem;
+      border-radius: 50%;
+      background-color: var(--ex-bg-white);
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      .back {
-        width: 0.6rem;
-        height: 0.6rem;
-        border-radius: 50%;
-        background-color: var(--ex-bg-white);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 0.32rem;
-      }
-      .title {
-        text-align: center;
-        font-size: 0.32rem;
-        color: var(--ex-white);
-      }
+      justify-content: center;
+      font-size: 0.32rem;
+    }
+
+    .title {
+      text-align: center;
+      font-size: 0.32rem;
+      color: var(--ex-white);
     }
   }
+}
 </style>
 
 <style lang="less" scoped>
@@ -197,6 +203,7 @@ const formatSec = (seconds, t) => {
   // padding: 0 0.12rem 0.12rem 0.12rem;
   padding-bottom: 0.56rem;
   position: relative;
+
   .submit {
     height: 0.72rem;
     width: 5.14rem;
@@ -314,10 +321,11 @@ const formatSec = (seconds, t) => {
       }
 
     }
-   
 
-    
+
+
   }
+
   .time-title {
     color: var(--ex-text-color3);
     text-align: right;
