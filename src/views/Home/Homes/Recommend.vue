@@ -18,8 +18,6 @@
                         <NoData v-if="!watchListLoading && !watchList.length" />
                     </div>
                     <div v-if="!token" class="flex flex-col pt-[0.32rem] pb-[0.32rem]">
-
-
                         <div
                             class="w-full flex justify-between border-b-[0.02rem] pb-[0.2rem] mb-[0.6rem] px-[0.32rem] border-b-color2">
                             <div class="text-color2">{{ $t('copy.copy_order_name') }}</div>
@@ -45,7 +43,7 @@
                 </div>
             </Tab>
             <Tab :name="5" v-if="from != 'home'" :title="t('market.market_header_buy')">
-                <BuyCoin v-if="activeTab == 5" />
+                <BuyCoin />
             </Tab>
             <Tab :name="1" :title="t('common.spot')">
                 <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
@@ -261,7 +259,6 @@ const filterList = list => {
 }
 
 .home-tabs-box-home {
-
 
     :deep(.van-tabs--sub) {
         &>.van-tabs__wrap .van-tabs__nav {

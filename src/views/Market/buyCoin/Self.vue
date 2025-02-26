@@ -561,9 +561,8 @@ defineExpose({
 <style lang="less" scoped>
 .withdraw_accounr_dialog {
   overflow: hidden;
-  padding: 0.32rem 0.32rem 0.8rem 0.32rem;
+  padding: 0.32rem 0 0;
   position: relative;
-
 
   .swap_dialog_list {
     max-height: calc(var(--vh) * 60);
@@ -572,30 +571,26 @@ defineExpose({
   }
 
   .swap_dialog_item {
-    height: 1rem;
+    height: 0.92rem;
     line-height: 0;
     display: flex;
     align-items: center;
-    border-radius: 0.4rem;
-    background-color: var(--ex-bg-color3);
     overflow: hidden;
     position: relative;
-    padding: 0 0.28rem;
-    margin-top: 0.2rem;
+    padding: 0 0.32rem;
+    margin-top: 0.08rem;
     color: var(--ex-text-color);
-    border: 1px solid rgba(0, 0, 0, 0);
 
     .icon {
-      width: 0.64rem;
-      height: 0.64rem;
-      margin-right: 0.2rem;
+      width: 0.48rem;
+      height: 0.48rem;
+      margin-right: 0.16rem;
     }
   }
 
   .swap_dialog_item_active {
     color: var(--ex-text-color);
-    border-color: var(--ex-primary-color);
-    background: none;
+    background-color: var(--ex-bg-white2);
 
     .check_icon {
       position: absolute;
@@ -605,116 +600,5 @@ defineExpose({
     }
   }
 
-
-  .tabs {
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    margin-bottom: 0.4rem;
-
-    .tab {
-      height: 0.72rem;
-      border-radius: 0.72rem;
-      display: flex;
-      align-items: center;
-      padding: 0 0.4rem;
-      color: var(--ex-text-color);
-      font-size: 0.32rem;
-      font-weight: 400;
-    }
-
-    .active_tab {
-      background-color: var(--ex-bg-color2);
-      color: var(--ex-primary-color);
-      font-weight: 500;
-    }
-  }
-
-  .list {
-    max-height: calc(var(--vh) * 70);
-    overflow-y: auto;
-
-    .add_account {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 0.4rem 0;
-    }
-  }
-
-  .add_item {
-    margin-bottom: 0.36rem;
-    border: 1px dashed var(--ex-border-color2);
-    border-radius: 0.12rem;
-    height: 1.44rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .dialog_account_item {
-    border-radius: 0.12rem;
-    height: 1.44rem;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    position: relative;
-    background-color: var(--ex-bg-color2);
-    padding: 0 0.4rem 0 0.36rem;
-    overflow: hidden;
-    margin-bottom: 0.36rem;
-
-    .card_icon {
-      background-color: var(--ex-bg-color4);
-      width: 0.96rem;
-      height: 0.96rem;
-      border-radius: 0.16rem;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      >img {
-        width: 0.64rem !important;
-        height: 0.64rem !important;
-      }
-    }
-
-    .card {
-      flex: 1;
-      margin: 0 0.2rem 0 0.36rem;
-      text-align: left;
-      font-size: 0.24rem;
-      color: var(--ex-text-color);
-      font-weight: 500;
-      line-height: 1;
-
-      .code {
-        font-size: 0.28rem;
-        margin-bottom: 0.1rem;
-        font-weight: 400;
-      }
-    }
-  }
-
-  .dialog_account_item_active {
-    border: 1px solid var(--ex-primary-color);
-
-    .checked {
-      position: absolute;
-      top: -0.04rem;
-      right: -0.04rem;
-      background-size: 100% 100%;
-      width: 0.46rem;
-      height: 0.42rem;
-
-      >img {
-        width: 0.18rem !important;
-        height: 0.12rem !important;
-        position: absolute;
-        right: 0.06rem;
-        top: 0.08rem;
-      }
-    }
-  }
 }
 </style>
