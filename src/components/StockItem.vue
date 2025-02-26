@@ -3,7 +3,7 @@
   <div ref="root" style="overflow: visible;" class="w-full mask-btn-stock ">
     <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
       <div class="stock_item_bg"
-        :class="[`${' stock_item_' + updownStatus} ${props.page == 'home' ? 'px-[0.2rem]' : 'px-[0.28rem]'}`]"
+        :class="[`${' stock_item_' + updownStatus} ${props.page == 'home' ? '' : 'px-[0.28rem]'}`]"
         @click="goInfo(props.item.type)">
         <div :class="['stock_item']">
           <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center" v-if="showIcon">

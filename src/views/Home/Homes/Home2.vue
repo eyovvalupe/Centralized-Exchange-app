@@ -171,7 +171,7 @@
                     <div class="f-tab" :class="{ 'f-tab-active': fActive == 1 }" @click="fActive = 1">{{
                         t('finance.portfolio_title') }}</div>
                     <div class="f-tab" :class="{ 'f-tab-active': fActive == 2 }" @click="fActive = 2">{{ t('copy.title')
-                    }}
+                        }}
                     </div>
                 </div>
                 <!-- 质押挖矿 -->
@@ -249,9 +249,6 @@
                     </div>
                 </div>
             </div>
-
-
-
 
         </div>
     </div>
@@ -332,7 +329,6 @@ onDeactivated(() => {
         socket && socket.off("realtime");
         socket && socket.off("snapshot");
     });
-
 });
 
 

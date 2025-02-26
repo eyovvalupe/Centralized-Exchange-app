@@ -10,7 +10,7 @@
 import { shallowRef } from 'vue'
 import { HOME_MODE } from "@/config.js"
 import Loaidng from "@/components/Loaidng.vue"
-import homePage from "@/views/Home/Homes/Home2.vue"
+import homePage from "@/views/Home/Homes/Home1.vue"
 
 // const homePage = shallowRef(null)
 // if (HOME_MODE == 2) {

@@ -4,7 +4,7 @@
             v-if="props.activated" v-model:active="activeTab" :animated="from != 'home'" shrink>
             <Tab :name="0" v-if="from != 'home'" :title="t('trade.left_mine')">
                 <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    :style="{ borderTop: '1px solid var(--ex-border-color)' }">
+                    :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
                     <div v-if="token">
                         <Loaidng v-if="watchListLoading" :loading="watchListLoading" />
                         <div style="padding-bottom: 0.2rem;overflow: visible;"
@@ -49,7 +49,7 @@
             </Tab>
             <Tab :name="1" :title="t('common.spot')">
                 <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    :style="{ borderTop: '1px solid var(--ex-border-color)' }">
+                    :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div class="" style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 1">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
@@ -64,7 +64,7 @@
             </Tab>
             <Tab :name="2" :title="$t('common.crypto')">
                 <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    :style="{ borderTop: '1px solid var(--ex-border-color)' }">
+                    :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 2">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
@@ -266,7 +266,7 @@ const filterList = list => {
     :deep(.van-tabs--sub) {
         &>.van-tabs__wrap .van-tabs__nav {
 
-            padding: 0 0.2rem;
+            // padding: 0 0.2rem;
         }
     }
 
