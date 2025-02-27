@@ -100,7 +100,7 @@
 <script setup>
 
 import { ref } from 'vue'
-import { Popup, Button, showToast } from 'vant'
+import { Button, showToast } from 'vant'
 import FormItem from '@/components/Form/FormItem.vue';
 import { useI18n } from 'vue-i18n';
 import { getStaticImgUrl } from "@/utils/index.js"

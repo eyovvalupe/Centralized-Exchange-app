@@ -37,7 +37,7 @@
 
       <template v-if="info.offset == 'buy'">
 
-        <div class="item bg-white2 rounded-[0.32rem] mt-[0.32rem] px-[0.28rem] pt-[0.36rem]">
+        <div class="item mx-[0.32rem] bg-white2 rounded-[0.32rem] mt-[0.32rem] px-[0.28rem] pt-[0.36rem]">
           <div class="flex justify-between items-center">
             <div class="text-[0.3rem]">{{ t('market.market_buy_list_amount') }}</div>
             <div class="flex items-center justify-center rounded-[0.32rem]">
@@ -54,22 +54,23 @@
             </div>
             <span class="text-[0.3rem]">{{ info.currCrypto }}</span>
           </div>
-          <div class="h-[1px] bg-white2"></div>
-          <div class="h-[0.88rem]"></div>
+    
         </div>
 
         <div
-          class="flex justify-between items-center bg-white1 rounded-[0.4rem] h-[1.3rem] mt-[0.32rem] px-[0.3rem] text-[0.3rem]">
+          class="flex justify-between items-center bg-white1 rounded-[0.4rem] h-[1.3rem] mt-[0.32rem] px-[0.3rem] text-[0.3rem] mx-[0.32rem]">
           <span>{{ t('market.market_buy_list_pre_pay') }} </span>
           <span><strong class="text-[0.4rem] mr-[0.16rem]">{{ showAmount }}</strong>
             {{ info.currWallet }}</span>
         </div>
         
-        <Button size="large" class="btn btn--buy bg-buy bg-buy-text-color ripple-btn" round :loading="loading" type="primary"
+        <div class="mx-[0.32rem]">
+          <Button size="large" class="btn btn--buy bg-buy bg-buy-text-color ripple-btn" round :loading="loading" type="primary"
           @click="goSubmit">
           <span style="color: var(--ex-white);">{{
             t('market.market_buy_fast_buy')
           }}</span></Button>
+        </div>
       </template>
 
       <template v-else-if="info.offset == 'sell'">
@@ -130,7 +131,7 @@
         <div class="mt-[0.4rem] bg-white1 rounded-[0.32rem] mx-[0.32rem] flex flex-col">
           <div class="text-[0.32rem] text-color3 pt-[0.24rem] px-[0.28rem] flex justify-between items-center">
             收款账号
-            <span class="text-primary text-[0.28rem]" @click="showAccountDialog = true;" v-if="currentAccount.channel">{{
+            <span class="text-primary text-[0.28rem]" @click="showAccountDialog = true;" v-if="currentAccount.id">{{
               t('重新选择')
             }}</span>
           </div>
@@ -138,7 +139,7 @@
           <div
             class="flex items-center justify-between relative  mt-[0.28rem] mx-[0.28rem] mb-[0.2rem] pl-[0.36rem] pr-[0.4rem] bg-white2 rounded-[0.4rem] h-[2.16rem]"
             :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/bank/card_bg.svg')})` }"
-            v-if="currentAccount.channel">
+            v-if="currentAccount.id">
             <div>
               <div class="right-[0.24rem] top-[0.24rem] absolute text-[0.28rem] text-color2"
                 v-if="currentAccount.accountName">
@@ -176,7 +177,7 @@
     </div>
 
     <BuyCoinConfirm ref="safeRef" :offset="info.offset" :loading="loading" :volume="amount" :price="info.price"
-      :currency="info.currCrypto" :pay-currency="info.currWallet" :money="showAmount" @submit="submitSell" />
+      :currency="info.currCrypto" :currentAccount="currentAccount"  :pay-currency="info.currWallet" :money="showAmount" @submit="submitSell" />
 
     <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="currentAccount" currency-type="bank"
       @on-add-collection="clickAccountItem" />
@@ -205,7 +206,7 @@ import AmountDialog from "@/components/AmountDialog.vue";
 
 const { t } = useI18n()
 // 收款方式列表 所有钱包
-const { accountList, wallet, sessionToken } = useMapState(['accountList', 'wallet', 'sessionToken'])
+const { wallet, sessionToken } = useMapState(['wallet', 'sessionToken'])
 
 const safeRef = ref()
 const currentAccount = ref({})
@@ -236,7 +237,6 @@ const clickAccountItem = (item) => {
 
 };
 
-
 const showAmountDialog = ref(false)
 const openConfirmBox = () => {
   showAmountDialog.value = true
@@ -257,8 +257,10 @@ const goSubmit = () => {
   amount.value = new Decimal(amount.value).toNumber()
   if (amount.value < info.value.limitmin || amount.value > info.value.limitmax) return showToast(`限额：${info.value.limitmin}-${info.value.limitmax}`)
   if (info.value.offset == 'sell') {
-    const cueeWallet = wallet.value.find(item => item.name == info.value.currCrypto)
-    if (amount.value > cueeWallet.amount) return showToast(t('transfer.no_enough_balance'))
+    if (!currentAccount.value.id) {
+      return showToast("请选择收款账户");
+    }
+    if (amount.value > currWallet.value.amount) return showToast(t('transfer.no_enough_balance'))
   }
   getSessionToken()
   // 打开密码
@@ -269,7 +271,7 @@ const submitSell = obj => {
   const params = {
     ad_id: info.value.id,
     volume: amount.value,
-    account_id: info.value.offset == 'buy' ? null : obj.account_id,
+    account_id: info.value.offset == 'buy' ? null : currentAccount.value.id,
     token: sessionToken.value,
     safeword: obj.safeword,
   }
@@ -410,7 +412,6 @@ const getSessionToken = () => {
 
     .btn {
       margin-top: 0.6rem;
-      border-radius: 0.4rem;
       font-weight: 600;
     }
   }

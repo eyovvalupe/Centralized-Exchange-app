@@ -82,6 +82,12 @@ class Service {
   }
 
   subscribe(orderNo) {
+    if(!this.socketC2C){
+      setTimeout(()=>{
+        this.subscribe(orderNo)
+      },300)
+      return
+    }
     this.socketC2C.emit('subscribe', orderNo)
   }
 

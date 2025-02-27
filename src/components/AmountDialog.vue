@@ -4,11 +4,11 @@
 
       <!-- 内容 -->
       <div
-        class="bg-color3 rounded-[0.4rem] px-[0.12rem] pb-[0.12rem]"
+        class="bg-white2 rounded-[0.4rem] px-[0.12rem] pb-[0.12rem]"
         style="text-align:center;border-radius:0.32rem;line-height:0.4rem;overflow:hidden;position:relative;margin:0.32rem 0.4rem 0 0.4rem;">
         <div class="text-color h-[0.84rem] flex items-center justify-center text-[0.32rem]">
           {{ account }}</div>
-        <div class="flex items-center justify-center flex-col bg-color p-[0.2rem] rounded-[0.4rem]">
+        <div class="flex items-center justify-center flex-col bg-white2 p-[0.2rem] rounded-[0.4rem]">
           <div class="flex items-center justify-center mb-[0.2rem]">
             <div v-if="currency" class="size-[0.4rem]">
               <CryptoIcon :name="currency.toUpperCase()" />
@@ -23,8 +23,8 @@
       <!--  按钮 -->
 
       <div
-        class="flex items-center justify-between text-[0.28rem] gap-[0.4rem]"
-        style="padding: 0.6rem 0.4rem 0.76rem 0.4rem;">
+        class="flex items-center justify-between text-[0.28rem] gap-[0.4rem] px-[0.4rem] pt-[0.6rem] pb-[0.76rem]"
+        >
         <div @click="router.push({ name: 'topUpCrypto' });close();"
           class="flex-1 h-[1.12rem] flex items-center justify-center font-[600] text-[0.36rem]"
           style="border-radius: 0.64rem;background-color: var(--ex-white);color: var(--ex-text-color--bg-light);">
@@ -38,8 +38,6 @@
 </template>
 
 <script setup>
-import { Popup } from "vant";
-import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
 import { watch } from "vue";
 import BottomPopup from "./BottomPopup.vue";

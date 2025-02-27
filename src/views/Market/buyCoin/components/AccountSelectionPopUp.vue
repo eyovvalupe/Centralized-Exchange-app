@@ -31,7 +31,7 @@
           <span class="text-[0.28rem]">{{ t('market.market_buy_fast_account_add') }}</span>
         </div>
 
-        <div class="flex flex-col items-center h-[1.36rem] my-[0.8rem]" v-if="bankList.length == 0">
+        <div class="flex flex-col items-center" v-if="bankList.length == 0">
        
           <NoData />
         </div>
