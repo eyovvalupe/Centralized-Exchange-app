@@ -153,7 +153,7 @@
             </div>
 
             <!-- 交易机器人 -->
-            <div class="box" id="ai-box">
+            <div class="box" id="ai-box" v-show="marketAiList.length">
                 <div class="recommend-title" v-if="pageLoaded">
                     <div class="wow slideInRight" style="flex: 1;" data-wow-duration="0.6s">交易机器人</div>
                 </div>
@@ -175,7 +175,7 @@
             </div>
 
             <!-- 跟单 -->
-            <div class="box" id="follow-box">
+            <div class="box" id="follow-box" v-show="followList.length">
                 <div class="recommend-title" v-if="pageLoaded">
                     <div class="wow slideInRight" style="flex: 1;" data-wow-duration="0.6s">跟单</div>
                 </div>
