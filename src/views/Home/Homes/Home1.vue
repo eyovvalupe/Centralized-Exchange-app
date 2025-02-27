@@ -10,9 +10,6 @@
         <div class="page-index">
             <!-- 头部 -->
             <div class="box home2-header">
-                <div @click="LeftRef.open()" class="icon" style="width: 0.48rem;height: 0.48rem;">
-                    <img v-lazy="getStaticImgUrl('/static/home2/menu.svg')" alt="">
-                </div>
                 <div style="flex: 1;"></div>
                 <div @click="jump('search')" class="icon icon2 ripple-btn" style="margin-right: 0.12rem;">
                     <img v-lazy="getStaticImgUrl('/static/home2/search.svg')" alt="">
@@ -20,8 +17,11 @@
                 <div @click="jump('notification')" class="icon icon2 ripple-btn" style="margin-right: 0.12rem;">
                     <img v-lazy="getStaticImgUrl('/static/home2/notice.svg')" alt="">
                 </div>
-                <div @click="jump('user', true)" class="icon icon2 ripple-btn" style="padding: 0.18rem;">
-                    <img v-lazy="getStaticImgUrl('/static/home2/user.svg')" alt="">
+                <div @click="jump('language')" class="icon icon2 ripple-btn" style="margin-right: 0.12rem;">
+                    <img v-lazy="getStaticImgUrl('/static/home2/lang.svg')" alt="">
+                </div>
+                <div @click="LeftRef.open()" class="icon icon2 ripple-btn">
+                    <img v-lazy="getStaticImgUrl('/static/home2/menu.svg')" alt="">
                 </div>
             </div>
             <div class="box top">
@@ -29,12 +29,12 @@
                 <div class="title"><span style="color: #F19009;">千万用户都在用的</span><br />交易所</div>
                 <div>体验无限可能</div>
             </div>
-            <div v-if="token" class="ripple-btn login-btn" @click="jump('user', true)">登录/注册</div>
+            <div v-if="!token" class="ripple-btn login-btn" @click="jump('user', true)">登录/注册</div>
             <div v-else style="height: 0.4rem;"></div>
 
             <!-- 导航 -->
             <div class="box dirs">
-                <div class="dir-b wow fadeInUp" @click="jump('tradeInfo', false, { tradeType: 'ai' })"
+                <div class="dir-b " @click="jump('tradeInfo', false, { tradeType: 'ai' })"
                     :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-b-bg2.png')})` }">
                     <div class="dir-b-box">
                         <div class="dir-b-icon">
@@ -43,7 +43,7 @@
                         <div>{{ t('trade.left_bot') }}</div>
                     </div>
                 </div>
-                <div class="dir-b wow fadeInUp" @click="jump('finance', false)"
+                <div class="dir-b " @click="jump('finance', false)"
                     :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-b-bg1.png')})` }">
                     <div class="dir-b-box">
                         <div class="dir-b-icon">
@@ -52,25 +52,25 @@
                         <div>{{ t('copy.title') }}</div>
                     </div>
                 </div>
-                <div class="dir-s wow fadeInUp" @click="jump('tradeInfo', false, { tradeType: 'spot' })">
+                <div class="dir-s " @click="jump('tradeInfo', false, { tradeType: 'spot' })">
                     <div class="dir-s-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/dir-s-1.svg')" alt="">
                     </div>
                     <div>{{ t('common.spot') }}</div>
                 </div>
-                <div class="dir-s wow fadeInUp" @click="jump('tradeInfo', false, { tradeType: 'constract' })">
+                <div class="dir-s " @click="jump('tradeInfo', false, { tradeType: 'constract' })">
                     <div class="dir-s-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/dir-s-2.svg')" alt="">
                     </div>
                     <div>{{ t('common.crypto') }}</div>
                 </div>
-                <div class="dir-s wow fadeInUp" @click="jump('finance', false, { activeTab: 1 })">
+                <div class="dir-s " @click="jump('finance', false, { activeTab: 1 })">
                     <div class="dir-s-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/dir-s-3.svg')" alt="">
                     </div>
                     <div>{{ t('finance.defi_borrow') }}</div>
                 </div>
-                <div class="dir-s wow fadeInUp" @click="jump('finance', false, { activeTab: 2 })">
+                <div class="dir-s " @click="jump('finance', false, { activeTab: 2 })">
                     <div class="dir-s-icon">
                         <img v-lazy="getStaticImgUrl('/static/home2/dir-s-4.svg')" alt="">
                     </div>
@@ -144,7 +144,7 @@
 
 
             <!-- 公告 -->
-            <div class="notice-bar">
+            <div v-if="pageLoaded" class="notice-bar">
                 <div class="notice-icon">
                     <img v-lazy="getStaticImgUrl('/static/home2/notice-primary.svg')" alt="">
                 </div>
@@ -154,7 +154,7 @@
 
             <!-- 交易机器人 -->
             <div class="box" id="ai-box">
-                <div class="recommend-title">
+                <div class="recommend-title" v-if="pageLoaded">
                     <div class="wow slideInRight" style="flex: 1;" data-wow-duration="0.6s">交易机器人</div>
                 </div>
 
@@ -176,7 +176,7 @@
 
             <!-- 跟单 -->
             <div class="box" id="follow-box">
-                <div class="recommend-title">
+                <div class="recommend-title" v-if="pageLoaded">
                     <div class="wow slideInRight" style="flex: 1;" data-wow-duration="0.6s">跟单</div>
                 </div>
 
@@ -198,7 +198,7 @@
 
             <!-- 质押挖矿 -->
             <div class="box" id="bor-box">
-                <div class="recommend-title">
+                <div class="recommend-title" v-if="pageLoaded">
                     <div class="wow slideInRight" style="flex: 1;" data-wow-duration="0.6s">质押挖矿</div>
                 </div>
 
@@ -231,7 +231,7 @@
             </div>
 
             <!-- ad -->
-            <div class="box ad " data-wow-duration="0.6s">
+            <div v-if="pageLoaded" class="box ad " data-wow-duration="0.6s">
 
                 <div class="ad-bg"
                     :style="{ 'background-image': `url(${getStaticImgUrl('/static/home2/ad-tip.png')})` }">
@@ -244,7 +244,7 @@
             </div>
 
             <!-- links -->
-            <div class="box" style="margin-top: 0.4rem;">
+            <div v-if="pageLoaded" class="box" style="margin-top: 0.4rem;">
                 <div class="links">
                     <div class="link-item " data-wow-duration="0.6s">
                         <div class="item-img">
