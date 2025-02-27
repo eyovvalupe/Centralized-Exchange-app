@@ -138,7 +138,8 @@
         </div>
       </div>
       </template>
-      <Button size="large" class="submit" :class="['submit--' + form1.offset]" round :loading="loading" @click="sell">
+
+      <Button size="large" class="submit ripple-btn" :class="['submit--' + form1.offset]" round :loading="loading" @click="sell">
         <span style="color: var(--ex-white);">{{
           form1.offset == "sell" ?
             t('market.market_buy_fast_sell_btn') : t('market.market_buy_fast_buy_btn') }}</span>
@@ -495,7 +496,6 @@ watch(() => store.state.deWeightCurrencyList, () => {
         font-size: 0.32rem;
         height: 0.8rem;
       }
-
       .active_tab {
         font-weight: bold;
         color: var(--ex-text-color);

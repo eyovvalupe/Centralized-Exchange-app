@@ -85,7 +85,7 @@
       <FormItem size="large"  :placeholder="t('trade.stock_opening_trade_pw')" input-type="password"
         v-model="safeword" />
       <div class="pt-[0.4rem] pb-[0.7rem]">
-        <Button size="large" round :loading="loading" @click="submit" type="primary">
+        <Button class="ripple-btn" size="large" round :loading="loading" @click="submit" type="primary">
           <span style="color: var(--ex-white);">{{ t('trade.stock_opening_confirm')
             }}</span></Button>
       </div>

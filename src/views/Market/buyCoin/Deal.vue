@@ -4,8 +4,8 @@
     <Top class="!z-20">
       <template #title>
         <span class="flex items-center justify-center">
-          <span class="mr-[0.16rem]" v-if="info.currCrypto">
-            <CryptoIcon class="size-[0.52rem] rounded-50" :name="info.currCrypto.toUpperCase()" />
+          <span class="size-[0.52rem] mr-[0.16rem]" v-if="info.currCrypto">
+            <CryptoIcon :name="info.currCrypto.toUpperCase()" />
           </span>
           {{ title }}{{ info.currCrypto }}
 
@@ -16,17 +16,17 @@
     <!-- 买入 -->
     <div class="form">
       <!-- 信息 -->
-      <div class="info">
-        <div class="flex items-center pt-[0.12rem] pb-[0.36rem] px-[0.16rem]">
+      <div class="info mx-[0.32rem]">
+        <div class="flex items-center px-[0.28rem] pt-[0.24rem] pb-[0.36rem]">
           <div class="avatar">
             {{ info.merchant?.slice(0, 1) }}
           </div>
           {{ info.merchant }}
         </div>
-        <div class="flex justify-between px-[0.3rem] py-[0.4rem] items-center bg-color rounded-[0.32rem]">
+        <div class="flex justify-between px-[0.4rem] h-[1.5rem] items-center bg-white2 rounded-[0.4rem]">
           <div class="info_item">
             {{ info.price }}
-            <span class="text-12 font-normal">{{ info.currWallet }}</span>
+            <span class="text-[0.24rem] font-normal">{{ info.currWallet }}</span>
           </div>
           <div class="text-14 text-color3">
             <div>{{ t('market.market_buy_optional_order_limit') }}</div>
@@ -37,12 +37,12 @@
 
       <template v-if="info.offset == 'buy'">
 
-        <div class="item bg-color3 rounded-[0.32rem] mt-[0.32rem] px-[0.28rem] py-[0.18rem]">
+        <div class="item bg-white2 rounded-[0.32rem] mt-[0.32rem] px-[0.28rem] pt-[0.36rem]">
           <div class="flex justify-between items-center">
             <div class="text-[0.3rem]">{{ t('market.market_buy_list_amount') }}</div>
-            <div class="flex items-center justify-center h-[0.88rem] px-[0.16rem] bg-color rounded-[0.32rem]">
-              <span class="mr-[0.16rem]" v-if="info.currCrypto">
-                <CryptoIcon class="size-[0.52rem] rounded-50" :name="info.currCrypto.toUpperCase()" />
+            <div class="flex items-center justify-center rounded-[0.32rem]">
+              <span class="size-[0.52rem] mr-[0.12rem]" v-if="info.currCrypto">
+                <CryptoIcon :name="info.currCrypto.toUpperCase()" />
               </span>
               {{ title }}{{ info.currCrypto }}
 
@@ -54,16 +54,18 @@
             </div>
             <span class="text-[0.3rem]">{{ info.currCrypto }}</span>
           </div>
+          <div class="h-[1px] bg-white2"></div>
+          <div class="h-[0.88rem]"></div>
         </div>
 
         <div
-          class="flex justify-between items-center bg-color3 rounded-[0.32rem] h-[1.3rem] mt-[0.32rem] px-[0.36rem] text-[0.3rem]">
+          class="flex justify-between items-center bg-white1 rounded-[0.4rem] h-[1.3rem] mt-[0.32rem] px-[0.3rem] text-[0.3rem]">
           <span>{{ t('market.market_buy_list_pre_pay') }} </span>
-          <span>
-            <strong class="text-[0.4rem] mr-[0.14rem]">{{ showAmount }}</strong>
+          <span><strong class="text-[0.4rem] mr-[0.16rem]">{{ showAmount }}</strong>
             {{ info.currWallet }}</span>
         </div>
-        <Button size="large" class="btn btn--buy bg-buy bg-buy-text-color" round :loading="loading" type="primary"
+        
+        <Button size="large" class="btn btn--buy bg-buy bg-buy-text-color ripple-btn" round :loading="loading" type="primary"
           @click="goSubmit">
           <span style="color: var(--ex-white);">{{
             t('market.market_buy_fast_buy')
@@ -74,37 +76,100 @@
         <!-- 卖出 -->
         <!-- 二层容器 -->
 
-        <div class="item bg-color3 rounded-[0.32rem] mt-[0.32rem] px-[0.28rem] py-[0.18rem]">
-          <div class="flex justify-between items-center">
-            <div class="text-[0.3rem]">{{ t('market.market_buy_list_amount') }}</div>
-            <div class="flex items-center justify-center h-[0.88rem] px-[0.16rem] bg-color rounded-[0.32rem]">
-              <span class="mr-[0.16rem]" v-if="info.currCrypto">
-                <CryptoIcon class="size-[0.52rem] rounded-50" :name="info.currCrypto.toUpperCase()" />
-              </span>
-              {{ title }}{{ info.currCrypto }}
-
+        <div class="item bg-white2 mx-[0.32rem] rounded-[0.32rem] mt-[0.32rem]  pt-[0.36rem]">
+          <div class="px-[0.28rem]">
+            <div class="flex justify-between items-center">
+              <div class="text-[0.3rem]">{{ t('market.market_buy_list_amount') }}</div>
+              <div class="flex items-center justify-center">
+                <span class="size-[0.52rem] mr-[0.16rem]" v-if="info.currCrypto">
+                  <CryptoIcon :name="info.currCrypto.toUpperCase()" />
+                </span>
+                {{ title }}{{ info.currCrypto }}
+              </div>
+            </div>
+            <div class="form_item">
+              <div class="flex-1">
+                <input v-model="amount" placeholder="0" type="number" @blur="amountBlur" class="ipt" />
+              </div>
+              <!-- <div class="all" @click="amount = currWallet.amount > info.limitmax ? info.limitmax : currWallet.amount">{{ t('trade.stock_position_all') }}</div> -->
+              <span class="text-[0.3rem]">{{ info.currCrypto }}</span>
             </div>
           </div>
-          <div class="form_item">
-            <div class="flex-1">
-              <input v-model="amount" placeholder="0" type="number" @blur="amountBlur" class="ipt" />
+          <div class="h-[1px] bg-white2"></div>
+          <div class="flex items-center justify-between px-[0.28rem]">
+            <div class="flex items-center justify-center">
+              <span class="size-[0.4rem] mr-[0.1rem]" v-if="info.currCrypto">
+                <CryptoIcon :name="info.currCrypto.toUpperCase()" />
+              </span>
+              <span class="text-[0.28rem]">{{ info.currCrypto }}</span>
             </div>
-            <!-- <div class="all" @click="amount = currWallet.amount > info.limitmax ? info.limitmax : currWallet.amount">{{ t('trade.stock_position_all') }}</div> -->
-            <span class="text-[0.3rem]">{{ info.currCrypto }}</span>
+            
+            <div class="flex items-center h-[0.88rem]">
+                <span class="text-primary flex items-center gap-[0.1rem] text-[0.24rem]" @click="openConfirmBox">
+                  <span class="text-color3">{{ t('assets.wallet_available_sim') }}</span>
+                  <span>{{ currWallet.amount }}</span>
+                  <span>{{ currWallet.name }}</span>
+                </span>
+                <Icon name="arrow" class="ml-[0.1rem]" color="var(--ex-text-color2)" size="0.22rem" />
+              </div>
           </div>
         </div>
 
         <!-- 三层容器 -->
         <div
-          class="flex justify-between items-center bg-color3 rounded-[0.32rem] h-[1.3rem] mt-[0.32rem] px-[0.36rem] text-[0.3rem]">
+          class="flex justify-between items-center bg-color3 rounded-[0.32rem] h-[1.3rem] mt-[0.32rem] px-[0.36rem] text-[0.3rem] mx-[0.32rem]">
           <span>{{ t('market.market_buy_optional_estreceive') }} </span>
           <span>
             <strong class="text-[0.4rem] mr-[0.14rem]">{{ showAmount }}</strong>
             {{ info.currWallet }}</span>
         </div>
 
-        <Button size="large" class="btn btn--sell bg-sell bg-sell-text-color" round :loading="loading"
+
+
+        <div class="h-[1px] bg-white2 mt-[0.4rem]"></div>
+        <div class="mt-[0.4rem] bg-white1 rounded-[0.32rem] mx-[0.32rem] flex flex-col">
+          <div class="text-[0.32rem] text-color3 pt-[0.24rem] px-[0.28rem] flex justify-between items-center">
+            收款账号
+            <span class="text-primary text-[0.28rem]" @click="showAccountDialog = true;" v-if="currentAccount.channel">{{
+              t('重新选择')
+            }}</span>
+          </div>
+         
+          <div
+            class="flex items-center justify-between relative  mt-[0.28rem] mx-[0.28rem] mb-[0.2rem] pl-[0.36rem] pr-[0.4rem] bg-white2 rounded-[0.4rem] h-[2.16rem]"
+            :style="{ backgroundImage: `url(${getStaticImgUrl('/static/img/bank/card_bg.svg')})` }"
+            v-if="currentAccount.channel">
+            <div>
+              <div class="right-[0.24rem] top-[0.24rem] absolute text-[0.28rem] text-color2"
+                v-if="currentAccount.accountName">
+                户主姓名：{{ currentAccount.accountName }}</div>
+              <div class="flex items-center">
+                <div class="bg-white size-[0.68rem] rounded-full flex items-center justify-center mr-[0.16rem]">
+                  <CryptoIcon v-if="currentAccount.channel === 'crypto'" class="rounded-50" :name="currentAccount.symbol?.toUpperCase()" />
+                  <img v-else class="!size-[0.44rem]" v-lazy="getStaticImgUrl('/static/img/bank/card_icon.svg')"
+                    alt="img" />
+                </div>
+                <div class="text-color text-[0.32rem]">{{ currentAccount.symbol ?
+                  `${currentAccount.symbol}-${currentAccount.network}` : `${currentAccount.bankName}` }}</div>
+
+              </div>
+              <div class="mt-[0.32rem]">
+                <div class="texr-[0.4rem] font-[600] text-color">{{ _hiddenAccount(currentAccount.bankCardNumber || currentAccount.address) }}</div>
+
+              </div>
+            </div>
+          </div>
+          <div class="h-[1.8rem] mx-[0.32rem] flex flex-col items-center justify-center" @click="showAccountDialog = true;" v-else>
+              <div class="size-[0.48rem]">
+                <img v-lazy="getStaticImgUrl('/static/img/common/add_gray.svg')" />
+              </div>
+              <span class="text-[0.28rem] text-color3 mt-[0.08rem]">{{ t('market.market_buy_fast_account_add') }}</span>
+          </div>
+        </div>
+        <div class="mx-[0.32rem]">
+          <Button size="large" class="btn btn--sell bg-sell bg-sell-text-color ripple-btn" round :loading="loading"
           @click="goSubmit"><span style="color: var(--ex-white);">{{ t('market.market_buy_fast_sell') }}</span></Button>
+        </div>
 
       </template>
 
@@ -113,29 +178,37 @@
     <BuyCoinConfirm ref="safeRef" :offset="info.offset" :loading="loading" :volume="amount" :price="info.price"
       :currency="info.currCrypto" :pay-currency="info.currWallet" :money="showAmount" @submit="submitSell" />
 
+    <AccountSelectionPopUp v-model:show="showAccountDialog" :bank="currentAccount" currency-type="bank"
+      @on-add-collection="clickAccountItem" />
+    
+    <!-- 余额提示 -->
+    <AmountDialog v-model:show="showAmountDialog" :currency="currWallet.name" :account="t('assets.wallet_cash_value')"
+      :amount="currWallet.amount" />
+
   </div>
 </template>
 
 <script setup>
-import { getStaticImgUrl } from "@/utils/index.js"
 import { ref, computed } from 'vue'
 import { useRoute } from 'vue-router'
-import { Button, showToast } from 'vant'
+import { Button,Icon, showToast } from 'vant'
 import Decimal from 'decimal.js'
 import Top from '@/components/Top.vue'
 import store, { useMapState } from '@/store'
 import BuyCoinConfirm from './components/BuyCoinConfirm.vue'
+import AccountSelectionPopUp from "./components/AccountSelectionPopUp.vue";
 import router from '@/router'
 import { _buysell } from '@/api/api'
-import { _hiddenAccount } from '@/utils/index'
+import { getStaticImgUrl, _hiddenAccount } from '@/utils/index'
 import { useI18n } from 'vue-i18n'
+import AmountDialog from "@/components/AmountDialog.vue";
 
 const { t } = useI18n()
 // 收款方式列表 所有钱包
 const { accountList, wallet, sessionToken } = useMapState(['accountList', 'wallet', 'sessionToken'])
 
 const safeRef = ref()
-
+const currentAccount = ref({})
 const route = useRoute()
 const title = ref(route.query.offset == 'buy' ? t('market.market_buy_fast_buy') : t('market.market_buy_fast_sell'))
 
@@ -151,11 +224,23 @@ const currWallet = computed(() => {
   return wallet.value.find(item => item.name == info.value.currCrypto) || {}
 })
 
-
 const currencyInfo = computed(() => {
   const data = store.state.currencyList.find((item) => item.currency == info.value.currCrypto) || {};
   return data
 });
+
+const showAccountDialog = ref(false)
+const clickAccountItem = (item) => {
+  currentAccount.value = item
+  showAccountDialog.value = false
+
+};
+
+
+const showAmountDialog = ref(false)
+const openConfirmBox = () => {
+  showAmountDialog.value = true
+};
 
 const amountBlur = () => {
   if (isNaN(amount.value) || amount.value <= 0) {
@@ -166,7 +251,6 @@ const amountBlur = () => {
     amount.value = new Decimal(amount.value).toFixed(currencyInfo.value.tpp + 1).slice(0, -1)
   }
 }
-
 
 const goSubmit = () => {
   if (!amount.value || amount.value <= 0) return showToast(t('market.market_buy_fast_no_amount'))
@@ -220,8 +304,7 @@ const getSessionToken = () => {
   padding-top: 1.12rem;
 
   .form {
-    padding: 0.32rem;
-
+    padding: 0.24rem 0 0.4rem 0;
     .card_box {
       border-radius: 0.3rem;
       height: 1.44rem;
@@ -281,7 +364,7 @@ const getSessionToken = () => {
     }
 
     .form_item {
-      height: 1.36rem;
+      height: 1.7rem;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -303,14 +386,12 @@ const getSessionToken = () => {
       border-radius: 0.32rem;
       background-color: var(--ex-bg-color3);
       font-size: 0.32rem;
-      padding: 0.12rem;
-
       .avatar {
         width: 0.54rem;
         height: 0.54rem;
         border-radius: 50%;
         background-color: var(--ex-white);
-        margin-right: 0.16rem;
+        margin-right: 0.2rem;
         position: relative;
         display: flex;
         align-items: center;

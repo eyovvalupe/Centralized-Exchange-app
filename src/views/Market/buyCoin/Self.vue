@@ -3,10 +3,10 @@
   <div class="buycoin_self">
     <!-- 一层容器 tab -->
     <div class="tabs-buy">
-      <div class="tab" :class="{ active_tab: offset == 'buy' }" @click="changeTab('buy')">
+      <div class="tab ripple-btn" :class="{ active_tab: offset == 'buy' }" @click="changeTab('buy')">
         {{ t('market.market_buy_fast_buy') }}
       </div>
-      <div class="tab" :class="{ active_tab: offset == 'sell' }" @click="changeTab('sell')">
+      <div class="tab ripple-btn" :class="{ active_tab: offset == 'sell' }" @click="changeTab('sell')">
         {{ t('market.market_buy_fast_sell') }}
       </div>
     </div>
@@ -73,7 +73,7 @@
               </span>
             </div>
           </div>
-          <div v-if="token" class="btn" :class="['btn--' + offset]" @click="goBuy(item)">
+          <div v-if="token" class="btn ripple-btn" :class="['btn--' + offset]" @click="goBuy(item)">
             {{ offset == "buy" ? t('market.market_buy_optional_buy') : t('market.market_buy_optional_sell') }}
           </div>
         </div>
