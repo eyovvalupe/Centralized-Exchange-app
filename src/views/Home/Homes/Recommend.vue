@@ -1,5 +1,6 @@
 <template>
-    <div class="home-tabs-box" :class="['home-tabs-box-' + props.from]">
+    <div class="home-tabs-box"
+        :class="['home-tabs-box-' + props.from, 'home-tabs-box-' + (props.innerPage ? 'inner' : '')]">
         <Tabs :type="from == 'trade' ? 'line-card-trade' : 'sub'" :color="'var(--ex-primary-color)'" @change="tabChange"
             v-if="props.activated" v-model:active="activeTab" :animated="from != 'home'" shrink>
             <Tab :name="0" v-if="from != 'home'" :title="t('trade.left_mine')">
@@ -267,6 +268,7 @@ const filterList = list => {
                 right: 1rem;
                 top: 0;
                 background: linear-gradient(90deg, rgba(14, 15, 24, 0.00) 0%, #0E0F18 100%);
+                pointer-events: none;
             }
 
             &>.van-tabs__nav {
@@ -274,6 +276,22 @@ const filterList = list => {
                 margin-right: 1.1rem;
                 height: 0.4rem;
 
+            }
+        }
+    }
+}
+
+.home-tabs-box-inner {
+    :deep(.van-tabs--line-card-trade) {
+        &>.van-tabs__wrap {
+            position: relative;
+
+            &::after {
+                display: none;
+            }
+
+            &>.van-tabs__nav {
+                margin-right: 0.4rem;
             }
         }
     }
