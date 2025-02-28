@@ -21,8 +21,8 @@
         {{ t('trade.stock_opening_btn_transfer') }}
       </div>
       <div
-        class="w-[3.23rem] h-[1.12rem] bg-primary rounded-[1.6rem] flex justify-center items-center text-[0.36rem] text-color--bg-primary ripple-btn"
-        @click="() => router.back()">
+        class="w-[3.23rem] h-[1.12rem] bg-primary rounded-[1.6rem] flex justify-center items-center text-[0.36rem] text-white ripple-btn"
+        @click="() => router.replace({name: 'tradeInfo'})">
         {{ t('trade.stock_opening_btn_trade') }}
       </div>
     </div>

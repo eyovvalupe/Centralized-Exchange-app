@@ -20,7 +20,7 @@
         <div class="w-[3.16rem] h-[0.8rem] flex items-center justify-center rounded-[1.3rem] bg-white text-black text-[0.32rem] font-semibold ripple-primary"
           @click="close">{{
             t('user_page.message_box_cancel') }}</div>
-        <div class="w-[3.16rem] h-[0.8rem] flex items-center justify-center rounded-[1.3rem] bg-primary text-black text-[0.32rem] font-semibold ripple-btn"
+        <div class="w-[3.16rem] h-[0.8rem] flex items-center justify-center rounded-[1.3rem] bg-primary text-white text-[0.32rem] font-semibold ripple-btn"
           @click="confirm">{{
             t('register.code_jump_confirm') }}</div>
       </div>

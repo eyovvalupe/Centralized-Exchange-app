@@ -60,19 +60,38 @@
       <!-- 导航 -->
       <div class="navs">
         <div
-          class="nav-item pb-[0.28rem] relative"
+          class="nav-item pb-[0.28rem] relative ripple-info"
           @click="jump('account', true)"
         >
-          <div class="nav-icon">
-            <img v-lazy="getStaticImgUrl('/static/home2/nav-1.svg')" alt="" />
+          <div class="relative">
+            <div class="nav-icon">
+              <img v-lazy="getStaticImgUrl('/static/home2/nav-1.svg')" alt="" />
+            </div>
+            <div class="nav-icon active_icon active_animation">
+              <img
+                v-lazy="getStaticImgUrl('/static/home2/nav-1_white.svg')"
+                alt=""
+              />
+            </div>
           </div>
           <div class="absolute text-center w-full top-[0.7rem]">
             {{ $t('user_page.receive_payment') }}
           </div>
         </div>
-        <div class="nav-item pb-[0.28rem] relative" @click="jump('kyc', true)">
-          <div class="nav-icon">
-            <img v-lazy="getStaticImgUrl('/static/home2/nav-2.svg')" alt="" />
+        <div
+          class="nav-item pb-[0.28rem] relative ripple-info"
+          @click="jump('kyc', true)"
+        >
+          <div class="relative">
+            <div class="nav-icon">
+              <img v-lazy="getStaticImgUrl('/static/home2/nav-2.svg')" alt="" />
+            </div>
+            <div class="nav-icon active_icon active_animation">
+              <img
+                v-lazy="getStaticImgUrl('/static/home2/nav-2_white.svg')"
+                alt=""
+              />
+            </div>
           </div>
           <div class="absolute text-center w-full top-[0.7rem]">
             {{ $t('user_page.verify_identity') }}
@@ -99,11 +118,19 @@
           </div>
         </div>
         <div
-          class="nav-item pb-[0.28rem] relative"
+          class="nav-item pb-[0.28rem] relative ripple-info"
           @click="jump('googleCode', true)"
         >
-          <div class="nav-icon">
-            <img v-lazy="getStaticImgUrl('/static/home2/nav-3.svg')" alt="" />
+          <div class="relative">
+            <div class="nav-icon">
+              <img v-lazy="getStaticImgUrl('/static/home2/nav-3.svg')" alt="" />
+            </div>
+            <div class="nav-icon active_icon active_animation">
+              <img
+                v-lazy="getStaticImgUrl('/static/home2/nav-3_white.svg')"
+                alt=""
+              />
+            </div>
           </div>
           <div class="absolute text-center w-full top-[0.7rem]">
             {{ $t('user_page.google_verification') }}
@@ -121,11 +148,19 @@
           </div>
         </div>
         <div
-          class="nav-item pb-[0.28rem] relative"
+          class="nav-item pb-[0.28rem] relative ripple-info"
           @click="jump('inviteFriends', true)"
         >
-          <div class="nav-icon">
-            <img v-lazy="getStaticImgUrl('/static/home2/nav-4.svg')" alt="" />
+          <div class="relative">
+            <div class="nav-icon">
+              <img v-lazy="getStaticImgUrl('/static/home2/nav-4.svg')" alt="" />
+            </div>
+            <div class="nav-icon active_icon active_animation">
+              <img
+                v-lazy="getStaticImgUrl('/static/home2/nav-4_white.svg')"
+                alt=""
+              />
+            </div>
           </div>
           <div class="absolute text-center w-full top-[0.7rem]">
             {{ $t('user_page.recommend_friend') }}
@@ -138,39 +173,71 @@
         <div class="tab-box">
           <div class="tab-title">{{ $t('user_page.manage_assets') }}</div>
           <div class="tabs">
-            <div class="tab" @click="jump('topUpCrypto', true)">
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-1.svg')"
-                  alt=""
-                />
+            <div class="tab ripple-info" @click="jump('topUpCrypto', true)">
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-1.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-1_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('home.recharge') }}</div>
             </div>
-            <div class="tab" @click="jump('withdraw', true)">
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-2.svg')"
-                  alt=""
-                />
+            <div class="tab ripple-info" @click="jump('withdraw', true)">
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-2.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-2_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('assets.withdraw') }}</div>
             </div>
-            <div class="tab" @click="jump('transfer', true)">
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-3.svg')"
-                  alt=""
-                />
+            <div class="tab ripple-info" @click="jump('transfer', true)">
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-3.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-3_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('assets.transfer') }}</div>
             </div>
-            <div class="tab" @click="jump('recordList', true)">
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-4.svg')"
-                  alt=""
-                />
+            <div class="tab ripple-info" @click="jump('recordList', true)">
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-4.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-4_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('assets.financialRecords') }}</div>
             </div>
@@ -180,61 +247,104 @@
         <div class="tab-box">
           <div class="tab-title">{{ $t('trade.ai_opening_trade') }}</div>
           <div class="tabs">
-            <div class="tab">
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-5.svg')"
-                  alt=""
-                />
+            <div
+              class="tab ripple-info"
+              @click="jump('register', false, { guest: 'guest' })"
+            >
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-5.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-5_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('home.simulatedTradingButton') }}</div>
             </div>
             <div
-              class="tab"
+              class="tab ripple-info"
               @click="jump('tradeInfo', false, { tradeType: 'spot' })"
             >
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-6.svg')"
-                  alt=""
-                />
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-6.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-6_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('common.spot') }}</div>
             </div>
             <div
-              class="tab"
+              class="tab ripple-info"
               @click="jump('tradeInfo', false, { tradeType: 'constract' })"
             >
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-7.svg')"
-                  alt=""
-                />
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-7.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-7_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('common.crypto') }}</div>
             </div>
             <div
-              class="tab"
+              class="tab ripple-info"
               @click="jump('tradeInfo', false, { tradeType: 'ai' })"
             >
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-8.svg')"
-                  alt=""
-                />
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-8.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-8_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('common.option') }}</div>
             </div>
             <div
-              class="tab"
+              class="tab ripple-info"
               style="margin-top: 0.4rem"
               @click="jump('tradeInfo', false, { tradeType: 'ai' })"
             >
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-9.svg')"
-                  alt=""
-                />
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-9.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-9_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>ETF</div>
             </div>
@@ -244,30 +354,63 @@
         <div class="tab-box">
           <div class="tab-title">{{ $t('home.finance') }}</div>
           <div class="tabs">
-            <div class="tab mr-[0.1rem]" @click="jump('finance', false, { activeTab: 0 })">
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-10.svg')"
-                  alt=""
-                />
+            <div
+              class="tab ripple-info"
+              @click="jump('finance', false, { activeTab: 0 })"
+            >
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-10.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-10_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('copy.title') }}</div>
             </div>
-            <div class="tab mr-[0.1rem]" @click="jump('finance', false, { activeTab: 1 })">
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-11.svg')"
-                  alt=""
-                />
+            <div
+              class="tab ripple-info"
+              @click="jump('finance', false, { activeTab: 1 })"
+            >
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-11.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-11_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('finance.defi_borrow') }}</div>
             </div>
-            <div class="tab" @click="jump('finance', false, { activeTab: 2 })">
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-12.svg')"
-                  alt=""
-                />
+            <div
+              class="tab ripple-info"
+              @click="jump('finance', false, { activeTab: 2 })"
+            >
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-12.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-12_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('finance.portfolio_title') }}</div>
             </div>
@@ -277,57 +420,113 @@
         <div class="tab-box">
           <div class="tab-title">{{ $t('user_page.user_func') }}</div>
           <div class="tabs">
-            <div class="tab" @click="jump('chat')">
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-13.svg')"
-                  alt=""
-                />
+            <div class="tab ripple-info" @click="jump('chat')">
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-13.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-13_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('user_page.support') }}</div>
             </div>
-            <div class="tab" @click="jump('notification')">
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-14.svg')"
-                  alt=""
-                />
+            <div class="tab ripple-info" @click="jump('notification')">
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-14.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-14_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('user_page.news') }}</div>
             </div>
-            <div class="tab" @click="jump('language')">
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-15.svg')"
-                  alt=""
-                />
+            <div class="tab ripple-info" @click="jump('language')">
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-15.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-15_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('user_page.set_language') }}</div>
             </div>
-            <div class="tab" @click="jump('safety', true)">
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-16.svg')"
-                  alt=""
-                />
+            <div class="tab ripple-info" @click="jump('safety', true)">
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-16.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-16_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('user_page.security') }}</div>
             </div>
-            <div class="tab" style="margin-top: 0.4rem" @click="jump('about')">
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-17.svg')"
-                  alt=""
-                />
+            <div
+              class="tab ripple-info"
+              style="margin-top: 0.4rem"
+              @click="jump('about')"
+            >
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-17.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-17_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('user_page.about') }}</div>
             </div>
-            <div class="tab" style="margin-top: 0.4rem" @click="jump('setting', true)">
-              <div class="tab-icon">
-                <img
-                  v-lazy="getStaticImgUrl('/static/home2/tab-18.svg')"
-                  alt=""
-                />
+            <div
+              class="tab ripple-info"
+              style="margin-top: 0.4rem"
+              @click="jump('setting', true)"
+            >
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-18.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-18_green.svg')"
+                    alt=""
+                  />
+                </div>
               </div>
               <div>{{ $t('user_page.setting') }}</div>
             </div>
@@ -350,11 +549,30 @@
   // })
   // 跳转
   const jump = (name, needToken, query) => {
+    if (
+      token.value &&
+      ((name == 'register' && query.guest) ||
+        (userInfo.value.role == 'guest' &&
+          [
+            'kyc',
+            'google',
+            'googleCode',
+            'inviteFriends',
+            'account',
+            'topUpCrypto',
+            'withdraw',
+          ].includes(name)))
+    ) {
+      return;
+    } else {
+      setTimeout(() => {
+        showLeft.value = false;
+      }, 600);
+    }
     if (needToken && !token.value) {
-      showLeft.value = false;
       setTimeout(() => {
         store.commit('setIsLoginOpen', true);
-      }, 500);
+      }, 800);
       return;
     }
 
@@ -377,10 +595,12 @@
       sessionStorage.setItem('tradeinfo-tab', e);
     }
 
-    router.push({
-      name,
-      query,
-    });
+    setTimeout(() => {
+      router.push({
+        name,
+        query,
+      });
+    }, 800);
   };
 
   const token = computed(() => store.state.token);
@@ -415,6 +635,13 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+
+    .active_icon {
+      position: absolute;
+      top: 0;
+      left: 0;
+      display: none;
+    }
 
     .user-box {
       padding: 0.6rem 0.32rem 0.48rem 0.32rem;

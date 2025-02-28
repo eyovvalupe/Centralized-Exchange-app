@@ -170,6 +170,7 @@ setTimeout(() => {
 }, 50000);
 
 const transitionName = computed(() => store.state.transitionName || "");
+console.log(transitionName.value)
 watch(
   token,
   () => {
@@ -233,6 +234,16 @@ onMounted(() => {
       button3.appendChild(ripple);
       ripple.addEventListener('animationend', () => {
         ripple.remove();
+      });
+      return
+    }
+
+    const button4 = e.target.closest('.ripple-info');
+    if (button4) {
+      const scaleElemnt = button4.querySelector('.active_animation')
+      scaleElemnt.classList.add('scale-animation');
+      scaleElemnt.addEventListener('animationend', () => {
+        scaleElemnt.classList.remove('scale-animation');
       });
       return
     }
