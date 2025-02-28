@@ -134,7 +134,7 @@ const checkActive = (item) => {
   height: 1.4rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 999;
+  z-index: 9;
   &::before{
     content: '';
     width: 100%;

@@ -817,3 +817,17 @@ export const _notifiJoin = (data = {}) => {
     custom: { auth: true, toast: true, retry: true }
   })
 }
+
+//推荐数据
+export const _referralData = (data = {}) => {
+  return http.post(`/authc/v1/user/referral/total`, data, {
+    custom: { auth: true, toast: true, retry: true }
+  })
+}
+
+//推荐用户
+export const _referralUsers = (data = {}) => {
+  return http.post(`/authc/v1/user/referral/myusers`, data, {
+    custom: { auth: true, toast: true, retry: true }
+  })
+}

@@ -20,7 +20,7 @@
                 <div @click="jump('language')" class="icon icon2 ripple-btn" style="margin-right: 0.12rem;">
                     <img v-lazy="getStaticImgUrl('/static/home2/lang.svg')" alt="">
                 </div>
-                <div @click="LeftRef.open()" class="icon icon2 ripple-btn">
+                <div @click="openLeftMenu" class="icon icon2 ripple-btn">
                     <img v-lazy="getStaticImgUrl('/static/home2/menu.svg')" alt="">
                 </div>
             </div>
@@ -322,6 +322,12 @@ const { startSocket } = useSocket();
 const { t } = useI18n();
 const notifiOpen = computed(() => store.state.notifiOpen);
 const marketAiList = computed(() => store.state.marketAiList || []); // ai量化默认列表
+
+//打开用户中心弹窗
+const openLeftMenu = () => {
+    if (token.value) store.dispatch('updateReferralInfo');
+    LeftRef.value.open()
+}
 
 // 跳转
 const jump = (name, needToken, query) => {

@@ -4,7 +4,7 @@
     v-model:show="showLeft"
     round
     position="left"
-    :style="{ width: '90%', height: '100%' }"
+    :style="{ width: '90%', height: '100%', paddingBottom: '1.4rem' }"
   >
     <div class="left-menu">
       <!-- 用户 -->
@@ -44,15 +44,15 @@
       <!-- 推广 -->
       <div class="po-box">
         <div class="po-item">
-          <div class="num">0</div>
+          <div class="num">{{ token && userInfo.role == 'user' ? referralInfo.subnum || 0 : 0 }}</div>
           <div>{{ $t('user_page.recommended_user') }}</div>
         </div>
         <div class="po-item">
-          <div class="num">0</div>
+          <div class="num">{{ token && userInfo.role == 'user' ? referralInfo.netnum || 0 : 0 }}</div>
           <div>{{ $t('user_page.social_user') }}</div>
         </div>
         <div class="po-item">
-          <div class="num">0</div>
+          <div class="num">{{ token && userInfo.role == 'user' ? referralInfo.bonus || 0 : 0 }}</div>
           <div>{{ $t('user_page.recommend_bonus') }}</div>
         </div>
       </div>
@@ -561,6 +561,7 @@
             'account',
             'topUpCrypto',
             'withdraw',
+            'safety',
           ].includes(name)))
     ) {
       return;
@@ -605,6 +606,7 @@
 
   const token = computed(() => store.state.token);
   const userInfo = computed(() => store.state.userInfo || {});
+  const referralInfo = computed(() => store.state.referralInfo || {});
   const goLogin = () => {
     close();
     setTimeout(() => {
