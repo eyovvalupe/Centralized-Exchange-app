@@ -106,7 +106,7 @@ const bankList = computed(() => accountList.value.filter(item => item.channel ==
 watch(
   () => props.show,
   val => {
-    if (val && !accountList.value.length) {
+    if (token.value && val) {
       showLoadingToast({ duration: 0, loadingType: 'circular' })
       store.dispatch('updateAccountList').then(closeToast)
     }
@@ -144,7 +144,7 @@ const goAddAccount = () => {
   }).then(() => {
     store.commit("setSelectedPayment", '1');
     router.push({
-      name: 'account',
+      name: 'bank',
     })
   })
 

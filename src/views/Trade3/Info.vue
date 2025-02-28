@@ -78,25 +78,6 @@
                 </Tab>
               </Tabs>
             </div>
-
-            <!-- 内容2 -->
-            <!-- <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
-                            <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg"
-                                :color="'var(--ex-primary-color)'" v-model:active="activeTab3" animated shrink>
-                                <Tab :title="t('trade.trade_orders_current')" :name="44">
-                                    <div style="height: 0.2rem;"></div>
-                                    <div class="dialog-market-bg" v-if="activeTab3 == 44">
-                                        <PositionsSpot :type="'constract'" />
-                                    </div>
-                                </Tab>
-                                <Tab :title="t('trade.trade_order_history')" :name="55">
-                                    <div style="height: 0.2rem;"></div>
-                                    <div class="dialog-market-bg" v-if="activeTab3 == 55">
-                                        <InquireSpot :scrollDom="'.dialog-market-box'" :type="'constract'" ref="InquireRef" />
-                                    </div>
-                                </Tab>
-                            </Tabs>
-                        </div> -->
             <div style="height: 0.4rem"></div>
           </div>
         </Tab>
@@ -164,25 +145,6 @@
                 </Tab>
               </Tabs>
             </div>
-
-            <!-- 内容2 -->
-            <!-- <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
-                            <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg"
-                                :color="'var(--ex-primary-color)'" v-model:active="activeTab3" animated shrink>
-                                <Tab :title="t('trade.trade_orders_current')" :name="44">
-                                    <div style="height: 0.2rem;"></div>
-                                    <div class="dialog-market-bg" v-if="activeTab3 == 44">
-                                        <PositionsContract :type="'constract'" />
-                                    </div>
-                                </Tab>
-                                <Tab :title="t('trade.trade_order_history')" :name="55">
-                                    <div style="height: 0.2rem;"></div>
-                                    <div class="dialog-market-bg" v-if="activeTab3 == 55">
-                                        <InquireContract :scrollDom="'.dialog-market-box'" :type="'constract'" ref="InquireRef" />
-                                    </div>
-                                </Tab>
-                            </Tabs>
-                        </div> -->
             <div style="height: 0.4rem"></div>
           </div>
         </Tab>
@@ -250,25 +212,6 @@
                 </Tab>
               </Tabs>
             </div>
-
-            <!-- 内容2 -->
-            <!-- <div style="padding: 0 0.1rem;background-color:var(--ex-bg-color);margin-top: 0.1rem;">
-                            <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg"
-                                :color="'var(--ex-primary-color)'" v-model:active="activeTab3" animated shrink>
-                                <Tab :title="t('trade.trade_orders_current')" :name="44">
-                                    <div style="height: 0.2rem;"></div>
-                                    <div class="dialog-market-bg" v-if="activeTab3 == 44">
-                                        <PositionsAi />
-                                    </div>
-                                </Tab>
-                                <Tab :title="t('trade.trade_order_history')" :name="55">
-                                    <div style="height: 0.2rem;"></div>
-                                    <div class="dialog-market-bg" v-if="activeTab3 == 55">
-                                        <InquireAi :scrollDom="'.dialog-market-box'"  ref="InquireRef" />
-                                    </div>
-                                </Tab>
-                            </Tabs>
-                        </div> -->
             <div style="height: 0.4rem"></div>
           </div>
         </Tab>
@@ -369,6 +312,8 @@ if (route.query.tradeType == 'constract') {
   activeTab.value = 2;
 } else if (route.query.tradeType == 'ai') {
   activeTab.value = 3;
+} else if (route.query.tradeType == 'stock') {
+  activeTab.value = 4;
 } else {
   if (sessionStorage.getItem('tradeinfo-tab')) {
     activeTab.value = Number(sessionStorage.getItem('tradeinfo-tab'));
@@ -403,6 +348,9 @@ const changeTab2 = (e) => {
 const item = computed(() => {
   let it = {};
   switch (activeTab.value) {
+    case 4: //股票
+      it = store.state.currStock || {};
+      break
     case 1: // 现货
     case 2: // 合约
       it = store.state.currConstact || {};
@@ -414,11 +362,6 @@ const item = computed(() => {
   return it;
 });
 
-const updown = computed(() => {
-  // 1-涨 -1-跌 0-平
-  if (item.value.ratio === undefined) return 0;
-  return item.value.ratio > 0 ? 1 : -1;
-});
 
 // 获取股票最新信息
 const getBasic = (obj, tab) => {
@@ -426,6 +369,12 @@ const getBasic = (obj, tab) => {
     if (res.code == 200) {
       if (res.data.symbol == item.value.symbol) {
         switch (tab) {
+          case 4: // 股票
+            store.commit('setCurrStock', {
+              ...obj,
+              ...res.data,
+            });
+            break
           case 1: // 现货
           case 2: // 合约
             store.commit('setCurrConstract', {
@@ -475,6 +424,9 @@ const handleClick = (obj) => {
 const handleClickIndex = ({ item, type }) => {
   if (type) {
     switch (type) {
+      case 'stock':
+        activeTab.value = 4;
+        break
       case 'spot':
         activeTab.value = 1;
         break;
@@ -513,6 +465,9 @@ const addCollect = (tab) => {
             case 3: // ai
               store.commit('setCurrAi', { watchlist: 1 });
               break;
+            case 4: // 股票
+              store.commit('setCurrStock', { watchlist: 1 });
+              break
           }
         }
       })
@@ -534,6 +489,9 @@ const addCollect = (tab) => {
             case 3: // ai
               store.commit('setCurrAi', { watchlist: 0 });
               break;
+            case 4: // 股票
+              store.commit('setCurrStock', { watchlist: 0 });
+              break
           }
         }
       })
@@ -603,6 +561,19 @@ const goDialogSearch = () => {
                       symbol: obj.symbol,
                       type: 'ai',
                       tradeType: 'ai',
+                    },
+                  });
+                }
+                break;
+              case 4:
+                store.commit('setCurrStock', obj || {});
+                if (route.name == 'tradeInfo') {
+                  router.replace({
+                    name: 'tradeInfo',
+                    query: {
+                      symbol: obj.symbol,
+                      type: 'stock',
+                      tradeType: 'stock',
                     },
                   });
                 }

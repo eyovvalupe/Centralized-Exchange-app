@@ -142,21 +142,50 @@
                 </div>
               </div>
             </div>
-          </div>
 
+            <!--卖家银行卡-->
+            <div class="px-[0.28rem] pb-[0.32rem]" v-if="currItem.offset == 'buy'">
+              <div class="bank_none" v-if="currItem.bank_status == 'undone'">
+                <div class="img">
+                  <img v-lazy="getStaticImgUrl('/static/img/market/waitFor.svg')" alt="" />
+                </div>
+                <div class="name">
+                  <!-- {{ t("market.market_buy_list_wait_buyer_bank") }} -->
+                </div>
+              </div>
+              <div class="bank" v-else-if="currItem.bank_status == 'done'">
+                <div class="tr">
+                  <div class="td">
+                    {{ t("market.market_buy_fast_account_bank") }}
+                  </div>
+                  <div class="td td2">{{ currItem.bank_name }}</div>
+                </div>
+                <div class="tr" @click="copy(currItem.bank_card_number)">
+                  <div class="td">
+                    {{ t("market.market_buy_list_wait_bank_no") }}
+                  </div>
+                  <div class="td td2">
+                    <span>{{ currItem.bank_card_number }}</span>
+                    <div class="copy">
+                      <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
+                    </div>
+                  </div>
+                </div>
+                <div class="tr">
+                  <div class="td">
+                    {{ t("market.market_buy_list_wait_account") }}
+                  </div>
+                  <div class="td td2">{{ currItem.account_name }}</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
          <!-- 银行卡 -->
-         <div class="bg-color3 px-[0.28rem] mt-[0.2rem] pt-[0.28rem] pb-[0.32rem] rounded-[0.28rem]">
-          <div class="text-[0.32rem] font-[500]">{{ currItem.offset == 'sell' ? '我的银行卡' : '商家银行卡' }}</div>
-          <div class="bank_none" v-if="currItem.bank_status == 'undone' && currItem.offset == 'buy'">
-            <div class="img">
-              <img v-lazy="getStaticImgUrl('/static/img/market/waitFor.svg')" alt="" />
-            </div>
-            <div class="name">
-              <!-- {{ t("market.market_buy_list_wait_buyer_bank") }} -->
-            </div>
-          </div>
-          <div class="bank" v-if="currItem.bank_status == 'done'">
+        <div class="bg-color3 px-[0.28rem] mt-[0.2rem] pt-[0.28rem] pb-[0.32rem] rounded-[0.28rem]" v-if="currItem.offset == 'sell'">
+          <div class="text-[0.32rem] font-[500]">我的银行卡</div>
+          
+          <div class="bank">
             <div class="tr">
               <div class="td">
                 {{ t("market.market_buy_fast_account_bank") }}
@@ -282,7 +311,10 @@
 
         <div class="h-[1.56rem]"></div>
         <!-- 按钮 -->
-        <div class="max-width btns" v-if="['waitpayment', 'waitconfirm'].includes(currItem.status)">
+        <div class="max-width btns" v-if="
+        (currItem.offset == 'buy' && currItem.status == 'waitpayment') ||
+        (currItem.offset == 'sell' && currItem.status == 'waitconfirm')
+        ">
           <div v-if="currItem.offset == 'buy' && currItem.status == 'waitpayment'" class="btn"
             style="margin-right: 0.2rem" @click="cancelOrder">
             {{ t("market.market_buy_list_cancel_order") }}
@@ -560,6 +592,71 @@ getSessionToken();
     }
   }
 
+  
+  .bank {
+    background-color: var(--ex-bg-white1);
+    border-radius: 0.32rem;
+    overflow: hidden;
+    margin-top:0.32rem;
+
+    .tr {
+      display: flex;
+      align-items: stretch;
+      border-bottom: 0.08rem solid var(--ex-bg-color3);
+      min-height: 0.7rem;
+
+      &:last-child{
+        border-bottom: none;
+      }
+
+      .td {
+        flex: 1;
+        border-right: 0.08rem solid var(--ex-bg-color3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--ex-text-color2);
+        font-size: 0.28rem;
+        font-weight: 400;
+
+        .copy {
+          width: 0.32rem;
+          height: 0.32rem;
+          margin-left: 0.08rem;
+        }
+      }
+
+      .td2 {
+        flex: 2;
+        border-right: none;
+        color: var(--ex-text-color);
+        font-size: 0.28rem;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .bank_none {
+    padding-top: 0.28rem;
+    padding-bottom: 0.48rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .img {
+      width: 1.82rem;
+      height: 1.46rem;
+    }
+
+    .name {
+      color: var(--ex-text-color3);
+      font-size: 0.24rem;
+      font-weight: 400;
+      margin-top: 0.2rem;
+    }
+  }
+
   .detail_box {
     background-color: var(--ex-bg-color3);
     border-radius: 0.4rem;
@@ -610,7 +707,6 @@ getSessionToken();
     }
 
     .detail_content {
-      height: 1.56rem;
       display: flex;
       justify-content: center;
       flex-direction: column;
@@ -618,9 +714,8 @@ getSessionToken();
       position: relative;
       background-color: var(--ex-bg-white2);
 
-
       .seller {
-        padding: 0 0.32rem;
+        padding: 0.32rem;
 
         .avatar {
           width: 0.48rem;
@@ -658,70 +753,13 @@ getSessionToken();
           margin: 0 0.12rem;
         }
       }
-    }
-  }
 
-
-  .bank {
-    background-color: var(--ex-bg-white1);
-    border-radius: 0.32rem;
-    overflow: hidden;
-    margin-top:0.32rem;
-
-    .tr {
-      display: flex;
-      align-items: stretch;
-      border-bottom: 0.08rem solid var(--ex-bg-color3);
-      min-height: 0.7rem;
-
-      &:last-child{
-        border-bottom: none;
-      }
-
-      .td {
-        flex: 1;
-        border-right: 0.08rem solid var(--ex-bg-color3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        color: var(--ex-text-color2);
-        font-size: 0.28rem;
-        font-weight: 400;
-
-        .copy {
-          width: 0.32rem;
-          height: 0.32rem;
-          margin-left: 0.08rem;
+      .bank{
+        margin-top: 0px;
+        .tr,.td {
+          border-color:rgba(39,40,49,1)
         }
       }
-
-      .td2 {
-        flex: 2;
-        border-right: none;
-        color: var(--ex-text-color);
-        font-size: 0.28rem;
-        font-weight: 400;
-      }
-    }
-  }
-
-  .bank_none {
-    padding-top: 0.4rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-
-    .img {
-      width: 1.82rem;
-      height: 1.46rem;
-    }
-
-    .name {
-      color: var(--ex-text-color3);
-      font-size: 0.24rem;
-      font-weight: 400;
-      margin-top: 0.2rem;
     }
   }
 

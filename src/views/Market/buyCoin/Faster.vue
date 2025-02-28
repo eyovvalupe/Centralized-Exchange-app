@@ -43,13 +43,15 @@
             </div>
           </div>
         </div>
+        
         <div class="flex items-center justify-between mt-[0.24rem]"
-            v-if="form1.offset == 'sell' && currWallet.amount > 0">
+            v-if="token && form1.offset == 'sell' && currWallet.amount > 0">
           <div>
             {{ t('assets.wallet_cash_value') }}
           </div>
           <div class="flex items-center">
-              <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox">
+              
+            <span class="text-primary text-[0.24rem]" @click="openConfirmBox">
               <span class="text-color3">{{ t('assets.wallet_available_sim') }}</span>
               {{ currWallet.amount }}
               {{ currOut.name }}
@@ -130,7 +132,7 @@
             </div>
           </div>
         </div>
-        <div class="h-[1.8rem] flex flex-col items-center justify-center" @click="showAccountDialog = true;" v-else>
+        <div class="h-[1.8rem] flex flex-col items-center justify-center" @click="openAccountDialog" v-else>
             <div class="size-[0.48rem]">
               <img v-lazy="getStaticImgUrl('/static/img/common/add_gray.svg')" />
             </div>
@@ -209,7 +211,6 @@ import router from "@/router";
 import { useI18n } from "vue-i18n";
 
 const { t } = useI18n();
-const { handleUrl, active } = useBuyCoinState();
 const safeRef = ref();
 const {
   sessionToken,
@@ -452,6 +453,13 @@ const clickAccountItem = (item) => {
 
 };
 
+const openAccountDialog = ()=>{
+  if(token.value){
+    showAccountDialog.value = true
+  }else{
+    store.commit('setIsLoginOpen', true)
+  }
+}
 const onInit = () => {
   if (!currOut.value.currency) {
     currOut.value = outWallet.value[0] || {}

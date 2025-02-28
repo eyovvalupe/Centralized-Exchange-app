@@ -3,6 +3,7 @@
         :class="['home-tabs-box-' + props.from, 'home-tabs-box-' + (props.innerPage ? 'inner' : '')]">
         <Tabs :type="from == 'trade' ? 'line-card-trade' : 'sub'" :color="'var(--ex-primary-color)'" @change="tabChange"
             v-if="props.activated" v-model:active="activeTab" :animated="from != 'home'" shrink>
+            <!-- 自选 -->
             <Tab :name="0" v-if="from != 'home'" :title="t('trade.left_mine')">
 
                 <template #title>
@@ -51,9 +52,15 @@
                     </div>
                 </div>
             </Tab>
+            <!-- 买币 -->
             <Tab :name="5" v-if="from != 'home'" :title="t('market.market_header_buy')">
-                <BuyCoin />
+                <BuyCoin v-if="activeTab == 5" />
             </Tab>
+            <!-- 股票 -->
+            <Tab :name="6" :title="'股票'">
+                <StockList v-if="activeTab == 6" />
+            </Tab>
+            <!-- 现货 -->
             <Tab :name="1" :title="t('common.spot')">
                 <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
                     :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
@@ -69,6 +76,7 @@
                     <NoData v-if="!commendLoading && !contractList.length" />
                 </div>
             </Tab>
+            <!-- 合约 -->
             <Tab :name="2" :title="$t('common.crypto')">
                 <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
                     :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
@@ -83,12 +91,14 @@
                     <NoData v-if="!commendLoading && !contractList.length" />
                 </div>
             </Tab>
+            <!-- 交易机器人 -->
             <Tab :name="3" :title="$t('common.option')">
                 <div class="pl-[0.32rem] pr-[0.24rem]" :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']">
                     <Ai :handleClick="props.innerPage ? handleClick : null" :from="props.from" page="home"
                         v-if="activeTab == 3" />
                 </div>
             </Tab>
+            <!-- ETF -->
             <Tab :name="4" :title="'ETF'">
                 <div class="pl-[0.32rem] pr-[0.24rem]" :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']">
                     <Ai :handleClick="props.innerPage ? handleClick : null" :from="props.from" page="home"
@@ -112,6 +122,7 @@ import { useI18n } from "vue-i18n";
 import router from "@/router";
 import { getStaticImgUrl } from "@/utils/index.js"
 import BuyCoin from "@/views/Market/buyCoin/index.vue";
+import StockList from "../components/StockList.vue"
 
 const emits = defineEmits(['handleClick'])
 const handleClick = (item, type) => {
@@ -137,7 +148,7 @@ const props = defineProps({
 
 const activeTab = ref(0);
 if (!token.value) {
-    activeTab.value = 1
+    activeTab.value = 6
 }
 if (sessionStorage.getItem(`rec_tab_${props.from}`)) {
     activeTab.value = Number(sessionStorage.getItem(`rec_tab_${props.from}`))
