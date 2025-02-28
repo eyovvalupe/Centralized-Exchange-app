@@ -195,7 +195,7 @@ import { useRoute } from 'vue-router'
 import { Button,Icon, showToast } from 'vant'
 import Decimal from 'decimal.js'
 import Top from '@/components/Top.vue'
-import store, { useMapState } from '@/store'
+import store from '@/store'
 import BuyCoinConfirm from './components/BuyCoinConfirm.vue'
 import AccountSelectionPopUp from "./components/AccountSelectionPopUp.vue";
 import router from '@/router'
@@ -206,8 +206,8 @@ import AmountDialog from "@/components/AmountDialog.vue";
 
 const { t } = useI18n()
 // 收款方式列表 所有钱包
-const { wallet, sessionToken } = useMapState(['wallet', 'sessionToken'])
-
+// sessionToken
+const sessionToken = computed(() => store.state.sessionToken || '')
 const safeRef = ref()
 const currentAccount = ref({})
 const route = useRoute()
@@ -222,7 +222,7 @@ const showAmount = computed(() => {
   return new Decimal(amount.value).mul(info.value.price).toFixed(3).slice(0, -1)
 })
 const currWallet = computed(() => {
-  return wallet.value.find(item => item.name == info.value.currCrypto) || {}
+  return store.state.wallet.find(item => item.name == info.value.currCrypto) || {}
 })
 
 const currencyInfo = computed(() => {
