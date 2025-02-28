@@ -51,7 +51,7 @@
                     </div>
                 </div>
             </Tab>
-            <Tab :name="5" v-if="from != 'home'" :title="t('market.market_header_buy')">
+            <Tab :name="5" v-if="from != 'home' && !props.innerPage" :title="t('market.market_header_buy')">
                 <BuyCoin />
             </Tab>
             <Tab :name="1" :title="t('common.spot')">
