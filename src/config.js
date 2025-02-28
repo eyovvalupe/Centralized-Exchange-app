@@ -36,8 +36,7 @@ export const DESKTOP_INVITE_URL = 'https://www.sunex.game/#/'
 // export const MOBILE_INVITE_URL = 'http://localhost:3000/#/'
 // export const DESKTOP_INVITE_URL = 'http://localhost:8080/#/'
 
-// export const UPLOAD_ADDRESS = 'https://api.github.com/repos/watershui1222/image/contents/'; 
-export const UPLOAD_ADDRESS = 'https://api.github.com/repos/eyovvalupe/saveImage/contents/';
-export const UPLOAD_TOKEN = 'Bearer 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';
+export const UPLOAD_ADDRESS = 'https://api.github.com/repos/eyovvalupe/save_upload_img/contents/';
+export const UPLOAD_TOKEN = 'Bearer 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';
 
 export const default_language = 'en'

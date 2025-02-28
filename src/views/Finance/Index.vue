@@ -43,10 +43,12 @@ const { t } = useI18n();
 const route = useRoute();
 
 const activeTab = ref(route.query.activeTab ? Number(route.query.activeTab) : Number(localStorage.getItem('financeActiveTab')) || 0);
+console.log(route.query.activeTab)
 const initialSwipe = ref(activeTab.value);
 const loadedTab = ref([activeTab.value]);
 const swipe = ref(null);
 const changeActiveTab = (val, slideSwipe = false) => {
+    // console.log(val)
     let normalizedVal = val;
     // Normalize the value for circular navigation
     if (val >= 3) normalizedVal = 0;
