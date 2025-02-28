@@ -68,9 +68,11 @@ const pageKeys = {
         'marketStockHongkongDataList',
         'marketStockMalaysiaDataList'
     ],
-    'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList', 'marketForeignList', 'marketCommoditiesList', 'contractList', 'searchList'],
+    'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList', 'marketForeignList', 'marketCommoditiesList', 'contractList', 'searchList', 'marketStockDataList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList', 'marketStockGermanyDataList', 'marketStockUkDataList', 'marketStockSingaporeDataList', 'marketStockHongkongDataList', 'marketStockMalaysiaDataList'],
+    'tradeInfo': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList', 'marketForeignList', 'marketCommoditiesList', 'contractList', 'searchList', 'marketStockDataList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList', 'marketStockGermanyDataList', 'marketStockUkDataList', 'marketStockSingaporeDataList', 'marketStockHongkongDataList', 'marketStockMalaysiaDataList'],
     'search': ['marketSearchList']
 }
+
 
 
 const setCurr = (keyName, state, data) => {
@@ -164,6 +166,7 @@ export default {
         marketStockMalaysiaIndexList: [],
 
         //股票
+        marketStockDataList: [],
         marketStockUsDataList: [],
         marketStockIndiaDataList: [],
         marketStockJapanDataList: [],
@@ -224,6 +227,9 @@ export default {
         },
 
         //更新市场股票
+        setMarketStockDataList(state, data) {
+            state.marketStockDataList = data
+        },
         setMarketStockUsDataList(state, data) {
             state.marketStockUsDataList = data
         },
@@ -575,6 +581,8 @@ export default {
     getters: {
         getMarketStockCurrentList(state) {
             switch (state.marketCurrent) {
+                case 'all':
+                    return state.marketStockDataList
                 case 'us':
                     return state.marketStockUsDataList
                 case 'india':

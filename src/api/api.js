@@ -697,37 +697,37 @@ export const _pledgeRepay = (data = {}) => {
 };
 
 // 跟单列表
-export const _copyList= (data = {}) => {
+export const _copyList = (data = {}) => {
   return http.post(`/anon/v1/copy/list`, data, {
     custom: { auth: false, toast: false, retry: true },
   });
 };
 // 我的跟单列表
-export const _copyMyList= (data = {}) => {
+export const _copyMyList = (data = {}) => {
   return http.post(`/authc/v1/copy/mycopy`, data, {
     custom: { auth: true, toast: false, retry: true },
   });
 };
 // 我的跟单列表
-export const _copyCancel= (data = {}) => {
+export const _copyCancel = (data = {}) => {
   return http.post(`/authc/v1/copy/cancel`, data, {
     custom: { auth: true, toast: true, retry: true },
   });
 };
 // 跟单
-export const _copyApply= (data = {}) => {
+export const _copyApply = (data = {}) => {
   return http.post(`/authc/v1/copy/apply `, data, {
     custom: { auth: true, toast: true, retry: true },
   });
 };
 // 追加跟单
-export const _copyAdd= (data = {}) => {
+export const _copyAdd = (data = {}) => {
   return http.post(`/authc/v1/copy/add`, data, {
     custom: { auth: true, toast: true, retry: true },
   });
 };
 // 我的跟单数据
-export const _copyMyData= (data = {}) => {
+export const _copyMyData = (data = {}) => {
   return http.post(`/authc/v1/copy/mycopydata`, data, {
     custom: { auth: true, toast: true, retry: true },
   });
@@ -754,7 +754,7 @@ export const _copyUsers = (data = {}) => {
 export const _realtime = (data = {}) => {
   const urlSeachParam = new URLSearchParams(data).toString();
   return http.get(`anon/v1/ticker/realtime?${urlSeachParam}`, {
-    custom: { auth: false, toast: true, retry: false}
+    custom: { auth: false, toast: true, retry: false }
   })
 }
 // 质押挖矿详情 
@@ -787,33 +787,33 @@ export const _myEarn = (data = {}) => {
 //公告弹窗
 export const _notifiPopup = (data = {}) => {
   return http.post(`/authc/v1/notice/popup`, data, {
-    custom: {auth: true, toast: true, retry: true}
+    custom: { auth: true, toast: true, retry: true }
   })
 }
 
 //公告列表
 export const _notifiList = (data = {}) => {
   return http.post(`/anon/v1/notice/list`, data, {
-    custom: {auth: false, toast: true, retry: true}
+    custom: { auth: false, toast: true, retry: true }
   })
 }
 
 //公告详情
 export const _notifiDetail = (data = {}) => {
   return http.post(`/anon/v1/notice/get`, data, {
-    custom: {auth: false, toast: true, retry: true}
+    custom: { auth: false, toast: true, retry: true }
   })
 }
 //加入活动列表
 export const _notifiJoinList = (data = {}) => {
   return http.post(`/authc/v1/notice/joinlist`, data, {
-    custom: {auth: true, toast: true, retry: true}
+    custom: { auth: true, toast: true, retry: true }
   })
 }
 
 //加入活动
 export const _notifiJoin = (data = {}) => {
   return http.post(`/authc/v1/notice/join`, data, {
-    custom: {auth: true, toast: true, retry: true}
+    custom: { auth: true, toast: true, retry: true }
   })
 }

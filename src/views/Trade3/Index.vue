@@ -135,7 +135,7 @@ const act = () => {
   store.commit("setMarketWatchKeys", []);
   setTimeout(() => {
     activated.value = true;
-  }, 300)
+  }, 500)
   subs();
 }
 const unact = () => {
