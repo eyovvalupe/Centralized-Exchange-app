@@ -46,6 +46,13 @@ import { _myEarn, _stakeOrder } from '@/api/api';
 import { isEmpty } from '@/utils/isEmpty';
 // import LoadingMore from '@/components/LoadingMore.vue';
 
+const props = defineProps({
+    from: {
+        type: String,
+        default: ''
+    }
+})
+
 const { t } = useI18n();
 const activeTab = ref(0);
 
