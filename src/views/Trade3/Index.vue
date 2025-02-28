@@ -1,6 +1,6 @@
 <template>
   <div class="w-full h-full">
-    <div class="page-trade3">
+    <div class="page-trade3" ref="tradePageRef">
       <div class="z-[1]  pt-[0.4rem] pb-[0.4rem] bg-color" v-if="props.innerPage">
         <div
           class="transition flex justify-between  px-[0.32rem] py-[0.18rem] rounded-[1rem] gap-[0.2rem] h-[0.8rem] mx-[0.4rem] items-center border-[0.02rem]"
@@ -16,16 +16,18 @@
         </div>
       </div>
       <div style="height: 0.24rem;" v-else>
-        <div @click="jump('search')" style="width: 0.56rem;height: 0.56rem;border-radius: 50%;background-color: var(--ex-bg-white1);position: absolute;right: 0.24rem;top: 0.18rem;z-index: 99;padding: 0.11rem 0.12rem 0.13rem 0.12rem;">
-            <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
-          </div>
+        <div @click="jump('search')"
+          style="width: 0.72rem;height: 0.72rem;border-radius: 50%;background-color: var(--ex-bg-white1);position: absolute;right: 0.24rem;top: 0.08rem;z-index: 99;padding: 0.11rem 0.12rem 0.13rem 0.12rem;">
+          <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
+        </div>
       </div>
 
       <!-- <div class="bill-box" @click="jump('tradeOrder')">
           <img v-lazy="getStaticImgUrl('/static/img/common/bill.svg')" alt="">
         </div> -->
       <div v-if="!focusRef && !searchRef">
-        <Recommend @handleClick="handleClick" :innerPage="props.innerPage" v-if="activated" ref="recommendRef" from="trade" :sticky="false" :activated="activated" />
+        <Recommend @handleClick="handleClick" :innerPage="props.innerPage" v-if="activated" ref="recommendRef"
+          from="trade" :sticky="false" :activated="activated" />
       </div>
 
       <div v-if="focusRef || searchRef">
@@ -146,6 +148,13 @@ const unact = () => {
     socket && socket.off("snapshot");
   });
 }
+
+const tradePageRef = ref(null);
+const scrollData = useScroll(tradePageRef, {
+  throttle: 200
+});
+provide('scrollData', scrollData);
+
 onActivated(() => {
   act()
 });
@@ -162,7 +171,7 @@ const handleClick = (obj) => { // 如果作为侧窗点击元素
 
 const recommendRef = ref()
 const goInfo = (item) => { // 作为页面点击元素
-  if (props.innerPage) return handleClick({item: item})
+  if (props.innerPage) return handleClick({ item: item })
   showSearchDialog.value = false
   store.commit("setCurrConstract", item);
   router.push({

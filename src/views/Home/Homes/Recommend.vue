@@ -1,10 +1,19 @@
 <template>
-    <div class="home-tabs-box" :class="['home-tabs-box-' + props.from]">
+    <div class="home-tabs-box"
+        :class="['home-tabs-box-' + props.from, 'home-tabs-box-' + (props.innerPage ? 'inner' : '')]">
         <Tabs :type="from == 'trade' ? 'line-card-trade' : 'sub'" :color="'var(--ex-primary-color)'" @change="tabChange"
             v-if="props.activated" v-model:active="activeTab" :animated="from != 'home'" shrink>
             <Tab :name="0" v-if="from != 'home'" :title="t('trade.left_mine')">
+
+                <template #title>
+                    <div style="width: 0.44rem;height: 0.44rem;">
+                        <img v-if="activeTab == 0" v-lazy="getStaticImgUrl('/static/img/trade/star.svg')" alt="">
+                        <img v-else v-lazy="getStaticImgUrl('/static/img/trade/unstar.svg')" alt="">
+                    </div>
+                </template>
+
                 <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    :style="{ borderTop: '1px solid var(--ex-border-color)' }">
+                    :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
                     <div v-if="token">
                         <Loaidng v-if="watchListLoading" :loading="watchListLoading" />
                         <div style="padding-bottom: 0.2rem;overflow: visible;"
@@ -18,8 +27,6 @@
                         <NoData v-if="!watchListLoading && !watchList.length" />
                     </div>
                     <div v-if="!token" class="flex flex-col pt-[0.32rem] pb-[0.32rem]">
-
-
                         <div
                             class="w-full flex justify-between border-b-[0.02rem] pb-[0.2rem] mb-[0.6rem] px-[0.32rem] border-b-color2">
                             <div class="text-color2">{{ $t('copy.copy_order_name') }}</div>
@@ -44,9 +51,12 @@
                     </div>
                 </div>
             </Tab>
+            <Tab :name="5" v-if="from != 'home'" :title="t('market.market_header_buy')">
+                <BuyCoin />
+            </Tab>
             <Tab :name="1" :title="t('common.spot')">
                 <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    :style="{ borderTop: '1px solid var(--ex-border-color)' }">
+                    :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div class="" style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 1">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
@@ -61,7 +71,7 @@
             </Tab>
             <Tab :name="2" :title="$t('common.crypto')">
                 <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    :style="{ borderTop: '1px solid var(--ex-border-color)' }">
+                    :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 2">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
@@ -101,6 +111,7 @@ import store from "@/store";
 import { useI18n } from "vue-i18n";
 import router from "@/router";
 import { getStaticImgUrl } from "@/utils/index.js"
+import BuyCoin from "@/views/Market/buyCoin/index.vue";
 
 const emits = defineEmits(['handleClick'])
 const handleClick = (item, type) => {
@@ -247,10 +258,40 @@ const filterList = list => {
 .home-tabs-box-trade {
     :deep(.van-tabs--line-card-trade) {
         &>.van-tabs__wrap {
+            position: relative;
+
+            &::after {
+                content: "";
+                width: 1rem;
+                height: 100%;
+                position: absolute;
+                right: 1rem;
+                top: 0;
+                background: linear-gradient(90deg, rgba(14, 15, 24, 0.00) 0%, #0E0F18 100%);
+                pointer-events: none;
+            }
+
             &>.van-tabs__nav {
                 padding-left: 0.2rem;
-                padding-right: 1.2rem;
+                margin-right: 1.1rem;
                 height: 0.4rem;
+
+            }
+        }
+    }
+}
+
+.home-tabs-box-inner {
+    :deep(.van-tabs--line-card-trade) {
+        &>.van-tabs__wrap {
+            position: relative;
+
+            &::after {
+                display: none;
+            }
+
+            &>.van-tabs__nav {
+                margin-right: 0.4rem;
             }
         }
     }
@@ -258,11 +299,10 @@ const filterList = list => {
 
 .home-tabs-box-home {
 
-
     :deep(.van-tabs--sub) {
         &>.van-tabs__wrap .van-tabs__nav {
 
-            padding: 0 0.2rem;
+            // padding: 0 0.2rem;
         }
     }
 

@@ -142,44 +142,46 @@
                 </div>
               </div>
             </div>
+          </div>
 
-            <!-- 银行卡 -->
-            <div class="bank_none" v-if="currItem.bank_status == 'undone' && currItem.offset == 'buy'">
-              <div class="img">
-                <img v-lazy="getStaticImgUrl('/static/img/market/waitFor.svg')" alt="" />
+        </div>
+         <!-- 银行卡 -->
+         <div class="bg-color3 px-[0.28rem] mt-[0.2rem] pt-[0.28rem] pb-[0.32rem] rounded-[0.28rem]">
+          <div class="text-[0.32rem] font-[500]">{{ currItem.offset == 'sell' ? '我的银行卡' : '商家银行卡' }}</div>
+          <div class="bank_none" v-if="currItem.bank_status == 'undone' && currItem.offset == 'buy'">
+            <div class="img">
+              <img v-lazy="getStaticImgUrl('/static/img/market/waitFor.svg')" alt="" />
+            </div>
+            <div class="name">
+              <!-- {{ t("market.market_buy_list_wait_buyer_bank") }} -->
+            </div>
+          </div>
+          <div class="bank" v-if="currItem.bank_status == 'done'">
+            <div class="tr">
+              <div class="td">
+                {{ t("market.market_buy_fast_account_bank") }}
               </div>
-              <div class="name">
-                <!-- {{ t("market.market_buy_list_wait_buyer_bank") }} -->
+              <div class="td td2">{{ currItem.bank_name }}</div>
+            </div>
+            <div class="tr" @click="copy(currItem.bank_card_number)">
+              <div class="td">
+                {{ t("market.market_buy_list_wait_bank_no") }}
+              </div>
+              <div class="td td2">
+                <span>{{ currItem.bank_card_number }}</span>
+                <div class="copy">
+                  <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
+                </div>
               </div>
             </div>
-            <div class="bank" v-if="currItem.bank_status == 'done'">
-              <div class="tr">
-                <div class="td">
-                  {{ t("market.market_buy_fast_account_bank") }}
-                </div>
-                <div class="td td2">{{ currItem.bank_name }}</div>
+            <div class="tr">
+              <div class="td">
+                {{ t("market.market_buy_list_wait_account") }}
               </div>
-              <div class="tr" @click="copy(currItem.bank_card_number)">
-                <div class="td">
-                  {{ t("market.market_buy_list_wait_bank_no") }}
-                </div>
-                <div class="td td2">
-                  <span>{{ currItem.bank_card_number }}</span>
-                  <div class="copy">
-                    <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="" />
-                  </div>
-                </div>
-              </div>
-              <div class="tr">
-                <div class="td">
-                  {{ t("market.market_buy_list_wait_account") }}
-                </div>
-                <div class="td td2">{{ currItem.account_name }}</div>
-              </div>
+              <div class="td td2">{{ currItem.account_name }}</div>
             </div>
           </div>
         </div>
-
         <!-- 订单 -->
         <div class="order pb-[0.24rem]" v-if="currItem.order_no">
           <div class="top" @click="copy(currItem.order_no)">
@@ -190,7 +192,7 @@
             <div style="flex: 1"></div>
             <div>{{ currItem.date }}</div>
           </div>
-          <div class="flex items-center bg-color rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
+          <div class="flex items-center bg-white2 rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
 
             <div
               class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-buy bg-buy-text-color flex items-center justify-center text-[0.3rem] font-[600] "
@@ -246,7 +248,7 @@
             </div>
 
           </div>
-          <div class="flex items-center bg-color rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
+          <div class="flex items-center bg-white2 rounded-[0.32rem] mt-[0.2rem] mx-[0.32rem] relative pl-[0.7rem]">
             <div
               class="absolute left-0 top-0 w-[0.7rem] h-full rounded-[0.32rem] bg-white text-color--bg-light flex items-center justify-center text-[0.3rem] font-[600] leading-[0.4rem]">
               <span style="writing-mode:vertical-lr; letter-spacing: 0.06rem;">
@@ -278,11 +280,11 @@
           </div>
         </div>
 
-        <div class="h-[1.36rem]"></div>
+        <div class="h-[1.56rem]"></div>
         <!-- 按钮 -->
         <div class="max-width btns" v-if="['waitpayment', 'waitconfirm'].includes(currItem.status)">
           <div v-if="currItem.offset == 'buy' && currItem.status == 'waitpayment'" class="btn"
-            style="margin-right: 0.32rem" @click="cancelOrder">
+            style="margin-right: 0.2rem" @click="cancelOrder">
             {{ t("market.market_buy_list_cancel_order") }}
           </div>
           <!-- <div v-if="currItem.status == 'waitpayment' && currItem.offset == 'sell'" class="btn">
@@ -526,14 +528,14 @@ getSessionToken();
       display: flex;
       align-items: center;
       justify-content: center;
-      color: var(--ex-text-color2);
+      color: var(--ex-text-color);
       font-weight: 500;
       transition: all ease-in 0.2s;
       position: relative;
-      border: 1px solid var(--ex-border-color);
       height: 100%;
       font-size: 0.36rem;
       border-radius: 0.4rem;
+      background-color: var(--ex-bg-white1);
 
       .hint {
         min-width: 0.26rem;
@@ -553,19 +555,18 @@ getSessionToken();
     }
 
     .tab_active {
-      background-color: var(--ex-white);
-      color: var(--ex-text-color--bg-light);
+      background-color: var(--ex-primary-color);
+      color: var(--ex-text-color);
     }
   }
 
   .detail_box {
     background-color: var(--ex-bg-color3);
-    border-radius: 0.32rem;
-    padding: 0 0.12rem 0.12rem 0.12rem;
+    border-radius: 0.4rem;
 
     .status {
       min-height: 1rem;
-      padding: 0.32rem;
+      padding: 0.28rem 0.4rem;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
@@ -584,7 +585,7 @@ getSessionToken();
         }
 
         .time {
-          color: var(--ex-error-color);
+          color: var(--ex-warning-color);
           font-size: 0.32rem;
           font-weight: 600;
           margin-left: 0.16rem;
@@ -609,76 +610,14 @@ getSessionToken();
     }
 
     .detail_content {
-      padding: 0.2rem 0 0.36rem 0;
-      border-radius: 0.32rem;
+      height: 1.56rem;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      border-radius: 0.4rem;
       position: relative;
-      bottom: -1px;
-      background-color: var(--ex-bg-color);
-      width: calc(100% + 2px);
-      left: -1px;
+      background-color: var(--ex-bg-white2);
 
-      .bank {
-        background-color: var(--ex-bg-color3);
-        border-radius: 0.32rem;
-        overflow: hidden;
-        margin: 0.32rem 0.32rem 0 0.32rem;
-
-        .tr {
-          display: flex;
-          align-items: stretch;
-          border-bottom: 0.08rem solid var(--ex-bg-color);
-          min-height: 0.7rem;
-
-          &:nth-last-child {
-            border-bottom: none;
-          }
-
-          .td {
-            flex: 1;
-            border-right: 0.08rem solid var(--ex-bg-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--ex-text-color2);
-            font-size: 0.28rem;
-            font-weight: 400;
-
-            .copy {
-              width: 0.32rem;
-              height: 0.32rem;
-              margin-left: 0.08rem;
-            }
-          }
-
-          .td2 {
-            flex: 2;
-            border-right: none;
-            color: var(--ex-text-color);
-            font-size: 0.28rem;
-            font-weight: 400;
-          }
-        }
-      }
-
-      .bank_none {
-        padding-top: 0.4rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: center;
-
-        .img {
-          width: 1.82rem;
-          height: 1.46rem;
-        }
-
-        .name {
-          color: var(--ex-text-color3);
-          font-size: 0.24rem;
-          font-weight: 400;
-          margin-top: 0.2rem;
-        }
-      }
 
       .seller {
         padding: 0 0.32rem;
@@ -692,7 +631,7 @@ getSessionToken();
           justify-content: center;
           border-radius: 50%;
           background-color: var(--ex-white);
-          color: var(--ex-text-color--bg-light);
+          color: var(--ex-bg-color);
           font-size: 0.24rem;
           font-weight: 600;
         }
@@ -722,6 +661,70 @@ getSessionToken();
     }
   }
 
+
+  .bank {
+    background-color: var(--ex-bg-white1);
+    border-radius: 0.32rem;
+    overflow: hidden;
+    margin-top:0.32rem;
+
+    .tr {
+      display: flex;
+      align-items: stretch;
+      border-bottom: 0.08rem solid var(--ex-bg-color3);
+      min-height: 0.7rem;
+
+      &:last-child{
+        border-bottom: none;
+      }
+
+      .td {
+        flex: 1;
+        border-right: 0.08rem solid var(--ex-bg-color3);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--ex-text-color2);
+        font-size: 0.28rem;
+        font-weight: 400;
+
+        .copy {
+          width: 0.32rem;
+          height: 0.32rem;
+          margin-left: 0.08rem;
+        }
+      }
+
+      .td2 {
+        flex: 2;
+        border-right: none;
+        color: var(--ex-text-color);
+        font-size: 0.28rem;
+        font-weight: 400;
+      }
+    }
+  }
+
+  .bank_none {
+    padding-top: 0.4rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    .img {
+      width: 1.82rem;
+      height: 1.46rem;
+    }
+
+    .name {
+      color: var(--ex-text-color3);
+      font-size: 0.24rem;
+      font-weight: 400;
+      margin-top: 0.2rem;
+    }
+  }
+
   .order {
     background-color: var(--ex-bg-color3);
     border-radius: 0.32rem;
@@ -731,11 +734,13 @@ getSessionToken();
       display: flex;
       align-items: center;
       justify-content: space-between;
-      padding: 0.2rem 0.32rem;
+      padding: 0 0.28rem;
       border-bottom: 1px solid var(--ex-border-color);
       color: var(--ex-text-color3);
       font-size: 0.24rem;
       font-weight: 400;
+      height: 0.68rem;
+      border-bottom: 1px solid var(--ex-bg-white2);
 
       .order_no {
         color: var(--ex-text-color2);
@@ -784,18 +789,22 @@ getSessionToken();
     display: flex;
     align-items: center;
     position: fixed;
-    bottom: 0.4rem;
+    bottom:0;
+    border-radius: 0.32rem 0.32rem 0 0;
+    border-top: 1px solid var(--ex-bg-white1);
+    background: rgba(26, 27, 36, 0.60);
     left: 50%;
+    backdrop-filter: blur(25px);
     transform: translateX(-50%);
-    padding: 0 0.32rem;
+    padding: 0.16rem 0.32rem 0.4rem 0.32rem;
     justify-content: space-between;
 
     .btn {
       flex: 2;
       height: 100%;
-      height: 0.96rem;
+      height: 1rem;
       border-radius: 1.26rem;
-      background-color: var(--ex-bg-color3);
+      background-color: var(--ex-bg-white1);
       display: flex;
       align-items: center;
       justify-content: center;

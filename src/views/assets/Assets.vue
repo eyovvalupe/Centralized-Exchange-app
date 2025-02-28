@@ -2,26 +2,29 @@
 <template>
   <div class="page page_assets">
     <!-- 头部 -->
-    <HeaderTabs  v-model:active="headActiveTab" :tabs="[
+    <HeaderTabs v-model:active="headActiveTab" :tabs="[
       t('assets.assets_center'),
       t('assets.header_order'),
     ]">
 
       <template #after>
-        <div class="size-[0.56rem] rounded-full bg-white1 flex items-center justify-center mr-[0.32rem]" @click="LeftRef.open()">
-          <span class="size-[0.32rem]">
-            <img :src="getStaticImgUrl('/static/img/common/icon_user.svg')"/>
+        <div class="size-[0.72rem] rounded-full bg-white1 flex items-center justify-center mr-[0.32rem]"
+          @click="LeftRef.open()">
+          <span class="size-[0.4rem]">
+            <img :src="getStaticImgUrl('/static/home2/menu.svg')" />
           </span>
         </div>
       </template>
-    </HeaderTabs> 
-    <Tabs v-model:active="activeTab" type="custom-card-stake" @change="changeActiveTab(activeTab, true)" v-if="headActiveTab == 0">
+    </HeaderTabs>
+    <Tabs v-model:active="activeTab" type="custom-card-stake" @change="changeActiveTab(activeTab, true)"
+      v-if="headActiveTab == 0">
       <Tab :title="t('assets.header_total')" />
       <Tab :title="t('assets.wallet_cash_value')" />
       <Tab :title="t('assets.wallet_header_contract')" />
     </Tabs>
 
-    <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" :loop="false" ref="swipe" @change="swipeChange" v-if="headActiveTab == 0">
+    <Swipe :autoplay="0" :initial-swipe="initialSwipe" :show-indicators="false" :loop="false" ref="swipe"
+      @change="swipeChange" v-if="headActiveTab == 0">
       <SwipeItem>
         <div class="assets_body pb-[0.32rem]">
           <Overview ref="overviewRef" @jumpToWallet="(val) => jumpToWallet(val)"
@@ -30,21 +33,19 @@
       </SwipeItem>
       <SwipeItem>
         <div class="assets_body">
-          <Wallet ref="cashRef" :from="'cash'" @setLoading="(val) => (loading = val)"
-            @click="(val) => click(val)" />
+          <Wallet ref="cashRef" :from="'cash'" @setLoading="(val) => (loading = val)" @click="(val) => click(val)" />
         </div>
       </SwipeItem>
       <SwipeItem>
         <div class="assets_body">
-          <Wallet ref="cashRef" :from="'futures'" @setLoading="(val) => (loading = val)"
-            @click="(val) => click(val)" />
+          <Wallet ref="cashRef" :from="'futures'" @setLoading="(val) => (loading = val)" @click="(val) => click(val)" />
         </div>
       </SwipeItem>
     </Swipe>
 
     <!-- 记录弹窗 -->
     <OrderCenter v-else />
-    
+
     <BottomPopup closeable v-model:show="handle" position="bottom" :style="{
       height: '5.56rem',
       borderTopRightRadius: '0.36rem',
@@ -52,8 +53,7 @@
       overflow: 'hidden'
     }">
       <div v-if="Object.keys(selectedItem).length" class="w-full h-[5.56rem] relative">
-        <div
-          class="w-full flex justify-center text-[0.32rem] text-color leading-[0.44rem] mb-[0.48rem]">
+        <div class="w-full flex justify-center text-[0.32rem] text-color leading-[0.44rem] mb-[0.48rem]">
           {{ t('assets.wallet_handle_title') }}
         </div>
         <div class="w-full flex items-center flex-col mb-[0.4rem]">
@@ -68,15 +68,14 @@
         </div>
         <div class="w-full flex px-[0.32rem] justify-between">
           <div v-if="selectedItem.account == 'money'"
-            class="w-[1.565rem] h-[1.75rem] rounded-[0.32rem] bg-topup flex flex-col items-center pt-[0.16rem]"
-            @click="() => {
+            class="w-[1.565rem] h-[1.75rem] rounded-[0.32rem] bg-topup flex flex-col items-center pt-[0.16rem]" @click="() => {
               router.push({
                 name: 'topUpCrypto',
                 query: { currency: selectedItem.name },
               });
               handle = false;
             }
-              ">
+            ">
             <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
               <img v-lazy="getStaticImgUrl(`/static/img/assets/deposit_color.svg`)" alt="">
             </div>
@@ -91,7 +90,7 @@
               });
               handle = false;
             }
-              ">
+            ">
             <div class="mb-[0.16rem]" style="width:0.8rem;height:0.8rem">
               <img v-lazy="getStaticImgUrl(`/static/img/assets/withdraw_color.svg`)" alt="">
             </div>
@@ -105,7 +104,7 @@
               });
               handle = false;
             }
-              ">
+            ">
             <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
               <img v-lazy="getStaticImgUrl(`/static/img/assets/transfer_in.svg`)" alt="">
             </div>
@@ -120,7 +119,7 @@
               });
               handle = false;
             }
-              ">
+            ">
             <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
               <img v-lazy="getStaticImgUrl(`/static/img/assets/transfer_out.svg`)" alt="">
             </div>
@@ -132,7 +131,7 @@
     </BottomPopup>
     <!-- 充提记录 -->
     <!-- <HintBlock v-if="route.name == 'assets' && hintNum" /> -->
-     <!-- 左侧弹窗 -->
+    <!-- 左侧弹窗 -->
     <LeftMenu :jump="jump" ref="LeftRef" />
   </div>
 </template>
@@ -174,18 +173,18 @@ const token = computed(() => store.state.token)
 
 // 跳转
 const jump = (name, needToken, query) => {
-    if (needToken && !token.value) {
-        LeftRef.value.close()
-        setTimeout(() => {
-            store.commit("setIsLoginOpen", true);
-        }, 0)
-        return
-    }
+  if (needToken && !token.value) {
+    LeftRef.value.close()
+    setTimeout(() => {
+      store.commit("setIsLoginOpen", true);
+    }, 0)
+    return
+  }
 
-    router.push({
-        name,
-        query
-    });
+  router.push({
+    name,
+    query
+  });
 };
 const changeActiveTab = (val, slideSwipe = false) => {
   activeTab.value = val;
@@ -293,7 +292,7 @@ getCoinMap();
     height: calc(var(--vh) * 100 - 2.52rem);
     padding-bottom: 1rem
   }
-  
+
 
 }
 </style>

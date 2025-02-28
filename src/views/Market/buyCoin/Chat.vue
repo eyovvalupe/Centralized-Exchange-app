@@ -299,7 +299,6 @@ onBeforeUnmount(() => {
     width: 0.8rem;
     height: 0.8rem;
     border-radius: 50%;
-    background-color: var(--ex-white);
     color: var(--ex-text-color--bg-light);
     display: flex;
     align-items: center;
@@ -534,13 +533,11 @@ onBeforeUnmount(() => {
     padding-top: 0.2rem;
     display: flex;
     align-items: center;
-    // border-top: 1px solid var(--ex-border-color2);
-    // padding: 0 0.32rem;
 
     .item {
       height: 0.96rem;
       padding: 0 0.24rem;
-      border: 0.02rem solid var(--ex-border-color2);
+      background-color: var(--ex-bg-white1);
       flex: 1;
       margin: 0 0.3rem;
       border-radius: 0.32rem;
@@ -569,8 +566,11 @@ onBeforeUnmount(() => {
     }
   }
   .bottom {
-    border-top: 1px solid var(--ex-border-color2);
-    background: linear-gradient(0deg, rgb(var(--ex-bg-color5-rgb) / 0.2) 0%, rgb(var(--ex-bg-color5-rgb) / 1) 95.61%);
+    border-radius: 0.32rem 0.32rem 0 0;
+    border-top: 1px solid var(--ex-bg-white1);
+    background: rgba(26, 27, 36, 0.60);
+    backdrop-filter: blur(25px);
+    
   }
 }
 </style>

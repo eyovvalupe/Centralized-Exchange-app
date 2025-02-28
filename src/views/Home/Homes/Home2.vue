@@ -228,42 +228,32 @@
                         @click="fActive == 1 ? jump('finance', true, 1) : jump('follow', false)">
                         <img v-lazy="getStaticImgUrl('/static/img/user/right_gray.svg')" alt="">
                     </div> -->
-        </div>
-        <div class="f-tabs">
-          <div
-            class="f-tab"
-            :class="{ 'f-tab-active': fActive == 1 }"
-            @click="fActive = 1"
-          >
-            {{ t('finance.portfolio_title') }}
-          </div>
-          <div
-            class="f-tab"
-            :class="{ 'f-tab-active': fActive == 2 }"
-            @click="fActive = 2"
-          >
-            {{ t('copy.title') }}
-          </div>
-        </div>
-        <!-- 质押挖矿 -->
-        <div class="scroll-box" v-if="homeLoaded && fActive == 1">
-          <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
-            <MiningItem class="mining-home-item" v-for="i in 10" :key="i" />
-          </div>
-        </div>
-        <!-- 跟单 -->
-        <div class="scroll-box" v-if="homeLoaded && fActive == 2">
-          <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
-            <div
-              class="scroll-item-follow"
-              v-for="(item, i) in followList"
-              :key="i"
-            >
-              <FollowItem class="follow-home-item" :item="item" />
+                </div>
+                <div class="f-tabs">
+                    <div class="f-tab" :class="{ 'f-tab-active': fActive == 1 }" @click="fActive = 1">{{
+                        t('finance.portfolio_title') }}</div>
+                    <div class="f-tab" :class="{ 'f-tab-active': fActive == 2 }" @click="fActive = 2">{{ t('copy.title')
+                    }}
+                    </div>
+                </div>
+                <!-- 质押挖矿 -->
+                <div class="scroll-box" v-if="homeLoaded && fActive == 1">
+                    <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
+                        <MiningItem class="mining-home-item" v-for="i in 10" :key="i" />
+                    </div>
+                </div>
+                <!-- 跟单 -->
+                <div class="scroll-box" v-if="homeLoaded && fActive == 2">
+                    <div class="scroll-con wow fadeInRight" data-wow-duration="0.4s">
+                        <div class="scroll-item-follow" v-for="(item, i) in followList" :key="i">
+                            <FollowItem class="follow-home-item" :item="item" />
+                        </div>
+                    </div>
+                </div>
             </div>
-          </div>
-        </div>
-      </div>
+
+
+
 
       <!-- ad -->
       <div class="ad wow fadeInUp" data-wow-duration="0.6s">
@@ -419,7 +409,11 @@
       socket && socket.off('realtime');
       socket && socket.off('snapshot');
     });
-  });
+
+});
+
+
+
 
   // 热门数据
   const marketSrockRecommendList = computed(

@@ -2,45 +2,79 @@
   <router-view v-slot="{ Component }">
     <div v-show="pageLoading" class="full_page_loading">
       <!-- 首页骨架屏 -->
-      <Skeleton v-if="routeName == 'home'"
-        style="padding: 0.12rem 0.24rem 0 0.24rem;flex-direction: column;opacity: 0.5;" animate>
+      <Skeleton class="max-width home-skeleton" v-if="routeName == 'home'"
+        style="padding: 0.08rem 0.32rem 0 0.32rem;flex-direction: column;opacity: 0.5;" animate>
         <template #template>
           <div :style="{ display: 'flex', width: '100%' }">
-            <SkeletonAvatar />
             <div style="flex: 1;"></div>
-            <SkeletonAvatar />
-            <SkeletonAvatar style="margin-right: 0;" />
+            <SkeletonAvatar class="avatar" />
+            <SkeletonAvatar class="avatar" />
+            <SkeletonAvatar class="avatar" />
+            <SkeletonAvatar class="avatar" style="margin-right: 0;" />
           </div>
-          <div class="welcome">
-            <div class="name mb-[0.42rem] " :data-wow-delay="'0.1s'" data-wow-duration="1s">安全 | 边界 | 严格
-            </div>
-            <div class="title mb-[0.16rem] " :data-wow-delay="'0.2s'" data-wow-duration="1s"><span
-                style="color:#F19009;margin-right: 0.04rem;">千万用户</span>都在用的</div>
-            <div class="title mb-[0.42rem] " :data-wow-delay="'0.3s'" data-wow-duration="1s">交易所</div>
-            <div class="name " :data-wow-delay="'0.4s'" data-wow-duration="1s">体验无限可能</div>
+          <div class="box top">
+            <div>安全 | 便捷 | 严格</div>
+            <div class="title"><span style="color: #F19009;">千万用户都在用的</span><br />交易所</div>
+            <div>体验无限可能</div>
+          </div>
+          <div v-if="!token" class="login-btn">登录/注册</div>
+          <div v-else style="height: 1.2rem;"></div>
 
-            <div v-if="token">&nbsp;</div>
-            <div v-else class="btns mt-[1rem] " data-wow-duration="1s">
-              <div class="btn ripple-primary">登录</div>
-              <div class="btn btn2 ripple-btn">注册</div>
+          <div class="box dirs">
+            <div class="dir-b " :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-b-bg2.png')})` }">
+              <div class="dir-b-box">
+                <div class="dir-b-icon">
+                  <img v-lazy="getStaticImgUrl('/static/home2/dir-ai.svg')" alt="">
+                </div>
+                <div>{{ t('trade.left_bot') }}</div>
+              </div>
+            </div>
+            <div class="dir-b " :style="{ backgroundImage: `url(${getStaticImgUrl('/static/home2/dir-b-bg1.png')})` }">
+              <div class="dir-b-box">
+                <div class="dir-b-icon">
+                  <img v-lazy="getStaticImgUrl('/static/home2/dir-follow.svg')" alt="">
+                </div>
+                <div>{{ t('copy.title') }}</div>
+              </div>
+            </div>
+            <div class="dir-s ">
+              <div class="dir-s-icon">
+                <img v-lazy="getStaticImgUrl('/static/home2/dir-s-1.svg')" alt="">
+              </div>
+              <div>{{ t('common.spot') }}</div>
+            </div>
+            <div class="dir-s ">
+              <div class="dir-s-icon">
+                <img v-lazy="getStaticImgUrl('/static/home2/dir-s-2.svg')" alt="">
+              </div>
+              <div>{{ t('common.crypto') }}</div>
+            </div>
+            <div class="dir-s ">
+              <div class="dir-s-icon">
+                <img v-lazy="getStaticImgUrl('/static/home2/dir-s-3.svg')" alt="">
+              </div>
+              <div>{{ t('finance.defi_borrow') }}</div>
+            </div>
+            <div class="dir-s ">
+              <div class="dir-s-icon">
+                <img v-lazy="getStaticImgUrl('/static/home2/dir-s-4.svg')" alt="">
+              </div>
+              <div class="mx-[0.1rem]">{{ t('finance.portfolio_title') }}</div>
             </div>
           </div>
-          <div style="margin-top: 0.05rem;" v-if="!token">&nbsp;</div>
-          <div style="margin-top: 0.32rem;">
-            <SkeletonTitle style="height: 0.4rem;" :title-width="'100%'" />
+
+          <!-- 轮播 -->
+          <div class="box banners-box">
+            <div class="left-banner">
+            </div>
+            <div>
+              <div class="right-banner">
+              </div>
+              <div class="right-banner" style="margin-top: 0.24rem;height: 2.36rem;">
+              </div>
+            </div>
           </div>
-          <div style="margin-top: 0.32rem;display: flex;align-items: center;justify-content: flex-start;">
-            <SkeletonTitle style="height: 0.4rem;margin-right: 0.12rem;" :title-width="'1.6rem'" />
-            <SkeletonTitle style="height: 0.4rem;" :title-width="'1.6rem'" />
-          </div>
-          <div style="overflow: hidden;margin-top: 0.32rem;white-space: nowrap;">
-            <SkeletonImage style="display:inline-flex;width: 4.6rem;border-radius: 0.32rem;height: 4.92rem;" />
-            <SkeletonImage
-              style="display:inline-flex;width: 4.6rem;border-radius: 0.32rem;height: 4.92rem;margin-left: 0.32rem;" />
-          </div>
-          <div style="margin-top: 0.32rem;">
-            <SkeletonTitle style="height: 0.48rem;" :title-width="'100%'" />
-          </div>
+
         </template>
       </Skeleton>
       <Loading style="position: absolute;top: 50%;left: 50%;transform: translateX(-50%) translateY(-50%);" v-else
@@ -74,8 +108,10 @@ import { serviceChat } from "@/utils/serviceChat";
 import LoginDialog from "./views/Public/LoginDialog.vue";
 import SuccessToast from "./views/User/Account/SuccessToast.vue";
 import BottomTabBar from "@/components/BottomTabBar.vue"
+import { useI18n } from "vue-i18n";
 import 'wow.js/css/libs/animate.css';  // 引入动画库样式
 
+const { t } = useI18n();
 const showSuccessToast = computed(() => store.state.showSuccessToast);
 
 const token = computed(() => store.state.token);
@@ -124,7 +160,9 @@ Promise.all([
   import("@/views/Finance/Index.vue"),
   import("@/views/assets/Assets.vue"),
 ]).finally(() => {
-  store.commit("setPageLoading", false);
+  setTimeout(() => {
+    store.commit("setPageLoading", false);
+  }, 100)
 });
 setTimeout(() => {
   // 最多5s
@@ -367,44 +405,119 @@ onMounted(() => {
   top: 0;
   left: 0;
 
-  // left: 50%;
-  // top: 40%;
-  // transform: translateX(-50%) translateY(-50%);
-  .welcome {
-    color: var(--ex-white);
-    padding: 1.6rem 0.2rem 1.4rem 0.2rem;
-    transform: all ease-in .2s;
+  .home-skeleton {
+    margin: 0 auto;
 
-    .name {
+    .avatar {
+      width: 0.72rem;
+      height: 0.72rem;
+      margin-right: 0;
+      margin-left: 0.12rem;
+    }
+
+    .top {
       font-size: 0.4rem;
+      font-weight: 400;
+      margin: 1.44rem 0 0 0;
+
+      .title {
+        font-size: 0.8rem;
+        font-style: normal;
+        font-weight: 900;
+        line-height: 1rem;
+        margin: 0.34rem 0;
+      }
     }
 
-    .title {
-      font-size: 0.68rem;
-      font-weight: bold;
+    .login-btn {
+      width: 6.7rem;
+      height: 1rem;
+      border-radius: 1.2rem;
+      background-color: var(--ex-primary-color);
+      color: var(--ex-white);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.36rem;
+      font-style: normal;
+      font-weight: 600;
+      margin: 0.8rem auto 0 auto;
     }
 
-    .btns {
+    .dirs {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 1.2rem;
+
+      .dir-b {
+        width: 3.38rem;
+        height: 2.16rem;
+        border-radius: 0.32rem;
+        margin-bottom: 0.12rem;
+        background-color: var(--ex-bg-white2);
+        background-size: 100% 100%;
+        padding: 0.24rem;
+
+        .dir-b-box {
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          font-size: 0.32rem;
+          color: var(--ex-white);
+
+          .dir-b-icon {
+            width: 0.48rem;
+            height: 0.48rem;
+            margin-right: 0.16rem;
+          }
+        }
+      }
+
+      .dir-s {
+        width: 1.64rem;
+        height: 1.54rem;
+        border-radius: 0.32rem;
+        background-color: var(--ex-bg-color3);
+        background-size: 100% 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.24rem;
+        color: var(--ex-white);
+        text-align: center;
+
+        .dir-s-icon {
+          width: 0.6rem;
+          height: 0.6rem;
+          margin-bottom: 0.12rem;
+        }
+      }
+    }
+
+    .banners-box {
       display: flex;
       align-items: center;
       justify-content: space-between;
-      margin-bottom: 0.4rem;
+      margin-top: 0.4rem;
 
-      .btn {
-        width: 3.2rem;
-        height: 0.88rem;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        background-color: var(--ex-white);
-        border-radius: 1rem;
-        color: var(--ex-bg-color);
-        font-size: 0.32rem;
+
+      .left-banner {
+        width: 3.28rem;
+        height: 5.34rem;
+        border-radius: 0.4rem;
+        background-color: var(--ex-bg-color3);
+
       }
 
-      .btn2 {
-        background-color: var(--ex-primary-color);
-        color: var(--ex-white);
+      .right-banner {
+        width: 3.28rem;
+        height: 2.76rem;
+        border-radius: 0.3rem;
+        background-color: var(--ex-bg-color3);
+
       }
     }
   }

@@ -23,18 +23,16 @@
         </div>
         <!-- 三层容器 -->
         <div
-          class="mb-[0.24rem] flex h-18 w-full flex-col items-center justify-center rounded-[0.3rem] bg-color text-primary"
+          class="mb-[0.24rem] flex h-[1.4rem] w-full flex-col items-center justify-center rounded-[0.32rem] bg-white1 text-color3"
           @click="goAddAccount">
           <div class="mb-1 size-[0.48rem]">
-            <img v-lazy="getStaticImgUrl('/static/img/common/add.svg')" alt="img" />
-
+            <img v-lazy="getStaticImgUrl('/static/img/common/add_gray.svg')" alt="img" />
           </div>
-          <span class="text-12 leading-22">{{ t('market.market_buy_fast_account_add') }}</span>
+          <span class="text-[0.28rem]">{{ t('market.market_buy_fast_account_add') }}</span>
         </div>
 
-        <div class="flex flex-col items-center h-[1.36rem] my-[0.8rem]" v-if="bankList.length == 0">
-          <!-- <img v-lazy="getStaticImgUrl('/static/img/user/noData.svg')" />
-          <span class="mt-[0.12rem] text-color4 text-[0.28rem]">{{ $t("account.no_data") }}</span> -->
+        <div class="flex flex-col items-center" v-if="bankList.length == 0">
+       
           <NoData />
         </div>
         <div v-for="(item, i) in bankList" :key="i" :class="{ dialog_account_item_active: bank.id == item.id }"
@@ -158,8 +156,10 @@ const clickAccountItem = val => {
 
 <style lang="less" scoped>
 .withdraw_accounr_dialog {
-  padding: 0.6rem 0.32rem 0.8rem 0.32rem;
-
+  padding: 0.6rem 0.32rem 0 0.32rem;
+  .list {
+    padding-bottom:0.32rem;
+  }
   .swap_dialog_item {
     height: 1.12rem;
     line-height: 0;
@@ -261,7 +261,7 @@ const clickAccountItem = val => {
     padding: 0 0.4rem 0 0.36rem;
     background-size: cover;
     border: 1px solid rgba(0, 0, 0, 0);
-    background-color: var(--ex-bg-color3);
+    background-color: var(--ex-bg-white2);
 
     .card_icon {
       background-color: var(--ex-white);
