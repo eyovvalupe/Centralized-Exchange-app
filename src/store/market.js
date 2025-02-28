@@ -100,7 +100,7 @@ export default {
         checkCryptoList: [],
         marketType: "all",
 
-        currStock: {}, // 当前股票的数据
+        currStockItem: {}, // 当前股票的数据
         marketSearchStr: '', // 当前搜索的文本
         marketSearchTextList: [],
         marketSearchList: [], // 当前搜索的结果-股票
@@ -408,9 +408,9 @@ export default {
         setMarketAiGridList(state, data) {
             state.marketAiGridList = data || [];
         },
-        setCurrStock(state, data) {
+        setCurrStockItem(state, data) {
             sessionStorage.setItem('currStock', JSON.stringify(data))
-            setCurr('currStock', state, data)
+            setCurr('currStockItem', state, data)
         },
         setCurrConstract(state, data) {
             sessionStorage.setItem('currConstact', JSON.stringify(data))
@@ -512,11 +512,11 @@ export default {
                         })
 
                         // 同步到当前 股票
-                        const cStock = res.data.find(a => a.symbol == state.currStock.symbol)
+                        const cStock = res.data.find(a => a.symbol == state.currStockItem.symbol)
                         if (cStock) {
                             let obj = JSON.parse(JSON.stringify(cStock))
                             delete obj.symbol
-                            commit('setCurrStock', obj)
+                            commit('setCurrStockItem', obj)
                         }
                         // 同步到当前 合约
                         const cConstract = res.data.find(a => a.symbol == state.currConstact.symbol)

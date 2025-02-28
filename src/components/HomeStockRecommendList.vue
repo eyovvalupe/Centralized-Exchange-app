@@ -7,21 +7,20 @@
     <Carousel v-bind="config" v-else v-model="currentSlide">
       <Slide v-for="(list, i) in slideList" :key="i">
         <div class="carousel__item" v-for="(item, index) in list" :key="index">
-          <div class="w-[3.33rem] h-[1.92rem] p-[0.24rem] rounded-[0.32rem] bg-color2 relative"
-            @click="goInfo(item)">
+          <div class="w-[3.33rem] h-[1.92rem] p-[0.24rem] rounded-[0.32rem] bg-color2 relative" @click="goInfo(item)">
             <div
               class="font-medium text-[0.3rem] text-color font-medium mb-[0.15rem] flex justify-between items-center">
               {{ item.symbol }}
             </div>
             <div class="flex justify-between text-up mb-[0.24rem]">
               <div class="text-[0.28rem] font-medium">
-                {{ getRealtime(item.symbol,'price') }}
+                {{ getRealtime(item.symbol, 'price') }}
               </div>
               <div class="text-[0.28rem] font-normal">
                 {{
-                  getRealtime(item.symbol,'ratio',0) > 0
-                    ? "+" + getRealtime(item.symbol,'ratio',0)
-                    : getRealtime(item.symbol,'ratio',0)
+                  getRealtime(item.symbol, 'ratio', 0) > 0
+                    ? "+" + getRealtime(item.symbol, 'ratio', 0)
+                    : getRealtime(item.symbol, 'ratio', 0)
                 }}%
               </div>
             </div>
@@ -30,13 +29,13 @@
                 :style="'width: 100%; height: 0.5rem'" :xtimes="1.2" />
               <div class="flex-1 float-right">
                 <div
-                class="border-[0.02rem] rounded-[0.32rem] border-primary text-primary text-[0.22rem] items-center justify-center flex px-[0.2rem]"
-                style="width: max-content; height: 0.48rem; float: right;" @click.stop="collect(item)">
-                <span class="text-[0.22rem]">+{{ t('home.optional') }}</span>
-              </div>
+                  class="border-[0.02rem] rounded-[0.32rem] border-primary text-primary text-[0.22rem] items-center justify-center flex px-[0.2rem]"
+                  style="width: max-content; height: 0.48rem; float: right;" @click.stop="collect(item)">
+                  <span class="text-[0.22rem]">+{{ t('home.optional') }}</span>
+                </div>
               </div>
             </div>
-          </div> 
+          </div>
         </div>
       </Slide>
     </Carousel>
@@ -85,9 +84,9 @@ const config = {
 };
 const marketSrockRecommendList = computed(() => store.state.marketSrockRecommendList || [])
 const marketContractRecommendList = computed(() => store.state.marketContractRecommendList || [])
-const getRealtime = (symbol,k,_default='')=>{
-  for(let i=0;i<store.state.realtimeData.length;i++){
-    if(store.state.realtimeData[i].symbol == symbol){
+const getRealtime = (symbol, k, _default = '') => {
+  for (let i = 0; i < store.state.realtimeData.length; i++) {
+    if (store.state.realtimeData[i].symbol == symbol) {
       return store.state.realtimeData[i][k] || _default
     }
   }
@@ -127,7 +126,7 @@ const slideList = computed(() => {
 
 const goInfo = (item) => {
   if (item.type == "stock") {
-    store.commit("setCurrStock", item);
+    store.commit("setCurrStockItem", item);
     setTimeout(() => {
       router.push({
         name: "tradeInfo",

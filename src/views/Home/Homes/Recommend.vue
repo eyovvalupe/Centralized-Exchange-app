@@ -58,7 +58,7 @@
             </Tab>
             <!-- 股票 -->
             <Tab :name="6" :title="'股票'">
-                <StockList v-if="activeTab == 6" />
+                <StockList :handleClick="props.innerPage ? handleClick : null" v-if="activeTab == 6" />
             </Tab>
             <!-- 现货 -->
             <Tab :name="1" :title="t('common.spot')">
@@ -126,7 +126,6 @@ import StockList from "../components/StockList.vue"
 
 const emits = defineEmits(['handleClick'])
 const handleClick = (item, type) => {
-    console.error(item, type)
     emits('handleClick', {
         item,
         type,

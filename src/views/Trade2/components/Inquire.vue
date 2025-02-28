@@ -1,79 +1,84 @@
 <!-- 查询 -->
 <template>
-  <div class="inquire" v-if="token">
-    <div class="tr th">
-      <div class="td td-5">{{ t("trade.stock_position_stock") }}</div>
-      <div class="td td-4">{{ t("trade.stock_position_open") }}</div>
-      <div class="td td-4">{{ t("trade.stock_position_cost") }}</div>
-      <div class="td td-4" style="text-align: end !important">
-        {{ t("trade.stock_position_profit") }}
+
+  <div>
+    <div class="inquire" v-if="token">
+      <div class="tr th">
+        <div class="td td-5">{{ t("trade.stock_position_stock") }}</div>
+        <div class="td td-4">{{ t("trade.stock_position_open") }}</div>
+        <div class="td td-4">{{ t("trade.stock_position_cost") }}</div>
+        <div class="td td-4" style="text-align: end !important">
+          {{ t("trade.stock_position_profit") }}
+        </div>
       </div>
-    </div>
-    <NoData v-if="!loading && !inquireList.length" />
+      <NoData v-if="!loading && !inquireList.length" />
 
-    <SwipeCell ref="items" v-for="(item, i) in inquireList" :key="i" disabled>
-      <div class="tr" @click="OpeningForm(item)">
+      <SwipeCell ref="items" v-for="(item, i) in inquireList" :key="i" disabled>
+        <div class="tr" @click="OpeningForm(item)">
 
-        <div class="mask-btn"
-          style="margin-top: 0.2rem;background-color: var(--ex-bg-color3);border-radius: 0.4rem;display: flex;width: 100%;padding: 0.24rem;">
-          <div class="td td-5">
-            <div class="name">{{ item.symbol }}</div>
-            <div class="lever">
-              <div class="status-color status tag-default">{{ item.lever }}X</div>
-              <div class="status-color status" :class="'status-' + item.status">
-                <!-- {{ statusMap[item.status] || "--" }} -->
+          <div class="mask-btn"
+            style="margin-top: 0.2rem;background-color: var(--ex-bg-color3);border-radius: 0.4rem;display: flex;width: 100%;padding: 0.24rem;">
+            <div class="td td-5">
+              <div class="name">{{ item.symbol }}</div>
+              <div class="lever">
+                <div class="status-color status tag-default">{{ item.lever }}X</div>
+                <div class="status-color status" :class="'status-' + item.status">
+                  <!-- {{ statusMap[item.status] || "--" }} -->
+                  {{
+                    item.status == "none"
+                      ? t("trade.stock_position_status_none")
+                      : item.status == "lock"
+                        ? t("trade.stock_position_status_lock")
+                        : item.status == "open"
+                          ? t("trade.stock_position_status_open")
+                          : item.status == "done"
+                            ? t("trade.stock_position_status_done")
+                            : item.status == "fail"
+                              ? t("trade.stock_position_status_fail")
+                              : item.status == "cancel"
+                                ? t("trade.stock_position_status_cancel")
+                                : "--"
+                  }}
+                </div>
+              </div>
+            </div>
+            <div class="td td-4">
+              <div class="state" :class="'state-' + item.offset">
+                <!-- {{ offsetMap[item.offset] || "--" }} -->
                 {{
-                  item.status == "none"
-                    ? t("trade.stock_position_status_none")
-                    : item.status == "lock"
-                      ? t("trade.stock_position_status_lock")
-                      : item.status == "open"
-                        ? t("trade.stock_position_status_open")
-                        : item.status == "done"
-                          ? t("trade.stock_position_status_done")
-                          : item.status == "fail"
-                            ? t("trade.stock_position_status_fail")
-                            : item.status == "cancel"
-                              ? t("trade.stock_position_status_cancel")
-                              : "--"
+                  item.offset == "long"
+                    ? t("trade.stock_position_offset_long")
+                    : item.offset == "short"
+                      ? t("trade.stock_position_offset_short")
+                      : "--"
                 }}
+              </div>
+              <div class="amount">{{ item.unsold_volume || "--" }}</div>
+            </div>
+            <div class="td td-4">
+              <div class="price">{{ item.settled_price || "--" }}</div>
+              <div class="price">{{ item.open_price || "--" }}</div>
+            </div>
+            <div class="td td-4">
+              <div class="num" :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'">
+                {{ item.profit || "--" }}
+              </div>
+              <div class="num" :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'">
+                {{ getRatio(item.ratio) }}
               </div>
             </div>
           </div>
-          <div class="td td-4">
-            <div class="state" :class="'state-' + item.offset">
-              <!-- {{ offsetMap[item.offset] || "--" }} -->
-              {{
-                item.offset == "long"
-                  ? t("trade.stock_position_offset_long")
-                  : item.offset == "short"
-                    ? t("trade.stock_position_offset_short")
-                    : "--"
-              }}
-            </div>
-            <div class="amount">{{ item.unsold_volume || "--" }}</div>
-          </div>
-          <div class="td td-4">
-            <div class="price">{{ item.settled_price || "--" }}</div>
-            <div class="price">{{ item.open_price || "--" }}</div>
-          </div>
-          <div class="td td-4">
-            <div class="num" :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'">
-              {{ item.profit || "--" }}
-            </div>
-            <div class="num" :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'">
-              {{ getRatio(item.ratio) }}
-            </div>
-          </div>
-        </div>
 
-      </div>
-    </SwipeCell>
-    <div style="height:0.56rem"></div>
-    <LoadingMore :loading="loading" :finish="finish" v-if="(finish && inquireList.length) || !finish" />
+        </div>
+      </SwipeCell>
+      <div style="height:0.56rem"></div>
+      <LoadingMore :loading="loading" :finish="finish" v-if="(finish && inquireList.length) || !finish" />
+    </div>
+
+    <UnLogin style="margin:0.6rem 0;" @loginfinish="loginfinish" v-else />
   </div>
 
-  <UnLogin @loginfinish="loginfinish" v-show="!token" />
+
 
   <!-- 订单详情 -->
   <Popup v-model:show="showInfo" position="right" style="width: 100%; height: 100%" teleport="body">
@@ -102,6 +107,12 @@ const loginfinish = () => {
 
 const inquireList = computed(() => store.state.inquireList || []);
 const token = computed(() => store.state.token);
+const props = defineProps({
+  scrollDom: { // 滚动的父级
+    type: String,
+    default: '.page'
+  }
+})
 
 const statusMap = ref({
   // 仓位状态
@@ -206,7 +217,7 @@ onMounted(() => {
     try {
       moreDom = document.querySelector(".loading_more");
       document
-        .querySelector(".trade_body")
+        .querySelector(props.scrollDom)
         .addEventListener("scroll", scrolHandle);
     } catch { }
   }, 500);
@@ -214,7 +225,7 @@ onMounted(() => {
 onUnmounted(() => {
   try {
     document
-      .querySelector(".trade_body")
+      .querySelector(props.scrollDom)
       .removeEventListener("scroll", scrolHandle);
   } catch { }
 });

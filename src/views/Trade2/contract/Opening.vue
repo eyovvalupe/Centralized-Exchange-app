@@ -64,7 +64,6 @@ import { _search, _basic, _stocksPara, _stocksBuy } from "@/api/api";
 import { useRoute } from "vue-router";
 import OpeningForm from "./OpeningForm.vue";
 import { useI18n } from "vue-i18n";
-import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
 import store from "@/store";
 

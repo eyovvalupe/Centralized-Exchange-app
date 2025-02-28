@@ -1,31 +1,22 @@
 <template>
-  <div
-    class="stock_description"
-    v-show="!loading && list.length > 0"
-  >
+  <div class="stock_description" v-show="!loading && list.length > 0">
     <div class="flex flex-row">
       <template v-for="(item, i) in list" :key="i">
-      <div
-        v-if="i < 3"
-        :class="item.ratio > 0 ? 'up_price' : 'down_price'"
-        class="flex flex-col w-[1.78rem] justify-between h-[1.34rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] mx-[0.06rem]"
-        style="overflow-x: hidden;"
-        @click="goInfo(item)"
-      >
-        <span class="text-[0.24rem] text-color" style="max-width: 1.98rem;">{{
-          item["symbol"].length > 8 ? item["symbol"].substring(0, 8) + '...' : item["symbol"]
-        }}</span>
-        <span class="stock_price">{{ item.amount }}</span>
-        <div class="flex flex-row justify-center stock_detail">
-          <span
-            >{{ item.ratio > 0 ? "+" : ""
+        <div v-if="i < 3" :class="item.ratio > 0 ? 'up_price' : 'down_price'"
+          class="flex flex-col w-[1.78rem] justify-between h-[1.34rem] items-center rounded-[0.32rem] pt-[0.2rem] pb-[0.2rem] mx-[0.06rem]"
+          style="overflow-x: hidden;" @click="goInfo(item)">
+          <span class="text-[0.24rem] text-color" style="max-width: 1.98rem;">{{
+            item["symbol"].length > 8 ? item["symbol"].substring(0, 8) + '...' : item["symbol"]
+            }}</span>
+          <span class="stock_price">{{ item.amount }}</span>
+          <div class="flex flex-row justify-center stock_detail">
+            <span>{{ item.ratio > 0 ? "+" : ""
             }}{{
-              (item.ratio || 0) 
-            }}%</span
-          >
+                (item.ratio || 0)
+              }}%</span>
+          </div>
         </div>
-      </div>
-    </template>
+      </template>
     </div>
   </div>
 </template>
@@ -55,12 +46,12 @@ const props = defineProps({
   },
   list: {
     type: Array,
-    default:()=>[]
+    default: () => []
   }
 });
-const goInfo = (item)=>{
-  store.commit("setCurrStock", item);
-  setTimeout(()=>{
+const goInfo = (item) => {
+  store.commit("setCurrStockItem", item);
+  setTimeout(() => {
     router.push({
       name: "tradeInfo",
       query: {
@@ -68,7 +59,7 @@ const goInfo = (item)=>{
         type: "stock",
       },
     });
-  },100)
+  }, 100)
 }
 </script>
 

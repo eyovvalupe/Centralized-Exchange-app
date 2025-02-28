@@ -249,7 +249,7 @@ const goItem = (item) => {
   if (item.type == "stock") {
     var newList = flag ? prevList : [...prevList, item.symbol];
     store.commit("setMarketSearchTextList", newList);
-    store.commit("setCurrStock", item);
+    store.commit("setCurrStockItem", item);
     setTimeout(() => {
       router.push({
         name: "market_info",

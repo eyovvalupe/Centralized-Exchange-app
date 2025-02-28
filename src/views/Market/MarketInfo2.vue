@@ -1,15 +1,17 @@
 <!-- 市场行情 -->
 <template>
-  <div class="page-marketinfo2" :style="{backgroundColor:props.innerPage?'var(--ex-bg-color9)':'var(--ex-bg-color)'}">
+  <div class="page-marketinfo2"
+    :style="{ backgroundColor: props.innerPage ? 'var(--ex-bg-color9)' : 'var(--ex-bg-color)' }">
     <!-- 头部 -->
-    <div class="max-width info_header" :style="{zIndex: props.innerPage ? 1 : 100,backgroundColor:props.innerPage?'var(--ex-bg-color9)':'var(--ex-bg-color)'}">
+    <div class="max-width info_header"
+      :style="{ zIndex: props.innerPage ? 1 : 100, backgroundColor: props.innerPage ? 'var(--ex-bg-color9)' : 'var(--ex-bg-color)' }">
       <div v-if="!props.innerPage" class="top">
         <div v-if="!props.innerPage" class="back" @click="router.back">
           <Icon name="arrow-left" />
         </div>
 
         <!-- 标题 -->
-        <div class="title" v-if="route.query.type == 'stock'">
+        <div class="title" v-if="type == 'stock'">
           <div class="title_name">{{ item.symbol || "--" }} </div>
           <div v-if="showDate" class=" leading-[0.4rem]">
             {{ showDate }}
@@ -31,7 +33,8 @@
         </div>
 
       </div>
-      <div :style="{backgroundColor:props.innerPage?'var(--ex-bg-white2)':'var(--ex-bg-color3)'}" style="border-radius: 0.32rem;padding: 0.28rem">
+      <div :style="{ backgroundColor: props.innerPage ? 'var(--ex-bg-white2)' : 'var(--ex-bg-color3)' }"
+        style="border-radius: 0.32rem;padding: 0.28rem">
 
         <div class="flex items-center justify-center gap-[0.2rem]">
 
@@ -65,20 +68,20 @@
           <div class="count flex-1">
             <div class="count_item">
               <span class="text-color3">{{ t('market.market_marketinfo_high') }}</span>
-              <span class="num text-white" >{{ item.high || '--' }}</span>
+              <span class="num text-white">{{ item.high || '--' }}</span>
             </div>
             <div class="count_item">
               <span class="text-color3">{{ t('market.market_marketinfo_low') }}</span>
-              <span class="num text-white" >{{ item.low || '--' }}</span>
+              <span class="num text-white">{{ item.low || '--' }}</span>
             </div>
             <div class="count_item">
               <span class="text-color3">{{ t('market.market_marketinfo_open') }}</span>
-              <span class="num text-white" >{{ item.open || '--' }}</span>
+              <span class="num text-white">{{ item.open || '--' }}</span>
             </div>
             <div class="count_item">
               <span class="text-color3">{{ t('market.market_marketinfo_close') }}</span>
-              <span class="num text-white" >{{ item.close || '--'
-                }}</span>
+              <span class="num text-white">{{ item.close || '--'
+              }}</span>
             </div>
           </div>
         </div>
@@ -97,9 +100,11 @@
     </div>
 
     <!-- 内容 -->
-    <div :class="[props.innerPage ? 'inner-marketinfo' : '']" style="padding: 0 0.1rem;margin-top: 0.1rem;" :style="{backgroundColor:props.innerPage?'var(--ex-none':'var(--ex-bg-color)'}">
-      <Tabs :style="{backgroundColor:props.innerPage?'var(--ex-bg-white2)':'var(--ex-bg-color3)'}" style="border-radius: 0.32rem 0.32rem 0 0;" class="van-tabs--sub_line van-tabs--sub_bg" :sticky="true" :color="'var(--ex-primary-color)'"
-        v-model:active="activeTab" animated shrink>
+    <div :class="[props.innerPage ? 'inner-marketinfo' : '']" style="padding: 0 0.1rem;margin-top: 0.1rem;"
+      :style="{ backgroundColor: props.innerPage ? 'var(--ex-none' : 'var(--ex-bg-color)' }">
+      <Tabs :style="{ backgroundColor: props.innerPage ? 'var(--ex-bg-white2)' : 'var(--ex-bg-color3)' }"
+        style="border-radius: 0.32rem 0.32rem 0 0;" class="van-tabs--sub_line van-tabs--sub_bg" :sticky="true"
+        :color="'var(--ex-primary-color)'" v-model:active="activeTab" animated shrink>
         <!-- <Tab :name="1" :title="'开仓'">
           <div class="market-box" style="height: calc(var(--vh) * 100 - 2.2rem);overflow-y: auto;">
             <Opening :item="item" v-if="tradeType == 'constract'" ref="openingRef" 
@@ -110,7 +115,7 @@
         </Tab> -->
         <Tab :name="2" :title="$t('market.market_item_detail')">
           <div class="market-box">
-            <Chart ref="chartRef" v-if="!chartLoading" :type="'constract'" />
+            <Chart ref="chartRef" v-if="!chartLoading" :type="type" />
           </div>
         </Tab>
         <Tab :name="3" :title="$t('market.market_item_order')" v-if="item.type == 'crypto'">
@@ -165,7 +170,8 @@
     <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showInfo"
       :title="t('market.market_marketinfo_data')" closeable>
       <div class="info_popup">
-        <div class="info_price" :style="{backgroundColor: updown > 0 ? 'rgb(var(--ex-up-color-rgb) / 0.06)' : 'rgb(var(--ex-down-color-rgb) / 0.06)'}">
+        <div class="info_price"
+          :style="{ backgroundColor: updown > 0 ? 'rgb(var(--ex-up-color-rgb) / 0.06)' : 'rgb(var(--ex-down-color-rgb) / 0.06)' }">
           <div class="info_num" :class="[updown === 0 ? '' : updown > 0 ? 'up' : 'down']">
             <template v-if="item.price || item.close">
               {{ item.price || item.close }}
@@ -296,20 +302,24 @@ const gotrade = () => {
 
 const activeTab = ref(2)
 const showInfo = ref(false);
+const type = ref(route.query.type || props.type)
 
 // 股票信息
 const item = computed(() => {
   let it = {};
-  const type = route.query.type || props.type;
-  switch (type) {
+  const type2 = type.value;
+  switch (type2) {
     case "constract": // 合约
       it = store.state.currConstact || {};
       break;
     case "ai": // 合约
       it = store.state.currAi || {};
       break;
+    case "stock": // 股票
+      it = store.state.currStockItem || {};
+      break
     default:
-      it = store.state.currStock || {};
+      it = store.state.currStockItem || {};
   }
   return it;
 });
@@ -328,10 +338,21 @@ const getBasic = (obj) => {
   _basic({ symbol: obj.symbol }).then((res) => {
     if (res.code == 200) {
       if (res.data.symbol == item.value.symbol) {
-        const type = route.query.type || props.type;
-        switch (type) {
+        switch (type.value) {
           case "constract": // 合约
             store.commit("setCurrConstract", {
+              ...obj,
+              ...res.data,
+            });
+            break;
+          case "stock": // 股票
+            store.commit("setCurrStockItem", {
+              ...obj,
+              ...res.data,
+            });
+            break;
+          case "ai": // 股票
+            store.commit("setCurrAi", {
               ...obj,
               ...res.data,
             });
@@ -377,12 +398,15 @@ const addCollect = () => {
       .then((res) => {
         if (res.code == 200) {
           store.dispatch('updateMarketWatchList');
-          switch (route.query.type) {
+          switch (type.value) {
             case "constract": // 合约
               store.commit("setCurrConstract", { watchlist: 1 });
               break;
+            case "ai": // ai
+              store.commit("setCurrAi", { watchlist: 1 });
+              break
             default:
-              store.commit("setCurrStock", { watchlist: 1 });
+              store.commit("setCurrStockItem", { watchlist: 1 });
           }
           // showToast(t('market.market_optional_add_success'));
         }
@@ -397,12 +421,15 @@ const addCollect = () => {
       .then((res) => {
         if (res.code == 200) {
           store.dispatch('updateMarketWatchList');
-          switch (route.query.type) {
+          switch (type.value) {
             case "constract": // 合约
               store.commit("setCurrConstract", { watchlist: 0 });
               break;
+            case "ai": // ai
+              store.commit("setCurrAi", { watchlist: 0 });
+              break
             default:
-              store.commit("setCurrStock", { watchlist: 0 });
+              store.commit("setCurrStockItem", { watchlist: 0 });
           }
           // showToast(t('market.market_optioanl_del_success'));
         }
@@ -515,10 +542,12 @@ setTimeout(() => {
     align-items: center;
     justify-content: space-between;
     border-top: 1px solid var(--ex-bg-white1);
+
     .info {
       .name {
         font-size: 0.32rem;
       }
+
       .type {
         margin-top: 0.16rem;
         color: var(--ex-text-color5);
@@ -531,6 +560,7 @@ setTimeout(() => {
         border: 1px solid var(--ex-text-color5);
       }
     }
+
     .data {
       background-color: var(--ex-bg-white1);
       height: 0.92rem;
@@ -543,6 +573,7 @@ setTimeout(() => {
       padding: 0 0.4rem;
       margin-right: 0.12rem;
     }
+
     .btn {
       background-color: var(--ex-status-color3);
       width: 2.88rem;
@@ -558,9 +589,8 @@ setTimeout(() => {
 
   .market-box {
     margin-top: 0.1rem;
-    height: calc(var(--vh) * 100 - 6rem)
-    // border-radius: 0.32rem;
-    // background-color: var(--ex-bg-color3);
+    height: calc(var(--vh) * 100 - 6rem) // border-radius: 0.32rem;
+      // background-color: var(--ex-bg-color3);
   }
 
 
@@ -633,6 +663,7 @@ setTimeout(() => {
       }
 
     }
+
     .count {
       display: flex;
       flex-wrap: wrap;
@@ -747,22 +778,25 @@ setTimeout(() => {
 
 .inner-marketinfo {
   :deep(.van-tabs--sub_bg) {
-     .van-sticky > div > .van-tabs__wrap .van-tabs__nav {
+    .van-sticky>div>.van-tabs__wrap .van-tabs__nav {
       background-color: var(--ex-none);
-     }
+    }
   }
-  
+
   :deep(.market-charts) {
     .chart_box {
       background-color: var(--ex-none);
+
       .tabs {
         .tab {
           background-color: var(--ex-bg-white1);
         }
+
         .active_tab {
           background-color: var(--ex-white);
         }
       }
+
       .chart_container {
         .chart_time {
           background-color: var(--ex-bg-white1);

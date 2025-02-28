@@ -14,6 +14,62 @@
     <div class="market-trade-body" v-if="item.symbol && !chartLoading">
       <Tabs @change="changeTab2" :key="'main'" class="van-tabs--top" :sticky="true" :color="'var(--ex-primary-color)'"
         v-model:active="activeTab" animated shrink>
+        <!-- 股票 -->
+        <Tab :name="4" :title="'股票'">
+          <div class="dialog-market-box" v-if="activeTab == 4 && !chartLoading">
+            <div class="top-box">
+              <!-- 标题 -->
+              <div class="title" @click="showStockSearchDialog">
+                <div class="title_name">
+                  {{ item.symbol || '--' }}
+                  <Icon name="arrow-down" />
+                </div>
+              </div>
+              <div style="flex: 1"></div>
+              <div @click="goMaret">
+                <div class="size-[0.48rem] mr-[0.24rem]">
+                  <img v-lazy="getStaticImgUrl('/static/img/market/market.svg')" alt="" />
+                </div>
+              </div>
+              <!-- 详情 -->
+              <div class="search star" @click="addCollect(activeTab)" :style="{ opacity: loading ? '0.5' : '1' }">
+                <div class="size-[0.48rem]">
+                  <img v-if="item.watchlist == 1" v-lazy="getStaticImgUrl('/static/img/market/star.svg')" alt="" />
+                  <img v-else v-lazy="getStaticImgUrl('/static/img/market/unstar.svg')" alt="" />
+                </div>
+              </div>
+            </div>
+            <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']" v-if="!showInfoDialog">
+              <Chart @switch="(e) => (hideChart = e)" :type="'stock'" :mini="true" />
+            </div>
+            <!-- 内容1 -->
+            <div style="
+                margin: 0.1rem;
+                background-color: var(--ex-bg-color3);
+                border-radius: 0.32rem;
+              ">
+              <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg van-tabs--market2"
+                :color="'var(--ex-primary-color)'" v-model:active="activeTab2" animated shrink>
+                <Tab :name="11" :title="$t('trade.stock_open')">
+                  <OpeningStock ref="stockOpenRef" :item="item" :from="'trade'" />
+                </Tab>
+                <Tab :title="t('trade.trade_orders_current')" :name="44">
+                  <div style="height: 0.2rem"></div>
+                  <div class="dialog-market-bg" v-if="activeTab2 == 44">
+                    <PositionsStock />
+                  </div>
+                </Tab>
+                <Tab :title="t('trade.trade_order_history')" :name="55">
+                  <div style="height: 0.2rem"></div>
+                  <div class="dialog-market-bg" v-if="activeTab2 == 55">
+                    <InquireStock :scrollDom="'.dialog-market-box'" ref="InquireRef" />
+                  </div>
+                </Tab>
+              </Tabs>
+            </div>
+            <div style="height: 0.4rem"></div>
+          </div>
+        </Tab>
         <!-- 现货 -->
         <Tab :name="1" :title="$t('common.spot')">
           <div class="dialog-market-box" v-if="activeTab == 1 && !chartLoading">
@@ -257,20 +313,25 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, onActivated, onDeactivated } from 'vue';
 import { Tabs, Tab, Icon, Popup } from 'vant';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import store from '@/store';
 import { getStaticImgUrl, _formatNumber } from '@/utils/index.js';
-import { _futures, _basic, _add, _del } from '@/api/api';
+import { _futures, _basic, _add, _del, _stock } from '@/api/api';
 import BottomPopup from '@/components/BottomPopup.vue';
 import Loaidng from '@/components/Loaidng.vue';
 import router from '@/router';
+import eventBus from "@/utils/eventBus.js"
 // 公共
 import StockTable from '@/components/StockTable.vue';
 import OrderingSpot from '@/views/Market/OrderingSpot.vue';
 import Chart from '@/views/Market/Chart.vue';
+// 股票
+import OpeningStock from '@/views/Trade2/components/Opening.vue';
+import PositionsStock from '@/views/Trade2/components/Positions.vue';
+import InquireStock from '@/views/Trade2/components/Inquire.vue';
 // 现货
 import OpeningSpot from '@/views/Trade2/spot/Opening.vue';
 import PositionsSpot from '@/views/Trade2/spot/Positions.vue';
@@ -323,6 +384,12 @@ const activeTab2 = ref(11); // 二级
 const hideChart = ref(false); // 折叠图表
 
 const lastTab = ref(activeTab.value); // 上一次的分类，切换时同步数据用的
+const tradeTypeMap = {
+  1: 'spot',
+  2: 'constract',
+  3: 'ai',
+  4: 'stock'
+}
 const changeTab2 = (e) => {
   hideChart.value = false;
   if (e == 3) {
@@ -340,8 +407,17 @@ const changeTab2 = (e) => {
     );
   }
   lastTab.value = e;
-
   sessionStorage.setItem('tradeinfo-tab', e);
+  setTimeout(() => {
+    router.replace({
+      name: 'tradeInfo',
+      query: {
+        symbol: item.value.symbol,
+        type: tradeTypeMap[e] == 'spot' ? 'constract' : tradeTypeMap[e],
+        tradeType: tradeTypeMap[e],
+      },
+    });
+  }, 100)
 };
 
 // 股票信息
@@ -349,7 +425,7 @@ const item = computed(() => {
   let it = {};
   switch (activeTab.value) {
     case 4: //股票
-      it = store.state.currStock || {};
+      it = store.state.currStockItem || {};
       break
     case 1: // 现货
     case 2: // 合约
@@ -363,6 +439,7 @@ const item = computed(() => {
 });
 
 
+
 // 获取股票最新信息
 const getBasic = (obj, tab) => {
   _basic({ symbol: obj.symbol }).then((res) => {
@@ -370,7 +447,7 @@ const getBasic = (obj, tab) => {
       if (res.data.symbol == item.value.symbol) {
         switch (tab) {
           case 4: // 股票
-            store.commit('setCurrStock', {
+            store.commit('setCurrStockItem', {
               ...obj,
               ...res.data,
             });
@@ -403,6 +480,7 @@ onMounted(() => {
   }, 500);
 });
 const handleClick = (obj) => {
+  console.error('点击了', obj)
   obj = JSON.parse(JSON.stringify(obj));
   if (obj.type != 'crypto' && ['3', '4'].includes(activeTab.value)) {
     // 非加密货币的没有订单薄
@@ -416,10 +494,23 @@ const handleClick = (obj) => {
   if (activeTab.value == 3) {
     store.commit('setCurrAi', obj);
   }
+  if (activeTab.value == 4) {
+    store.commit('setCurrStockItem', obj);
+  }
+  setTimeout(() => {
+    router.replace({
+      name: 'tradeInfo',
+      query: {
+        symbol: obj.symbol,
+        type: tradeTypeMap[activeTab.value] == 'spot' ? 'constract' : tradeTypeMap[activeTab.value],
+        tradeType: tradeTypeMap[activeTab.value],
+      },
+    });
+  }, 100)
   setTimeout(() => {
     getBasic(obj, activeTab.value);
     chartLoading.value = false;
-  }, 100);
+  }, 200);
 };
 const handleClickIndex = ({ item, type }) => {
   if (type) {
@@ -466,7 +557,7 @@ const addCollect = (tab) => {
               store.commit('setCurrAi', { watchlist: 1 });
               break;
             case 4: // 股票
-              store.commit('setCurrStock', { watchlist: 1 });
+              store.commit('setCurrStockItem', { watchlist: 1 });
               break
           }
         }
@@ -490,7 +581,7 @@ const addCollect = (tab) => {
               store.commit('setCurrAi', { watchlist: 0 });
               break;
             case 4: // 股票
-              store.commit('setCurrStock', { watchlist: 0 });
+              store.commit('setCurrStockItem', { watchlist: 0 });
               break
           }
         }
@@ -500,6 +591,12 @@ const addCollect = (tab) => {
       });
   }
 };
+
+// 股票搜索
+const stockOpenRef = ref()
+const showStockSearchDialog = () => {
+  stockOpenRef.value && stockOpenRef.value.openSearch()
+}
 
 // 搜索
 const marketSearchList2 = computed(() => store.state.futuresSearchList);
@@ -565,19 +662,6 @@ const goDialogSearch = () => {
                   });
                 }
                 break;
-              case 4:
-                store.commit('setCurrStock', obj || {});
-                if (route.name == 'tradeInfo') {
-                  router.replace({
-                    name: 'tradeInfo',
-                    query: {
-                      symbol: obj.symbol,
-                      type: 'stock',
-                      tradeType: 'stock',
-                    },
-                  });
-                }
-                break;
               default:
                 store.commit('setCurrConstract', obj || {});
                 if (route.name == 'tradeInfo') {
@@ -602,6 +686,27 @@ const goDialogSearch = () => {
 };
 setTimeout(() => {
   goDialogSearch();
+  // 获取股票列表
+  _stock({
+    market: "",
+    name: '',
+    page: 1,
+  }).then(res => {
+    if (!store.state.currStockItem.symbol && res.data[0]) {
+      const obj = res.data[0]
+      store.commit('setCurrStockItem', obj || {});
+      if (route.name == 'tradeInfo') {
+        router.replace({
+          name: 'tradeInfo',
+          query: {
+            symbol: obj.symbol,
+            type: 'stock',
+            tradeType: 'stock',
+          },
+        });
+      }
+    }
+  })
 }, 2000);
 
 // 侧边弹框
@@ -613,6 +718,27 @@ const openMenu = () => {
     IndexRef.value && IndexRef.value.act();
   }, 0);
 };
+
+
+// 选择股票
+const clickStockHandle = () => {
+  console.error('收到')
+  chartLoading.value = true
+  setTimeout(() => {
+    chartLoading.value = false
+  }, 200)
+}
+
+onActivated(() => {
+  eventBus.on('clickStock', clickStockHandle)
+  setTimeout(() => {
+    chartLoading.value = false;
+  }, 500);
+})
+onDeactivated(() => {
+  chartLoading.value = true
+  eventBus.off('clickStock', clickStockHandle)
+})
 </script>
 
 <style lang="less" scoped>

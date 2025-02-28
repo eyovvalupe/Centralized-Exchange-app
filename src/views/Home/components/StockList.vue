@@ -6,8 +6,8 @@
                 <div>
                     <NoData v-if="!loading && !showList.length" />
                     <div class="list-i">
-                        <StockItem :padding="true" :showIcon="false" :item="item" v-for="(item, i) in showList"
-                            :key="'s_' + i" />
+                        <StockItem :menuType="'stock'" :handleClick="handleClick" :padding="true" :showIcon="false"
+                            :item="item" v-for="(item, i) in showList" :key="'s_' + i" />
                     </div>
 
                     <LoadingMore :classN="'loading_more_stock'" :loading="loading" :finish="finish"
@@ -19,8 +19,8 @@
                     <Loaidng :loading="loading" v-if="loading && (!showList || !showList.length)" />
                     <NoData v-if="!loading && (!showList || !showList.length)" />
                     <div class="list-i" v-if="showList">
-                        <StockItem :padding="true" :showIcon="false" :item="item" v-for="(item, i) in showList"
-                            :key="item.market + '_' + i" />
+                        <StockItem :menuType="'stock'" :handleClick="props.handleClick" :padding="true"
+                            :showIcon="false" :item="item" v-for="(item, i) in showList" :key="item.market + '_' + i" />
                     </div>
                 </div>
             </Tab>
@@ -39,6 +39,14 @@ import { _marketGet, _recommend, _stock } from "@/api/api"
 import Loaidng from "@/components/Loaidng.vue"
 import store from "@/store/index.js"
 import LoadingMore from "@/components/LoadingMore.vue"
+
+
+const props = defineProps({
+    handleClick: {
+        type: Function,
+        default: null
+    }
+})
 
 const activeTab = ref(0)
 const loading = ref(false)

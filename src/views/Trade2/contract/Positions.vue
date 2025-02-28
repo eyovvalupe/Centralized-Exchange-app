@@ -17,7 +17,8 @@
         <div class="name van-omit1">{{ item.name }}</div>
         <div class="lever">
           <div class="status-color status_lever">{{ item.lever }}X</div>
-          <div class="status-color status" :class="item.status == 'open' ? 'status_'  + item.status : 'status-' + item.status">
+          <div class="status-color status"
+            :class="item.status == 'open' ? 'status_' + item.status : 'status-' + item.status">
             {{
               item.status == "none"
                 ? t("trade.stock_position_status_none")
@@ -685,7 +686,7 @@ getSessionToken();
       font-size: 0.22rem;
       margin-right: 0.08rem;
     }
-    
+
     .status_lever {
       height: 0.3rem;
       padding: 0 0.08rem;

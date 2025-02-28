@@ -1,118 +1,119 @@
 <!-- 持仓 -->
 <template>
-  <div v-if="token" class="positions">
-    <div class="tr th">
-      <div class="td td-5">{{ t("trade.stock_position_stock") }}</div>
-      <div class="td td-4">{{ t("trade.stock_position_open") }}</div>
-      <div class="td td-4">{{ t("trade.stock_position_cost") }}</div>
-      <div class="td td-4" style="text-align: end !important">
-        {{ t("trade.stock_position_profit") }}
+  <div>
+    <div v-if="token" class="positions">
+      <div class="tr th">
+        <div class="td td-5">{{ t("trade.stock_position_stock") }}</div>
+        <div class="td td-4">{{ t("trade.stock_position_open") }}</div>
+        <div class="td td-4">{{ t("trade.stock_position_cost") }}</div>
+        <div class="td td-4" style="text-align: end !important">
+          {{ t("trade.stock_position_profit") }}
+        </div>
       </div>
-    </div>
-    <NoData v-if="!positionsList.length && !loading" />
-    <Loaidng size="0.32rem" :loading="loading" v-if="!positionsList.length && loading" />
+      <NoData v-if="!positionsList.length && !loading" />
+      <Loaidng size="0.32rem" :loading="loading" v-if="!positionsList.length && loading" />
 
-    <div class="tr " @click="OpeningForm(item)" v-for="(item, i) in positionsList" :key="i">
+      <div class="tr " @click="OpeningForm(item)" v-for="(item, i) in positionsList" :key="i">
 
-      <div class="mask-btn"
-        style="margin-top: 0.2rem;background-color: var(--ex-bg-color3);border-radius: 0.4rem;display: flex;width: 100%;padding: 0.24rem;">
-        <div class="td td-5">
-          <div class="name van-omit1">{{ item.symbol }}</div>
-          <div class="lever">
-            <div class="status-color status tag-default">{{ item.lever }}X</div>
-            <div class="status-color status" :class="'status-' + item.status">
-              <!-- {{ statusMap[item.status] || "--" }} -->
+        <div class="mask-btn"
+          style="margin-top: 0.2rem;background-color: var(--ex-bg-color3);border-radius: 0.4rem;display: flex;width: 100%;padding: 0.24rem;">
+          <div class="td td-5">
+            <div class="name van-omit1">{{ item.symbol }}</div>
+            <div class="lever">
+              <div class="status-color status tag-default">{{ item.lever }}X</div>
+              <div class="status-color status" :class="'status-' + item.status">
+                <!-- {{ statusMap[item.status] || "--" }} -->
+                {{
+                  item.status == "none"
+                    ? t("trade.stock_position_status_none")
+                    : item.status == "lock"
+                      ? t("trade.stock_position_status_lock")
+                      : item.status == "open"
+                        ? t("trade.stock_position_status_open")
+                        : item.status == "done"
+                          ? t("trade.stock_position_status_done")
+                          : item.status == "fail"
+                            ? t("trade.stock_position_status_fail")
+                            : item.status == "cancel"
+                              ? t("trade.stock_position_status_cancel")
+                              : "--"
+                }}
+              </div>
+            </div>
+          </div>
+          <div class="td td-4">
+            <div class="state" :class="'state-' + item.offset">
+              <!-- {{ offsetMap[item.offset] || "--" }} -->
               {{
-                item.status == "none"
-                  ? t("trade.stock_position_status_none")
-                  : item.status == "lock"
-                    ? t("trade.stock_position_status_lock")
-                    : item.status == "open"
-                      ? t("trade.stock_position_status_open")
-                      : item.status == "done"
-                        ? t("trade.stock_position_status_done")
-                        : item.status == "fail"
-                          ? t("trade.stock_position_status_fail")
-                          : item.status == "cancel"
-                            ? t("trade.stock_position_status_cancel")
-                            : "--"
+                item.offset == "long"
+                  ? t("trade.stock_position_offset_long")
+                  : item.offset == "short"
+                    ? t("trade.stock_position_offset_short")
+                    : "--"
               }}
+            </div>
+            <div class="amount">{{ item.unsold_volume || "--" }}</div>
+          </div>
+          <div class="td td-4">
+            <div class="price">{{ item.settled_price || "--" }}</div>
+            <div class="price">{{ item.open_price || "--" }}</div>
+          </div>
+          <div class="td td-4">
+            <div class="num" :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'">
+              {{ item.profit || "--" }}
+            </div>
+            <div class="num" :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'">
+              {{ getRatio(item.ratio) }}
             </div>
           </div>
         </div>
-        <div class="td td-4">
-          <div class="state" :class="'state-' + item.offset">
-            <!-- {{ offsetMap[item.offset] || "--" }} -->
-            {{
-              item.offset == "long"
-                ? t("trade.stock_position_offset_long")
-                : item.offset == "short"
-                  ? t("trade.stock_position_offset_short")
-                  : "--"
-            }}
-          </div>
-          <div class="amount">{{ item.unsold_volume || "--" }}</div>
-        </div>
-        <div class="td td-4">
-          <div class="price">{{ item.settled_price || "--" }}</div>
-          <div class="price">{{ item.open_price || "--" }}</div>
-        </div>
-        <div class="td td-4">
-          <div class="num" :class="!item.profit ? '' : item.profit > 0 ? 'up' : 'down'">
-            {{ item.profit || "--" }}
-          </div>
-          <div class="num" :class="!item.ratio ? '' : item.ratio > 0 ? 'up' : 'down'">
-            {{ getRatio(item.ratio) }}
-          </div>
-        </div>
+
       </div>
 
-    </div>
+      <!-- 订单详情 -->
+      <Popup v-model:show="showInfo" position="right" style="width: 100%; height: 100%" teleport="body">
+        <OrderInfo :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel" @back="showInfo = false" />
+      </Popup>
 
-    <!-- 订单详情 -->
-    <Popup v-model:show="showInfo" position="right" style="width: 100%; height: 100%" teleport="body">
-      <OrderInfo :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel" @back="showInfo = false" />
-    </Popup>
-
-    <!-- 平仓 -->
-    <BottomPopup v-model:show="showSell" position="bottom" round closeable teleport="body">
-      <div class="van-popup-custom-title">
-        {{ t("trade.stock_position_close") }}
-      </div>
-      <div class="order_sell_box">
-        <div class="form">
-          <!-- <div class="subtitle">
+      <!-- 平仓 -->
+      <BottomPopup v-model:show="showSell" position="bottom" round closeable teleport="body">
+        <div class="van-popup-custom-title">
+          {{ t("trade.stock_position_close") }}
+        </div>
+        <div class="order_sell_box">
+          <div class="form">
+            <!-- <div class="subtitle">
             <span>{{ t("trade.stock_position_amount") }}</span>
             <span class="subtitle-tip">{{ t("trade.stock_position_ongoing_amount") }}
               {{ currStock.unsold_volume }}</span>
           </div> -->
-          <div class="item">
-            <input :placeholder="'数量'" @focus="amountFocus = true" @blur="amountFocus = false" v-model="sellForm.volume"
-              @input="changeValue" type="number" class="ipt" />
+            <div class="item">
+              <input :placeholder="'数量'" @focus="amountFocus = true" @blur="amountFocus = false"
+                v-model="sellForm.volume" @input="changeValue" type="number" class="ipt" />
 
-            <span :style="{
-              opacity: amountFocus ? '1' : '0',
-              visibility: amountFocus ? '' : 'hidden',
-            }" style="
+              <span :style="{
+                opacity: amountFocus ? '1' : '0',
+                visibility: amountFocus ? '' : 'hidden',
+              }" style="
                 color: var(--ex-primary-color);
                 word-break: keep-all;
                 transition: all ease-in 0.3s;
               " @click="onSliderChange(100)">{{ t("trade.stock_position_all") }}</span>
 
-            <span style="white-space: nowrap;margin: 0 0 0 0.24rem;color: var(--ex-text-color2);">{{
-              t("trade.stock_position_ongoing_amount") }} <span
-                style="color: var(--ex-text-primary);margin-left: 0.04rem;"> {{
-                  currStock.unsold_volume || 0 }}</span> </span>
-          </div>
+              <span style="white-space: nowrap;margin: 0 0 0 0.24rem;color: var(--ex-text-color2);">{{
+                t("trade.stock_position_ongoing_amount") }} <span
+                  style="color: var(--ex-text-primary);margin-left: 0.04rem;"> {{
+                    currStock.unsold_volume || 0 }}</span> </span>
+            </div>
 
-          <!-- 拖动 -->
-          <div style="padding: 0.2rem 0 0.4rem 0.08rem">
-            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
-          </div>
+            <!-- 拖动 -->
+            <div style="padding: 0.2rem 0 0.4rem 0.08rem">
+              <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+            </div>
 
 
-          <!-- 收益分析 -->
-          <!-- <div class="total_box">
+            <!-- 收益分析 -->
+            <!-- <div class="total_box">
                         <div class="total_item">
                             <div class="total_num total_big"
                                 :class="!currStock.profit ? '' : (currStock.profit > 0 ? 'up' : 'down')">{{
@@ -131,84 +132,89 @@
                         </div>
                     </div> -->
 
-          <Button class="submit ripple-btn" @click="goSellDialog" round :loading="sellLoading" type="primary" size="large"
-            color="var(--ex-primary-color)">
-            <span style="color: var(--ex-white);">{{ t("trade.stock_position_btn") }}</span>
-          </Button>
-        </div>
-      </div>
-    </BottomPopup>
-
-    <!-- 更新 -->
-    <BottomPopup v-model:show="showUpdate" position="bottom" round closeable teleport="body">
-      <div class="van-popup-custom-title">
-        {{ t("trade.stock_position_update") }}
-      </div>
-      <div class="order_sell_box">
-        <div class="form">
-
-          <div class="item_box">
-            <div class="item_box_right">
-              <FormItem input-type="number" :placeholder="t('trade.stock_opening_stop')" :min="0" :max="updateForm.stop_profit_type == 'ratio' ? 100 : 99999999999999
-                " size="large" v-model="updateForm.stop_loss_price" :percent-tags="currStock.offset == 'long'
-                  ? [
-                    { label: '-20%', value: 20 },
-                    { label: '-15%', value: 15 },
-                    { label: '-10%', value: 10 },
-                  ]
-                  : [
-                    { label: '+20%', value: 20 },
-                    { label: '+15%', value: 15 },
-                    { label: '+10%', value: 10 },
-                  ]
-                  " @percentTagClick="setPriceStop" />
-            </div>
+            <Button class="submit ripple-btn" @click="goSellDialog" round :loading="sellLoading" type="primary"
+              size="large" color="var(--ex-primary-color)">
+              <span style="color: var(--ex-white);">{{ t("trade.stock_position_btn") }}</span>
+            </Button>
           </div>
-          <!-- <div class="subtitle">
+        </div>
+      </BottomPopup>
+
+      <!-- 更新 -->
+      <BottomPopup v-model:show="showUpdate" position="bottom" round closeable teleport="body">
+        <div class="van-popup-custom-title">
+          {{ t("trade.stock_position_update") }}
+        </div>
+        <div class="order_sell_box">
+          <div class="form">
+
+            <div class="item_box">
+              <div class="item_box_right">
+                <FormItem input-type="number" :placeholder="t('trade.stock_opening_stop')" :min="0" :max="updateForm.stop_profit_type == 'ratio' ? 100 : 99999999999999
+                  " size="large" v-model="updateForm.stop_loss_price" :percent-tags="currStock.offset == 'long'
+                    ? [
+                      { label: '-20%', value: 20 },
+                      { label: '-15%', value: 15 },
+                      { label: '-10%', value: 10 },
+                    ]
+                    : [
+                      { label: '+20%', value: 20 },
+                      { label: '+15%', value: 15 },
+                      { label: '+10%', value: 10 },
+                    ]
+                    " @percentTagClick="setPriceStop" />
+              </div>
+            </div>
+            <!-- <div class="subtitle">
             <span>{{ t("trade.stock_position_add_deposit") }}</span>
             <span class="subtitle-tip">≤ {{ stockWalletAmount }}</span>
           </div> -->
-          <div class="item">
-            <input :placeholder="t('trade.stock_position_add_deposit')" @focus="amountFocus = true"
-              @blur="amountFocus = false" @input="changeAmount" v-model="updateForm.amount" type="number" class="ipt" />
+            <div class="item">
+              <input :placeholder="t('trade.stock_position_add_deposit')" @focus="amountFocus = true"
+                @blur="amountFocus = false" @input="changeAmount" v-model="updateForm.amount" type="number"
+                class="ipt" />
 
 
-            <span :style="{
-              opacity: amountFocus ? '1' : '0',
-              visibility: amountFocus ? '' : 'hidden',
-            }" style="
+              <span :style="{
+                opacity: amountFocus ? '1' : '0',
+                visibility: amountFocus ? '' : 'hidden',
+              }" style="
                 color: var(--ex-primary-color);
                 word-break: keep-all;
                 transition: all ease-in 0.3s;
               " @click="onSliderChange(100)">{{ t("trade.stock_position_all") }}</span>
-            <span style="white-space: nowrap;margin: 0 0 0 0.24rem;color: var(--ex-text-color2);">≤ {{ stockWalletAmount
+              <span style="white-space: nowrap;margin: 0 0 0 0.24rem;color: var(--ex-text-color2);">≤ {{
+                stockWalletAmount
               }}</span>
-          </div>
-          <!-- 拖动 -->
-          <div style="padding: 0.2rem 0 0.4rem 0.08rem">
-            <SlideContainer v-model="sliderValue" @change="onSliderChange" />
-          </div>
+            </div>
+            <!-- 拖动 -->
+            <div style="padding: 0.2rem 0 0.4rem 0.08rem">
+              <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+            </div>
 
-          <Button @click="goUpdateDialog" class="submit ripple-btn" round size="large" :loading="updateLoading" type="primary"
-            color="var(--ex-primary-color)">
-            <span style="color: var(--ex-white);">{{ t("trade.stock_position_btn") }}</span>
-          </Button>
+            <Button @click="goUpdateDialog" class="submit ripple-btn" round size="large" :loading="updateLoading"
+              type="primary" color="var(--ex-primary-color)">
+              <span style="color: var(--ex-white);">{{ t("trade.stock_position_btn") }}</span>
+            </Button>
+          </div>
         </div>
-      </div>
-    </BottomPopup>
+      </BottomPopup>
 
-    <!-- 止盈类型选择 -->
-    <ActionSheet teleport="body" v-model:show="showUpModelDialog" @select="onSelectUpMode" :actions="upModeList"
-      :title="t('trade.stock_opening_take')">
-    </ActionSheet>
+      <!-- 止盈类型选择 -->
+      <ActionSheet teleport="body" v-model:show="showUpModelDialog" @select="onSelectUpMode" :actions="upModeList"
+        :title="t('trade.stock_opening_take')">
+      </ActionSheet>
 
-    <!-- 止损类型选择 -->
-    <ActionSheet teleport="body" v-model:show="showDownModelDialog" @select="onSelectDownMode" :actions="downModeList"
-      :title="t('trade.stock_opening_stop')">
-    </ActionSheet>
+      <!-- 止损类型选择 -->
+      <ActionSheet teleport="body" v-model:show="showDownModelDialog" @select="onSelectDownMode" :actions="downModeList"
+        :title="t('trade.stock_opening_stop')">
+      </ActionSheet>
+    </div>
+    <UnLogin style="margin:0.6rem 0;" @loginfinish="loginfinish" v-else />
   </div>
 
-  <UnLogin @loginfinish="loginfinish" v-show="!token" />
+
+
 
   <!-- 更新订单-安全密码弹窗 -->
   <SafePassword @submit="goUpdate" ref="safeRef" :key="'update'"></SafePassword>
@@ -382,14 +388,14 @@ const goSellDialog = () => {
     return showToast(t("trade.stock_position_no_close_amount"));
   // if (!sellForm.value.safeword) return showToast('请输入交易密码')
   showSell.value = false;
-  if(userInfo.value.role == 'guest'){
+  if (userInfo.value.role == 'guest') {
     goSell('000000')
-  }else{
+  } else {
     safeRef2.value && safeRef2.value.open();
   }
 };
 const goSell = (s) => {
-  
+
   sellLoading.value = true;
   _stocksSell({
     ...sellForm.value,
@@ -441,9 +447,9 @@ const goUpdateDialog = () => {
     return showToast(t("trade.stock_position_no_deposit"));
   // if (!updateForm.value.safeword) return showToast('请输入交易密码')
   showUpdate.value = false;
-  if(userInfo.value.role == 'guest'){
+  if (userInfo.value.role == 'guest') {
     goUpdate('000000')
-  }else{
+  } else {
     safeRef.value && safeRef.value.open();
   }
 };
@@ -821,8 +827,8 @@ getSessionToken();
     .item {
       width: 100%;
       height: 1.12rem;
-      border: 1px solid var(--ex-border-color2);
-      background-color: var(--ex-bg-color2);
+      // border: 1px solid var(--ex-border-color2);
+      background-color: var(--ex-bg-white1);
       border-radius: 0.32rem;
       padding: 0 0.24rem;
       display: flex;

@@ -1,7 +1,6 @@
 <!-- 未登录 -->
 <template>
   <div class="unlogin_box">
-    <NoData :tip="''" />
     <div class="unlogin" @click="goLogin">
       <span>{{ t('trade.stock_position_unlogin_title') }}</span>
       <span class="link">{{ t('trade.stock_position_unlogin_con') }}</span>
@@ -10,8 +9,6 @@
 </template>
 
 <script setup>
-import NoData from "./NoData.vue";
-import router from "@/router";
 import { useRoute } from "vue-router";
 import eventBus from "@/utils/eventBus";
 import store from "@/store";
@@ -41,8 +38,6 @@ const goLogin = () => {
   .unlogin {
     text-align: center;
     color: var(--ex-text-color4);
-    position: relative;
-    top: -1rem;
 
     .link {
       color: var(--ex-primary-color);

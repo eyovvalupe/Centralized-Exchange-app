@@ -4,7 +4,7 @@
     <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
       <div class="stock_item_bg"
         :class="[`${' stock_item_' + updownStatus} ${props.page == 'home' ? '' : 'px-[0.28rem]'}`]"
-        @click="goInfo(props.item.type)">
+        @click="goInfo(props.item.type)" v-if="props.item">
         <div :class="['stock_item']">
           <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center" v-if="showIcon">
             <CryptoIcon :name="item.name.split('/')[0]" />
@@ -15,13 +15,7 @@
                 props.item.name
               }}</span>
               <span class="truncate" v-else>{{ props.item.symbol }}</span>
-              <div v-if="(props.page == 'market' || props.page == 'trade') && item.type == 'stock'"
-                :class="`${marketStyle[props.item.type]
-                  } font-normal whitespace-nowrap text-[0.22rem] ml-[0.06rem] flex items-center justify-center rounded-[0.08rem] px-[0.08rem] h-[0.3rem] `">
-                {{
-                  t("market.market_optional_stock")
-                }}
-              </div>
+
             </div>
             <!-- <div class="item_info" v-show="props.item.type == 'stock'">
               {{ props.item.name || "--" }}
@@ -187,7 +181,7 @@ watch(price, (newVal, oldVal) => {
 const goInfo = (type) => {
   if (props.handleClick) return props.handleClick(props.item, props.menuType);
   if (type == "stock") {
-    store.commit("setCurrStock", props.item);
+    store.commit("setCurrStockItem", props.item);
     router.push({
       name: "market_info",
       query: {

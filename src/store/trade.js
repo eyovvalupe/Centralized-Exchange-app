@@ -10,7 +10,6 @@ export default {
     inquireList: [], // 股票列表
     contractInquireList: [], // 合约历史列表
     aiInquireList: [], // ai历史列表
-    currStockItem: sessionStorage.getItem('currStock') ? JSON.parse(sessionStorage.getItem('currStock')) : {},
     currConstractItem: sessionStorage.getItem('currConstract') ? JSON.parse(sessionStorage.getItem('currConstract')) : {},
     c2cList: [], // c2c订单列表
     c2cUnread: {}, // 未读消息
@@ -21,9 +20,6 @@ export default {
   mutations: {
     setOpenInfoStatus(state, data) {
       state.openInfoStatus = data
-    },
-    setCurrStockItem(state, data) {
-      state.currStockItem = data
     },
     setCurrConstractItem(state, data) {
       state.currConstractItem = data

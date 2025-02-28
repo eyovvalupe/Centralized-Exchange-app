@@ -445,7 +445,7 @@ const addCollect = () => {
               store.commit('setCurrConstract', { watchlist: 1 });
               break;
             default:
-              store.commit('setCurrStock', { watchlist: 1 });
+              store.commit('setCurrStockItem', { watchlist: 1 });
           }
           showToast(t('market.market_optional_add_success'));
         }
@@ -465,7 +465,7 @@ const addCollect = () => {
               store.commit('setCurrConstract', { watchlist: 0 });
               break;
             default:
-              store.commit('setCurrStock', { watchlist: 0 });
+              store.commit('setCurrStockItem', { watchlist: 0 });
           }
           showToast(t('market.market_optioanl_del_success'));
         }
@@ -490,7 +490,7 @@ const item = computed(() => {
       it = store.state.currAi || {};
       break;
     default:
-      it = store.state.currStock || {};
+      it = store.state.currStockItem || {};
   }
   return it;
 });

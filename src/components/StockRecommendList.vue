@@ -77,7 +77,7 @@ const disabled = computed(
 );
 
 const goInfo = (item) => {
-  store.commit("setCurrStock", item);
+  store.commit("setCurrStockItem", item);
   setTimeout(() => {
     router.push({
       name: "tradeInfo",

@@ -133,7 +133,7 @@ const item = computed(() => {
       it = store.state.currAi || {};
       break;
     default:
-      it = store.state.currStock || {};
+      it = store.state.currStockItem || {};
   }
   return it;
 });

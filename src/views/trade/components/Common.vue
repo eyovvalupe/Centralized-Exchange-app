@@ -697,7 +697,7 @@ const changePrice = () => {
 
 const openPopup = () => {
   if (!stockCo.value[0]) return
-  store.commit('setCurrStock', stockCo.value[0])
+  store.commit('setCurrStockItem', stockCo.value[0])
   store.dispatch('openPopup', StockPopup)
   store.commit('setPopupHeight', '90%')
   store.commit('setkeyborader', false)

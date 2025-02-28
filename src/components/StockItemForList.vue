@@ -175,7 +175,7 @@ watch(price, (newVal, oldVal) => {
 const goInfo = (type) => {
   if (props.handleClick) return props.handleClick(props.item);
   if (type == "stock") {
-    store.commit("setCurrStock", props.item);
+    store.commit("setCurrStockItem", props.item);
     router.push({
       name: "tradeInfo",
       query: {

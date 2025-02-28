@@ -1353,7 +1353,7 @@ const submitForm = (s) => {
 // 打开行情
 const showStockModel = ref(false);
 const openStockModel = () => {
-  // store.commit("setCurrStock", currStock.value);
+  // store.commit("setCurrStockItem", currStock.value);
   showStockModel.value = true;
 };
 

@@ -3,7 +3,7 @@
   <div class="form">
 
     <!-- 搜索 -->
-    <div class="item_box" :class="{ 'item_box_big': currStock.symbol }" @click="openSearchDialog">
+    <!-- <div class="item_box" :class="{ 'item_box_big': currStock.symbol }" @click="openSearchDialog">
       <div class="item">
         <div class="tip-title" v-if="currStock.symbol">
           <span @click="showNavDialog">{{ t("trade.stock_opening_stock") }}</span>
@@ -26,7 +26,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- 止盈止损 -->
     <template v-if="props.activeTab == 2">
@@ -36,7 +36,7 @@
       <FormItem :placeholder="activeType == 1
         ? t('trade.stock_opening_take')
         : t('trade.stock_opening_stop')
-        " class="mb-[0.4rem]" v-model="form1.stop_loss_price" input-type="number" :percent-tags="props.activeType == 1
+        " class="mb-[0.2rem]" v-model="form1.stop_loss_price" input-type="number" :percent-tags="props.activeType == 1
           ? [
             { label: '-20%', value: 20 },
             { label: '-15%', value: 15 },
@@ -59,10 +59,12 @@
             <template #right-con>
               <!-- 市价/限价 -->
               <div class="pricetype-modes">
-                <div class="pricetype-mode tab_ani" @click="priceMode = 1" :class="{ 'pricetype-mode-active': priceMode == 1 }">
+                <div class="pricetype-mode tab_ani" @click="priceMode = 1"
+                  :class="{ 'pricetype-mode-active': priceMode == 1 }">
                   {{
                     t("trade.stock_opening_price_market") }}</div>
-                <div class="pricetype-mode tab_ani" @click="priceMode = 2" :class="{ 'pricetype-mode-active': priceMode == 2 }">
+                <div class="pricetype-mode tab_ani" @click="priceMode = 2"
+                  :class="{ 'pricetype-mode-active': priceMode == 2 }">
                   {{
                     t("trade.stock_opening_price_limit") }}</div>
               </div>
@@ -99,7 +101,7 @@
     </template>
 
     <!-- 价格 -->
-    <FormItem class="mb-[0.4rem]" input-type="number" :placeholder="t('trade.stock_opening_price_title')"
+    <FormItem class="mb-[0.2rem]" input-type="number" :placeholder="t('trade.stock_opening_price_title')"
       :tip="t('trade.stock_opening_price_tip')" v-model="form1.price" :percent-tags="props.activeType == 1
         ? [
           { label: '-3%', value: 3 },
@@ -124,7 +126,7 @@
         <img v-lazy="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
       </div>
     </div> -->
-    
+
 
     <!-- 保证金模式 -->
     <div class="item_box">
@@ -158,10 +160,9 @@
     <!-- 数量 -->
     <div class="item_box">
       <div class="item_box_right">
-        <FormItem :hasRT="true" :hasScroll="true" :placeholder="t('trade.stock_opening_amount_title')"
-          :max="maxStockNum" v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
-          @btnClick="putAll" @change="changePercent" tip-align="right" :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''"
-          input-type="number">
+        <FormItem :hasScroll="true" :placeholder="t('trade.stock_opening_amount_title')" :max="maxStockNum"
+          v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll"
+          @change="changePercent" tip-align="right" :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''" input-type="number">
           <!-- <template #title-right v-if="token">
             <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox"><span
                 style="color: var(--ex-text-color2)">{{
@@ -170,7 +171,7 @@
               {{ stockWalletAmount }} {{ paramCurrency }}</span>
           </template> -->
 
-          <template #rt>
+          <!-- <template #rt>
             <div @click="openConfirmBox" class="mask-btn">
               <div
                 style="color: var(--ex-text-color2); font-size: 0.24rem;padding: 0.12rem 0.16rem;border-radius: 0.4rem;background-color: var(--ex-bg-color);">
@@ -179,7 +180,7 @@
                 <span>{{ paramCurrency }}</span>
               </div>
             </div>
-          </template>
+          </template> -->
           <template #scroll>
             <!-- 拖动 -->
             <SlideContainer v-model="sliderValue" @change="onSliderChange" />
@@ -191,8 +192,8 @@
 
 
     <!-- 按钮 -->
-    <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1" class="submit ripple-btn"
-      :color="activeType == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'" round>
+    <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1"
+      class="submit ripple-btn" :color="activeType == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'" round>
       <span style="color:var(--ex-white);">{{
         activeType == 1
           ? t("trade.stock_open_long")
@@ -201,19 +202,23 @@
 
     <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box">
       <div class="flex justify-between mb-[0.32rem]">
-        <div class="w-[3.22rem] h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
+        <div
+          class="w-[3.22rem] h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
           @click="store.commit('setIsLoginOpen', true)">
           {{ t("trade.stock_opening_token_login") }}
         </div>
-        <div class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn ripple-primary"
+        <div
+          class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn btn2 ripple-primary"
           @click="jump('register')">
           {{ t("trade.stock_opening_token_register") }}
         </div>
       </div>
-      <div class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary" @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
+      <!-- <div
+        class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
+        @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
         ">
         {{ t("trade.contract_create_guest_btn") }}
-      </div>
+      </div> -->
     </div>
   </div>
 
@@ -224,20 +229,29 @@
     </div>
     <div class="stock_submit_box">
 
-      <div style="border-radius: 0.32rem;background-color: var(--ex-bg-color3);padding:0.12rem;margin-bottom: 0.32rem;">
+      <div style="border-radius: 0.32rem;
+          background-color: var(--ex-bg-white2);
+          margin-bottom: 0.32rem;
+          padding: 0 1px 1px 1px;">
 
 
         <!-- 股票 -->
-        <div style="line-height: 0.36rem;text-align: left;padding: 0.2rem 0 0.2rem 0.16rem;">
-          <div style="font-size: 0.32rem;margin-bottom: 0.1rem;">
-            {{ currStock.symbol }}
-          </div>
-          <div style="color: var(--ex-text-color3); font-size: 0.24rem">
-            {{ currStock.name }}
+        <div style="line-height: 0.36rem; text-align: left; padding: 0.28rem">
+          <div style="
+              font-size: 0.32rem;
+              margin-bottom: 0.1rem;
+              display: flex;
+              align-items: center;
+              justify-content: flex-start;
+            ">
+            <span class="mr-[0.12rem]">{{ currStock.symbol }}</span>
+            <div class="text-[0.22rem] h-[0.3rem] w-max px-[0.1rem] rounded-[0.08rem] tag-crypto flex items-center">
+              股票
+            </div>
           </div>
         </div>
 
-        <div style="border-radius: 0.32rem;background-color: var(--ex-bg-color);padding: 0 0.28rem">
+        <div class="confirm-item-box">
 
           <!-- <div class="item">
             <div class="item_name">{{ t("trade.stock_opening_stock") }}</div>
@@ -310,17 +324,27 @@
           </div>
         </div>
 
-        <div class="money_box">
-          <div class="amount">
-            {{ t("trade.stock_opening_pay") }} <strong>{{ payAmount }}</strong>
-          </div>
-          <div class="fee">
-            {{ t("trade.stock_opening_upfront") }} <span>{{ payOrigin }}</span> +
-            {{ t("trade.stock_opening_fee") }} <span>{{ payFee }}</span>
-          </div>
+
+      </div>
+
+      <div class="money_box">
+        <div class="amount">
+          {{ t("trade.stock_opening_pay") }} <strong>{{ payAmount }}</strong>
+        </div>
+        <div class="fee">
+          {{ t("trade.stock_opening_upfront") }} <span>{{ payOrigin }}</span> +
+          {{ t("trade.stock_opening_fee") }} <span>{{ payFee }}</span>
         </div>
       </div>
 
+      <div style="
+          width: calc(100% + 1.2rem);
+          height: 0.02rem;
+          background-color: var(--ex-bg-white2);
+          margin-bottom: 0.32rem;
+          position: relative;
+          left: -0.6rem;
+        "></div>
       <!-- <div class="subtitle">{{ t("trade.stock_opening_trade_pw") }}</div> -->
       <div class="item pass_ipt">
         <input v-model="safePass" :placeholder="t('trade.stock_opening_trade_pw')"
@@ -330,7 +354,8 @@
         <img v-else v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
           @click="showPassword = false" />
       </div>
-      <Button class="ripple-btn" :loading="submitLoading" @click="submitFormDialog" size="large" color="var(--ex-primary-color)" round>
+      <Button class="ripple-btn" :loading="submitLoading" @click="submitFormDialog" size="large"
+        color="var(--ex-primary-color)" round>
         <span style="color: var(--ex-white);">{{ t("trade.stock_open") }}</span>
       </Button>
     </div>
@@ -404,7 +429,7 @@
 
       <div class="lists">
         <!-- 搜索列表 -->
-        <StockTable :showIcon="true" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
+        <StockTable :showIcon="false" :handleClick="handleClick" :loading="searchLoading" :key="'search'"
           :list="marketSearchList" :page="'trade'" />
       </div>
     </div>
@@ -542,6 +567,7 @@ import SlideContainer from "@/components/SlideContainer.vue";
 import FormItem from "@/components/Form/FormItem.vue";
 import { useI18n } from "vue-i18n";
 import BottomPopup from "@/components/BottomPopup.vue";
+import eventBus from "@/utils/eventBus.js"
 
 const props = defineProps({
   activeTab: null, // 0-市价 1-限价 2-止盈止损
@@ -1091,6 +1117,7 @@ const initParam = () => {
 const handleClick = (item) => {
   showSearchDialog.value = false;
   currStock.value = item;
+  store.commit('setCurrStockItem', currStock.value)
   initParam();
   _basic({ symbol: currStock.value.symbol }).then((r) => {
     if (r && r.data && r.data.symbol) {
@@ -1102,6 +1129,7 @@ const handleClick = (item) => {
       store.commit('setCurrStockItem', currStock.value)
     }
   });
+  eventBus.emit('clickStock', item)
 };
 
 // url参数处理
@@ -1188,7 +1216,7 @@ const submitForm = (s) => {
 // 打开行情
 const showStockModel = ref(false);
 const openStockModel = () => {
-  store.commit("setCurrStock", currStock.value);
+  store.commit("setCurrStockItem", currStock.value);
   showStockModel.value = true;
 };
 
@@ -1213,6 +1241,8 @@ const choose = (item) => {
 
 defineExpose({
   choose,
+  openSearchDialog,
+  stockWalletAmount,
 });
 </script>
 
@@ -1230,9 +1260,9 @@ defineExpose({
     margin: 0.4rem 0.3rem 0 0.3rem;
     display: flex;
     align-items: center;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white1);
     border-radius: 0.6rem;
-    border: 1px solid var(--ex-border-color2);
+    // border: 1px solid var(--ex-border-color2);
 
     .search_icon {
       width: 0.48rem;
@@ -1277,7 +1307,7 @@ defineExpose({
   .item_box {
     display: flex;
     align-items: stretch;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.2rem;
     position: relative;
     font-size: 0.32rem;
 
@@ -1290,9 +1320,9 @@ defineExpose({
       flex-wrap: wrap;
       height: 1.12rem;
       border-radius: 0.32rem;
-      border: 1px solid var(--ex-border-color2);
+      // border: 1px solid var(--ex-border-color2);
       padding: 0.06rem 0.24rem;
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white1);
 
       .tip-title {
         color: var(--ex-text-color3);
@@ -1440,6 +1470,11 @@ defineExpose({
       background-color: var(--ex-white);
       color: var(--ex-bg-color);
     }
+
+    .btn2 {
+      background-color: var(--ex-primary-color);
+      color: var(--ex-white);
+    }
   }
 
   .submit {
@@ -1449,13 +1484,23 @@ defineExpose({
 }
 
 .stock_submit_box {
-  padding: 0.2rem 0.6rem 0.6rem;
+  padding: 0.4rem 0.32rem 0.6rem 0.32rem;
+
+  .confirm-item-box {
+    border-radius: 0.32rem;
+    background-color: var(--ex-bg-color9);
+    padding: 0.28rem 0.4rem;
+    height: 4.14rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
 
   .item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.36rem 0 0.2rem 0;
+    // padding: 0.36rem 0 0.2rem 0;
     // border-bottom: 1px solid var(--ex-border-color);
 
     .item_name {
@@ -1474,12 +1519,12 @@ defineExpose({
 
       .tag {
         height: 0.44rem;
-        color: var(--ex-primary-color);
-        background-color: var(--ex-bg-color3);
+        color: var(--ex-white);
+        background-color: var(--ex-bg-white2);
         line-height: 0.44rem;
-        padding: 0 0.3rem;
+        padding: 0 0.2rem;
         border-radius: 0.4rem;
-        margin-left: 0.2rem;
+        margin-left: 0.08rem;
         font-size: 0.24rem;
       }
 
@@ -1494,8 +1539,9 @@ defineExpose({
       }
 
       .lever {
-        min-width: 0.7rem;
         text-align: right;
+        width: max-content;
+        padding-left: 0.08rem;
       }
     }
   }
@@ -1511,13 +1557,13 @@ defineExpose({
   .pass_ipt {
     margin-bottom: 0.58rem;
     border-radius: 0.32rem;
-    border: 1px solid var(--ex-border-color2);
+    // border: 1px solid var(--ex-border-color2);
     padding: 0 0.24rem;
     height: 1.12rem;
     padding: 0.16rem 0.32rem;
     box-sizing: border-box;
     position: relative;
-    background-color: var(--ex-bg-color3);
+    background-color: var(--ex-bg-white1);
 
     img {
       width: 0.4rem;
@@ -1535,32 +1581,13 @@ defineExpose({
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: var(--ex-bg-color);
+    background-color: var(--ex-bg-white2);
     border-radius: 0.32rem;
     height: 1.4rem;
     text-align: center;
     margin-top: 0.2rem;
     position: relative;
-
-    &::after {
-      width: 0.16rem;
-      height: 0.34rem;
-      content: "";
-      background-color: var(--ex-bg-color);
-      position: absolute;
-      top: -0.28rem;
-      right: 1.1rem;
-    }
-
-    &::before {
-      width: 0.16rem;
-      height: 0.34rem;
-      content: "";
-      background-color: var(--ex-bg-color);
-      position: absolute;
-      top: -0.28rem;
-      left: 1.1rem;
-    }
+    margin-bottom: 0.4rem;
 
     .amount {
       color: var(--ex-text-color2);

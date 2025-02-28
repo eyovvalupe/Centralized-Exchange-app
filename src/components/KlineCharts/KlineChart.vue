@@ -271,11 +271,11 @@ const setCurrData = (item) => {
             break
         default:
             obj = {
-                ...store.state.currStock,
+                ...store.state.currStockItem,
                 ...item,
                 price: item.close
             }
-            store.commit('setCurrStock', obj)
+            store.commit('setCurrStockItem', obj)
             break
     }
 }
