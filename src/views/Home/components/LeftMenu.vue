@@ -655,6 +655,7 @@
   // })
   // 跳转
   const jump = (name, needToken, query) => {
+    store.commit('setShowLeftMenu', false);
     if (
       token.value &&
       ((userInfo.value.role == 'guest' && name == 'register') ||
