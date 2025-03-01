@@ -51,7 +51,7 @@
       </div>
 
       <!-- 导航 -->
-      <div class="navs">
+      <div class="navs" v-if="loaded1">
         <div class="nav-item pb-[0.28rem] relative ripple-info" @click="jump('account', true)">
           <div class="relative">
             <div class="nav-icon">
@@ -131,7 +131,7 @@
 
       <!-- 滚动导航 -->
       <div class="scroll-box">
-        <div class="tab-box">
+        <div class="tab-box" v-if="loaded1">
           <div class="tab-title">{{ $t('user_page.manage_assets') }}</div>
           <div class="tabs">
             <div class="tab ripple-info mb-[0.4rem]" @click="jump('topUpCrypto', true)">
@@ -192,7 +192,7 @@
           </div>
         </div>
 
-        <div class="tab-box">
+        <div class="tab-box" v-if="loaded1">
           <div class="tab-title">{{ $t('trade.ai_opening_trade') }}</div>
           <div class="tabs">
             <div class="tab ripple-info" @click="jump('tradeInfo', false, { tradeType: 'stock' })">
@@ -266,7 +266,7 @@
           </div>
         </div>
 
-        <div class="tab-box">
+        <div class="tab-box" v-if="loaded1">
           <div class="tab-title">{{ $t('home.finance') }}</div>
           <div class="tabs">
             <div class="tab ripple-info" @click="jump('finance', false, { activeTab: 0 })">
@@ -316,7 +316,7 @@
           </div>
         </div>
 
-        <div class="tab-box">
+        <div class="tab-box" v-if="loaded2">
           <div class="tab-title">{{ $t('user_page.user_func') }}</div>
           <div class="tabs">
             <div class="tab ripple-info" @click="jump('chat')">
@@ -374,7 +374,7 @@
               </div>
               <div>{{ $t('user_page.about') }}</div>
             </div>
-            <div v-if="token && userInfo.role == 'user'" class="tab ripple-info" style="margin-top: 0.4rem"
+            <!-- <div v-if="token && userInfo.role == 'user'" class="tab ripple-info" style="margin-top: 0.4rem"
               @click="jump('setting', true)">
               <div class="relative">
                 <div class="tab-icon">
@@ -385,8 +385,8 @@
                 </div>
               </div>
               <div>{{ $t('user_page.setting') }}</div>
-            </div>
-            <div class="tab ripple-info mt-[0.4rem]" @click="jump('register', false, { guest: 'guest' })">
+            </div> -->
+            <div v-if="!token" class="tab ripple-info mt-[0.4rem]" @click="jump('register', false, { guest: 'guest' })">
               <div class="relative">
                 <div class="tab-icon">
                   <img v-lazy="getStaticImgUrl('/static/home2/tab-5.svg')" alt="" />
@@ -508,8 +508,33 @@ const goLogin = () => {
 
 // 开关
 const showLeft = ref(false);
+const loaded1 = ref(false)
+const loaded2 = ref(false)
 const open = () => {
   showLeft.value = true;
+  // 加载相关页面资源
+  if (token.value) {
+    Promise.all([
+      import("@/views/User/Account/Account.vue"),
+      import("@/views/User/Kyc/Index.vue"),
+      import("@/views/User/Google/Google.vue"),
+      import("@/views/User/Google/GoogleCode.vue"),
+      import("@/views/User/InviteFriends.vue"),
+      import("@/views/assets/TopUpCrypto.vue"),
+      import("@/views/assets/Withdraw.vue"),
+      import("@/views/assets/Transfer.vue"),
+      import("@/views/assets/RecordList.vue"),
+    ]).finally(() => {
+      loaded1.value = true
+    })
+  }
+  Promise.all([
+    import("@/views/Chat/Index.vue"),
+    import("@/views/Notification/Index.vue"),
+    import("@/views/Public/Language.vue"),
+  ]).finally(() => {
+    loaded2.value = true
+  })
 };
 const close = () => {
   store.commit('setShowLeftMenu', false);
@@ -522,6 +547,8 @@ defineExpose({
   open,
   close,
 });
+
+
 </script>
 
 <style lang="less" scoped>
@@ -546,17 +573,13 @@ defineExpose({
     align-items: center;
     justify-content: space-between;
 
-    .log-out {
-      width: 318px;
-      height: 46px;
-      border-radius: 16px;
-      background-color: var(--ex-bg-white2);
-      margin: 16px auto;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      font-size: 16px;
+    .avatar {
+      width: 1rem;
+      height: 1rem;
+      margin-right: 0.24rem;
     }
+
+
 
     .active_icon {
       position: absolute;
@@ -577,6 +600,18 @@ defineExpose({
       height: 0.48rem;
       margin-left: 0.24rem;
     }
+  }
+
+  .log-out {
+    width: 318px;
+    height: 46px;
+    border-radius: 16px;
+    background-color: var(--ex-bg-white2);
+    margin: 16px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
   }
 
   .po-box {

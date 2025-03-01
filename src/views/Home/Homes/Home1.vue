@@ -345,6 +345,7 @@ Promise.all([
     import("@/views/Market/Search.vue"),
     import("@/views/Public/Login.vue"),
     import("@/views/assets/TopUpCrypto.vue"),
+    import("@/views/Finance/Index.vue"),
 ])
 
 // 订阅
