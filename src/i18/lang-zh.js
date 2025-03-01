@@ -372,6 +372,7 @@ export default {
     order_current_position: "当前持仓",
     order_history: "历史查询",
     assets_center: "资产中心",
+    order_one_click: "一键买币",
   },
   withdraw: {
     withdraw: "提现",

@@ -169,6 +169,7 @@ const jump = (val) => {
 const ipoRef = ref();
 const ipoDataList = computed(() => store.state.ipoDataList || []);
 const tabChange = (val) => {
+    console.log(val)
     if (val == 2 && !ipoDataList.value.length) {
         nextTick(() => {
             ipoRef.value && ipoRef.value.init();

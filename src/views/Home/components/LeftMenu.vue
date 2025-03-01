@@ -44,15 +44,25 @@
       <!-- 推广 -->
       <div class="po-box">
         <div class="po-item">
-          <div class="num">{{ token && userInfo.role == 'user' ? referralInfo.subnum || 0 : 0 }}</div>
+          <div class="num">
+            {{
+              token && userInfo.role == 'user' ? referralInfo.subnum || 0 : 0
+            }}
+          </div>
           <div>{{ $t('user_page.recommended_user') }}</div>
         </div>
         <div class="po-item">
-          <div class="num">{{ token && userInfo.role == 'user' ? referralInfo.netnum || 0 : 0 }}</div>
+          <div class="num">
+            {{
+              token && userInfo.role == 'user' ? referralInfo.netnum || 0 : 0
+            }}
+          </div>
           <div>{{ $t('user_page.social_user') }}</div>
         </div>
         <div class="po-item">
-          <div class="num">{{ token && userInfo.role == 'user' ? referralInfo.bonus || 0 : 0 }}</div>
+          <div class="num">
+            {{ token && userInfo.role == 'user' ? referralInfo.bonus || 0 : 0 }}
+          </div>
           <div>{{ $t('user_page.recommend_bonus') }}</div>
         </div>
       </div>
@@ -173,7 +183,10 @@
         <div class="tab-box">
           <div class="tab-title">{{ $t('user_page.manage_assets') }}</div>
           <div class="tabs">
-            <div class="tab ripple-info" @click="jump('topUpCrypto', true)">
+            <div
+              class="tab ripple-info mb-[0.4rem]"
+              @click="jump('topUpCrypto', true)"
+            >
               <div class="relative">
                 <div class="tab-icon">
                   <img
@@ -190,7 +203,10 @@
               </div>
               <div>{{ $t('home.recharge') }}</div>
             </div>
-            <div class="tab ripple-info" @click="jump('withdraw', true)">
+            <div
+              class="tab ripple-info mb-[0.4rem]"
+              @click="jump('withdraw', true)"
+            >
               <div class="relative">
                 <div class="tab-icon">
                   <img
@@ -207,7 +223,10 @@
               </div>
               <div>{{ $t('assets.withdraw') }}</div>
             </div>
-            <div class="tab ripple-info" @click="jump('transfer', true)">
+            <div
+              class="tab ripple-info mb-[0.4rem]"
+              @click="jump('transfer', true)"
+            >
               <div class="relative">
                 <div class="tab-icon">
                   <img
@@ -224,7 +243,10 @@
               </div>
               <div>{{ $t('assets.transfer') }}</div>
             </div>
-            <div class="tab ripple-info" @click="jump('recordList', true)">
+            <div
+              class="tab ripple-info mb-[0.4rem]"
+              @click="jump('recordList', true)"
+            >
               <div class="relative">
                 <div class="tab-icon">
                   <img
@@ -241,6 +263,26 @@
               </div>
               <div>{{ $t('assets.financialRecords') }}</div>
             </div>
+            <div
+              class="tab ripple-info"
+              @click="jump('trade', false, { marketType: 'one_click' })"
+            >
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-19.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-19_green.svg')"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div>{{ $t('assets.order_one_click') }}</div>
+            </div>
           </div>
         </div>
 
@@ -249,23 +291,23 @@
           <div class="tabs">
             <div
               class="tab ripple-info"
-              @click="jump('register', false, { guest: 'guest' })"
+              @click="jump('tradeInfo', false, { tradeType: 'stock' })"
             >
               <div class="relative">
                 <div class="tab-icon">
                   <img
-                    v-lazy="getStaticImgUrl('/static/home2/tab-5.svg')"
+                    v-lazy="getStaticImgUrl('/static/home2/tab-20.svg')"
                     alt=""
                   />
                 </div>
                 <div class="tab-icon active_icon active_animation">
                   <img
-                    v-lazy="getStaticImgUrl('/static/home2/tab-5_green.svg')"
+                    v-lazy="getStaticImgUrl('/static/home2/tab-20_green.svg')"
                     alt=""
                   />
                 </div>
               </div>
-              <div>{{ $t('home.simulatedTradingButton') }}</div>
+              <div>{{ $t('common.stock') }}</div>
             </div>
             <div
               class="tab ripple-info"
@@ -285,7 +327,7 @@
                   />
                 </div>
               </div>
-              <div>{{ $t('common.spot') }}</div>
+              <div>{{ $t('币币') }}</div>
             </div>
             <div
               class="tab ripple-info"
@@ -305,7 +347,7 @@
                   />
                 </div>
               </div>
-              <div>{{ $t('common.crypto') }}</div>
+              <div>{{ $t('加密货币合约') }}</div>
             </div>
             <div
               class="tab ripple-info"
@@ -330,23 +372,44 @@
             <div
               class="tab ripple-info"
               style="margin-top: 0.4rem"
-              @click="jump('tradeInfo', false, { tradeType: 'ai' })"
+              @click="jump('tradeInfo', false, { tradeType: 'forex' })"
             >
               <div class="relative">
                 <div class="tab-icon">
                   <img
-                    v-lazy="getStaticImgUrl('/static/home2/tab-9.svg')"
+                    v-lazy="getStaticImgUrl('/static/home2/tab-21.svg')"
                     alt=""
                   />
                 </div>
                 <div class="tab-icon active_icon active_animation">
                   <img
-                    v-lazy="getStaticImgUrl('/static/home2/tab-9_green.svg')"
+                    v-lazy="getStaticImgUrl('/static/home2/tab-21_green.svg')"
                     alt=""
                   />
                 </div>
               </div>
-              <div>ETF</div>
+              <div>{{ $t('外汇') }}</div>
+            </div>
+            <div
+              class="tab ripple-info"
+              style="margin-top: 0.4rem"
+              @click="jump('tradeInfo', false, { tradeType: 'blocktrade' })"
+            >
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-22.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-22_green.svg')"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div>{{ $t('大宗商品') }}</div>
             </div>
           </div>
         </div>
@@ -413,6 +476,26 @@
                 </div>
               </div>
               <div>{{ $t('finance.portfolio_title') }}</div>
+            </div>
+            <div
+              class="tab ripple-info"
+              @click="jump('finance', false, { activeTab: 2 })"
+            >
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-12.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-12_green.svg')"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div>IPO</div>
             </div>
           </div>
         </div>
@@ -486,7 +569,7 @@
                   />
                 </div>
               </div>
-              <div>{{ $t('user_page.security') }}</div>
+              <div>{{ $t('安全设置') }}</div>
             </div>
             <div
               class="tab ripple-info"
@@ -510,6 +593,7 @@
               <div>{{ $t('user_page.about') }}</div>
             </div>
             <div
+            v-if="token && userInfo.role == 'user'"
               class="tab ripple-info"
               style="margin-top: 0.4rem"
               @click="jump('setting', true)"
@@ -529,6 +613,26 @@
                 </div>
               </div>
               <div>{{ $t('user_page.setting') }}</div>
+            </div>
+            <div
+              class="tab ripple-info mt-[0.4rem]"
+              @click="jump('register', false, { guest: 'guest' })"
+            >
+              <div class="relative">
+                <div class="tab-icon">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-5.svg')"
+                    alt=""
+                  />
+                </div>
+                <div class="tab-icon active_icon active_animation">
+                  <img
+                    v-lazy="getStaticImgUrl('/static/home2/tab-5_green.svg')"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div>{{ $t('home.simulatedTradingButton') }}</div>
             </div>
           </div>
         </div>
@@ -577,7 +681,12 @@
       return;
     }
 
-    if (query && ['spot', 'constract', 'ai'].includes(query.tradeType)) {
+    if (
+      query &&
+      ['spot', 'constract', 'ai', 'stock', 'forex', 'blocktrade'].includes(
+        query.tradeType,
+      )
+    ) {
       let e;
       switch (query.tradeType) {
         case 'spot':
@@ -589,11 +698,34 @@
         case 'ai':
           e = 3;
           break;
+        case 'stock':
+          e = 4;
+          break;
+        case 'forex':
+          e = 5;
+          break;
+        case 'blocktrade':
+          e = 6;
+          break;
         default:
           e = 1;
           break;
       }
       sessionStorage.setItem('tradeinfo-tab', e);
+    }
+
+    if (query && ['one_click'].includes(query.marketType)) {
+      let e;
+      switch (query.marketType) {
+        case 'one_click':
+          e = 5;
+          break;
+        default:
+          e = 1;
+          break;
+      }
+      console.log('left one click', e);
+      sessionStorage.setItem('rec_tab_trade', e);
     }
 
     setTimeout(() => {
