@@ -527,6 +527,21 @@ const open = () => {
     ]).finally(() => {
       loaded1.value = true
     })
+  } else {
+    loaded1.value = true
+    setTimeout(() => {
+      Promise.all([
+        import("@/views/User/Account/Account.vue"),
+        import("@/views/User/Kyc/Index.vue"),
+        import("@/views/User/Google/Google.vue"),
+        import("@/views/User/Google/GoogleCode.vue"),
+        import("@/views/User/InviteFriends.vue"),
+        import("@/views/assets/TopUpCrypto.vue"),
+        import("@/views/assets/Withdraw.vue"),
+        import("@/views/assets/Transfer.vue"),
+        import("@/views/assets/RecordList.vue"),
+      ])
+    }, 1000)
   }
   Promise.all([
     import("@/views/Chat/Index.vue"),
