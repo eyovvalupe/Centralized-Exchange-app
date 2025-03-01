@@ -656,80 +656,82 @@
   // 跳转
   const jump = (name, needToken, query) => {
     store.commit('setShowLeftMenu', false);
-    if (
-      token.value &&
-      ((userInfo.value.role == 'guest' && name == 'register') ||
-        (userInfo.value.role == 'guest' &&
-          [
-            'kyc',
-            'google',
-            'googleCode',
-            'inviteFriends',
-            'account',
-            'topUpCrypto',
-            'withdraw',
-            'safety',
-          ].includes(name)))
-    ) {
-      return;
-    } else {
-      showLeft.value = false;
-    }
-    if (needToken && !token.value) {
-      goLogin()
-      return;
-    }
-
-    if (
-      query &&
-      ['spot', 'constract', 'ai', 'stock', 'forex', 'blocktrade'].includes(
-        query.tradeType,
-      )
-    ) {
-      let e;
-      switch (query.tradeType) {
-        case 'spot':
-          e = 1;
-          break;
-        case 'constract':
-          e = 2;
-          break;
-        case 'ai':
-          e = 3;
-          break;
-        case 'stock':
-          e = 4;
-          break;
-        case 'forex':
-          e = 5;
-          break;
-        case 'blocktrade':
-          e = 6;
-          break;
-        default:
-          e = 1;
-          break;
+    setTimeout(() => {
+      if (
+        token.value &&
+        ((userInfo.value.role == 'guest' && name == 'register') ||
+          (userInfo.value.role == 'guest' &&
+            [
+              'kyc',
+              'google',
+              'googleCode',
+              'inviteFriends',
+              'account',
+              'topUpCrypto',
+              'withdraw',
+              'safety',
+            ].includes(name)))
+      ) {
+        return;
+      } else {
+        showLeft.value = false;
       }
-      sessionStorage.setItem('tradeinfo-tab', e);
-    }
-
-    if (query && ['one_click'].includes(query.marketType)) {
-      let e;
-      switch (query.marketType) {
-        case 'one_click':
-          e = 5;
-          break;
-        default:
-          e = 1;
-          break;
+      if (needToken && !token.value) {
+        goLogin();
+        return;
       }
-      sessionStorage.setItem('rec_tab_trade', e);
-    }
 
-    router.push({
-      name,
-      query,
-    });
+      if (
+        query &&
+        ['spot', 'constract', 'ai', 'stock', 'forex', 'blocktrade'].includes(
+          query.tradeType,
+        )
+      ) {
+        let e;
+        switch (query.tradeType) {
+          case 'spot':
+            e = 1;
+            break;
+          case 'constract':
+            e = 2;
+            break;
+          case 'ai':
+            e = 3;
+            break;
+          case 'stock':
+            e = 4;
+            break;
+          case 'forex':
+            e = 5;
+            break;
+          case 'blocktrade':
+            e = 6;
+            break;
+          default:
+            e = 1;
+            break;
+        }
+        sessionStorage.setItem('tradeinfo-tab', e);
+      }
+
+      if (query && ['one_click'].includes(query.marketType)) {
+        let e;
+        switch (query.marketType) {
+          case 'one_click':
+            e = 5;
+            break;
+          default:
+            e = 1;
+            break;
+        }
+        sessionStorage.setItem('rec_tab_trade', e);
+      }
+
+      router.push({
+        name,
+        query,
+      });
+    }, 200);
   };
 
   const token = computed(() => store.state.token);
