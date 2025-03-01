@@ -636,6 +636,10 @@
             </div>
           </div>
         </div>
+
+        <div v-if="token" class="log-out" @click="goLogin">
+            退出登录
+        </div>
       </div>
     </div>
   </Popup>
@@ -655,7 +659,7 @@
   const jump = (name, needToken, query) => {
     if (
       token.value &&
-      ((name == 'register' && query.guest) ||
+      ((userInfo.value.role == 'guest' && name == 'register') ||
         (userInfo.value.role == 'guest' &&
           [
             'kyc',
@@ -769,6 +773,18 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
+
+    .log-out {
+        width: 318px;
+        height: 46px;
+        border-radius: 16px;
+        background-color: var(--ex-bg-white2);
+        margin: 16px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 16px;
+    }
 
     .active_icon {
       position: absolute;
