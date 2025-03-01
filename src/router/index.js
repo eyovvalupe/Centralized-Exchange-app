@@ -852,7 +852,6 @@ router.beforeEach((to, from) => {
       'topUpCrypto',
       'withdraw',
       'safety',
-      'setting',
     ].includes(to.name)
   ) {
     return { name: 'home' };

@@ -9,7 +9,7 @@
 
       <template #after>
         <div class="size-[0.72rem] rounded-full bg-white1 flex items-center justify-center mr-[0.32rem]"
-          @click="LeftRef.open()">
+          @click="eventBus.emit('leftOpen')">
           <span class="size-[0.4rem]">
             <img :src="getStaticImgUrl('/static/home2/menu.svg')" />
           </span>
@@ -131,16 +131,13 @@
     </BottomPopup>
     <!-- 充提记录 -->
     <!-- <HintBlock v-if="route.name == 'assets' && hintNum" /> -->
-    <!-- 左侧弹窗 -->
-    <LeftMenu :jump="jump" ref="LeftRef" />
   </div>
 </template>
 
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
-import { Tab, Tabs, PullRefresh, Swipe, SwipeItem, Popup } from "vant";
+import { Tab, Tabs, Swipe, SwipeItem, Popup } from "vant";
 import { ref, onMounted, computed, onActivated } from "vue";
-import { useRoute } from "vue-router";
 import Overview from "./page/Overview.vue";
 import store from "@/store";
 import router from "@/router";
@@ -149,13 +146,11 @@ import Wallet from "./page/Wallet.vue";
 import OrderCenter from "./page/OrderCenter.vue";
 import { _cryptoCoin } from "@/api/api";
 import { useI18n } from "vue-i18n";
-import { fiat } from "@/utils/dataMap";
+import eventBus from "@/utils/eventBus.js"
 import BottomPopup from "@/components/BottomPopup.vue";
-import LeftMenu from "../Home/components/LeftMenu.vue";
 
 const { t } = useI18n();
 const handle = ref(false);
-const LeftRef = ref()
 // import HintBlock from "@/components/HintBlock.vue"
 const selectedItem = ref({});
 const headActiveTab = ref(0);
@@ -172,20 +167,6 @@ const swipe = ref(null);
 const token = computed(() => store.state.token)
 
 // 跳转
-const jump = (name, needToken, query) => {
-  if (needToken && !token.value) {
-    LeftRef.value.close()
-    setTimeout(() => {
-      store.commit("setIsLoginOpen", true);
-    }, 0)
-    return
-  }
-
-  router.push({
-    name,
-    query
-  });
-};
 const changeActiveTab = (val, slideSwipe = false) => {
   activeTab.value = val;
   if (loadedTab.value.indexOf(val) == -1) {

@@ -272,6 +272,7 @@ import BottomPopup from "@/components/BottomPopup.vue";
 import StockTable from "@/components/StockTable.vue";
 import OrderingSpot from "./OrderingSpot.vue"
 import Chart from "./Chart.vue"
+import { formatTimestamp } from '@/utils/time';
 
 
 
@@ -324,6 +325,16 @@ const item = computed(() => {
   return it;
 });
 
+const showDate = computed(() => {
+  // 展示的数据时间
+  if (item.value.timestamp || item.value.ts) {
+    return formatTimestamp(
+      item.value.timestamp || item.value.ts,
+      item.value.timezone,
+    );
+  }
+  return '';
+});
 
 
 const updown = computed(() => {

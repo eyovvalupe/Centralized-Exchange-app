@@ -287,8 +287,6 @@
 
             <!-- 通知 -->
             <NotifiModal v-if="notifiOpen" />
-            <!-- 左侧弹窗 -->
-            <!-- <LeftMenu :jump="jump" ref="LeftRef" /> -->
         </div>
     </div>
 
@@ -311,13 +309,12 @@ import Wow from "wow.js"
 import { isEmpty } from "@/utils/isEmpty";
 import { useRoute } from "vue-router";
 import Recommend from "./Recommend.vue"
-import LeftMenu from "../components/LeftMenu.vue"
 import AiItem from "@/views/Market/components/AiItem.vue";
 import Ai from "@/views/Market/components/Ai.vue";
+import eventBus from "@/utils/eventBus.js"
 
 const token = computed(() => store.state.token || "");
 const route = useRoute();
-const LeftRef = ref()
 const { startSocket } = useSocket();
 const { t } = useI18n();
 const notifiOpen = computed(() => store.state.notifiOpen);
@@ -326,14 +323,12 @@ const marketAiList = computed(() => store.state.marketAiList || []); // ai量化
 //打开用户中心弹窗
 const openLeftMenu = () => {
     if (token.value) store.dispatch('updateReferralInfo');
-    store.commit('setShowLeftMenu', true)
-    // LeftRef.value.open()
+    eventBus.emit('leftOpen')
 }
 
 // 跳转
 const jump = (name, needToken, query) => {
     if (needToken && !token.value) {
-        LeftRef.value.close()
         setTimeout(() => {
             store.commit("setIsLoginOpen", true);
         }, 0)
@@ -350,6 +345,7 @@ Promise.all([
     import("@/views/Market/Search.vue"),
     import("@/views/Public/Login.vue"),
     import("@/views/assets/TopUpCrypto.vue"),
+    import("@/views/Finance/Index.vue"),
 ])
 
 // 订阅
