@@ -142,7 +142,7 @@ const setSession = () => {
 }
 
 
-
+subs()
 
 const changeTab = e => {
     if (e == 0) { // 全部

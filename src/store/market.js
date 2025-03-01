@@ -602,7 +602,7 @@ export default {
                 case 'malaysia':
                     return state.marketStockMalaysiaDataList
             }
-            return []
+            return state.marketStockDataList
         },
         getMarketType(state) {
             return state.marketType;

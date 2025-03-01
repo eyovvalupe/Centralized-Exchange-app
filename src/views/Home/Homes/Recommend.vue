@@ -160,6 +160,7 @@ const subs = () => {
     store.dispatch("subList", {});
 };
 
+
 const jump = (val) => {
     router.push({
         name: val
