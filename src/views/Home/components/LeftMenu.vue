@@ -675,7 +675,7 @@
       showLeft.value = false;
     }
     if (needToken && !token.value) {
-      store.commit('setIsLoginOpen', true);
+      goLogin()
       return;
     }
 
@@ -722,7 +722,6 @@
           e = 1;
           break;
       }
-      console.log('left one click', e);
       sessionStorage.setItem('rec_tab_trade', e);
     }
 
