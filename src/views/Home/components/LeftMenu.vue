@@ -4,7 +4,7 @@
     v-model:show="showLeft"
     round
     position="left"
-    :style="{ width: '90%', height: '100%', paddingBottom: '1.4rem' }"
+    :style="{ width: '90%', height: '100%' }"
   >
     <div class="left-menu">
       <!-- 用户 -->
@@ -593,7 +593,7 @@
               <div>{{ $t('user_page.about') }}</div>
             </div>
             <div
-            v-if="token && userInfo.role == 'user'"
+              v-if="token && userInfo.role == 'user'"
               class="tab ripple-info"
               style="margin-top: 0.4rem"
               @click="jump('setting', true)"
@@ -637,9 +637,7 @@
           </div>
         </div>
 
-        <div v-if="token" class="log-out" @click="goLogin">
-            退出登录
-        </div>
+        <div v-if="token" class="log-out" @click="goLogin">退出登录</div>
       </div>
     </div>
   </Popup>
@@ -674,14 +672,10 @@
     ) {
       return;
     } else {
-      setTimeout(() => {
-        showLeft.value = false;
-      }, 600);
+      showLeft.value = false;
     }
     if (needToken && !token.value) {
-      setTimeout(() => {
-        store.commit('setIsLoginOpen', true);
-      }, 800);
+      store.commit('setIsLoginOpen', true);
       return;
     }
 
@@ -732,12 +726,10 @@
       sessionStorage.setItem('rec_tab_trade', e);
     }
 
-    setTimeout(() => {
-      router.push({
-        name,
-        query,
-      });
-    }, 800);
+    router.push({
+      name,
+      query,
+    });
   };
 
   const token = computed(() => store.state.token);
@@ -756,6 +748,7 @@
     showLeft.value = true;
   };
   const close = () => {
+    store.commit('setShowLeftMenu', false);
     showLeft.value = false;
   };
 
@@ -775,15 +768,15 @@
     overflow: hidden;
 
     .log-out {
-        width: 318px;
-        height: 46px;
-        border-radius: 16px;
-        background-color: var(--ex-bg-white2);
-        margin: 16px auto;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 16px;
+      width: 318px;
+      height: 46px;
+      border-radius: 16px;
+      background-color: var(--ex-bg-white2);
+      margin: 16px auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 16px;
     }
 
     .active_icon {

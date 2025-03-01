@@ -288,7 +288,7 @@
             <!-- 通知 -->
             <NotifiModal v-if="notifiOpen" />
             <!-- 左侧弹窗 -->
-            <LeftMenu :jump="jump" ref="LeftRef" />
+            <!-- <LeftMenu :jump="jump" ref="LeftRef" /> -->
         </div>
     </div>
 
@@ -326,7 +326,8 @@ const marketAiList = computed(() => store.state.marketAiList || []); // ai量化
 //打开用户中心弹窗
 const openLeftMenu = () => {
     if (token.value) store.dispatch('updateReferralInfo');
-    LeftRef.value.open()
+    store.commit('setShowLeftMenu', true)
+    // LeftRef.value.open()
 }
 
 // 跳转

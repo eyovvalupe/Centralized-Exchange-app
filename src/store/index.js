@@ -55,6 +55,7 @@ const store = createStore({
     bottomTabBarValue: '',
     showSuccessToast: false,
     isSentCodeError: false,
+    showLeftMenu: false,
     ...market.state,
     ...trade.state,
     ...assets.state,
@@ -63,6 +64,9 @@ const store = createStore({
     ...finance.state,
   },
   mutations: {
+    setShowLeftMenu (state, data) {
+      state.showLeftMenu = data
+    },
     setReferralInfo(state, data) {
       state.referralInfo = data;
     },
