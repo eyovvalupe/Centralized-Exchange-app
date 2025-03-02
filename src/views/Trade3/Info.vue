@@ -137,6 +137,7 @@
             <div style="height: 0.4rem"></div>
           </div>
         </Tab>
+        <!-- 加密货币 -->
         <Tab :name="2" :title="$t('common.crypto')">
           <div class="dialog-market-box" v-if="activeTab == 2 && !chartLoading">
             <div class="top-box">
@@ -204,6 +205,7 @@
             <div style="height: 0.4rem"></div>
           </div>
         </Tab>
+        <!-- ai -->
         <Tab :name="3" :title="$t('trade.left_bot')">
           <div class="dialog-market-box" v-if="activeTab == 3 && !chartLoading">
             <div class="top-box">
@@ -264,6 +266,120 @@
                   <div style="height: 0.2rem"></div>
                   <div class="dialog-market-bg" v-if="activeTab2 == 55">
                     <InquireAi :scrollDom="'.dialog-market-box'" ref="InquireRef" />
+                  </div>
+                </Tab>
+              </Tabs>
+            </div>
+            <div style="height: 0.4rem"></div>
+          </div>
+        </Tab>
+        <!-- 外汇 -->
+        <Tab :name="5" :title="'外汇'">
+          <div class="dialog-market-box" v-if="activeTab == 5 && !chartLoading">
+            <div class="top-box">
+              <!-- 标题 -->
+              <div class="title" @click="showSearchDialog = true">
+                <div class="title_name">
+                  {{ item.name || '--' }}
+                  <Icon name="arrow-down" />
+                </div>
+              </div>
+              <div style="flex: 1"></div>
+              <div @click="goMaret">
+                <div class="size-[0.48rem] mr-[0.24rem]">
+                  <img v-lazy="getStaticImgUrl('/static/img/market/market.svg')" alt="" />
+                </div>
+              </div>
+              <!-- 详情 -->
+              <div class="search star" @click="addCollect(activeTab)" :style="{ opacity: loading ? '0.5' : '1' }">
+                <div class="size-[0.48rem]">
+                  <img v-if="item.watchlist == 1" v-lazy="getStaticImgUrl('/static/img/market/star.svg')" alt="" />
+                  <img v-else v-lazy="getStaticImgUrl('/static/img/market/unstar.svg')" alt="" />
+                </div>
+              </div>
+            </div>
+            <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']"
+              v-if="!showInfoDialog && !openInfoStatus">
+              <Chart @switch="(e) => (hideChart = e)" :from="'constract'" :type="'constract'" :mini="true" />
+            </div>
+            <!-- 内容1 -->
+            <div style="
+                margin: 0.1rem;
+                background-color: var(--ex-bg-color3);
+                border-radius: 0.32rem;
+              ">
+              <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg van-tabs--market2"
+                :color="'var(--ex-primary-color)'" v-model:active="activeTab2" animated shrink>
+                <Tab :name="11" :title="$t('trade.stock_open')">
+                  <OpeningContract :item="item" ref="openingRef2" :from="'trade'" />
+                </Tab>
+                <Tab :title="t('trade.trade_orders_current')" :name="44">
+                  <div style="height: 0.2rem"></div>
+                  <div class="dialog-market-bg" v-if="activeTab2 == 44">
+                    <PositionsContract :type="'constract'" />
+                  </div>
+                </Tab>
+                <Tab :title="t('trade.trade_order_history')" :name="55">
+                  <div style="height: 0.2rem"></div>
+                  <div class="dialog-market-bg" v-if="activeTab2 == 55">
+                    <InquireContract :scrollDom="'.dialog-market-box'" :type="'constract'" ref="InquireRef" />
+                  </div>
+                </Tab>
+              </Tabs>
+            </div>
+            <div style="height: 0.4rem"></div>
+          </div>
+        </Tab>
+        <!-- 大宗商品 -->
+        <Tab :name="6" :title="'大宗商品'">
+          <div class="dialog-market-box" v-if="activeTab == 6 && !chartLoading">
+            <div class="top-box">
+              <!-- 标题 -->
+              <div class="title" @click="showSearchDialog = true">
+                <div class="title_name">
+                  {{ item.name || '--' }}
+                  <Icon name="arrow-down" />
+                </div>
+              </div>
+              <div style="flex: 1"></div>
+              <div @click="goMaret">
+                <div class="size-[0.48rem] mr-[0.24rem]">
+                  <img v-lazy="getStaticImgUrl('/static/img/market/market.svg')" alt="" />
+                </div>
+              </div>
+              <!-- 详情 -->
+              <div class="search star" @click="addCollect(activeTab)" :style="{ opacity: loading ? '0.5' : '1' }">
+                <div class="size-[0.48rem]">
+                  <img v-if="item.watchlist == 1" v-lazy="getStaticImgUrl('/static/img/market/star.svg')" alt="" />
+                  <img v-else v-lazy="getStaticImgUrl('/static/img/market/unstar.svg')" alt="" />
+                </div>
+              </div>
+            </div>
+            <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']"
+              v-if="!showInfoDialog && !openInfoStatus">
+              <Chart @switch="(e) => (hideChart = e)" :from="'constract'" :type="'constract'" :mini="true" />
+            </div>
+            <!-- 内容1 -->
+            <div style="
+                margin: 0.1rem;
+                background-color: var(--ex-bg-color3);
+                border-radius: 0.32rem;
+              ">
+              <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg van-tabs--market2"
+                :color="'var(--ex-primary-color)'" v-model:active="activeTab2" animated shrink>
+                <Tab :name="11" :title="$t('trade.stock_open')">
+                  <OpeningContract :item="item" ref="openingRef2" :from="'trade'" />
+                </Tab>
+                <Tab :title="t('trade.trade_orders_current')" :name="44">
+                  <div style="height: 0.2rem"></div>
+                  <div class="dialog-market-bg" v-if="activeTab2 == 44">
+                    <PositionsContract :type="'constract'" />
+                  </div>
+                </Tab>
+                <Tab :title="t('trade.trade_order_history')" :name="55">
+                  <div style="height: 0.2rem"></div>
+                  <div class="dialog-market-bg" v-if="activeTab2 == 55">
+                    <InquireContract :scrollDom="'.dialog-market-box'" :type="'constract'" ref="InquireRef" />
                   </div>
                 </Tab>
               </Tabs>
@@ -375,6 +491,10 @@ if (route.query.tradeType == 'constract') {
   activeTab.value = 3;
 } else if (route.query.tradeType == 'stock') {
   activeTab.value = 4;
+} else if (route.query.tradeType == 'foreign') {
+  activeTab.value = 5;
+} else if (route.query.tradeType == 'commodities') {
+  activeTab.value = 6;
 } else {
   if (sessionStorage.getItem('tradeinfo-tab')) {
     activeTab.value = Number(sessionStorage.getItem('tradeinfo-tab'));
@@ -383,30 +503,16 @@ if (route.query.tradeType == 'constract') {
 const activeTab2 = ref(11); // 二级
 const hideChart = ref(false); // 折叠图表
 
-const lastTab = ref(activeTab.value); // 上一次的分类，切换时同步数据用的
 const tradeTypeMap = {
   1: 'spot',
   2: 'constract',
   3: 'ai',
-  4: 'stock'
+  4: 'stock',
+  5: 'foreign',
+  6: 'commodities'
 }
 const changeTab2 = (e) => {
   hideChart.value = false;
-  if (e == 3) {
-    // 切换到交易机器人
-    store.commit(
-      'setCurrAi',
-      JSON.parse(JSON.stringify(store.state.currConstact)),
-    );
-  }
-  if (lastTab.value == 3) {
-    // 从交易机器人切出来
-    store.commit(
-      'setCurrConstract',
-      JSON.parse(JSON.stringify(store.state.currAi)),
-    );
-  }
-  lastTab.value = e;
   sessionStorage.setItem('tradeinfo-tab', e);
   setTimeout(() => {
     router.replace({
@@ -417,6 +523,9 @@ const changeTab2 = (e) => {
         tradeType: tradeTypeMap[e],
       },
     });
+    if (!item.value.symbol) {
+      goDialogSearch()
+    }
   }, 100)
 };
 
@@ -434,6 +543,12 @@ const item = computed(() => {
     case 3: // ai
       it = store.state.currAi || {};
       break;
+    case 5: // 外汇
+      it = store.state.currForeign
+      break
+    case 6: // 大宗商品
+      it = store.state.currCommodities
+      break
   }
   return it;
 });
@@ -465,6 +580,18 @@ const getBasic = (obj, tab) => {
               ...res.data,
             });
             break;
+          case 5: // 外汇
+            store.commit('setCurrForeign', {
+              ...obj,
+              ...res.data,
+            });
+            break
+          case 6: // 大宗商品
+            store.commit('setCurrCommodities', {
+              ...obj,
+              ...res.data,
+            });
+            break
         }
       }
     }
@@ -480,9 +607,8 @@ onMounted(() => {
   }, 500);
 });
 const handleClick = (obj) => {
-  console.error('点击了', obj)
   obj = JSON.parse(JSON.stringify(obj));
-  if (obj.type != 'crypto' && ['3', '4'].includes(activeTab.value)) {
+  if (obj.type != 'crypto' && ['3', '4', '5', '6'].includes(activeTab.value)) {
     // 非加密货币的没有订单薄
     activeTab2.value = 11;
   }
@@ -496,6 +622,12 @@ const handleClick = (obj) => {
   }
   if (activeTab.value == 4) {
     store.commit('setCurrStockItem', obj);
+  }
+  if (activeTab.value == 5) {
+    store.commit('setCurrForeign', obj);
+  }
+  if (activeTab.value == 6) {
+    store.commit('setCurrCommodities', obj);
   }
   setTimeout(() => {
     router.replace({
@@ -526,6 +658,12 @@ const handleClickIndex = ({ item, type }) => {
         break;
       case 'ai':
         activeTab.value = 3;
+        break;
+      case 'foreign':
+        activeTab.value = 5;
+        break;
+      case 'commodities':
+        activeTab.value = 6;
         break;
     }
   }
@@ -559,6 +697,12 @@ const addCollect = (tab) => {
             case 4: // 股票
               store.commit('setCurrStockItem', { watchlist: 1 });
               break
+            case 5:
+              store.commit('setCurrForeign', { watchlist: 1 });
+              break
+            case 6:
+              store.commit('setCurrCommodities', { watchlist: 1 });
+              break
           }
         }
       })
@@ -582,6 +726,12 @@ const addCollect = (tab) => {
               break;
             case 4: // 股票
               store.commit('setCurrStockItem', { watchlist: 0 });
+              break
+            case 5:
+              store.commit('setCurrForeign', { watchlist: 0 });
+              break
+            case 6:
+              store.commit('setCurrCommodities', { watchlist: 0 });
               break
           }
         }
@@ -638,42 +788,18 @@ const goDialogSearch = () => {
             switch (activeTab.value) {
               case 1:
                 store.commit('setCurrConstract', obj || {});
-                if (route.name == 'tradeInfo') {
-                  router.replace({
-                    name: 'tradeInfo',
-                    query: {
-                      symbol: obj.symbol,
-                      type: 'constract',
-                      tradeType: 'spot',
-                    },
-                  });
-                }
                 break;
               case 3:
                 store.commit('setCurrAi', obj || {});
-                if (route.name == 'tradeInfo') {
-                  router.replace({
-                    name: 'tradeInfo',
-                    query: {
-                      symbol: obj.symbol,
-                      type: 'ai',
-                      tradeType: 'ai',
-                    },
-                  });
-                }
+                break;
+              case 5:
+                store.commit('setCurrForeign', obj || {});
+                break;
+              case 6:
+                store.commit('setCurrCommodities', obj || {});
                 break;
               default:
                 store.commit('setCurrConstract', obj || {});
-                if (route.name == 'tradeInfo') {
-                  router.replace({
-                    name: 'tradeInfo',
-                    query: {
-                      symbol: obj.symbol,
-                      type: 'constract',
-                      tradeType: 'constract',
-                    },
-                  });
-                }
                 break;
             }
           }
@@ -695,19 +821,9 @@ setTimeout(() => {
     if (!store.state.currStockItem.symbol && res.data[0]) {
       const obj = res.data[0]
       store.commit('setCurrStockItem', obj || {});
-      if (route.name == 'tradeInfo') {
-        router.replace({
-          name: 'tradeInfo',
-          query: {
-            symbol: obj.symbol,
-            type: 'stock',
-            tradeType: 'stock',
-          },
-        });
-      }
     }
   })
-}, 2000);
+}, 500);
 
 // 侧边弹框
 const showNavDialog = ref(false);

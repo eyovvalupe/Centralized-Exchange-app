@@ -91,6 +91,36 @@
                     <NoData v-if="!commendLoading && !contractList.length" />
                 </div>
             </Tab>
+            <!-- 外汇 -->
+            <Tab :name="7" :title="'外汇'">
+                <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
+                    :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
+                    <Loaidng v-if="commendLoading2" :loading="commendLoading2" />
+                    <div style="padding-bottom: 0.2rem;" v-if="activeTab == 7">
+                        <StockItem :handleClick="props.innerPage ? handleClick : null"
+                            :page="from == 'home' ? 'home' : ''" :padding="true"
+                            :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
+                            :showIcon="true" :item="item" v-for="(item, i) in filterList(marketForeignList)"
+                            :key="'c_' + i" menuType="foreign" marketType="crypto" page="home" />
+                    </div>
+                    <NoData v-if="!commendLoading2 && !marketForeignList.length" />
+                </div>
+            </Tab>
+            <!-- 大宗交易 -->
+            <Tab :name="8" :title="'大宗交易'">
+                <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
+                    :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
+                    <Loaidng v-if="commendLoading3" :loading="commendLoading3" />
+                    <div style="padding-bottom: 0.2rem;" v-if="activeTab == 8">
+                        <StockItem :handleClick="props.innerPage ? handleClick : null"
+                            :page="from == 'home' ? 'home' : ''" :padding="true"
+                            :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
+                            :showIcon="true" :item="item" v-for="(item, i) in filterList(marketCommoditiesList)"
+                            :key="'c_' + i" menuType="commodities" marketType="crypto" page="home" />
+                    </div>
+                    <NoData v-if="!commendLoading3 && !marketCommoditiesList.length" />
+                </div>
+            </Tab>
             <!-- 交易机器人 -->
             <Tab :name="3" :title="$t('common.option')">
                 <div class="pl-[0.32rem] pr-[0.24rem]" :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']">
@@ -178,6 +208,28 @@ const tabChange = (val) => {
     }
     // 缓存
     sessionStorage.setItem(`rec_tab_${props.from}`, val)
+    // 订阅最新的列表
+    setTimeout(() => {
+        let arr = []
+        switch (val) {
+            case 0: // 自选
+                arr = watchList.value
+                break
+            case 1: // 现货
+            case 2: // 合约
+                arr = contractList.value
+                break
+            case 7: // 外汇
+                arr = marketForeignList.value
+                break
+            case 8: // 大宗交易
+                arr = marketCommoditiesList.value
+                break
+        }
+        store.dispatch('subList', {
+            allKeys: arr.map(item => item.symbol)
+        })
+    }, 500)
 };
 
 
@@ -185,10 +237,17 @@ const tabChange = (val) => {
 // 获取推荐数据
 const commendLoading = ref(false);
 const contractList = computed(() => store.state.contractList || []);
+const commendLoading2 = ref(false);
+const marketForeignList = computed(() => store.state.marketForeignList || []);
+const commendLoading3 = ref(false);
+const marketCommoditiesList = computed(() => store.state.marketCommoditiesList || []);
 const watchList = computed(() => store.state.marketWatchList || []);
 
 const getRecommendData = () => {
     commendLoading.value = true;
+    commendLoading2.value = true;
+    commendLoading3.value = true;
+    // 合约
     _futures()
         .then((res) => {
             if (res.code == 200) {
@@ -204,17 +263,56 @@ const getRecommendData = () => {
                     return item;
                 });
                 store.commit("setContractList", rs || []);
-
-                subs();
-
-                setTimeout(() => {
-                    // console.error(contractList.value)
-                })
             }
         })
         .finally(() => {
             commendLoading.value = false;
         });
+
+    // 外汇
+    _futures({
+        type: 'forex'
+    }).then((res) => {
+        if (res.code == 200) {
+            const rs = res.data.map((item) => {
+                const target = marketForeignList.value.find(
+                    (a) => a.symbol == item.symbol
+                );
+                item.type = "crypto";
+                if (target) {
+                    Object.assign(target, item);
+                    item = target;
+                }
+                return item;
+            });
+            store.commit("setMarketForeignList", rs || []);
+
+        }
+    }).finally(() => {
+        commendLoading2.value = false;
+    });
+    // 大宗商品
+    _futures({
+        type: 'blocktrade'
+    }).then((res) => {
+        if (res.code == 200) {
+            const rs = res.data.map((item) => {
+                const target = marketCommoditiesList.value.find(
+                    (a) => a.symbol == item.symbol
+                );
+                item.type = "crypto";
+                if (target) {
+                    Object.assign(target, item);
+                    item = target;
+                }
+                return item;
+            });
+            store.commit("setMarketCommoditiesList", rs || []);
+
+        }
+    }).finally(() => {
+        commendLoading3.value = false;
+    });
 };
 
 const watchListLoading = ref(false);
