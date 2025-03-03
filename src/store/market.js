@@ -5,71 +5,18 @@ import router from "@/router"
 import { _watchlist } from '@/api/api'
 const { startSocket } = useSocket()
 
+// 主组件的所有key
+const recommendArr = ['marketWatchList', 'contractList', 'marketForeignList', 'marketCommoditiesList', 'marketAiList', 'marketStockDataList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList', 'marketStockGermanyDataList', 'marketStockUkDataList', 'marketStockSingaporeDataList', 'marketStockHongkongDataList', 'marketStockMalaysiaDataList']
 // 不同页面对应的监听列表 key
 const pageKeys = {
     'home': [
-        'marketRecommndList',
-        'marketRecommndContractList',
-        'contractList',
-        'marketRecommndStockList',
-        'marketVolumeList',
-        'marketAiList',
-        'marketWatchList',
-        'marketSrockRecommendList',
-        'marketContractRecommendList',
-
-        'marketStockUsIndexList',
-        'marketStockIndiaIndexList',
-        'marketStockJapanIndexList',
-        'marketStockKoreaIndexList',
-        'marketStockGermanyIndexList',
-        'marketStockUkIndexList',
-        'marketStockSingaporeIndexList',
-        'marketStockHongkongIndexList',
-        'marketStockMalaysiaIndexList',
-        'marketStockUsDataList',
-        'marketStockIndiaDataList',
-        'marketStockJapanDataList',
-        'marketStockKoreaDataList',
-        'marketStockGermanyDataList',
-        'marketStockUkDataList',
-        'marketStockSingaporeDataList',
-        'marketStockHongkongDataList',
-        'marketStockMalaysiaDataList'
+        ...recommendArr
     ],
     'market': [
-        'marketWatchList',
-        'marketVolumeList',
-        'marketUpList',
-        'marketDownList',
-        'marketSrockRecommendList',
-        'marketContractRecommendList',
-        'contractList',
-        'marketAiList',
-        'marketAiHisList',
-        'marketAi24List',
-        'marketAiGridList',
-        'marketStockUsIndexList',
-        'marketStockIndiaIndexList',
-        'marketStockJapanIndexList',
-        'marketStockKoreaIndexList',
-        'marketStockGermanyIndexList',
-        'marketStockUkIndexList',
-        'marketStockSingaporeIndexList',
-        'marketStockHongkongIndexList',
-        'marketStockMalaysiaIndexList',
-        'marketStockUsDataList',
-        'marketStockIndiaDataList',
-        'marketStockJapanDataList',
-        'marketStockKoreaDataList',
-        'marketStockGermanyDataList',
-        'marketStockUkDataList',
-        'marketStockSingaporeDataList',
-        'marketStockHongkongDataList',
-        'marketStockMalaysiaDataList'
+        ...recommendArr
     ],
-    'trade': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList', 'marketForeignList', 'marketCommoditiesList', 'contractList', 'searchList', 'marketStockDataList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList', 'marketStockGermanyDataList', 'marketStockUkDataList', 'marketStockSingaporeDataList', 'marketStockHongkongDataList', 'marketStockMalaysiaDataList'],
-    'tradeInfo': ['marketWatchList', 'marketSearchList', 'futuresSearchList', 'aiquantSearchList', 'forexSearchList', 'marketAiList', 'marketForeignList', 'marketCommoditiesList', 'contractList', 'searchList', 'marketStockDataList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList', 'marketStockGermanyDataList', 'marketStockUkDataList', 'marketStockSingaporeDataList', 'marketStockHongkongDataList', 'marketStockMalaysiaDataList'],
+    'trade': [...recommendArr],
+    'tradeInfo': [...recommendArr],
     'search': ['marketSearchList']
 }
 
@@ -462,23 +409,23 @@ export default {
             }
 
             //先从已获取过的实时数据里拿数据
-            (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
-                const arr = state[ck].map(item => {
-                    const target = state.realtimeData.find(a => a.symbol == item.symbol)
-                    if (target) {
-                        return {
-                            ...item,
-                            ...target,
-                            name: item.name || target.name
-                        }
-                    }
-                    return item
-                })
-                state[ck] = arr
-                if (ck == 'marketWatchList') {
-                    sessionStorage.setItem('market_watch_list', JSON.stringify(arr))
-                }
-            })
+            // (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
+            //     const arr = state[ck].map(item => {
+            //         const target = state.realtimeData.find(a => a.symbol == item.symbol)
+            //         if (target) {
+            //             return {
+            //                 ...item,
+            //                 ...target,
+            //                 name: item.name || target.name
+            //             }
+            //         }
+            //         return item
+            //     })
+            //     state[ck] = arr
+            //     if (ck == 'marketWatchList') {
+            //         sessionStorage.setItem('market_watch_list', JSON.stringify(arr))
+            //     }
+            // })
 
             const socket = startSocket(() => {
                 const keys = Array.from(new Set([
@@ -490,11 +437,11 @@ export default {
                 socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.on('realtime', res => {
                     if (res.code == 200) {
-                        if (res.data && res.data.length) {
-                            res.data.map(_item => {
-                                commit("setRealtimeItemData", _item)
-                            })
-                        }
+                        // if (res.data && res.data.length) {
+                        //     res.data.map(_item => {
+                        //         commit("setRealtimeItemData", _item)
+                        //     })
+                        // }
                         // 根据不同页面，同步页面内模块的数据
                         (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
                             const arr = state[ck].map(item => { // 数据和观察列表里的数据融合
@@ -506,6 +453,7 @@ export default {
                                         name: item.name || target.name
                                     }
                                 }
+                                console.error('同步成功' + item.symol)
                                 return item
                             })
                             state[ck] = arr
@@ -541,15 +489,15 @@ export default {
                 socket && socket.emit('snapshot', keys.join(',')) // 快照数据
                 socket && socket.on('snapshot', res => {
                     if (res.code == 200) {
-                        let points = ''
+                        let points = '';
                         if (res.data) {
                             points = _getSnapshotLine(res.data)
-                            commit('setRealtimeItemData', {
-                                symbol: res.symbol,
-                                points
-                            })
+                            // commit('setRealtimeItemData', {
+                            //     symbol: res.symbol,
+                            //     points
+                            // })
                         }
-                        // // 根据不同页面，同步页面内模块的数据
+                        // // 根据不同页面，同步页面内模块的数据2
                         (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
                             const target = state[ck].find(item => item.symbol == res.symbol)
                             if (target) {

@@ -1,8 +1,8 @@
 <template>
-    <div class="home-tabs-box"
+    <div v-if="loaded" class="home-tabs-box"
         :class="['home-tabs-box-' + props.from, 'home-tabs-box-' + (props.innerPage ? 'inner' : '')]">
         <Tabs :type="from == 'trade' ? 'line-card-trade' : 'sub'" :color="'var(--ex-primary-color)'" @change="tabChange"
-            v-if="props.activated" v-model:active="activeTab" :animated="from != 'home'" shrink>
+            v-model:active="activeTab" :animated="from != 'home'" shrink>
             <!-- 自选 -->
             <Tab :name="0" v-if="from != 'home'" :title="t('trade.left_mine')">
 
@@ -13,7 +13,7 @@
                     </div>
                 </template>
 
-                <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
+                <div v-if="loaded && activeTab == 0" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
                     :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
                     <div v-if="token">
                         <Loaidng v-if="watchListLoading" :loading="watchListLoading" />
@@ -22,8 +22,8 @@
                             <StockItem :handleClick="props.innerPage ? handleClick : null"
                                 :page="from == 'home' ? 'home' : ''" :padding="true"
                                 :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
-                                :showIcon="true" :item=item v-for="(item, i) in (watchList)" :key="'c_' + i"
-                                menuType="option" marketType="crypto" />
+                                :showIcon="['crypto'].includes(item.type)" :item=item v-for="(item, i) in (watchList)"
+                                :key="'c_' + i" menuType="option" marketType="crypto" />
                         </div>
                         <NoData v-if="!watchListLoading && !watchList.length" />
                     </div>
@@ -47,22 +47,22 @@
                                 class="px-[0.28rem] h-[0.8rem] rounded-[0.4rem] bg-[var(--ex-bg-white1)] flex items-center justify-center text-[0.32rem] text-white ripple-primary"
                                 @click="jump('login')">{{ $t('trade.stock_opening_token_login') }}</div>
                             <!-- <div class="w-[3rem] h-[0.8rem] rounded-[0.4rem] bg-primary flex items-center justify-center text-[0.32rem] text-white ripple-btn"
-                                @click="jump('register')">{{ $t('trade.stock_opening_token_register') }}</div> -->
+                @click="jump('register')">{{ $t('trade.stock_opening_token_register') }}</div> -->
                         </div>
                     </div>
                 </div>
             </Tab>
             <!-- 买币 -->
             <Tab :name="5" v-if="from != 'home'" :title="t('market.market_header_buy')">
-                <BuyCoin v-if="activeTab == 5" />
+                <BuyCoin v-if="loaded && activeTab == 5" />
             </Tab>
             <!-- 股票 -->
             <Tab :name="6" :title="'股票'">
-                <StockList :handleClick="props.innerPage ? handleClick : null" v-if="activeTab == 6" />
+                <StockList :handleClick="props.innerPage ? handleClick : null" v-if="loaded && activeTab == 6" />
             </Tab>
             <!-- 现货 -->
             <Tab :name="1" :title="t('common.spot')">
-                <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
+                <div v-if="loaded && activeTab == 1" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
                     :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div class="" style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 1">
@@ -78,7 +78,7 @@
             </Tab>
             <!-- 合约 -->
             <Tab :name="2" :title="$t('common.crypto')">
-                <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
+                <div v-if="loaded && activeTab == 2" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
                     :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
                     <Loaidng v-if="commendLoading" :loading="commendLoading" />
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 2">
@@ -93,14 +93,14 @@
             </Tab>
             <!-- 外汇 -->
             <Tab :name="7" :title="'外汇'">
-                <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
+                <div v-if="loaded && activeTab == 7" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
                     :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
                     <Loaidng v-if="commendLoading2" :loading="commendLoading2" />
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 7">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
                             :page="from == 'home' ? 'home' : ''" :padding="true"
                             :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
-                            :showIcon="true" :item="item" v-for="(item, i) in filterList(marketForeignList)"
+                            :showIcon="false" :item="item" v-for="(item, i) in filterList(marketForeignList)"
                             :key="'c_' + i" menuType="foreign" marketType="crypto" page="home" />
                     </div>
                     <NoData v-if="!commendLoading2 && !marketForeignList.length" />
@@ -108,14 +108,14 @@
             </Tab>
             <!-- 大宗交易 -->
             <Tab :name="8" :title="'大宗交易'">
-                <div :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
+                <div v-if="loaded && activeTab == 8" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
                     :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
                     <Loaidng v-if="commendLoading3" :loading="commendLoading3" />
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 8">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
                             :page="from == 'home' ? 'home' : ''" :padding="true"
                             :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
-                            :showIcon="true" :item="item" v-for="(item, i) in filterList(marketCommoditiesList)"
+                            :showIcon="false" :item="item" v-for="(item, i) in filterList(marketCommoditiesList)"
                             :key="'c_' + i" menuType="commodities" marketType="crypto" page="home" />
                     </div>
                     <NoData v-if="!commendLoading3 && !marketCommoditiesList.length" />
@@ -123,25 +123,26 @@
             </Tab>
             <!-- 交易机器人 -->
             <Tab :name="3" :title="$t('common.option')">
-                <div class="pl-[0.32rem] pr-[0.24rem]" :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']">
+                <div v-if="loaded && activeTab == 3" class="pl-[0.32rem] pr-[0.24rem]"
+                    :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']">
                     <Ai :handleClick="props.innerPage ? handleClick : null" :from="props.from" page="home"
                         v-if="activeTab == 3" />
                 </div>
             </Tab>
             <!-- ETF -->
-            <Tab :name="4" :title="'ETF'">
+            <!-- <Tab :name="4" :title="'ETF'">
                 <div class="pl-[0.32rem] pr-[0.24rem]" :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']">
                     <Ai :handleClick="props.innerPage ? handleClick : null" :from="props.from" page="home"
                         v-if="activeTab == 4" />
                 </div>
-            </Tab>
+            </Tab> -->
         </Tabs>
     </div>
 </template>
 
 <script setup>
 import { Tab, Tabs } from "vant";
-import { ref, computed, nextTick } from "vue"
+import { ref, computed, nextTick, onMounted, onBeforeUnmount } from "vue"
 import NoData from "@/components/NoData.vue";
 import Loaidng from "@/components/Loaidng.vue";
 import Ai from "@/views/Market/components/Ai.vue";
@@ -153,6 +154,16 @@ import router from "@/router";
 import { getStaticImgUrl } from "@/utils/index.js"
 import BuyCoin from "@/views/Market/buyCoin/index.vue";
 import StockList from "../components/StockList.vue"
+
+const loaded = ref(false)
+onMounted(() => {
+    setTimeout(() => {
+        loaded.value = true
+    }, 500)
+})
+onBeforeUnmount(() => {
+    loaded.value = false
+})
 
 const emits = defineEmits(['handleClick'])
 const handleClick = (item, type) => {
@@ -200,7 +211,6 @@ const jump = (val) => {
 const ipoRef = ref();
 const ipoDataList = computed(() => store.state.ipoDataList || []);
 const tabChange = (val) => {
-    console.log(val)
     if (val == 2 && !ipoDataList.value.length) {
         nextTick(() => {
             ipoRef.value && ipoRef.value.init();
@@ -248,14 +258,15 @@ const getRecommendData = () => {
     commendLoading2.value = true;
     commendLoading3.value = true;
     // 合约
-    _futures()
+    _futures({
+        type: 'crypto'
+    })
         .then((res) => {
             if (res.code == 200) {
                 const rs = res.data.map((item) => {
                     const target = contractList.value.find(
                         (a) => a.symbol == item.symbol
                     );
-                    item.type = "crypto";
                     if (target) {
                         Object.assign(target, item);
                         item = target;
@@ -278,7 +289,6 @@ const getRecommendData = () => {
                 const target = marketForeignList.value.find(
                     (a) => a.symbol == item.symbol
                 );
-                item.type = "crypto";
                 if (target) {
                     Object.assign(target, item);
                     item = target;
@@ -300,7 +310,6 @@ const getRecommendData = () => {
                 const target = marketCommoditiesList.value.find(
                     (a) => a.symbol == item.symbol
                 );
-                item.type = "crypto";
                 if (target) {
                     Object.assign(target, item);
                     item = target;

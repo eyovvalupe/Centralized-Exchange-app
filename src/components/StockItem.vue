@@ -6,7 +6,8 @@
         :class="[`${' stock_item_' + updownStatus} ${props.page == 'home' ? '' : 'px-[0.28rem]'}`]"
         @click="goInfo(props.item.type)" v-if="props.item">
         <div :class="['stock_item']">
-          <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center" v-if="showIcon">
+          <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center"
+            v-if="['crypto'].includes(item.type)">
             <CryptoIcon :name="item.name.split('/')[0]" />
           </div>
           <div class="td5" :class="{ 'td5--ac': showIcon }">
@@ -23,21 +24,11 @@
 
             <!-- <div v-if="item.type != 'stock'" class="flex items-center"> -->
             <div class="flex items-center">
-              <span style=""
+              <span v-if="marketMap[props.item.type]"
                 :class="`${marketStyle[props.item.type]
                   } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center ]`">
                 {{
-                  item.type == "stock"
-                    ? t("market.market_optional_stock")
-                    : item.type == "crypto"
-                      ? t("market.market_optional_contract")
-                      : item.type == "forex"
-                        ? t("market.market_optional_forex")
-                        : item.type == "blocktrade"
-                          ? t("market.market_optional_blocktrade")
-                          : item.type == "spot"
-                            ? t("market.market_optional_contract")
-                            : ""
+                  marketMap[props.item.type]
                 }}
               </span>
             </div>
@@ -65,8 +56,8 @@
                 }}%</span>
                 <span v-else-if="mode == 2">{{
                   props.item.price || 0 > 0
-                    ? "+" + (props.item.price || 0).toFixed(2)
-                    : (props.item.price || 0).toFixed(2)
+                    ? "+" + (props.item.price || 0)
+                    : (props.item.price || 0)
                 }}</span>
                 <span v-else>{{ _formatNumber(props.item.volume) }}</span>
               </div>
@@ -98,11 +89,13 @@ import { useI18n } from "vue-i18n";
 import CryptoIcon from "./CryptoIcon.vue";
 
 const { t } = useI18n();
-const market = {
-  stock: "股票",
-  crypto: "合约",
-  forex: "外汇",
-};
+const marketMap = ref({
+  stock: t("market.market_optional_stock"),
+  crypto: t("market.market_optional_contract"),
+  forex: t("market.market_optional_forex"),
+  blocktrade: t("market.market_optional_blocktrade"),
+  spot: t("market.market_optional_contract")
+});
 const marketStyle = {
   stock: "tag-stock",
   crypto: "tag-crypto",

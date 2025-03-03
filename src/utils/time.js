@@ -34,28 +34,28 @@ export function getTimestr(timestamp, key) {
 // key==2  返回 hh:mm:ss
 export function getTimestrTimezone(timestamp, timezone, key) {
   const date = new Date(timestamp);
-    const options = {
-        year: 'numeric',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        timeZone: timezone,
-        hour12: false, // 24小时制
-    };
-    
-    const formatter = new Intl.DateTimeFormat('en-GB', options); // 使用 en-GB 让日期格式为 dd/mm/yyyy
-    const formattedDate = formatter.format(date);
+  const options = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    timeZone: timezone,
+    hour12: false, // 24小时制
+  };
 
-    // 获取格式化后的日期组件
-    const [day, month, year, hour, minute, second] = formattedDate.split(/[\/,\s:]+/);
+  const formatter = new Intl.DateTimeFormat('en-GB', options); // 使用 en-GB 让日期格式为 dd/mm/yyyy
+  const formattedDate = formatter.format(date);
 
-    // 拼接成目标格式
-    if (key == 2) {
-      return `${hour}:${minute}:${second}`;
-    }
-    return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
+  // 获取格式化后的日期组件
+  const [day, month, year, hour, minute, second] = formattedDate.split(/[\/,\s:]+/);
+
+  // 拼接成目标格式
+  if (key == 2) {
+    return `${hour}:${minute}:${second}`;
+  }
+  return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
 }
 
 // 时间字符转换  20240622105805 ->yyyy-mm-dd hh:mm:ss
@@ -85,27 +85,29 @@ export function formatSec(seconds) {
 }
 
 // 秒 转换成 hh:mm:ss
-export function formatSec2(seconds,zeroFill=false) {
+export function formatSec2(seconds, zeroFill = false) {
   if (seconds < 0) return '--'
   let hours = Math.floor(seconds / 3600);
-  if(zeroFill && hours < 10){
-    hours = '0'+hours
+  if (zeroFill && hours < 10) {
+    hours = '0' + hours
   }
   seconds %= 3600;
   let minutes = Math.floor(seconds / 60);
-  if(zeroFill && minutes < 10){
-    minutes = '0'+minutes
+  if (zeroFill && minutes < 10) {
+    minutes = '0' + minutes
   }
   let sec = seconds % 60
-  if(zeroFill && sec < 10){
-    sec = '0'+sec
+  if (zeroFill && sec < 10) {
+    sec = '0' + sec
   }
   return `${hours}:${minutes}:${sec}`;
 }
 
 // 时间戳和时区 转换成 时间
 export function formatTimestamp(timestamp, timezone) {
+  console.log(timestamp, timezone)
   try {
+    if (timestamp > 1000000000000000) timestamp = timestamp / 1000
     const date = new Date(timestamp);
     const options = {
       year: 'numeric',
@@ -149,7 +151,7 @@ export function formatTimestamp(timestamp, timezone) {
 
     return `${formattedDate[0]}-${formattedDate[1]}-${formattedDate[2]} ${formattedDate[3]}:${formattedDate[4]}:${formattedDate[5]}`;
   } catch {
-    console.error(`-- format error --  timestamp:${timestamp}  timezone:${timezone}`)
+    // console.error(`-- format error --  timestamp:${timestamp}  timezone:${timezone}`)
     return getTimestr(timestamp)
   }
 

@@ -133,13 +133,9 @@ const goSearch = () => {
 const activated = ref(false);
 const act = () => {
   store.commit("setMarketWatchKeys", []);
-  setTimeout(() => {
-    activated.value = true;
-  }, 500)
   subs();
 }
 const unact = () => {
-  activated.value = false;
   // 取消订阅
   const socket = startSocket(() => {
     socket && socket.emit("realtime", ""); // 价格变化
@@ -161,8 +157,14 @@ onActivated(() => {
 onDeactivated(() => {
   unact()
 });
+onMounted(() => {
+  setTimeout(() => {
+    activated.value = true
+  }, 500)
+})
 onUnmounted(() => {
   unact()
+  activated.value = false
 })
 
 const handleClick = (obj) => { // 如果作为侧窗点击元素

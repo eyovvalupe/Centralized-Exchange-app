@@ -6,6 +6,7 @@ import eslintPlugin from 'vite-plugin-eslint'
 import eslint from 'vite-plugin-eslint'
 import path from 'path'
 import { VitePWA } from 'vite-plugin-pwa';
+import { VERSION } from './src/config'
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -73,6 +74,17 @@ export default defineConfig({
         ],
       },
     }),
+    {
+      name: 'html-transform', // 插件名称
+      transformIndexHtml(html) {
+        return html.replace(
+          '</body>',
+          `<script>
+            console.log("${VERSION}  ${new Date()}");
+          </script></body>`
+        );
+      }
+    },
   ],
   resolve: {
     alias: {
