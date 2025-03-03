@@ -453,7 +453,6 @@ export default {
                                         name: item.name || target.name
                                     }
                                 }
-                                console.error('同步成功' + item.symol)
                                 return item
                             })
                             state[ck] = arr
