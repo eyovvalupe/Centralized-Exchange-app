@@ -6,12 +6,12 @@
             <!-- 自选 -->
             <Tab :name="0" v-if="from != 'home'" :title="t('trade.left_mine')">
 
-                <template #title>
+                <!-- <template #title>
                     <div style="width: 0.44rem;height: 0.44rem;">
                         <img v-if="activeTab == 0" v-lazy="getStaticImgUrl('/static/img/trade/star.svg')" alt="">
                         <img v-else v-lazy="getStaticImgUrl('/static/img/trade/unstar.svg')" alt="">
                     </div>
-                </template>
+                </template> -->
 
                 <div v-if="loaded && activeTab == 0" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
                     :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
@@ -211,6 +211,7 @@ const jump = (val) => {
 const ipoRef = ref();
 const ipoDataList = computed(() => store.state.ipoDataList || []);
 const tabChange = (val) => {
+    activeTab.value = val
     if (val == 2 && !ipoDataList.value.length) {
         nextTick(() => {
             ipoRef.value && ipoRef.value.init();
@@ -358,7 +359,8 @@ const init = () => {
 init()
 
 defineExpose({
-    activeTab
+    activeTab,
+    tabChange,
 })
 
 
