@@ -840,22 +840,22 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from) => {
-  if (
-    userInfo.value &&
-    userInfo.value.role == 'guest' &&
-    [
-      'account',
-      'kyc',
-      'google',
-      'googleCode',
-      'inviteFriends',
-      'topUpCrypto',
-      'withdraw',
-      'safety',
-    ].includes(to.name)
-  ) {
-    return { name: 'home' };
-  }
+  // if (
+  //   userInfo.value &&
+  //   userInfo.value.role == 'guest' &&
+  //   [
+  //     'account',
+  //     'kyc',
+  //     'google',
+  //     'googleCode',
+  //     'inviteFriends',
+  //     'topUpCrypto',
+  //     'withdraw',
+  //     'safety',
+  //   ].includes(to.name)
+  // ) {
+  //   return { name: 'home' };
+  // }
   store.commit('setTransitionName', '');
 
   if (to.name == 'registerSuccess') {

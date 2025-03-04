@@ -667,8 +667,6 @@
               'googleCode',
               'inviteFriends',
               'account',
-              'topUpCrypto',
-              'withdraw',
               'safety',
             ].includes(name)))
       ) {
