@@ -15,10 +15,16 @@
           </div>
         </div>
       </div>
-      <div style="height: 0.24rem;" v-else>
+      <!-- <div style="height: 0.24rem;" v-else>
         <div @click="jump('search')"
           style="width: 0.72rem;height: 0.72rem;border-radius: 50%;background-color: var(--ex-bg-white1);position: absolute;right: 0.24rem;top: 0.08rem;z-index: 99;padding: 0.11rem 0.12rem 0.13rem 0.12rem;">
           <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
+        </div>
+      </div> -->
+      <div style="height: 0.24rem;" v-else>
+        <div @click="showRight = true"
+          style="width: 0.72rem;height: 0.72rem;border-radius: 50%;background-color: var(--ex-bg-white1);position: absolute;right: 0.24rem;top: 0.08rem;z-index: 99;padding: 0.11rem 0.12rem 0.13rem 0.12rem;">
+          <img v-lazy="getStaticImgUrl('/static/home2/menu.svg')" alt="">
         </div>
       </div>
 
@@ -26,7 +32,7 @@
           <img v-lazy="getStaticImgUrl('/static/img/common/bill.svg')" alt="">
         </div> -->
       <div v-if="!focusRef && !searchRef">
-        <Recommend @handleClick="handleClick" :innerPage="props.innerPage" v-if="activated" ref="recommendRef"
+        <Recommend @handleClick="handleClick" :innerPage="props.innerPage" v-if="activated && loaded" ref="recommendRef"
           from="trade" :sticky="false" :activated="activated" />
       </div>
 
@@ -68,9 +74,74 @@
       </div>
     </div>
   </BottomPopup>
+
+
+  <!-- 弹出菜单 -->
+  <Popup round v-model:show="showRight" position="right" :style="{ width: '70%', height: '100%' }">
+    <div class="left-menu-popup" v-if="recommendRef">
+      <div @click="changeTabHandle(0)" class="left-menu-item"
+        :class="{ 'left-menu-active': recommendRef.activeTab == 0 }">
+        <span>自选</span>
+        <div class="icon" v-if="recommendRef.activeTab == 0">
+          <img :src="getStaticImgUrl('/static/img/market/ok.svg')" alt="">
+        </div>
+      </div>
+      <div @click="changeTabHandle(5)" class="left-menu-item"
+        :class="{ 'left-menu-active': recommendRef.activeTab == 5 }">
+        <span>买币</span>
+        <div class="icon" v-if="recommendRef.activeTab == 5">
+          <img :src="getStaticImgUrl('/static/img/market/ok.svg')" alt="">
+        </div>
+      </div>
+      <div @click="changeTabHandle(6)" class="left-menu-item"
+        :class="{ 'left-menu-active': recommendRef.activeTab == 6 }">
+        <span>股票</span>
+        <div class="icon" v-if="recommendRef.activeTab == 6">
+          <img :src="getStaticImgUrl('/static/img/market/ok.svg')" alt="">
+        </div>
+      </div>
+      <div @click="changeTabHandle(1)" class="left-menu-item"
+        :class="{ 'left-menu-active': recommendRef.activeTab == 1 }">
+        <span>现货</span>
+        <div class="icon" v-if="recommendRef.activeTab == 1">
+          <img :src="getStaticImgUrl('/static/img/market/ok.svg')" alt="">
+        </div>
+      </div>
+      <div @click="changeTabHandle(2)" class="left-menu-item"
+        :class="{ 'left-menu-active': recommendRef.activeTab == 2 }">
+        <span>合约</span>
+        <div class="icon" v-if="recommendRef.activeTab == 2">
+          <img :src="getStaticImgUrl('/static/img/market/ok.svg')" alt="">
+        </div>
+      </div>
+      <div @click="changeTabHandle(7)" class="left-menu-item"
+        :class="{ 'left-menu-active': recommendRef.activeTab == 7 }">
+        <span>外汇</span>
+        <div class="icon" v-if="recommendRef.activeTab == 7">
+          <img :src="getStaticImgUrl('/static/img/market/ok.svg')" alt="">
+        </div>
+      </div>
+      <div @click="changeTabHandle(8)" class="left-menu-item"
+        :class="{ 'left-menu-active': recommendRef.activeTab == 8 }">
+        <span>大宗交易</span>
+        <div class="icon" v-if="recommendRef.activeTab == 8">
+          <img :src="getStaticImgUrl('/static/img/market/ok.svg')" alt="">
+        </div>
+      </div>
+      <div @click="changeTabHandle(3)" class="left-menu-item"
+        :class="{ 'left-menu-active': recommendRef.activeTab == 3 }">
+        <span>交易机器人</span>
+        <div class="icon" v-if="recommendRef.activeTab == 3">
+          <img :src="getStaticImgUrl('/static/img/market/ok.svg')" alt="">
+        </div>
+      </div>
+    </div>
+  </Popup>
+
 </template>
 
 <script setup>
+import { Popup } from "vant"
 import Recommend from "@/views/Home/Homes/Recommend.vue"
 import { ref, onActivated, onDeactivated, computed, onMounted, onUnmounted } from "vue"
 import { useSocket } from "@/utils/ws";
@@ -90,6 +161,13 @@ const props = defineProps({
     default: false
   }
 })
+
+const showRight = ref(false)
+const changeTabHandle = (val) => {
+  showRight.value = false
+  recommendRef.value.tabChange(val)
+}
+
 
 const jump = name => router.push(name)
 const { t } = useI18n();
@@ -133,13 +211,9 @@ const goSearch = () => {
 const activated = ref(false);
 const act = () => {
   store.commit("setMarketWatchKeys", []);
-  setTimeout(() => {
-    activated.value = true;
-  }, 500)
   subs();
 }
 const unact = () => {
-  activated.value = false;
   // 取消订阅
   const socket = startSocket(() => {
     socket && socket.emit("realtime", ""); // 价格变化
@@ -156,13 +230,23 @@ const scrollData = useScroll(tradePageRef, {
 provide('scrollData', scrollData);
 
 onActivated(() => {
+  activated.value = true
   act()
 });
 onDeactivated(() => {
   unact()
+  activated.value = false
 });
+
+const loaded = ref(false)
+onMounted(() => {
+  setTimeout(() => {
+    loaded.value = true
+  }, 500)
+})
 onUnmounted(() => {
   unact()
+  loaded.value = false
 })
 
 const handleClick = (obj) => { // 如果作为侧窗点击元素
@@ -278,6 +362,30 @@ defineExpose({
   }
 }
 
+.left-menu-popup {
+  height: 100%;
+  padding: 0;
+  background-color: var(--ex-bg-color9);
+
+  .left-menu-item {
+    padding: 0.3rem 0.4rem;
+    color: var(--ex-white);
+    font-size: 0.28rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    .icon {
+      width: 0.48rem;
+      height: 0.48rem;
+    }
+  }
+
+  .left-menu-active {
+    background-color: var(--ex-bg-white2);
+    color: var(--ex-primary-color);
+  }
+}
 
 .page-trade3 {
   width: 100%;

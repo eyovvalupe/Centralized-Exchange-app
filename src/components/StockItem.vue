@@ -6,44 +6,47 @@
         :class="[`${' stock_item_' + updownStatus} ${props.page == 'home' ? '' : 'px-[0.28rem]'}`]"
         @click="goInfo(props.item.type)" v-if="props.item">
         <div :class="['stock_item']">
-          <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center" v-if="showIcon">
-            <CryptoIcon :name="item.name.split('/')[0]" />
+          <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center"
+            v-if="['crypto', 'forex'].includes(item.type)">
+
+            <CryptoIcon v-if="item.type == 'crypto'" :name="item.name.split('/')[0]" />
+            <CryptoIcon v-if="item.type == 'forex'" :name="item.symbol" />
           </div>
           <div class="td5" :class="{ 'td5--ac': showIcon }">
             <div class="item_name flex items-center gap-1 mb-[0.2rem]">
               <span class="truncate" v-if="item.type != 'stock'">{{
                 props.item.name
               }}</span>
-              <span class="truncate" v-else>{{ props.item.symbol }}</span>
+              <template v-else>
+                <span class="truncate">{{ props.item.symbol }}</span>
+                <span v-if="marketMap[props.item.type]"
+                  :class="`${marketStyle[props.item.type]
+                    } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center ]`">
+                  {{
+                    marketMap[props.item.type]
+                  }}
+                </span>
+              </template>
+
 
             </div>
-            <!-- <div class="item_info" v-show="props.item.type == 'stock'">
+            <div class="item_info" v-show="props.item.type == 'stock'">
               {{ props.item.name || "--" }}
-            </div> -->
+            </div>
 
             <!-- <div v-if="item.type != 'stock'" class="flex items-center"> -->
-            <div class="flex items-center">
-              <span style=""
+            <div class="flex items-center" v-if="item.type != 'stock'">
+              <span v-if="marketMap[props.item.type]"
                 :class="`${marketStyle[props.item.type]
                   } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center ]`">
                 {{
-                  item.type == "stock"
-                    ? t("market.market_optional_stock")
-                    : item.type == "crypto"
-                      ? t("market.market_optional_contract")
-                      : item.type == "forex"
-                        ? t("market.market_optional_forex")
-                        : item.type == "blocktrade"
-                          ? t("market.market_optional_blocktrade")
-                          : item.type == "spot"
-                            ? t("market.market_optional_contract")
-                            : ""
+                  marketMap[props.item.type]
                 }}
               </span>
             </div>
 
           </div>
-          <div :class="['td2 spark_line_box']" v-if="showSparkLine">
+          <div style="flex: 1.5;" :class="['spark_line_box']" v-if="showSparkLine">
             <SparkLine :style="['width: 100%; height: 0.6rem;']" v-if="props.item.points" :points="props.item.points"
               :ratio="props.item.ratio" />
           </div>
@@ -65,8 +68,8 @@
                 }}%</span>
                 <span v-else-if="mode == 2">{{
                   props.item.price || 0 > 0
-                    ? "+" + (props.item.price || 0).toFixed(2)
-                    : (props.item.price || 0).toFixed(2)
+                    ? "+" + (props.item.price || 0)
+                    : (props.item.price || 0)
                 }}</span>
                 <span v-else>{{ _formatNumber(props.item.volume) }}</span>
               </div>
@@ -98,17 +101,19 @@ import { useI18n } from "vue-i18n";
 import CryptoIcon from "./CryptoIcon.vue";
 
 const { t } = useI18n();
-const market = {
-  stock: "股票",
-  crypto: "合约",
-  forex: "外汇",
-};
+const marketMap = ref({
+  stock: t("market.market_optional_stock"),
+  crypto: t("market.market_optional_contract"),
+  forex: t("market.market_optional_forex"),
+  blocktrade: t("market.market_optional_blocktrade"),
+  spot: t("market.market_optional_contract")
+});
 const marketStyle = {
   stock: "tag-stock",
-  crypto: "tag-crypto",
-  forex: "tag-forex",
-  blocktrade: "tag-blocktrade",
-  spot: "tag-spot"
+  crypto: "tag-stock",
+  forex: "tag-stock",
+  blocktrade: "tag-stock",
+  spot: "tag-stock"
 };
 const emits = defineEmits(["remove"]);
 const props = defineProps({
@@ -295,7 +300,8 @@ const removeStock = (item) => {
   .td5 {
     flex-shrink: 0;
     // width: 3rem;
-    flex: 2.5;
+    flex: 3;
+    overflow: hidden;
 
     .item_name {
       font-size: 0.28rem;

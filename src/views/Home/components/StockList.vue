@@ -1,7 +1,24 @@
 <!-- 股票列表 -->
 <template>
     <div style="padding-top: 0.32rem;">
-        <Tabs v-model:active="activeTab" animated shrink @change="changeTab">
+        <div class="search" @click="jump('search')">
+            <div class="icon">
+                <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
+            </div>
+
+            <span>搜索</span>
+        </div>
+
+        <NoData v-if="!loading && !showList.length" />
+        <div class="list-i">
+            <StockItem :menuType="'stock'" :handleClick="handleClick" :padding="true" :showIcon="false" :item="item"
+                v-for="(item, i) in showList" :key="'s_' + i" />
+        </div>
+
+        <LoadingMore :classN="'loading_more_stock'" :loading="loading" :finish="finish"
+            v-if="((finish && showList.length) || (!finish)) && activeTab == 0" />
+
+        <!-- <Tabs v-model:active="activeTab" animated shrink @change="changeTab">
             <Tab :title="'全部'" :name="'0'">
                 <div>
                     <NoData v-if="!loading && !showList.length" />
@@ -24,7 +41,7 @@
                     </div>
                 </div>
             </Tab>
-        </Tabs>
+        </Tabs> -->
 
 
     </div>
@@ -39,8 +56,10 @@ import { _marketGet, _recommend, _stock } from "@/api/api"
 import Loaidng from "@/components/Loaidng.vue"
 import store from "@/store/index.js"
 import LoadingMore from "@/components/LoadingMore.vue"
+import { getStaticImgUrl } from "@/utils/index.js"
+import router from "@/router"
 
-
+const jump = name => router.push(name)
 const props = defineProps({
     handleClick: {
         type: Function,
@@ -173,7 +192,7 @@ const changeTab = e => {
     }
     subs()
 }
-
+changeTab(0)
 
 
 // 滚动监听
@@ -203,3 +222,23 @@ onBeforeUnmount(() => {
     } catch { }
 });
 </script>
+
+<style lang="less" scoped>
+.search {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 0.9rem;
+    border-radius: 1rem;
+    background-color: var(--ex-bg-white1);
+    padding: 0.0.32rem;
+    color: var(--ex-placeholder-color);
+    margin: 0.1rem 0.28rem;
+
+    .icon {
+        width: 0.4rem;
+        height: 0.4rem;
+        margin-right: 0.2rem;
+    }
+}
+</style>

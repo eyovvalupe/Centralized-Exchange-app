@@ -165,7 +165,7 @@ const showDate = computed(() => {
   // 展示的数据时间
   if (item.value.timestamp || item.value.ts) {
     return formatTimestamp(
-      item.value.timestamp || item.value.ts,
+      (item.value.timestamp || item.value.ts || Date.now()),
       item.value.timezone
     );
   }
