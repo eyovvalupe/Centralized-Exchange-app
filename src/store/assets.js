@@ -28,11 +28,15 @@ export default {
     coinMap: {}, // 币种 网络 map
     currencyMapList: [],
     currSelectedWallet: 0,
+    depositData: {},
   },
   getters: {
     
   },
   mutations: {
+    setDepositData(state, data) {
+      state.depositData = data
+    },
     setCurrSelectedWallet(state, data) {
       state.currSelectedWallet = data
     },

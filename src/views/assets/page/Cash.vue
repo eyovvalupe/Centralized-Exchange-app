@@ -40,7 +40,7 @@ const getAssets = () => {
   });
   // store.dispatch('updateOrderHint')
 };
-const show0 = ref(true); // 是否隐藏余额为0的钱包
+const show0 = ref(false); // 是否隐藏余额为0的钱包
 const coinMap = computed(() => store.state.coinMap || {});
 const showList = computed(() => {
   const arr = [...wallet.value];

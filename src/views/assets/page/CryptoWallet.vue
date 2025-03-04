@@ -45,7 +45,7 @@ const getAssets = () => {
   });
   // store.dispatch('updateOrderHint')
 }
-const show0 = ref(true) // 是否隐藏余额为0的钱包
+const show0 = ref(false) // 是否隐藏余额为0的钱包
 
 _cryptoCoin({ dedup: false }).then(res => {
   store.commit('setCoinMap', res.data || [])

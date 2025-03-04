@@ -20,6 +20,7 @@
       v-if="headActiveTab == 0">
       <Tab :title="t('assets.header_total')" />
       <Tab :title="t('assets.wallet_cash_value')" />
+      <Tab :title="t('assets.wallet_header_stock')" />
       <Tab :title="t('assets.wallet_header_contract')" />
     </Tabs>
 
@@ -34,6 +35,11 @@
       <SwipeItem>
         <div class="assets_body">
           <Wallet ref="cashRef" :from="'cash'" @setLoading="(val) => (loading = val)" @click="(val) => click(val)" />
+        </div>
+      </SwipeItem>
+      <SwipeItem>
+        <div class="assets_body">
+          <Wallet ref="cashRef" :from="'stock'" @setLoading="(val) => (loading = val)" @click="(val) => click(val)" />
         </div>
       </SwipeItem>
       <SwipeItem>

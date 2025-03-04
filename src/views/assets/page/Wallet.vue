@@ -23,6 +23,11 @@
       <Btns />
       <Cash :showInfo="showInfo" @click="(val) => click(val)" />
     </div>
+    <div v-if="from == 'stock'">
+      <DefaultWallet v-model:showInfo="showInfo" :name="t('assets.wallet_stock_balance')" type="stock" />
+      <Btns />
+      <StockWallet :showInfo="showInfo" @click="(val) => click(val)" />
+    </div>
     <div v-if="from == 'futures'">
       <DefaultWallet v-model:showInfo="showInfo" :name="t('assets.wallet_contract_balance')" type="futures" />
       <Btns />
@@ -41,6 +46,7 @@ import StockMyWallet from "./StockWallet.vue";
 import CryptoWallet from "./CryptoWallet.vue";
 import HeaderTabs from "@/components/HeaderTabs.vue";
 import { useI18n } from "vue-i18n";
+import StockWallet from "./StockWallet.vue";
 const showInfo = ref(true)
 
 const emits = defineEmits(['click'])

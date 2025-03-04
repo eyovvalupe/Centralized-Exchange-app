@@ -65,13 +65,13 @@
           </div>
         </div>
       </div>
-      <!-- <div ref="tab2" :key="2" class="tab" :class="{ open_tab: rightSwitch2 == true }" @click="jumpToWallet('1')">
+      <div ref="tab2" :key="2" class="tab ripple-btn" :class="{ open_tab: rightSwitch2 == true }" @click="jumpToWallet('2')">
         <div class="tab_icon">
           <div style="width: 0.36rem;height: 0.36rem;">
             <img v-lazy="getStaticImgUrl(`/static/img/assets/stock.svg`)" alt="">
           </div>
         </div>
-        <div class="name">{{ $t("assets.over_view_stock") }}</div>
+        <div class="name">{{ $t("assets.wallet_header_stock") }}</div>
         <div class="amount" :class="hidden ? '!pt-[0.2rem]' : ''">
           {{
             hidden ? '******' : parseFloat(assets && assets.stock ? assets.stock : 0).toLocaleString()
@@ -82,8 +82,8 @@
             <img v-lazy="getStaticImgUrl(`/static/img/assets/right_arrow.svg`)" alt="">
           </div>
         </div>
-      </div> -->
-      <div ref="tab3" :key="3" class="tab ripple-btn" :class="{ open_tab: rightSwitch3 == true }" @click="jumpToWallet('2')">
+      </div>
+      <div ref="tab3" :key="3" class="tab ripple-btn" :class="{ open_tab: rightSwitch3 == true }" @click="jumpToWallet('3')">
         <div class="tab_icon">
           <div style="width: 0.28rem;height: 0.28rem;">
             <img v-lazy="getStaticImgUrl(`/static/img/assets/future.svg`)" alt="">

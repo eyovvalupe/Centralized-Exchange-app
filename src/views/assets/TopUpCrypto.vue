@@ -68,17 +68,17 @@
       </div>
       <div class="flex gap-[0.1rem] mb-[0.3rem]">
         <div
-          class="w-[3.3rem] h-[0.6rem] text-[0.28rem] text-color2 flex items-center justify-center rounded-[0.4rem] bg-white1 ripple-btn"
+          class="w-[1.32rem] h-[0.6rem] text-[0.28rem] text-color2 flex items-center justify-center rounded-[0.4rem] bg-white1 ripple-btn"
           @click="form.amount = 100">
           100
         </div>
         <div
-          class="w-[3.3rem] h-[0.6rem] text-[0.28rem] text-color2 flex items-center justify-center rounded-[0.4rem] bg-white1 ripple-btn"
+          class="w-[1.32rem] h-[0.6rem] text-[0.28rem] text-color2 flex items-center justify-center rounded-[0.4rem] bg-white1 ripple-btn"
           @click="form.amount = 200">
           200
         </div>
         <div
-          class="w-[3.3rem] h-[0.6rem] text-[0.28rem] text-color2 flex items-center justify-center rounded-[0.4rem] bg-white1 ripple-btn"
+          class="w-[1.32rem] h-[0.6rem] text-[0.28rem] text-color2 flex items-center justify-center rounded-[0.4rem] bg-white1 ripple-btn"
           @click="form.amount = 300">
           300
         </div>
@@ -169,10 +169,11 @@ import BottomPopup from '@/components/BottomPopup.vue';
 import RecordList from '@/components/RecordList.vue';
 import SafePassword from '@/components/SafePassword.vue';
 import AccountCheck from '@/components/AccountCheck.vue';
-import { _swapRate } from '@/api/api';
+import { _swapRate, _deposit1 } from '@/api/api';
 import Decimal from 'decimal.js';
 import { _cryptoCoin } from '@/api/api';
 import { useI18n } from 'vue-i18n';
+import {isEmpty} from '@/utils/isEmpty';
 
 const { t } = useI18n();
 const tabActive = ref('cryptocurrency');
@@ -180,6 +181,7 @@ const tabActive = ref('cryptocurrency');
 const safeRef = ref();
 const valueFocusRef = ref(false)
 const userInfo = computed(() => store.state.userInfo || {});
+const token = computed(() => store.state.sessionToken)
 const RecordListRef = ref();
 const route = useRoute();
 
@@ -302,6 +304,9 @@ const goTopUp = () => {
   if (topUpMode.value == 2 && !rate.value) {
     return showToast(t('topUpCrypto.getting_rate_msg'));
   }
+  if (isEmpty(form.value.currency) || isEmpty(form.value.network)) {
+    return;
+  }
   submit();
 };
 const submit = () => {
@@ -362,6 +367,7 @@ const getRate = () => {
 
 onMounted(() => {
   getCoinNet();
+  store.dispatch('updateSessionToken')
 });
 
 onBeforeUnmount(() => {

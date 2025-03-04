@@ -8,7 +8,7 @@
       </div>
 
       <!-- <CurrencyItem v-for="(item, i) in wallet" :item="item" :switchs="switchs" :i="i" :key="i" @switchOpen="switchOpen" /> -->
-      <CurrencyList @click="(val) => click(val)" :list="wallet" :type="'stock'" />
+      <CurrencyList :showInfo="showInfo" @click="(val) => click(val)" :list="wallet" :type="'stock'" />
 
     </div>
   </div>
@@ -23,8 +23,14 @@ import CurrencyList from './components/CurrencyList.vue';
 
 const { t } = useI18n();
 const emits = defineEmits(['setLoading', 'click'])
+const props = defineProps({
+  showInfo: {
+    type: Boolean,
+    default: false
+  }
+})
+
 const token = computed(() => store.state.token || '')
-const hidden = ref(false)
 
 // 刷新现金钱包
 const assets = computed(() => store.state.assets || {})
@@ -45,7 +51,7 @@ const getAssets = () => {
   })
   // store.dispatch('updateOrderHint')
 }
-const show0 = ref(true) // 是否隐藏余额为0的钱包
+const show0 = ref(false) // 是否隐藏余额为0的钱包
 const coinMap = computed(() => store.state.coinMap || {})
 
 _cryptoCoin({ dedup: false }).then(res => {
