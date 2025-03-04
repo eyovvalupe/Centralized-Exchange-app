@@ -46,7 +46,7 @@
             </div>
 
           </div>
-          <div :class="['td2 spark_line_box']" v-if="showSparkLine">
+          <div style="flex: 1.5;" :class="['spark_line_box']" v-if="showSparkLine">
             <SparkLine :style="['width: 100%; height: 0.6rem;']" v-if="props.item.points" :points="props.item.points"
               :ratio="props.item.ratio" />
           </div>
@@ -300,7 +300,7 @@ const removeStock = (item) => {
   .td5 {
     flex-shrink: 0;
     // width: 3rem;
-    flex: 2.5;
+    flex: 3;
     overflow: hidden;
 
     .item_name {
