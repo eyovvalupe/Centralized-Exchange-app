@@ -29,11 +29,27 @@ export default {
     currencyMapList: [],
     currSelectedWallet: 0,
     depositData: {},
+    fromType: 'money',
+    fromCurrency: {},
+    toType: 'money',
+    toCurrency: {},
   },
   getters: {
     
   },
   mutations: {
+    setFromType(state, data) {
+      state.fromType = data
+    },
+    setFromCurrency(state, data) {
+      state.fromCurrency = data
+    },
+    setToType(state, data) {
+      state.toType = data
+    },
+    setToCurrency(state, data) {
+      state.toCurrency = data
+    },
     setDepositData(state, data) {
       state.depositData = data
     },

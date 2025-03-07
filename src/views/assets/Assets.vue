@@ -103,14 +103,7 @@
             <div class="text-withdraw text-[0.32rem]">{{ t('assets.coin_list_withdraw') }}</div>
           </div>
           <div class="h-[1.75rem] rounded-[0.32rem] bg-transfer-in flex flex-col items-center pt-[0.16rem]"
-            :class="selectedItem.account == 'money' ? 'w-[1.565rem]' : 'w-[3.27rem]'" @click="() => {
-              router.push({
-                name: 'transfer',
-                query: { to: selectedItem.account },
-              });
-              handle = false;
-            }
-            ">
+            :class="selectedItem.account == 'money' ? 'w-[1.565rem]' : 'w-[3.27rem]'" @click="goIn(selectedItem)">
             <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
               <img v-lazy="getStaticImgUrl(`/static/img/assets/transfer_in.svg`)" alt="">
             </div>
@@ -118,14 +111,7 @@
               t('transfer.in') }}</div>
           </div>
           <div class="h-[1.75rem] rounded-[0.32rem] bg-transfer-out flex flex-col items-center pt-[0.16rem]"
-            :class="selectedItem.account == 'money' ? 'w-[1.565rem]' : 'w-[3.27rem]'" @click="() => {
-              router.push({
-                name: 'transfer',
-                query: { from: selectedItem.account },
-              });
-              handle = false;
-            }
-            ">
+            :class="selectedItem.account == 'money' ? 'w-[1.565rem]' : 'w-[3.27rem]'" @click="goOut(selectedItem)">
             <div class="mb-[0.16rem]" style="width: 0.8rem;height: 0.8rem;">
               <img v-lazy="getStaticImgUrl(`/static/img/assets/transfer_out.svg`)" alt="">
             </div>
@@ -171,6 +157,20 @@ const loadedTab = ref([activeTab.value]);
 const swipe = ref(null);
 
 const token = computed(() => store.state.token)
+
+const goIn = (item) => {
+  handle.value = false;
+  store.commit('setToCurrency', item)
+  store.commit('setToType', item.account)
+  router.push({name: 'transfer'})
+}
+
+const goOut = (item) => {
+  handle.value = false;
+  store.commit('setFromCurrency', item)
+  store.commit('setFromType', item.account)
+  router.push({name: 'transfer'})
+}
 
 // 跳转
 const changeActiveTab = (val, slideSwipe = false) => {

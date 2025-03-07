@@ -246,7 +246,7 @@
   const form = ref({
     from: route.query.from || 'money',
     fromCurrency: {},
-    to: route.query.to || 'futures',
+    to: route.query.to || 'money',
     toCurrency: {},
     amount: '',
   });
@@ -260,7 +260,10 @@
   });
 
   // 设置默认货币
-  const fromCurrency = computed(() => wallet.value[0]);
+  const fromCurrency = computed(() => !isEmpty(store.state.fromCurrency) ? store.state.fromCurrency : wallet.value[0]);
+  const toCurrency = computed(() => !isEmpty(store.state.toCurrency) ? store.state.toCurrency : wallet.value[0]);
+  const fromType = computed(() => store.state.fromType)
+  const toType = computed(() => store.state.toType)
 
   const t1 = computed(() => {
     const temp = elseWallet.value.find((item) => item.account == form.value.to);
@@ -270,7 +273,9 @@
 
   const init = () => {
     form.value.fromCurrency = fromCurrency.value;
-    form.value.toCurrency = t1.value;
+    form.value.toCurrency = toCurrency.value;
+    form.value.from = fromType.value;
+    form.value.to = toType.value;
   };
 
   setTimeout(() => {
@@ -537,6 +542,14 @@
   watch(wallet, (val) => {
     init();
   });
+
+  watch(fromCurrency, (val) => {
+    getRate()
+  })
+
+  watch(toCurrency, (val) => {
+    getRate()
+  })
 </script>
 
 <style lang="less" scoped>
