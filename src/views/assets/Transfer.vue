@@ -122,6 +122,7 @@
       @closed="clickKey = ''">
       <div class="van-popup-custom-title w-full text-center text-[0.32rem] relative top-[-0.05rem]">{{
         $t("transfer.confirm_con") }}</div>
+        {{ console.log(columns, customFieldName) }}
       <Picker :swipe-duration="200" :show-toolbar="false" :columns="columns" :columns-field-names="customFieldName"
         @cancel="hideDialog" @change="onChange">
         <template #option="option">
@@ -159,13 +160,14 @@ import AccountCheck from "@/components/AccountCheck.vue";
 import { useI18n } from "vue-i18n";
 import BottomPopup from "@/components/BottomPopup.vue";
 import { isEmpty } from "@/utils/isEmpty";
+import CryptoIcon from '@/components/CryptoIcon.vue'
 
 const { t } = useI18n();
 const AccountCheckRef = ref();
 const toAmount = ref("");
 const route = useRoute();
 const focus = ref(false); // 是否在输入中
-const columnList = ref(['money', 'stock', 'futures', 'forex'])
+const columnList = ref(['money', 'stock', 'futures'])
 const blurInput = () => {
   setTimeout(() => {
     errStatus.value = focus.value = false;
@@ -282,7 +284,7 @@ const columns1 = computed(() => {
   } else return []
 });
 const columns = computed(() => columns1.value.filter(item => {
-  return item.key != 'stock'
+  return item.key != 'forex'
 }))
 const customFieldName = {
   text: "value",
