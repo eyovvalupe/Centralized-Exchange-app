@@ -49,7 +49,7 @@
         <!-- <div class="form_title" v-show="activeTab == 0">
           {{ $t("register.email") }}
         </div> -->
-        <div class="form_item margin_item" v-show="activeTab == 0" :class="{ err_ipt: errorTip.error1 }">
+        <div class="form_item margin_item transition" v-show="activeTab == 0" :class="{ err_ipt: errorTip.error1 }">
           <input maxlength="30" @blur="errorTip.error1 = false" v-model.trim="form.email"
             :placeholder="t('register.pw_placeholder1')" type="text" class="item_input mask-btn"
             :class="{ err_ipt1: errorTip.error1 }" />
@@ -60,7 +60,7 @@
         <!-- <div class="form_title" v-show="activeTab == 1">
           {{ $t("register.phone_number") }}
         </div> -->
-        <div class="form_item margin_item" v-show="activeTab == 1" :class="{ err_ipt: errorTip.error1 }">
+        <div class="form_item margin_item transition" v-show="activeTab == 1" :class="{ err_ipt: errorTip.error1 }">
           <div class="code" @click="(showDialog = true), (searchStr = '')">
             <span class="flag_icon">
               <img v-lazy="getStaticImgUrl('/static/img/user/flag_hongkong.svg')" alt="" />
@@ -74,7 +74,7 @@
             :placeholder="t('register.pw_placeholder2')" type="text" class="item_input" />
         </div>
         <!-- <div class="form_title">{{ $t("register.login_password") }}</div> -->
-        <div class="form_item margin_item relative" :class="{ err_ipt: errorTip.error2 }">
+        <div class="form_item margin_item relative transition" :class="{ err_ipt: errorTip.error2 }">
           <input maxlength="20" @blur="errorTip.error2 = false" v-model.trim="form.password"
             :placeholder="t('register.pw_placeholder3')" :type="showPass ? 'text' : 'password'" class="item_input" />
           <div class="absolute top-[0.4rem] right-[0.32rem]" @click="showPass = !showPass">
@@ -87,7 +87,7 @@
         <!-- 密码等级 -->
         <PasswordLevel style="position: relative; top: -0.32rem; left: 0.32rem" :password="form.password" />
         <!-- <div class="form_title">{{ $t("register.trade_password") }}</div> -->
-        <div class="form_item margin_item relative" :class="{ err_ipt: errorTip.error3 }">
+        <div class="form_item margin_item relative transition" :class="{ err_ipt: errorTip.error3 }">
           <input maxlength="20" @blur="errorTip.error3 = false" v-model.trim="form.safeword"
             :placeholder="t('register.pw_placeholder5')" :type="showPass2 ? 'text' : 'password'" class="item_input" />
           <div class="absolute top-[0.4rem] right-[0.32rem]" @click="showPass2 = !showPass2">
@@ -98,7 +98,7 @@
           </div>
         </div>
         <!-- <div class="form_title">{{ $t("register.invite_code") }}</div> -->
-        <div class="form_item margin_item">
+        <div class="form_item margin_item transition">
           <input maxlength="20" v-model.trim="form.invateCode" :placeholder="t('register.pw_placeholder6')" type="text"
             class="item_input" />
         </div>
