@@ -6,7 +6,7 @@ import { _watchlist } from '@/api/api'
 const { startSocket } = useSocket()
 
 // 主组件的所有key
-const recommendArr = ['marketWatchList', 'contractList', 'marketForeignList', 'marketCommoditiesList', 'marketAiList', 'marketStockDataList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList', 'marketStockGermanyDataList', 'marketStockUkDataList', 'marketStockSingaporeDataList', 'marketStockHongkongDataList', 'marketStockMalaysiaDataList']
+const recommendArr = ['marketStockList', 'marketWatchList', 'contractList', 'marketForeignList', 'marketCommoditiesList', 'marketAiList', 'marketStockDataList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList', 'marketStockGermanyDataList', 'marketStockUkDataList', 'marketStockSingaporeDataList', 'marketStockHongkongDataList', 'marketStockMalaysiaDataList']
 // 不同页面对应的监听列表 key
 const pageKeys = {
     'home': [
@@ -23,6 +23,7 @@ const pageKeys = {
 
 
 const setCurr = (keyName, state, data) => {
+    data = JSON.parse(JSON.stringify(data))
     if (!data.symbol) { // 只更新部分数据
         for (let key in data) {
             if (data[key] === null) delete data[key]

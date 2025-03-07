@@ -828,6 +828,9 @@ const percentTagClick = (percent) => {
 
 // 市价
 const currStock = ref({}); // 当前股票
+if (store.state.currStockItem && store.state.currStockItem.symbol) {
+  currStock.value = JSON.parse(JSON.stringify(store.state.currStockItem))
+}
 
 const form1 = ref({
   leverType: "cross",
@@ -1114,7 +1117,7 @@ const initParam = () => {
   }
 };
 
-const handleClick = (item) => {
+const handleClick = (item, notHand) => {
   showSearchDialog.value = false;
   currStock.value = item;
   store.commit('setCurrStockItem', currStock.value)
@@ -1129,9 +1132,16 @@ const handleClick = (item) => {
       store.commit('setCurrStockItem', currStock.value)
     }
   });
+  if (notHand) return
   eventBus.emit('clickStock', item)
 };
 
+// 初始化
+setTimeout(() => {
+  if (currStock.value.symbol) {
+    handleClick(currStock.value, true)
+  }
+}, 0)
 // url参数处理
 if (props.tradeType == 1) {
   // 股票页

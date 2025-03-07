@@ -152,8 +152,10 @@ import BottomPopup from "@/components/BottomPopup.vue";
 import StockTable from "@/components/StockTable.vue";
 import { _futures } from "@/api/api";
 import { useI18n } from "vue-i18n";
-import NoData from "@/components/NoData.vue";
+import { useRoute } from "vue-router"
 
+
+const route = useRoute()
 const emits = defineEmits(['handleClick'])
 const props = defineProps({
   innerPage: {
@@ -212,6 +214,9 @@ const activated = ref(false);
 const act = () => {
   store.commit("setMarketWatchKeys", []);
   subs();
+  if (route.query.tab) {
+    sessionStorage.setItem(`rec_tab_trade`, route.query.tab)
+  }
 }
 const unact = () => {
   // 取消订阅

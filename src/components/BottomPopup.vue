@@ -1,7 +1,8 @@
 <template>
     <Popup class="ex-bottom-popup" round v-model:show="popupShow" position="bottom" :close-on-popstate="closeOnPopstate"
         :safe-area-inset-top="safeAreaInsetTop" :safe-area-inset-bottom="safeAreaInsetBottom"
-        :closeable="props.closeable" :teleport="from != 'account' ? 'body' : ''" @close="emits('close')" @closed="onClose">
+        :closeable="props.closeable" :teleport="from != 'account' ? 'body' : ''" @opened="emits('opened')"
+        @close="emits('close')" @closed="onClose">
         <div class="ex-bottom-popup-top relative top-[0.02rem]">
             <div class="t"></div>
             <!-- <img v-lazy="getStaticImgUrl('/static/img/common/popup_top.svg')" /> -->
@@ -43,7 +44,7 @@ const props = defineProps({
         default: ''
     }
 })
-const emits = defineEmits(['update:show', 'close', 'closed'])
+const emits = defineEmits(['update:show', 'close', 'closed', 'opened'])
 const popupShow = ref(props.show)
 watch(() => props.show, (v) => {
     popupShow.value = v
@@ -57,6 +58,7 @@ const onClose = () => {
 .ex-bottom-popup {
     background: none;
     border-radius: 0.48rem 0.48rem 0 0 !important;
+
     :deep(.van-popup__close-icon) {
         width: 0.6rem;
         height: 0.6rem;
@@ -69,21 +71,23 @@ const onClose = () => {
         right: 0.28rem;
         top: 0.24rem;
     }
-} 
+}
 
 .ex-bottom-popup-top {
     width: 100%;
     height: 0.58rem;
     background-color: var(--ex-bg-color9);
     position: relative;
+
     img {
         object-fit: fill;
     }
+
     .t {
         width: 0.64rem;
         height: 0.08rem;
         border-radius: 2rem;
-        background-color: rgba(255,255,255,0.5);
+        background-color: rgba(255, 255, 255, 0.5);
         position: absolute;
         top: 0.2rem;
         left: 50%;

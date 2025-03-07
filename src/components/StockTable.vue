@@ -6,7 +6,7 @@
       (type == 'stock' && item.symbol == currStockItem.symbol || type == 'future' && item.name == currConstractItem.name)
       ? 'current_item_effect'
       : ''
-      " :key="i" v-show="props.marketType == 'all' || props.marketType == item.type">
+      " :key="item.symbol" v-show="props.marketType == 'all' || props.marketType == item.type">
       <StockItem :marketType="props.marketType" :theme="theme" :handleClick="props.handleClick"
         :deleteItem="props.deleteItem" :showSparkLine="showSparkLine" :type="props.type" @remove="remove"
         :scrollDom="props.scrollDom" :item="item" :page="props.page" :showIcon="props.showIcon" />
