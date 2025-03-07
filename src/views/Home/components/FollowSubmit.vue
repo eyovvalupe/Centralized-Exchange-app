@@ -21,8 +21,8 @@
                     <div class="flex text-primary">{{ maxStockNum }}<span class="text-color">&nbsp;USDT</span></div>
                 </div>
                 <div class="flex gap-[0.28rem] justify-center">
-                    <div class="w-[3rem] h-[0.6rem] flex items-center justify-center rounded-[1rem] bg-white text-black ripple-primary" @click="goDeposit">{{ $t('home.recharge') }}</div>
-                    <div class="w-[3rem] h-[0.6rem] flex items-center justify-center rounded-[1rem] bg-white text-black ripple-primary" @click="goTransfer">{{ $t('assets.transfer') }}</div>
+                    <div class="w-[3rem] h-[0.6rem] flex items-center justify-center rounded-[1rem] bg-white1 text-white ripple-primary" @click="goDeposit">{{ $t('home.recharge') }}</div>
+                    <div class="w-[3rem] h-[0.6rem] flex items-center justify-center rounded-[1rem] bg-white1 text-white ripple-primary" @click="goTransfer">{{ $t('assets.transfer') }}</div>
                 </div>
             </div>
             <div class="line"></div>
@@ -179,7 +179,7 @@ const openConfirmBox = () => {
         margin: 0.6rem 0.32rem 0 0.32rem;
 
         .line {
-            border-top: 1px dashed var(--ex-border-color4);
+            border-top: 1px dashed var(--ex-bg-white2);
             height: 1px;
             width: 100%;
             margin: 0.4rem 0;
@@ -187,9 +187,9 @@ const openConfirmBox = () => {
     }
 
     .pass_ipt {
-        margin-bottom: 0.58rem;
+        margin-bottom: 0.4rem;
         border-radius: 0.32rem;
-        border: 1px solid var(--ex-border-color2);
+        border: 1px solid transparent;
         padding: 0 0.24rem;
         height: 1.12rem;
         padding: 0.16rem 0.32rem;

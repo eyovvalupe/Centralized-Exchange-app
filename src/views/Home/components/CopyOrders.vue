@@ -3,11 +3,11 @@
         <div class="my-total" v-if="!isEmpty(myCopyData)">
             <div class="info-flex">
                 <div class="info-item">
-                    <div class="name">{{ $t('copy.copy_order_total_profit') }}</div>
-                    <div class="val">{{ myCopyData.returnamount }}</div>
+                    <div class="name">{{ $t('copy.copy_order_total_profit') }}<span class="text-[0.24rem]">(USDT)</span></div>
+                    <div class="val" :class="[myCopyData.returnamount >= 0 ? 'up' : 'down']">{{ myCopyData.returnamount }}</div>
                 </div>
                 <div class="info-item" style="text-align: right;">
-                    <div class="name">{{ $t('copy.copy_order_total_amount') }}</div>
+                    <div class="name">{{ $t('copy.copy_order_total_amount') }}<span class="text-[0.24rem]">(USDT)</span></div>
                     <div class="val" @click="plus">
                         <span>{{ myCopyData.amount }}</span>
                     </div>
@@ -54,6 +54,7 @@ const openInfo = item => {
     background: var(--ex-bg-color3);
     padding: 0.12rem;
     margin-bottom: 0.2rem;
+    border:1px solid var(--ex-bg-white2);
 
     .info-flex {
         display: flex;
@@ -67,7 +68,7 @@ const openInfo = item => {
 
             .name {
                 color: var(--ex-placeholder-color);
-                font-size: 0.28rem;
+                font-size: 0.3rem;
                 margin-bottom: 0.24rem;
             }
 

@@ -99,6 +99,7 @@ let moreDom = null;
 const totalHeight = window.innerHeight || document.documentElement.clientHeight;
 const scrolHandle = () => {
     const rect = moreDom.getBoundingClientRect();
+    console.log(666)
     if (rect.top <= totalHeight) {
         // 加载更多
         getMoreData();

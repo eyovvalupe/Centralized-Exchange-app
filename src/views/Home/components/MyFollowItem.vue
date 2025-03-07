@@ -27,7 +27,7 @@
             <div class="info-flex">
                 <div class="info-item">
                     <div class="name">{{ $t('finance.portfolio_revenue') }}</div>
-                    <div class="val">{{ props.item.returnamount }}</div>
+                    <div class="val" :class="[props.item.returnamount >= 0 ? 'up' : 'down']">{{ props.item.returnamount }}</div>
                 </div>
                 <div class="info-item" style="text-align: right;">
                     <div class="name">{{ $t('copy.copy_order_total_amount') }}</div>
@@ -252,7 +252,7 @@ const goInfo = () => {
                 justify-content: flex-start;
 
                 .bottom-info {
-                    background-color: var(--ex-bg-color2);
+                    background-color: var(--ex-bg-white2);
                     height: 0.36rem;
                     padding: 0 0.1rem;
                     border-radius: 0.12rem;
@@ -301,7 +301,7 @@ const goInfo = () => {
         display: flex;
         align-items: center;
         justify-content: space-between;
-        margin: 0.16rem 0 0.32rem 0;
+        margin: 0.26rem 0 0.32rem 0;
 
         .info-item {
             text-align: left;
@@ -314,9 +314,9 @@ const goInfo = () => {
             }
 
             .val {
-                color: var(--ex-white);
+                color: var(--ex-text-color);
                 font-weight: bold;
-                font-size: 0.36rem;
+                font-size: 0.4rem;
             }
         }
     }
@@ -357,13 +357,13 @@ const goInfo = () => {
         justify-content: space-between;
 
         .btn {
-            background-color: var(--ex-white);
+            background-color: var(--ex-bg-white2);
             display: flex;
             align-items: center;
             justify-content: center;
             height: 0.8rem;
             border-radius: 0.8rem;
-            color: var(--ex-bg-color);
+            color: var(--ex-text-color);
             width: 47.5%;
         }
 
