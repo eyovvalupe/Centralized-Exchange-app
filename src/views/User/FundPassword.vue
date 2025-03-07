@@ -149,7 +149,6 @@
       !form.value.password || !form.value.password2 || !form.value.prevPassword,
   );
   const loading = ref(false); // 加载
-  const isSame = ref(true);
   const submit = () => {
     if (accountCheckRef.value.check()) {
       if (
@@ -179,6 +178,8 @@
     _safeword(params)
       .then((res) => {
         if (res.code == 200) {
+          store.commit('setSuccessToastText', t('safety.success_title'));
+          store.commit('setShowSuccessToast', true);
           router.replace({
             name: 'success',
           });

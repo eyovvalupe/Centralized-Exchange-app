@@ -152,7 +152,11 @@
 
   const submit = () => {
     if (accountCheckRef.value.check()) {
-      if (!form.value.prevPassword || !form.value.password || !form.value.password2) {
+      if (
+        !form.value.prevPassword ||
+        !form.value.password ||
+        !form.value.password2
+      ) {
         if (!form.value.prevPassword) originError.value = true;
         if (!form.value.password) newError.value = true;
         if (!form.value.password2) confirmError.value = true;
@@ -175,6 +179,8 @@
     _updatepw(params)
       .then((res) => {
         if (res.code == 200) {
+          store.commit('setSuccessToastText', t('safety.success_title'));
+          store.commit('setShowSuccessToast', true);
           router.replace({
             name: 'success',
           });

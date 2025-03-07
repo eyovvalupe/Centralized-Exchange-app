@@ -290,7 +290,11 @@
 
       <div class="withdraw_accounr_dialog">
         <div class="lists card_lists">
-          <div class="add_account" style="background-color: var(--ex-bg-white1);" @click="goAddAccount">
+          <div
+            class="add_account"
+            style="background-color: var(--ex-bg-white1)"
+            @click="goAddAccount"
+          >
             <Icon size="0.48rem" color="var(--ex-text-color2)" name="add-o" />
             <div class="add_account_text">
               {{ $t('withdraw.addPaymentMethod') }}
@@ -302,7 +306,7 @@
             @click="clickAccountItem(item)"
             :class="{
               card_box_active:
-                (tabActive == 'cryptocurrency' && currAccount.id == item.id)
+                tabActive == 'cryptocurrency' && currAccount.id == item.id,
             }"
             :key="i"
           >
@@ -385,7 +389,7 @@
   import { useRoute } from 'vue-router';
   import { useI18n } from 'vue-i18n';
   import BottomPopup from '@/components/BottomPopup.vue';
-  import CryptoIcon from '@/components/CryptoIcon.vue'
+  import CryptoIcon from '@/components/CryptoIcon.vue';
 
   const { t } = useI18n();
   const RecordListRef = ref();
@@ -463,7 +467,8 @@
     _withdraw(withdrawParams.value)
       .then((res) => {
         if (res.code == 200) {
-          showToast(t('withdraw.successful'));
+          store.commit('setSuccessToastText', t('safety.success_title'));
+          store.commit('setShowSuccessToast', true);
           form.value.amount = '';
           store.dispatch('updateWallet'); // 更新钱包
           router.push({
