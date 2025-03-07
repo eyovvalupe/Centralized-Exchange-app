@@ -71,8 +71,10 @@
         :crypto-currency="form.from.toUpperCase()"
         :balance="balance"
         :placeholder="$t('withdraw.withdrawalAmount')"
+        :errStatus="errStatus"
         @change="changeAmount"
         @btnClick="maxIpt"
+        @focus="errStatus = false"
       >
       </FormItem>
 
@@ -427,16 +429,16 @@
     if (AccountCheckRef.value.check()) {
       if (!form.value.amount || form.value.amount <= 0) {
         errStatus.value = true;
-        return showToast(t('withdraw.no_amount_msg'));
+        return showToast(t('topUpCrypto.no_amount_msg'));
       }
       if (form.value.amount > balance.value) {
-        return showToast(t('withdraw.no_enough_msg'));
+        return showToast(t('topUpCrypto.no_enough_balance'));
       }
       if (
         (tabActive == 'cryptoCurrency' && !showAccount.value.length) ||
         (tabActive == 'bankCard' && !showBankAccount.value.length)
       ) {
-        return showToast(t('withdraw.no_account_msg'));
+        return showToast(t('topUpCrypto.no_account_msg'));
       }
       safeRef.value.open();
     }

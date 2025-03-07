@@ -92,7 +92,7 @@
             <template v-if="item.type !== 'img'">
               {{ item.content }}
             </template>
-            <van-image v-else class="send-conimg" radius="6" Lazyload :src="item.content" fit="scale-down">
+            <van-image v-else class="send-conimg" radius="6" Lazyload :src="item.content" fit="scale-down" @click="preview(item.content)">
               <template v-slot:loading>
                 <Loaidng type="circular" size="20" />
               </template>
