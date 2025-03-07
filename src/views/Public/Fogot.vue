@@ -25,7 +25,7 @@
     <!-- 表单 -->
     <div class="form relative">
       <!-- <div class="form_title">{{ t('forget_pw.email_phone') }}</div> -->
-      <div class="form_item margin_item">
+      <div class="form_item margin_item transition">
         <input maxlength="20" v-model.trim="form.username" :placeholder="t('forget_pw.user_name')" type="text"
           class="item_input" />
         <div class="form_item_clear" v-show="form.username" @click="form.username = null">
@@ -34,7 +34,7 @@
       </div>
 
       <!-- <div class="form_title">{{ t('change_login_pw.new_pw') }}</div> -->
-      <div class="form_item mb-[0.05rem]">
+      <div class="form_item mb-[0.05rem] transition">
         <input maxlength="20" v-model.trim="form.password" :type="showPass ? 'text' : 'password'"
           :placeholder="t('change_login_pw.new_pw_placeholder')" class="item_input" @input="checkPasswordStrength" />
         <div class="form_item_icon" @click="toggleShowPass">
@@ -45,7 +45,7 @@
 
       <div class="mb-[0.32rem]"></div>
       <!-- <div class="form_title">{{ t('change_login_pw.confirm_pw') }}</div> -->
-      <div class="form_item">
+      <div class="form_item transition">
         <input maxlength="20" v-model.trim="form.confirmPassword" :type="showConfirmPass ? 'text' : 'password'"
           :placeholder="t('change_login_pw.confirm_pw_placeholder')" class="item_input" />
         <div class="form_item_icon" @click="toggleShowConfirmPass">
@@ -302,6 +302,7 @@ const submitForm = (code) => {
       height: 1.12rem;
       border-radius: 0.32rem;
       padding: 0 0.2rem;
+      border-width: 0.02rem;
 
       .item_input {
         flex: 1;
