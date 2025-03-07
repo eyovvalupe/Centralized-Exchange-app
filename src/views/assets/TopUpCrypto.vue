@@ -75,7 +75,7 @@
         <div class="item_content">
           <input
             class="ipt"
-            @focus="valueFocusRef = true"
+            @focus="valueFocusRef = true; errStatus = false"
             @blur="
               errStatus = false;
               valueFocusRef = false;
