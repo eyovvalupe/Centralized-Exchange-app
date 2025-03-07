@@ -36,6 +36,7 @@ const store = createStore({
     transitionName: '', // 页面过渡动画名字
     token: '',
     userInfo: {}, // 用户详情
+    guestUserInfo: {}, //模拟账户详情
     selectedPayment: 0,
     accountList: [], // 收款方式列表
     sessionToken: '', // 关键请求token
@@ -56,6 +57,7 @@ const store = createStore({
     showSuccessToast: false,
     isSentCodeError: false,
     showLeftMenu: false,
+    successToastText: '',
     ...market.state,
     ...trade.state,
     ...assets.state,
@@ -64,6 +66,12 @@ const store = createStore({
     ...finance.state,
   },
   mutations: {
+    setSuccessToastText(state, data) {
+      state.successToastText = data
+    },
+    setGuestUserInfo(state, data) {
+      state.guestUserInfo = data
+    },
     setShowLeftMenu (state, data) {
       state.showLeftMenu = data
     },

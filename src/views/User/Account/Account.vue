@@ -14,14 +14,14 @@
           </div>
         </div>
       </Tab>
-      <Tab :title="''" name="1">
+      <Tab :title="t('account.bank')" name="1">
         <div class="tab_data">
-          <div class="no_data">
+          <div class="no_data" v-if="bankList.length == 0">
             <NoWallet />
           </div>
-          <!-- <div class="list" v-else>
+          <div class="list" v-else>
             <BankList :list="bankList" />
-          </div> -->
+          </div>
         </div>
       </Tab>
     </Tabs>

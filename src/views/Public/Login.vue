@@ -24,14 +24,14 @@
     <!-- 表单 -->
     <div class="form">
       <!-- <div class="form_title" v-show="activeTab == 0">{{ $t("login.email") }}</div> -->
-      <div class="form_item margin_item" v-show="activeTab == 0">
+      <div class="form_item margin_item transition" :style="{borderColor: emailError ? 'var(--ex-error-color)' : ''}" v-show="activeTab == 0">
         <div class="form_item_user">
           <div class="envelope-icon">
             <img v-lazy="getStaticImgUrl('/static/img/user/envelope.svg')" alt="">
           </div>
         </div>
         <input @change="changeAccount" v-model.trim="form.email" :placeholder="t('login.pw_placeholder1')" type="text"
-          class="item_input" />
+          class="item_input" @focus="emailError = false"/>
         <Loading v-if="accountLoading" :size="'0.32rem'" type="circular" />
         <div class="form_item_clear" v-show="form.email" @click="form.email = null">
           <div class="cross-icon">
@@ -41,7 +41,7 @@
       </div>
 
       <!-- <div class="form_title" v-show="activeTab == 1">{{ $t("login.phone_number") }}</div> -->
-      <div class="form_item margin_item" v-show="activeTab == 1">
+      <div class="form_item margin_item transition" :style="{borderColor: phoneError ? 'var(--ex-error-color)' : ''}" v-show="activeTab == 1">
         <div class="code" @click="
           showDialog = true;
         searchStr = '';
@@ -55,10 +55,10 @@
           </div>
         </div>
         <input maxlength="20" v-model.trim="form.phone" type="text" :placeholder="t('login.pw_placeholder2')"
-          class="item_input" />
+          class="item_input" @focus="phoneError = false"/>
       </div>
       <!-- <div class="form_title">{{ $t("login.password") }}</div> -->
-      <div class="form_item">
+      <div class="form_item transition" :style="{borderColor: pwError ? 'var(--ex-error-color)' : ''}">
         <!-- 显示密码输入时的锁图标 -->
         <div class="form_item_user">
           <div class="lock-icon">
@@ -68,7 +68,7 @@
 
         <!-- 密码输入框，使用 v-if/v-else 优化 -->
         <input maxlength="20" :type="showPass ? 'text' : 'password'" v-model.trim="form.password"
-          :placeholder="t('login.pw_placeholder3')" class="item_input" />
+          :placeholder="t('login.pw_placeholder3')" class="item_input" @focus="pwError = false"/>
 
         <!-- 切换显示/隐藏密码的图标 -->
         <div class="form_item_icon" @click="showPass = !showPass">
@@ -85,7 +85,7 @@
 
     <!-- 按钮 -->
     <div class="submit_box " @click="submit">
-      <Button :loading="loading" :disabled="disabled" round class="submit ripple-btn" type="primary">
+      <Button :loading="loading" round class="submit ripple-btn" type="primary">
         <span style="color: var(--ex-white);">{{
           $t("login.login") }}</span></Button>
     </div>
@@ -152,7 +152,7 @@ import {
   List,
   Cell,
 } from "vant";
-import { ref, computed, onMounted } from "vue";
+import { ref, computed, onMounted, watch } from "vue";
 import router from "@/router";
 import { useRoute } from "vue-router";
 import { _login, _userExist, _watchlist } from "@/api/api";
@@ -248,8 +248,21 @@ const disabled = computed(() => {
   return !form.value.password;
 });
 
+const emailError = ref(false);
+const phoneError = ref(false);
+const pwError = ref(false);
+
 // 提交
 const submit = () => {
+  console.log(activeTab.value == 0 && !form.value.email || activeTab.value == 1 && !form.value.phone || !form.value.password)
+
+  if (activeTab.value == 0 && !form.value.email || activeTab.value == 1 && !form.value.phone || !form.value.password) {
+    if (activeTab.value == 0 && !form.value.email) emailError.value = true;
+    if (activeTab.value == 1 && !form.value.phone) phoneError.value = true;
+    if (!form.value.password) pwError.value = true;
+    console.log('error')
+    return;
+  }
   if (loading.value) return;
   loading.value = true;
   if (activeTab.value == 0) {
@@ -372,6 +385,16 @@ const goRegister = () => {
     },
   });
 };
+
+const cleanError = () => {
+  emailError.value = false;
+  phoneError.value = false;
+  pwError.value = false;
+}
+
+watch(activeTab, (val) => {
+  cleanError();
+})
 
 onMounted(() => {
   Promise.all([

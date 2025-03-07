@@ -11,9 +11,9 @@ export const _accountMap = {
   forex: t("accountMap.foreignExchangeAccount"),
 };
 export const _accountMapList = [
-  { key: "money", value: t('assets.wallet_header_cash') },
+  { key: "money", value: t('assets.wallet_cash_value') },
   { key: "stock", value: t('assets.wallet_header_stock') },
-  { key: "futures", value: t('market.market_buy_fast_account_crypto') },
+  { key: "futures", value: t('assets.wallet_header_contract') },
   { key: "forex", value: t('assets.wallet_header_forex') },
 ];
 

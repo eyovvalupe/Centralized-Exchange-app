@@ -79,10 +79,8 @@ const submit = (googleCode) => {
   })
     .then((res) => {
       if (res.code == 200) {
+        store.commit("setSuccessToastText", t('success_toast_message'))
         store.commit("setShowSuccessToast", true);
-        setTimeout(() => {
-          store.commit("setShowSuccessToast", false);
-        }, 1000);
         setTimeout(() => {
           router.back();
         }, 200);
@@ -132,7 +130,7 @@ _kycGet().then((res) => {
     width: 100%;
     height: 1.12rem;
     border-radius: 0.32rem;
-    background-color: var(--ex-bg-color2);
+    background-color: var(--ex-bg-white2);
     border: 1px solid var(--ex-border-color);
     margin-bottom: 0.4rem;
     display: flex;

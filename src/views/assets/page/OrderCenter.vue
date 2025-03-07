@@ -25,7 +25,7 @@
       </div>
       <div id="assets_order_center_body" ref="orderCenterRef">
         <div class="tab pt-[0.4rem]" v-if="activeTab == 0">
-          <RecordBuyCoin />
+          <RecordBuyCoin :from="'order'" />
         </div>
 
         <div class="tab px-[0.32rem]" v-if="activeTab == 1">
@@ -36,65 +36,64 @@
         </div>
         <div class="tab" v-if="activeTab == 3">
           <Tabs
-              type="custom-sub"
-                v-model:active="active"
-                :swipeable="false"
-                :color="'var(--ex-primary-color)'"
-                shrink
-                @change="onChange"
-              >
-                <Tab :title="'当前委托'" :name="0">
-                  <div class="px-[0.32rem]">
-                    <SpotPosition />
-                  </div>
-                </Tab>
-                <Tab :title="'历史订单'" :name="1">
-                  <div class="px-[0.32rem]">
-                    <SpotInquire />
-                  </div>
-                </Tab>
-              </Tabs>
+            type="custom-sub"
+            v-model:active="active"
+            :swipeable="false"
+            :color="'var(--ex-primary-color)'"
+            shrink
+            @change="onChange"
+          >
+            <Tab :title="'当前委托'" :name="0">
+              <div class="px-[0.32rem]">
+                <SpotPosition />
+              </div>
+            </Tab>
+            <Tab :title="'历史订单'" :name="1">
+              <div class="px-[0.32rem]">
+                <SpotInquire />
+              </div>
+            </Tab>
+          </Tabs>
         </div>
         <div class="tab px-[0.32rem]" v-if="activeTab == 4">
           <Tabs
-                type="sub"
-                v-model:active="active"
-                :swipeable="false"
-                :color="'var(--ex-primary-color)'"
-                shrink
-                @change="onChange"
-              >
-                <Tab :title="'当前委托'" :name="0">
-                    <ContractPosition />
-                </Tab>
-                <Tab :title="'历史订单'" :name="1">
-                    <ContractInquire />
-                </Tab>
-              </Tabs>
+            type="sub-order"
+            v-model:active="active"
+            :swipeable="false"
+            :color="'var(--ex-primary-color)'"
+            shrink
+            @change="onChange"
+          >
+            <Tab :title="'当前委托'" :name="0" class="pt-[0.32rem]">
+              <ContractPosition />
+            </Tab>
+            <Tab :title="'历史订单'" :name="1" class="pt-[0.32rem]">
+              <ContractInquire />
+            </Tab>
+          </Tabs>
         </div>
         <div class="tab px-[0.32rem]" v-if="activeTab == 5">
           <Tabs
-          type="sub"
-
-                v-model:active="active"
-                :swipeable="false"
-                :color="'var(--ex-primary-color)'"
-                shrink
-                @change="onChange"
-              >
-                <Tab :title="'当前委托'" :name="0">
-                    <AiPosition />
-                </Tab>
-                <Tab :title="'历史订单'" :name="1">
-                    <AiInquire />
-                </Tab>
-              </Tabs>
+            type="sub-order"
+            v-model:active="active"
+            :swipeable="false"
+            :color="'var(--ex-primary-color)'"
+            shrink
+            @change="onChange"
+          >
+            <Tab :title="'当前委托'" :name="0">
+              <AiPosition />
+            </Tab>
+            <Tab :title="'历史订单'" :name="1">
+              <AiInquire />
+            </Tab>
+          </Tabs>
         </div>
         <div class="tab" v-if="activeTab == 6">
-          <PledgeOrder />
+          <PledgeOrder :from="'order'"/>
         </div>
         <div class="tab" v-if="activeTab == 7">
-          <Order :from="'order'"/>
+          <Order :from="'order'" />
         </div>
       </div>
     </div>

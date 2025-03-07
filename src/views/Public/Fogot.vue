@@ -25,29 +25,34 @@
     <!-- 表单 -->
     <div class="form relative">
       <!-- <div class="form_title">{{ t('forget_pw.email_phone') }}</div> -->
-      <div class="form_item margin_item">
+      <div class="form_item margin_item transition" :style="{borderColor: idError ? 'var(--ex-error-color)' : ''}">
         <input maxlength="20" v-model.trim="form.username" :placeholder="t('forget_pw.user_name')" type="text"
-          class="item_input" />
+          class="item_input" @focus="idError = false"/>
         <div class="form_item_clear" v-show="form.username" @click="form.username = null">
-          <Icon name="cross" size="0.25rem" />
+          <div class="size-[0.25rem]">
+            <img v-lazy="getStaticImgUrl('static/img/common/mini_close.svg')" alt="" />
+          </div>
         </div>
       </div>
 
       <!-- <div class="form_title">{{ t('change_login_pw.new_pw') }}</div> -->
-      <div class="form_item mb-[0.05rem]">
+      <div class="form_item mb-[0.05rem] transition" :style="{borderColor: newError ? 'var(--ex-error-color)' : ''}">
         <input maxlength="20" v-model.trim="form.password" :type="showPass ? 'text' : 'password'"
-          :placeholder="t('change_login_pw.new_pw_placeholder')" class="item_input" @input="checkPasswordStrength" />
+          :placeholder="t('change_login_pw.new_pw_placeholder')" class="item_input" @input="checkPasswordStrength" @focus="newError = false"/>
         <div class="form_item_icon" @click="toggleShowPass">
-          <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'"></div>
+          <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'">
+            <img v-if="showPass" v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
+            <img v-else v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
+          </div>
         </div>
       </div>
       <PasswordLevel class="form_passCheck" :password="form.password" :from="'forgot'" />
 
       <div class="mb-[0.32rem]"></div>
       <!-- <div class="form_title">{{ t('change_login_pw.confirm_pw') }}</div> -->
-      <div class="form_item">
+      <div class="form_item transition" :style="{borderColor: confirmError ? 'var(--ex-error-color)' : ''}">
         <input maxlength="20" v-model.trim="form.confirmPassword" :type="showConfirmPass ? 'text' : 'password'"
-          :placeholder="t('change_login_pw.confirm_pw_placeholder')" class="item_input" />
+          :placeholder="t('change_login_pw.confirm_pw_placeholder')" class="item_input" @focus="confirmError = false"/>
         <div class="form_item_icon" @click="toggleShowConfirmPass">
           <div :class="showConfirmPass ? 'eye-show-icon' : 'eye-hidden-icon'">
             <img v-if="showConfirmPass" v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
@@ -59,7 +64,7 @@
 
     <!-- 按钮 -->
     <div class="submit_box" @click="submit">
-      <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="submit"
+      <Button :loading="loading" round color="var(--ex-primary-color)" class="submit"
         type="primary"><span style="color: var(--ex-white);">{{ t('forget_pw.get_back') }}</span></Button>
     </div>
     <div class="tologin" @click="router.push({ name: 'login' })">{{ t('register.go_login') }}</div>
@@ -96,6 +101,9 @@ const showPass = ref(false);
 const showConfirmPass = ref(false);
 const svgColor = ref("var(--ex-border-color2)");
 const loading = ref(false);
+const idError = ref(false);
+const newError = ref(false);
+const confirmError = ref(false);
 
 // Form data
 const form = ref({
@@ -124,6 +132,17 @@ const toggleShowConfirmPass = () => {
 
 // Submit form to trigger Google Verification
 const submit = () => {
+  if (!form.value.username || !form.value.password || !form.value.confirmPassword) {
+    if (!form.value.username) idError.value = true;
+    if (!form.value.password) newError.value = true;
+    if (!form.value.confirmPassword) confirmError.value = true;
+    return;
+  }
+  if (form.value.password != form.value.confirmPassword) {
+    newError.value = true;
+    confirmError.value = true;
+    return;
+  }
   ggRef.value.open();
 };
 
@@ -302,6 +321,7 @@ const submitForm = (code) => {
       height: 1.12rem;
       border-radius: 0.32rem;
       padding: 0 0.2rem;
+      border-width: 0.02rem;
 
       .item_input {
         flex: 1;

@@ -42,13 +42,12 @@
                 <template v-if="item.type !== 'img'">
                   {{ item.content }}
                 </template>
-                <van-image v-else class="send-conimg" radius="6" Lazyload :src="item.content" fit="scale-down">
+                <van-image v-else class="send-conimg" radius="6" Lazyload :src="item.content" fit="scale-down" @click="preview(item.content)">
                   <template v-slot:loading>
                     <Loaidng type="circular" size="20" />
                   </template>
                 </van-image>
               </div>
-              {{ console.log(token) }}
               <div class="user-icon" v-if="item.direction !== 'receive' && item.type !== 'img'"></div>
               <div v-if="!token" style="width: 0.8rem;height: 0.8rem;" class="ml-[0.2rem]">
                 <img v-lazy="getStaticImgUrl(`/static/img/user/avatar1.svg`)" alt="">
@@ -69,7 +68,7 @@
                 </div>
               </div>
               <div class="con break-all" :class="item.type" v-else>
-                <van-image class="send-conimg" radius="6" Lazyload :src="item.content" fit="scale-down">
+                <van-image class="send-conimg" radius="6" Lazyload :src="item.content" fit="scale-down" @click="preview(item.content)">
                   <template v-slot:loading>
                     <Loaidng type="circular" size="20" />
                   </template>
@@ -103,13 +102,14 @@
         </div>
       </div>
     </template>
+    <ImagePreview v-model:show="isPreview" :images="previewList" />
   </div>
 </template>
 
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
 import { computed, onMounted, ref, watch } from "vue";
-import { Lazyload, Image as VanImage } from "vant";
+import { ImagePreview, Lazyload, Image as VanImage } from "vant";
 import { transferTime } from "@/utils";
 import storeChat from "@/store/chat";
 import Loaidng from "@/components/Loaidng.vue";
@@ -148,6 +148,12 @@ function formatDate(date) {
 //     scrollToBottom();
 //   }, 200);
 // });
+const isPreview = ref(false);
+const previewList = ref([])
+const preview = (url) => {
+  previewList.value = [url]
+  isPreview.value = true
+}
 </script>
 
 <style lang="less" scoped>

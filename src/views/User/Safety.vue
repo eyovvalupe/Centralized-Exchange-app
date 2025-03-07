@@ -71,15 +71,15 @@ const goGG = () => {
 };
 
 const checkGG = async (name) => {
-  if (!userInfo.value.googlebind) {
-    return showConfirmDialog({
-      title: t('safety.bind_google_auth'),
-      message: t('safety.no_google_dialog_con'),
-      theme: 'round-button'
-    }).then(() => {
-      jump("google");
-    });
-  }
+  // if (!userInfo.value.googlebind) {
+  //   return showConfirmDialog({
+  //     title: t('safety.bind_google_auth'),
+  //     message: t('safety.no_google_dialog_con'),
+  //     theme: 'round-button'
+  //   }).then(() => {
+  //     jump("google");
+  //   });
+  // }
   jump(name);
 };
 

@@ -20,9 +20,9 @@
     </div>
     <div class="title">{{ $t("register.success_sign_up") }}</div>
 
-    <Button round color="var(--ex-primary-color)" class="submit ripple-btn" type="primary" @click="next">{{
+    <Button round color="var(--ex-primary-color)" class="submit ripple-btn" type="primary" @click="next"><span class="text-[0.32rem] text-white">{{
       $t("register.success_btn")
-    }}</Button>
+    }}</span></Button>
     <div @click="back">
       <span class="text-white text-[0.32rem]">{{
         $t('register.success_finish') }}</span>
@@ -147,6 +147,7 @@ const goChat = () => {
     margin-bottom: 0.6rem;
     font-size: 0.32rem;
     font-weight: 400;
+    color: var(--ex-white);
   }
 
   :deep(.van-button__text) {

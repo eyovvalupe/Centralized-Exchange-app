@@ -2,17 +2,6 @@
 <template>
   <div class="container">
     <!-- 返回和语言 -->
-    <!-- <div class="top_icon_container">
-      <div class="top_back_container text-[0.48rem]" @click="goBack">
-        <Icon name="arrow-left" />
-      </div>
-
-      <div class="language_icon_container" @click="goLang">
-        <div class="language_icon">
-          <img v-lazy="getStaticImgUrl('/static/img/user/lang.svg')" alt="">
-        </div>
-      </div>
-    </div> -->
     <Top>
       <template #right>
         <div class="w-[0.6rem] h-[0.6rem]" @click="goLang">
@@ -316,40 +305,5 @@
     .status_error {
       color: var(--ex-error-color);
     }
-
-    // .check_slider {
-    //   :deep(.van-slider__bar) {
-    //     height: 1.2rem;
-    //     border-radius: 0.6rem;
-    //   }
-
-    //   :deep(.van-slider__runway) {
-    //     height: 1.2rem;
-    //     border-radius: 0.6rem;
-    //   }
-
-    //   :deep(.van-slider__button-wrapper) {
-    //     top: 0;
-    //   }
-
-    //   :deep(.van-slider__button) {
-    //     width: 1.2rem;
-    //     height: 1.2rem;
-    //     border: none;
-    //     background-size: 100% 100%;
-    //   }
-    // }
-
-    // .check_slider_success {
-    //   :deep(.van-slider__bar) {
-    //     background-color: var(--ex-success-color);
-    //   }
-    // }
-
-    // .check_slider_error {
-    //   :deep(.van-slider__bar) {
-    //     background-color: var(--ex-error-color);
-    //   }
-    // }
   }
 </style>

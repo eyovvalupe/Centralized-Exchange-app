@@ -19,7 +19,8 @@
                         <div style="width: 0.48rem;height:0.48rem" class="mr-[0.2rem]">
                           <CryptoIcon :name="form.currency" />
                         </div>
-                        <div class="ipt">{{ form.currency }}</div>
+                        <div class="ipt mr-[0.16rem]">{{ form.currency }}</div>
+                        <div v-if="form.network" class="w-max px-[0.1rem] h-[0.3rem] text-[0.22rem] rounded-[0.15rem] bg-white2 flex items-center">{{ form.network }}</div>
                       </div>
                     </div>
                     <div class="w-[0.2rem] h-[0.2rem]">
@@ -80,7 +81,7 @@
       position="bottom" class="popup_container" closeable>
       <div class="pt-[0.3rem] px-[0.32rem] h-full">
         <div class="w-full  mb-[0.2rem]">
-          <div class="w-full h-[0.96rem] rounded-[1rem] bg-color2 border-[1px] flex items-center px-[0.2rem]">
+          <div class="w-full h-[0.96rem] rounded-[1rem] bg-white2 flex items-center px-[0.2rem]">
             <div style="width: 0.48rem;height: 0.48rem;">
               <img v-lazy="getStaticImgUrl(`/static/img/common/search.svg`)" alt="">
             </div>
@@ -136,6 +137,7 @@ import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import Top from "@/components/Top.vue";
 import { useI18n } from "vue-i18n";
 import BottomPopup from "@/components/BottomPopup.vue";
+import CryptoIcon from "@/components/CryptoIcon.vue";
 
 const { t } = useI18n();
 const route = useRoute();
@@ -238,10 +240,9 @@ const submit = (googleCode) => {
   _addAccount(params)
     .then((res) => {
       if (res.code == 200) {
+        store.commit("setSuccessToastText", t('success_toast_message'))
         store.commit("setShowSuccessToast", true);
-        setTimeout(() => {
-          store.commit("setShowSuccessToast", false);
-        }, 1000);
+        
         setTimeout(() => {
           router.back();
         }, 200);
@@ -403,7 +404,7 @@ getSessionToken();
       // padding: 0 0.32rem;
       height: 1.28rem;
       border: 1px solid var(--ex-border-color);
-      background-color: var(--ex-bg-color2);
+      background-color: var(--ex-bg-white2);
       border-radius: 0.32rem;
       margin-bottom: 0.4rem;
       display: flex;
