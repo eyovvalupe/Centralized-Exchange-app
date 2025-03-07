@@ -29,15 +29,13 @@
             <Tab :title="$t('copy.copy_belong_tab1')" name="0">
                 <div class="follow-box">
                     <!-- 带单情况 -->
-                    <div class="follow-info-box mb-[0.1rem] mx-[0.1rem]">
+                    <div class="follow-info-box mb-[0.24rem] mx-[0.32rem]">
 
                         <div class="info-box pb-[0.12rem]">
                             <div class="flex justify-between mb-[0.48rem]">
                                 <div class="flex ml-[0.28rem] mt-[0.28rem] items-center">
-                                    <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
-                                        <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
-                                    </div>
-                                    <div class="right_left_effect text-[0.3rem]">{{ $t('copy.copy_order_status') }}
+                                  
+                                    <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_order_status') }}
                                     </div>
                                 </div>
                                 <!-- <div class="w-[2.4rem] h-[0.6rem] rounded-[0.32rem] flex items-center justify-between px-[0.28rem] mr-[0.28rem] mt-[0.28rem] mask-btn"
@@ -90,13 +88,10 @@
                         </div>
                     </div>
                     <!-- 带单员总览 -->
-                    <div class="rounded-[0.32rem] p-[0.28rem] mb-[0.1rem] mx-[0.1rem]"
+                    <div class="rounded-[0.32rem] p-[0.28rem] mb-[0.24rem] mx-[0.32rem]"
                         style="background-color: var(--ex-bg-white);">
                         <div class="flex items-center">
-                            <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
-                                <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
-                            </div>
-                            <div class="right_left_effect text-[0.3rem]">{{ $t('copy.copy_leader_overview') }}</div>
+                            <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_leader_overview') }}</div>
                         </div>
                         <div class="w-full pt-[0.6rem] flex flex-col">
                             <div class="h-[2.4rem] flex flex-col justify-between mb-[0.6rem]">
@@ -104,13 +99,13 @@
                                     <div class="flex-1 flex flex-col">
                                         <div class="text-[0.28rem] text-color2 text-center mb-[0.1rem]">{{
                                             $t('copy.copy_belong_days') }}</div>
-                                        <div class="text-[0.3rem] mt-[0.1rem] font-semibold text-center">{{ info.days }}
+                                        <div class="text-[0.4rem] mt-[0.14rem] font-semibold text-center">{{ info.days }}
                                         </div>
                                     </div>
                                     <div class="flex-1 flex flex-col">
                                         <div class="text-[0.28rem] text-color2 text-center mb-[0.1rem]">{{
                                             $t('copy.copy_leader_order_size') }}</div>
-                                        <div class="text-[0.3rem] mt-[0.1rem] font-semibold text-center">{{ info.amount
+                                        <div class="text-[0.4rem] mt-[0.14rem] font-semibold text-center">{{ info.amount
                                             }}</div>
                                     </div>
                                 </div>
@@ -119,14 +114,14 @@
                                     <div class="flex-1 flex flex-col">
                                         <div class="text-[0.28rem] text-color2 text-center mb-[0.1rem]">{{
                                             $t('copy.copy_leader_followers_profit') }}</div>
-                                        <div class="text-[0.3rem] mt-[0.1rem] font-semibold text-center">{{
+                                        <div class="text-[0.4rem] mt-[0.14rem] font-semibold text-center">{{
                                             info.returnamount }}
                                         </div>
                                     </div>
                                     <div class="flex-1 flex flex-col">
                                         <div class="text-[0.28rem] text-color2 text-center mb-[0.1rem]">{{
                                             $t('copy.copy_leader_followers_num') }}</div>
-                                        <div class="text-[0.3rem] mt-[0.1rem] font-semibold text-center">{{
+                                        <div class="text-[0.4rem] mt-[0.14rem] font-semibold text-center">{{
                                             info.followers }}</div>
                                     </div>
                                 </div>
@@ -196,21 +191,16 @@
                     </div> -->
 
                     <!-- 跟单用户 -->
-                    <div class="rounded-[0.32rem] mb-[0.1rem] p-[0.28rem] pt-[0.2rem] mx-[0.1rem]"
+                    <div class="rounded-[0.32rem] mb-[0.4rem] px-[0.28rem] py-[0.32rem] mx-[0.32rem]"
                         style="background-color: var(--ex-bg-white);">
-                        <div class="flex justify-between items-center mb-[0.2rem]">
+                        <div class="flex justify-between items-center mb-[0.4rem]">
                             <div class="flex items-center">
-                                <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
-                                    <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
-                                </div>
-                                <div class="right_left_effect text-[0.3rem]">{{ $t('copy.copy_belong_tab3') }}
+                                <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_belong_tab3') }}
                                 </div>
                             </div>
-                            <div class="w-[0.48rem] h-[0.48rem] rounded-[0.1rem] mask-btn" @click="active = '2'">
-                                <img v-lazy="getStaticImgUrl('static/img/common/next.svg')" alt="" />
-                            </div>
+                            
                         </div>
-                        <div class="rounded-[0.32rem] h-[1.5rem] flex items-center justify-center mb-[0.1rem]"
+                        <div class="rounded-[0.32rem] h-[1.5rem] flex items-center justify-center"
                             style="background-color: var(--ex-bg-white2);">
                             <div class="flex flex-col items-center">
                                 <div class="text-[0.28rem] text-color2 mb-[0.2rem]">{{ $t('copy.copy_follower_amount')
@@ -218,7 +208,8 @@
                                 <div class="text-[0.3rem] font-semibold">{{ follows.length }}</div>
                             </div>
                         </div>
-                        <div class="w-full rounded-[0.32rem] h-[0.96rem] flex items-center px-[0.28rem] justify-between mb-[0.12rem]"
+                        <div class="h-[0.12rem]"></div>
+                        <div class="w-full rounded-[0.32rem] h-[0.96rem] flex items-center px-[0.28rem] justify-between mt-[0.12rem]"
                             v-if="follows.length" v-for="(item, i) in follows"
                             style="background-color: var(--ex-bg-white2);">
                             <div class="flex items-center">
@@ -245,32 +236,33 @@
             </Tab>
             <Tab :title="$t('copy.copy_belong_tab2')" name="1">
                 <div class="follow-box">
-                    <div class="flex h-[0.6rem] mx-[0.1rem] border-b-[0.02rem]">
-                        <div class="w-1/4 text-[0.22rem] text-[0.24rem] text-color2">{{ $t('copy.copy_belong_subtitle1')
+                    <div class="flex h-[0.6rem] leading-[0.4rem] mx-[0.32rem] border-b-[0.02rem]">
+                        <div class="w-1/4 text-[0.24rem] text-color2">{{ $t('copy.copy_belong_subtitle1')
                             }}</div>
-                        <div class="w-1/4 text-[0.22rem] text-[0.24rem] text-color2">{{ $t('copy.copy_belong_subtitle2')
+                        <div class="w-1/4 text-[0.24rem] text-color2">{{ $t('copy.copy_belong_subtitle2')
                             }}</div>
-                        <div class="w-1/4 text-[0.22rem] text-[0.24rem] text-color2">{{ $t('copy.copy_belong_subtitle3')
+                        <div class="w-1/4 text-[0.24rem] text-color2">{{ $t('copy.copy_belong_subtitle3')
                             }}</div>
-                        <div class="flex-1 text-end text-[0.22rem] text-[0.24rem] text-color2">{{
+                        <div class="flex-1 text-end text-[0.24rem] text-color2">{{
                             $t('copy.copy_belong_subtitle4') }}</div>
 
                     </div>
                     <div class="table">
-                        <div class="w-full flex mask-btn" v-if="orders.length" v-for="(item, i) in orders" :key="i">
+                        <div class="w-full flex p-[0.24rem] bg-color3 rounded-[0.32rem] mt-[0.2rem] mask-btn" v-if="orders.length" v-for="(item, i) in orders" :key="i">
                             <div class="w-1/4">
                                 <div class="name">{{ item.name }}</div>
-                                <div class="fever">{{ item.lever }}</div>
+                                <div class="flex">
+                                    <div class="fever">{{ item.lever }}X</div>
+                                </div>
                             </div>
                             <div class="w-1/4 flex flex-col">
-                                <div class="w-[0.7rem] h-[0.36rem] rounded-[0.12rem] status-up flex items-center justify-center text-[0.24rem]"
-                                    v-if="true">{{ $t('copy.copy_belong_open1') }}</div>
+                                <div class="w-[0.7rem] h-[0.36rem] rounded-[0.12rem] status-up flex items-center justify-center text-[0.24rem] mb-[0.18rem]">{{ $t('copy.copy_belong_open1') }}</div>
                                 <div class="w-[0.7rem] h-[0.36rem] rounded-[0.12rem] status-down items-center justify-center text-[0.24rem]"
                                     v-if="false">{{ $t('copy.copy_belong_open2') }}</div>
                                 <div class="">{{ item.time }}{{ item.unit }}</div>
                             </div>
-                            <div class="w-1/4">{{ item.amount }}</div>
-                            <div class="w-1/4 text-end">{{ item.amountreturn }}</div>
+                            <div class="w-1/4 flex items-center">{{ item.amount }}</div>
+                            <div class="w-1/4 flex items-center justify-end">{{ item.amountreturn }}</div>
                         </div>
                         <NoData v-if="!orders.length" />
                     </div>
@@ -300,7 +292,7 @@
                             <div class="td td-l up" :class="[item.returnamount < 0 ? 'down' : 'up']">
                                 <div class="mb-[0.16rem]">{{ item.returnamount }}</div>
                                 <div class="w-[1.08rem] h-[0.48rem] rounded-[0.12rem] flex items-center justify-center text-white"
-                                    :class="item.returnrate > 0 ? 'bg-up' : 'bg-down'">{{ item.returnrate > 0 ? '+' : ''
+                                    :class="item.returnrate >= 0 ? 'bg-up' : 'bg-down'">{{ item.returnrate > 0 ? '+' : ''
                                     }}{{
                                         item.returnrate }}%</div>
                             </div>
@@ -414,12 +406,12 @@ watch(copyItem, (val) => {
     padding-top: 0.88rem;
 
     :deep(.van-tabs__nav) {
+        height:0.64rem;
         padding-left: 0.24rem;
     }
 
     .title-box {
-        padding: 0.2rem 0.32rem;
-        margin-bottom: 0.1rem;
+        padding: 0.2rem 0.32rem 0.48rem 0.32rem;
         width: 100%;
         display: flex;
         align-items: flex-start;
@@ -447,12 +439,11 @@ watch(copyItem, (val) => {
                 align-items: center;
                 justify-content: flex-start;
 
-
-
                 .name {
                     font-size: 0.32rem;
                     font-weight: 600;
                     line-height: 1.4;
+                    color:var(--ex-text-color);
                 }
 
                 .level {
@@ -514,7 +505,7 @@ watch(copyItem, (val) => {
     }
 
     .follow-box {
-        padding-top: 0.2rem;
+        padding-top: 0.32rem;
     }
 
     .follow-info-box {
@@ -571,7 +562,7 @@ watch(copyItem, (val) => {
                     .name {
                         color: var(--ex-placeholder-color);
                         font-size: 0.28rem;
-                        margin-bottom: 0.2rem;
+                        
                     }
 
                     .val {
@@ -589,17 +580,17 @@ watch(copyItem, (val) => {
                 display: flex;
                 align-items: center;
                 justify-content: space-between;
-                padding: 0 0.28rem 0.24rem 0.28rem;
+                padding: 0 0.28rem 0.28rem 0.28rem;
 
                 .nav {
                     .name {
-                        color: var(--ex-placeholder-color);
-                        font-size: 0.24rem;
-                        margin-bottom: 0.16rem;
+                        color: var(--ex-text-color3);
+                        font-size: 0.32rem;
+                        margin-bottom: 0.2rem;
                     }
 
                     .val {
-                        font-size: 0.28rem;
+                        font-size: 0.4rem;
                         color: var(--ex-white);
                     }
                 }
@@ -662,7 +653,20 @@ watch(copyItem, (val) => {
             gap: 0.1rem;
         }
 
+        .name {
+            font-size: 0.28rem;
+            margin-bottom: 0.18rem;
+            line-height: 0.36rem;
+        }
 
+        .fever {
+          
+            height: 0.3rem;
+            padding: 0 0.12rem;
+            border-radius: 0.24rem;
+            background-color: var(--ex-bg-white1);
+            
+        }
 
         .td {
             flex: 1;
@@ -671,21 +675,7 @@ watch(copyItem, (val) => {
             align-items: start;
             justify-content: center;
 
-            .name {
-                font-size: 0.28rem;
-            }
-
-            .fever {
-                margin-top: 0.2rem;
-                height: 0.3rem;
-                padding: 0 0.12rem;
-                border-radius: 0.24rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                background-color: rgba(255, 255, 255, 0.1);
-            }
-
+           
             .tag {
                 margin-bottom: 0.2rem;
                 margin-top: 0;

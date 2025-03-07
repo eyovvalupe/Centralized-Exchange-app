@@ -15,7 +15,7 @@
                         <div class="icon"><img v-lazy="getStaticImgUrl('/static/home2/group.svg')" alt=""></div>
                         <div>{{ props.item.followers }}</div>
                     </div>
-                    <div class="info-a" v-if="props.showDetail">@{{ props.item.uid }}</div>
+                    <!-- <div class="info-a" v-if="props.showDetail">@{{ props.item.uid }}</div> -->
                 </div>
             </div>
             <div class="btn ripple-btn" @click="goFollow">{{ $t('copy.copy_tab_tab1') }}</div>
@@ -28,7 +28,7 @@
                     :class="[props.item.returnrate < 0 ? 'down' : 'up']">{{ (props.item.returnrate > 0
                         ? '+' : '') }}{{ props.item.returnrate }}%</div>
                 <div class="text-[0.24rem]">
-                    <b>{{ (props.item.returnamount > 0 ? '+' : '') }}{{ props.item.returnamount || '--' }}</b>
+                    {{ (props.item.returnamount > 0 ? '+' : '') }}{{ props.item.returnamount || '--' }}
                 </div>
             </div>
             <div class="line-box">
@@ -131,6 +131,7 @@ const goFollow = () => {
                     height: 0.34rem;
                     padding: 0 0.08rem;
                     border-radius: 0.12rem;
+                    font-size: 0.24rem;
                     display: flex;
                     align-items: center;
                     justify-content: center;
@@ -147,7 +148,7 @@ const goFollow = () => {
                 justify-content: flex-start;
 
                 .bottom-info {
-                    background-color: var(--ex-bg-color2);
+                    background-color: var(--ex-bg-white1);
                     height: 0.36rem;
                     padding: 0 0.1rem;
                     border-radius: 0.12rem;
@@ -174,14 +175,14 @@ const goFollow = () => {
         .btn {
             background-color: var(--ex-primary-color);
             color: var(--ex-white);
-            height: 0.58rem;
+            height: 0.68rem;
             border-radius: 0.5rem;
             padding: 0 0.26rem;
             min-width: 1.4rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.24rem;
+            font-size: 0.28rem;
         }
     }
 
@@ -189,11 +190,12 @@ const goFollow = () => {
         width: 100%;
         height: 1.84rem;
         border-radius: 0.32rem;
-        background-color: var(--ex-bg-color3);
+        background-color: var(--ex-bg-white2);
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 0.28rem;
+        margin-top:0.08rem;
 
         .line-box {
             width: 2.08rem;
@@ -247,13 +249,15 @@ const goFollow = () => {
             line-height: 1.5;
 
             .item-name {
-                color: var(--ex-placeholder-color);
+                color: var(--ex-text-color3);
                 width: max-content;
                 margin-right: 0.2rem;
             }
 
             .item-val {
-                color: var(--ex-white);
+                color: var(--ex-text-color);
+                margin-top:0.16rem;
+                font-weight: 600;
             }
         }
 
