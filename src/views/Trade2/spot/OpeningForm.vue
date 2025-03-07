@@ -118,9 +118,11 @@
           { label: `${t('trade.stock_opening_price_label')}`, value: 0 },
         ]
         " @percentTagClick="percentTagClick" v-if="props.activeTab == 1" />
-    <FormItem class="mb-[0.2rem]" v-else input-type="number" :placeholder="$t('trade.spot_trade_market_price')" :tip="''" :disabled="true" />
+    <FormItem class="mb-[0.2rem]" v-else input-type="number" :placeholder="$t('trade.spot_trade_market_price')"
+      :tip="''" :disabled="true" />
 
-    <FormItem class="mb-[0.2rem]" input-type="number" :placeholder="`${t('market.market_marketinfo_value')}(${currName.split('/')[1]})`" :tip="''"
+    <FormItem class="mb-[0.2rem]" input-type="number"
+      :placeholder="`${t('market.market_marketinfo_value')}(${currName.split('/')[1]})`" :tip="''"
       v-model="form1.amount" @input="changeAmount" />
 
 
@@ -1200,7 +1202,7 @@ setTimeout(() => {
   if (currStock.value.symbol) {
     handleClick(currStock.value)
   }
-}, 500)
+}, 0)
 
 // url参数处理
 if (props.tradeType == 2) {

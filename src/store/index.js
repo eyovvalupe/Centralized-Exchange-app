@@ -20,7 +20,7 @@ import { _referralData } from '../api/api';
 
 // 这几个数据需要缓存 但不缓存其中的 points 字段
 const onlySaveSymbols = [
-  'currStock',
+  'currStockItem',
   'currConstact',
   'currAi',
   'currForeign',
@@ -72,7 +72,7 @@ const store = createStore({
     setGuestUserInfo(state, data) {
       state.guestUserInfo = data
     },
-    setShowLeftMenu (state, data) {
+    setShowLeftMenu(state, data) {
       state.showLeftMenu = data
     },
     setReferralInfo(state, data) {
@@ -149,7 +149,7 @@ const store = createStore({
     reset({ commit }) {
       try {
         useSocket().disConnect();
-      } catch {}
+      } catch { }
       setTimeout(() => {
         // 重置相关数据
         commit('setToken', '');
