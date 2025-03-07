@@ -657,18 +657,7 @@
   const jump = (name, needToken, query) => {
     store.commit('setShowLeftMenu', false);
     setTimeout(() => {
-      if (
-        token.value &&
-        ((userInfo.value.role == 'guest' && name == 'register') ||
-          (userInfo.value.role == 'guest' &&
-            [
-              'kyc',
-              'google',
-              'googleCode',
-              'inviteFriends',
-              'account',
-            ].includes(name)))
-      ) {
+      if (token.value && userInfo.value.role == 'guest' && name == 'register') {
         return;
       } else {
         showLeft.value = false;

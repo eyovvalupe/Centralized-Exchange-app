@@ -157,7 +157,13 @@
   import router from '@/router';
   import { getStaticImgUrl } from '@/utils/index.js';
 
-  // store.dispatch("updateOrderHint")
+  const props = defineProps({
+    from: {
+      type: String,
+      default: ''
+    }
+  })
+
   const userInfo = computed(() => store.state.userInfo || {});
   const loanNum = computed(() => store.state.loanNum || 0);
 
@@ -175,7 +181,6 @@
     //     open()
     // }
     // return val
-    console.log(userInfo.value.role);
     if (userInfo.value.role == 'guest') {
       setTimeout(() => {
         showConfirmDialog({
@@ -192,7 +197,7 @@
       }, 400);
       return false;
     }
-    if (!userInfo.value.googlebind) {
+    if (props.from != 'kyc' && !userInfo.value.googlebind) {
       console.error('弹窗');
       setTimeout(() => {
         showConfirmDialog({
@@ -209,7 +214,7 @@
       }, 400);
       return false;
     }
-    if (userInfo.value.kycl2 != 2) {
+    if (props.from != 'kyc' && userInfo.value.kycl2 != 2) {
       setTimeout(() => {
         showConfirmDialog({
           title: '实名认证',
