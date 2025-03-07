@@ -667,7 +667,6 @@
               'googleCode',
               'inviteFriends',
               'account',
-              'safety',
             ].includes(name)))
       ) {
         return;

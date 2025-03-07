@@ -290,10 +290,10 @@ const next = () => {
           setTimeout(() => {
             setTimeout(() => {
               store.commit("setToken", res.data.auth);
-              store.commit("setUserInfo", res.data);
+              store.commit("setGuestUserInfo", res.data);
             }, 100);
             setTimeout(() => {
-              // store.dispatch("updateUserInfo");
+              store.dispatch("updateUserInfo");
               store.dispatch("updateAssets");
               store.dispatch("updateWallet");
               registerSuccessNext();

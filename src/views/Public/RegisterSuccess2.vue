@@ -43,7 +43,7 @@ const { t } = useI18n();
 
 const route = useRoute();
 
-const userInfo = computed(() => store.state.userInfo || {});
+const userInfo = computed(() => store.state.guestUserInfo || {});
 const next = () => {
   router.replace({
     name: "google",
