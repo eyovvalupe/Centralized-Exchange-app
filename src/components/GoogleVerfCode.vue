@@ -13,11 +13,11 @@
       <div class="btns">
         <Button :disabled="disabled" round color="var(--ex-white)" class="btn ripple-primary" type="primary"
           @click="close">
-          <span class="text-black">{{ $t("google_auth.google_input_btn_cancel") }}</span>
+          <span class="text-black font-normal">{{ $t("google_auth.google_input_btn_cancel") }}</span>
         </Button>
         <Button :loading="loading" :disabled="disabled" round color="var(--ex-primary-color)" class="btn ripple-btn"
           type="primary" @click="submit">
-          <span class="text-black">{{ $t("google_auth.google_input_btn_confirm") }}</span>
+          <span class="text-white font-normal">{{ $t("google_auth.google_input_btn_confirm") }}</span>
         </Button>
       </div>
     </div>

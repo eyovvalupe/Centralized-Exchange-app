@@ -57,6 +57,7 @@ const store = createStore({
     showSuccessToast: false,
     isSentCodeError: false,
     showLeftMenu: false,
+    successToastText: '',
     ...market.state,
     ...trade.state,
     ...assets.state,
@@ -65,6 +66,9 @@ const store = createStore({
     ...finance.state,
   },
   mutations: {
+    setSuccessToastText(state, data) {
+      state.successToastText = data
+    },
     setGuestUserInfo(state, data) {
       state.guestUserInfo = data
     },

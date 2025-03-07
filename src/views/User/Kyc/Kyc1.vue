@@ -15,14 +15,6 @@
           <span class="status status_fail" v-if="kycInfo.status == 'failure'">{{ t('kyc.verify_failure') }}</span>
         </div>
       </template>
-      <!-- <template #right v-else>
-        <div @click="jump('chat')"
-          class="w-[0.72rem] h-[0.72rem] rounded-[50%] border-color border-[0.02rem] flex items-center justify-center">
-          <div class="w-[0.4rem] h-[0.4rem]">
-            <img v-lazy="getStaticImgUrl('/static/img/user/server.svg')" alt="server" />
-          </div>
-        </div>
-      </template> -->
     </Top>
     <!-- 查看模式头部 -->
     <Tabs @change="nextStep" class="tabs" v-if="checkMode" style="width: 100%" :lazy-render="false"
