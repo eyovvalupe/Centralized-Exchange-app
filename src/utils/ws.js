@@ -1,5 +1,6 @@
 import io from "socket.io-client";
 import { BASE_SOCKET } from "../config"
+import store from "@/store"
 
 let socket = null;
 export const useSocket = () => {
@@ -28,6 +29,17 @@ export const useSocket = () => {
         if (typeof fn === "function") {
           fn();
         }
+        // 重连后重新订阅
+        setTimeout(() => {
+          let arr = []
+          try {
+            arr = JSON.parse(sessionStorage.getItem('subKeys') || '[]')
+          } catch { }
+
+          store.dispatch("subList", {
+            allKeys: arr
+          });
+        }, 1000)
       });
       socket.on("disconnect", () => {
         console.log("socket disconnected...");

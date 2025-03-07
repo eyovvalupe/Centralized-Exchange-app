@@ -433,6 +433,7 @@ export default {
                     ...state.marketWatchKeys,
                 ]))
                 console.error('订阅', keys)
+                sessionStorage.setItem('subKeys', JSON.stringify(keys))
                 socket && socket.off('realtime')
                 socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.on('realtime', res => {
