@@ -13,7 +13,7 @@
                     <div class="text-[0.4rem]">{{ Number(myEarn.amount).toLocaleString() }}</div>
                 </div>
             </div>
-            <Tabs key="form" type="sub-stake" style="margin-top:0.2rem;" v-model="activeTab" :swipeable="false"
+            <Tabs key="form" :type="from == 'order' ? 'sub-order' : 'sub-stake'" style="margin-top:0.2rem;" v-model="activeTab" :swipeable="false"
                 :color="'var(--ex-primary-color)'" shrink @change="changeTab">
                 <Tab :active="activeTab == 0" style="min-width: 2rem" :title="t('finance.portfolio_order_tab1')"
                     name="0">

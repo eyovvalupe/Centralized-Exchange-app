@@ -1,7 +1,7 @@
 <!-- 股票 -->
 <template>
     <div class="stock_block">
-        <Tabs animated :type="from == 'order' ? 'sub' : 'custom-line'" v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
+        <Tabs animated :type="from == 'order' ? 'sub-order' : 'custom-line'" v-model:active="active" :swipeable="false" :color="'var(--ex-primary-color)'" shrink
             @change="onChange">
             <Tab :title="t('trade.stock_open')" name="0" v-if="from != 'order'">
                 <div class="stock_tab-body">
