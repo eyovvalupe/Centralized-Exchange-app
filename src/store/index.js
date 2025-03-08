@@ -58,6 +58,7 @@ const store = createStore({
     isSentCodeError: false,
     showLeftMenu: false,
     successToastText: '',
+    showRightMenu: false,
     ...market.state,
     ...trade.state,
     ...assets.state,
@@ -66,6 +67,9 @@ const store = createStore({
     ...finance.state,
   },
   mutations: {
+    setShowRightMenu(state, data) {
+      state.showRightMenu = data
+    },
     setSuccessToastText(state, data) {
       state.successToastText = data
     },

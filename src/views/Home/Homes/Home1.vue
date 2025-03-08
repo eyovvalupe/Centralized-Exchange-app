@@ -289,7 +289,6 @@
             <NotifiModal v-if="notifiOpen" />
         </div>
     </div>
-
     <Ai style="display: none;" />
 </template>
 
@@ -319,11 +318,13 @@ const { startSocket } = useSocket();
 const { t } = useI18n();
 const notifiOpen = computed(() => store.state.notifiOpen);
 const marketAiList = computed(() => store.state.marketAiList || []); // ai量化默认列表
+const showRightMenu = computed(() => store.state.showRightMenu)
 
 //打开用户中心弹窗
 const openLeftMenu = () => {
     if (token.value) store.dispatch('updateReferralInfo');
-    eventBus.emit('leftOpen')
+    // eventBus.emit('leftOpen')
+    store.commit('setShowRightMenu', !showRightMenu.value)
 }
 
 // 跳转

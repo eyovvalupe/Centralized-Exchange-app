@@ -436,7 +436,7 @@
 
 
     <!-- 弹出菜单 -->
-    <Popup round v-model:show="rightMenu" position="right" :style="{ width: '70%', height: '100%' }">
+    <Popup round v-model:show="rightMenu" position="right" :style="{ width: '70%', height: '80%' }">
       <div class="right-menu-popup">
         <template v-for="item in rightMenus">
           <div class="item" @click="clickRightMenu(item)">

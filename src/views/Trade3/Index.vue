@@ -77,7 +77,7 @@
 
 
   <!-- 弹出菜单 -->
-  <Popup round v-model:show="showRight" position="right" :style="{ width: '70%', height: '100%' }">
+  <Popup round v-model:show="showRight" transition-appear position="right" :style="{ width: '6.8rem', height: 'calc(100vh - 88px)' }">
     <div class="left-menu-popup" v-if="recommendRef">
       <div @click="changeTabHandle(0)" class="left-menu-item"
         :class="{ 'left-menu-active': recommendRef.activeTab == 0 }">
@@ -368,7 +368,7 @@ defineExpose({
 }
 
 .left-menu-popup {
-  height: 100%;
+  height: 80%;
   padding: 0;
   background-color: var(--ex-bg-color9);
 

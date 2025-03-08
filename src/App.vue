@@ -99,11 +99,12 @@
 
   <!-- 左侧弹窗 -->
   <LeftMenu :jump="jump" ref="LeftRef" />
+  <RightMenu />
 </template>
 
 <script setup>
 import { computed, watch, onMounted } from "vue";
-import { Skeleton, SkeletonTitle, SkeletonAvatar, SkeletonParagraph, SkeletonImage, Loading } from "vant";
+import { Skeleton, SkeletonTitle, SkeletonAvatar, SkeletonParagraph, SkeletonImage, Loading, Popup } from "vant";
 import { useRoute } from "vue-router";
 import { getStaticImgUrl } from "@/utils/index.js"
 import store from "@/store/index";
@@ -116,13 +117,14 @@ import LeftMenu from "@/views/Home/components/LeftMenu.vue"
 import router from "@/router"
 import eventBus from "@/utils/eventBus.js"
 import 'wow.js/css/libs/animate.css';  // 引入动画库样式
+import RightMenu from "./components/RightMenu.vue";
 
 const { t } = useI18n();
 const showSuccessToast = computed(() => store.state.showSuccessToast);
-const LeftRef = ref()
+const LeftRef = ref();
 
 eventBus.on('leftOpen', () => {
-  LeftRef.value.open()
+  // LeftRef.value.open()
 })
 // 跳转
 const jump = (name, needToken, query) => {
@@ -139,6 +141,7 @@ const jump = (name, needToken, query) => {
   });
 };
 
+const showMenu = ref(true)
 
 const token = computed(() => store.state.token);
 if (token.value) {
