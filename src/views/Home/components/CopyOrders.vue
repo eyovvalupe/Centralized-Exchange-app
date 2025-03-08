@@ -21,10 +21,16 @@
                 :style="typeChange == 'option' ? '' : 'background-color: var(--ex-bg-white2)'">{{
                     $t('common.option') }}</div>
         </div> -->
-        <div class="list-i" v-if="myFollowList.length" v-for="(item, i) in myFollowList" :key="i">
-            <MyFollowItem @openInfo="openInfo" :item="item" :showDetail="false" />
+        <div class="list-i" v-if="myFollowList.length">
+            <MyFollowItem @openInfo="openInfo" :item="item"  v-for="(item, i) in myFollowList" :key="i" :showDetail="false" />
         </div>
         <NoData v-if="!myFollowList.length" />
+
+        <!-- 详情 -->
+        <Popup teleport="body" v-model:show="showInfo" position="right" :style="{ height: '100%', width: '100%' }">
+            <FollowInfo v-if="showInfo" @back="showInfo = false" style="width: 100%;height: 100%;" />
+        </Popup>
+
     </div>
 </template>
 <script setup>
@@ -32,14 +38,15 @@ import store from '@/store'
 import { isEmpty } from "@/utils/isEmpty";
 import MyFollowItem from "../components/MyFollowItem.vue"
 import { ref } from 'vue';
+import { Popup } from 'vant'
 import NoData from '@/components/NoData.vue';
+import FollowInfo from "../Follow/FollowInfo.vue"
 const myFollowList = computed(() => store.state.myCopy)
 const myCopyData = computed(() => store.state.myCopyData)
-
 const typeChange = ref('option')
-// 跟单详情
 const showInfo = ref(false)
-const openInfo = item => {
+// 跟单详情
+const openInfo = () => {
     showInfo.value = true
 }
 

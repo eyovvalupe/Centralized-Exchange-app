@@ -1,141 +1,117 @@
-<!-- 我的跟单元素 -->
 <template>
-    <div class="flex flex-col">
-        <div class="myfollow-item bg-color3 mb-[0.24rem]" v-if="!isEmpty(item)">
-            <div class="title-box" @click="goInfo">
-                <div class="left">
-                    <div class="top">
-                        <div class="avatar overflow-hidden">
-                            <img v-lazy="getStaticImgUrl(`static/avatar/${item.avatar || 1}.png`)" alt="" />
-                        </div>
-                        <div class="name">{{ props.item.name }}</div>
-                        <div class="level">{{ $t('copy.level', { level: props.item.lv }) }}</div>
-                    </div>
-                    <div class="bottom">
-                        <div class="bottom-info">
-                            <div class="icon"><img v-lazy="getStaticImgUrl('/static/home2/group.svg')" alt=""></div>
-                            <div>{{ props.item.followers }}</div>
-                        </div>
-                    </div>
-                </div>
-                <!-- <div class="btn" v-if="!props.showDetail">
-                    <img v-lazy="getStaticImgUrl('/static/home2/right-line.svg')" alt="">
-                </div> -->
-                <div class="status" v-if="props.showDetail">{{ $t('copy.copy_order_detail_on') }}</div>
-            </div>
+<div class="pb-[0.6rem] ">
 
-            <div class="info-flex">
-                <div class="info-item">
-                    <div class="name">{{ $t('finance.portfolio_revenue') }}</div>
-                    <div class="val" :class="[props.item.returnamount >= 0 ? 'up' : 'down']">{{ props.item.returnamount }}</div>
+    <div class="myfollow-item bg-white2 mx-[0.32rem] mt-[0.4rem]">
+        <div class="title-box">
+            <div class="left">
+                <div class="top">
+                    <div class="avatar overflow-hidden">
+                        <img v-lazy="getStaticImgUrl(`static/avatar/${item.avatar || 1}.png`)" alt="" />
+                    </div>
+                    <div class="name">{{ props.item.name }}</div>
+                    <div class="level">{{ $t('copy.level', { level: props.item.lv }) }}</div>
                 </div>
-                <div class="info-item" style="text-align: right;">
-                    <div class="name">{{ $t('copy.copy_order_total_amount') }}</div>
-                    <div class="val" @click="plus">
-                        <span>{{ props.item.amount }}</span>
+                <div class="bottom">
+                    <div class="bottom-info">
+                        <div class="icon"><img v-lazy="getStaticImgUrl('/static/home2/group.svg')" alt=""></div>
+                        <div>{{ props.item.followers }}</div>
                     </div>
                 </div>
             </div>
-            <!-- <div class="info-box">
-                <div class="info-item">
-                    <div class="name">{{ $t('copy.copy_order_daily_profit') }}</div>
-                    <div class="val up">{{ props.item.today || '--' }}</div>
-                </div>
-            </div> -->
-            <div class="info-box" v-if="props.showDetail" style="margin-top: 0.12rem;">
-                <div class="info-item">
-                    <div class="name">{{ $t('copy.copy_order_detail_duration') }}</div>
-                    <div class="val">{{ item.date || '--' }}</div>
-                </div>
+            <div class="status">{{ $t('copy.copy_order_detail_on') }}</div>
+        </div>
+        <div class="flex items-center gap-[0.2rem] px-[0.16rem]">
+            <div class="text-color3">{{ $t('copy.copy_order_detail_duration') }}</div>
+            <div class="text-color">{{ item.date || '--' }}</div>
+        </div>
+        <div class="info-flex">
+            <div class="info-item">
+                <div class="name">{{ $t('finance.portfolio_revenue') }}</div>
+                <div class="val" :class="[props.item.returnamount >= 0 ? 'up' : 'down']">{{ props.item.returnamount }}</div>
             </div>
-
-            <div class="btns">
-                <div class="btn cancel ripple-primary" @click="cancel">{{ $t('copy.copy_order_detail_cancel') }}</div>
-                <div class="btn add ripple-btn" @click="plus">{{ $t('copy.copy_order_detail_confirm') }}</div>
+            <div class="info-item" style="text-align: right;">
+                <div class="name">{{ $t('copy.copy_order_total_amount') }}</div>
+                <div class="val" @click="plus">
+                    <span>{{ props.item.amount }}</span>
+                </div>
             </div>
         </div>
-        <div class="mt-[0.24rem]" v-if="showDetail">
-            <AiBlock :customType="'custom-line-small'" />
-        </div>
+        
+
     </div>
-
-
-    <!-- 取消跟单 -->
-    <BottomPopup v-model:show="showCancel" @closed="showPopupCont=false" :title="$t('copy.copy_order_detail_cancel')" position="bottom" round
-        closeable teleport="body">
-        <FollowCancel :item="item"  v-if="showPopupCont" @cancel="oncancel" />
-    </BottomPopup>
-
-    <!-- 追加弹窗 -->
-    <BottomPopup @closed="showPopupCont=false" v-model:show="showPlus" :title="$t('copy.copy_order_detail_confirm')" position="bottom" round closeable
-        teleport="body">
-        <FollowSubmit :mode="'plus'" v-if="showPopupCont" :item="item" @success="success" />
-    </BottomPopup>
-
-
+    <div class="line"></div>
+    <div class="item pass_ipt" :class="{'erript':erript}" v-if="userInfo.role != 'guest'">
+        <input v-model="safePass" @focus="erript=false" :placeholder="t('trade.stock_opening_trade_pw')"
+            :type="showPassword ? 'text' : 'password'" class="ipt" />
+        <img v-if="!showPassword" v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')"
+            @click="showPassword = true" alt="off" />
+        <img v-else v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
+            @click="showPassword = false" />
+    </div>
+    
+    <div class="px-[0.32rem] pt-[0.4rem]">
+        <Button :loading="cancelLoading" type="primary" round class="w-full !h-[1.12rem] !text-[0.36rem] font-semibold ripple-btn"
+            @click="submitCancel">{{ $t('copy.copy_order_cancel_confirm') }}</Button>
+    </div>
+</div>
 </template>
-
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
-import { useI18n } from "vue-i18n";
-import BottomPopup from "@/components/BottomPopup.vue";
-import { _copyCancel, _copyAdd } from "@/api/api"
 import store from "@/store";
-import FollowSubmit from "./FollowSubmit.vue"
-import { isEmpty } from "@/utils/isEmpty";
-import AiBlock from "@/views/Trade2/pages/AiBlock.vue"
-import FollowCancel from './FollowCancel.vue'
-
-const emits = defineEmits(['openInfo', 'plus', 'cancel'])
-const showPopupCont = ref(false)
+import { useI18n } from "vue-i18n";
 const { t } = useI18n();
+import { Button,showToast } from 'vant'
+import { _copyCancel } from "@/api/api"
+const userInfo = computed(() => store.state.userInfo)
+const showPassword = ref(false)
+const safePass = ref('')
+const erript = ref(false)
 const props = defineProps({
     item: {
         type: Object,
         default: () => { }
-    },
-    showDetail: { // 展示详情
-        type: Boolean,
-        default: false
-    },
-    stopJump: { // 禁止跳转
-        type: Boolean,
-        default: false
     }
 })
+const emits = defineEmits(['cancel'])
+const cancelLoading = ref(false)
+const submitCancel = () => {
+    if (cancelLoading.value) return
+    if(userInfo.value.role == 'guest'){
+        safePass.value = '000000'
+    }
+    if(!safePass.value){
+        erript.value = true
+        return
+    }
+    cancelLoading.value = true
+    store.dispatch("updateSessionToken").then(token => {
+        setTimeout(() => {
+            if (token) {
+                cancelLoading.value = true
+                _copyCancel({
+                    id: props.item.id,
+                    token: token,
+                    safeword: safePass.value
+                }).then(() => {
+                    showToast('已撤单')
+                    store.dispatch("updateMyFollowList")
+                    store.dispatch('updateMyCopyData')
+                    safeword.value = false
+                    emits('cancel', {})
+                }).finally(() => {
+                    cancelLoading.value = false
+                })
+            } else {
+                setTimeout(() => {
+                    submitCancel()
+                }, 1000)
+            }
+        }, 100)
+    }).finally(() => {
+        cancelLoading.value = false
+    })
+}
 
-const activeTab = ref(0)
-const onChange = () => {
-}
-const success = () => {
-    showPlus.value = false
-}
-
-const oncancel = ()=>{
-    showCancel.value = false
-    emits('cancel')
-}
-// 取消订单
-const showCancel = ref(false)
-const cancel = () => {
-    showPopupCont.value = true
-    showCancel.value = true
-}
-
-// 追加
-const showPlus = ref(false)
-const plus = () => {
-    showPopupCont.value = true
-    showPlus.value = true
-}
-
-// 跳转
-const goInfo = () => {
-    if (props.stopJump) return
-    store.commit('setCopyItemDetail', props.item)
-    sessionStorage.setItem('copyItemDetail', JSON.stringify(props.item))
-    emits('openInfo', {})
-}
 </script>
 
 <style lang="less" scoped>
@@ -146,7 +122,8 @@ const goInfo = () => {
     position: relative;
 
     .title-box {
-        padding: 0.16rem;
+        padding: 0.16rem ;
+        padding-bottom:0.24rem;
         width: 100%;
         display: flex;
         align-items: flex-start;
@@ -321,7 +298,46 @@ const goInfo = () => {
             color: var(--ex-white);
         }
     }
+}
+.line {
+    border-top: 1px dashed var(--ex-bg-white2);
+    height: 1px;
+    width: 100%;
+    margin: 0.4rem 0;
+}
+.pass_ipt {
+    margin-bottom: 0.4rem;
+    border-radius: 0.32rem;
+    border: 1px solid transparent;
+    height: 1.12rem;
+    padding: 0.16rem 0.32rem;
+    box-sizing: border-box;
+    position: relative;
+    background-color: var(--ex-bg-white2);
+    margin: 0.32rem 0.32rem 0 0.32rem;
 
+    &.erript{
+        border-color:var(--ex-error-color);
+    }
+    .ipt {
+        flex: 1;
+        height: 100%;
+        width: 100%;
+        font-size: 0.32rem;
+        padding: 0;
+        color: var(--ex-text-white);
+        position: relative;
+        z-index: 1;
+    }
 
+    img {
+        width: 0.4rem;
+        height: 0.4rem;
+        position: absolute;
+        right: 0.32rem;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 9999;
+    }
 }
 </style>

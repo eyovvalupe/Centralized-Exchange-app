@@ -164,7 +164,7 @@ defineExpose({
             align-items: center;
             justify-content: center;
             border-radius: 0.24rem;
-            background-color: var(--ex-bg-color2);
+            background-color: var(--ex-bg-white2);
 
             img {
                 width: 0.53rem !important;
@@ -186,7 +186,7 @@ defineExpose({
             .grid {
                 color: var(--ex-text-color3);
                 font-weight: 400;
-                font-size: 0.28rem;
+                font-size: 0.24rem;
                 margin-top: 0.18rem;
             }
         }

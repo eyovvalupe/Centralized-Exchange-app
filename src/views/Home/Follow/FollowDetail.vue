@@ -24,7 +24,7 @@
             <!-- <div class="btn ripple-btn" @click="plus">{{ $t('copy.copy_tab_tab1') }}</div> -->
         </div>
 
-        <Tabs type="custom-line" v-model:active="active" animated :swipeable="false" :color="'var(--ex-primary-color)'"
+        <Tabs type="custom-line" v-model:active="active"  :color="'var(--ex-primary-color)'"
             shrink>
             <Tab :title="$t('copy.copy_belong_tab1')" name="0">
                 <div class="follow-box">
@@ -97,16 +97,14 @@
                             <div class="h-[2.4rem] flex flex-col justify-between mb-[0.6rem]">
                                 <div class="w-full flex">
                                     <div class="flex-1 flex flex-col">
-                                        <div class="text-[0.28rem] text-color2 text-center mb-[0.1rem]">{{
-                                            $t('copy.copy_belong_days') }}</div>
+                                        <div class="text-[0.28rem] text-color2 text-center mb-[0.1rem]">{{ $t('copy.copy_belong_days') }}</div>
                                         <div class="text-[0.4rem] mt-[0.14rem] font-semibold text-center">{{ info.days }}
                                         </div>
                                     </div>
                                     <div class="flex-1 flex flex-col">
                                         <div class="text-[0.28rem] text-color2 text-center mb-[0.1rem]">{{
                                             $t('copy.copy_leader_order_size') }}</div>
-                                        <div class="text-[0.4rem] mt-[0.14rem] font-semibold text-center">{{ info.amount
-                                            }}</div>
+                                        <div class="text-[0.4rem] mt-[0.14rem] font-semibold text-center">{{ info.amount }}</div>
                                     </div>
                                 </div>
                                 <div class="w-full flex">
@@ -126,7 +124,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="w-full flex h-[1.12rem] rounded-[0.32rem] flex items-center px-[0.28rem] justify-between"
+                            <div class="w-full flex h-[1.12rem] rounded-[0.32rem] items-center px-[0.28rem] justify-between"
                                 style="background-color: var(--ex-bg-white2);">
                                 <div class="text-[0.28rem] text-color2 text-center">{{
                                     $t('copy.copy_profit_divide_ratio') }}</div>
@@ -135,42 +133,39 @@
                         </div>
                     </div>
                     <!-- 收益率 -->
-                    <!-- <div class="h-[7.9rem] rounded-[0.32rem] mb-[0.1rem] p-[0.28rem] mx-[0.1rem]"
+                    <div class="h-[7.9rem] rounded-[0.32rem] mb-[0.24rem] p-[0.28rem] mx-[0.32rem]"
                         style="background-color: var(--ex-bg-white);">
-                        <div class="flex justify-between items-center mb-[0.1rem] h-[0.6rem]">
+                        <div class="flex justify-between items-center mb-[0.4rem] h-[0.6rem]">
                             <div class="flex items-center">
-                                <div class="w-[0.28rem] h-[0.28rem] mr-[0.2rem]">
-                                    <img v-lazy="getStaticImgUrl('static/home2/point.svg')" alt="" />
-                                </div>
-                                <div class="right_left_effect text-[0.3rem]">{{ $t('copy.copy_belong_profit_rate') }}
+                                <div class="right_left_effect text-[0.4rem]">{{ $t('copy.copy_belong_profit_rate') }}
                                 </div>
                             </div>
-                            <div class="flex">
-                                <div class="w-[1.6rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center text-[0.32rem]  mr-[0.12rem]"
+                            <div class="flex  bg-white1 rounded-full">
+                                <div class="w-[1.6rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center text-[0.32rem]"
                                     :class="activeRatio == 0 ? 'font-semibold text-black ripple-primary bg-white' : 'text-color2 ripple-btn'"
-                                    :style="activeRatio == 1 ? 'background-color: var(--ex-bg-white2);' : ''"
+                                   
                                     @click="activeRatio = 0">
                                     {{ $t('copy.copy_belong_profit_rate') }}
                                 </div>
                                 <div class="w-[1.6rem] h-[0.6rem] rounded-[1rem] flex items-center justify-center text-[0.32rem]"
                                     :class="activeRatio == 1 ? 'font-semibold text-black ripple-primary bg-white' : 'text-color2 ripple-btn'"
-                                    :style="activeRatio == 0 ? 'background-color: var(--ex-bg-white2);' : ''"
+                                
                                     @click="activeRatio = 1">
                                     {{ $t('copy.copy_belong_profit_rate') }}
                                 </div>
                             </div>
                         </div>
                         <div class="flex items-center justify-between mb-[0.36rem]">
-                            <div class="text-[0.4rem] font-semibold" :class="true ? 'text-up' : 'text-down'">
+                            <div class="text-[0.6rem] font-[600]" :class="true ? 'text-up' : 'text-down'">
                                 {{ info.returnrate > 0 ? '+' + info.returnrate : info.returnrate }}%
                             </div>
-                            <div class="flex items-center">
+                            <!-- <div class="flex items-center">
                                 <div class="text-[0.24rem] text-color mr-[0.1rem]">{{ $t('copy.copy_order_time1') }}
                                 </div>
                                 <div class="w-[0.32rem] h-[0.32rem]">
                                     <img v-lazy="getStaticImgUrl('static/img/common/down.svg')" alt="" />
                                 </div>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="flex flex-col">
                             <div class="flex w-full">
@@ -188,7 +183,7 @@
                                 <div class="text-[0.24rem] text-color2" v-for="(item, i) in dateAxios">{{ item }}</div>
                             </div>
                         </div>
-                    </div> -->
+                    </div>
 
                     <!-- 跟单用户 -->
                     <div class="rounded-[0.32rem] mb-[0.4rem] px-[0.28rem] py-[0.32rem] mx-[0.32rem]"
@@ -226,12 +221,7 @@
                             <NoData />
                         </div>
                     </div>
-                    <div class="w-full h-[1.6rem] rounded-tl-[0.32rem] rounded-tr-[0.32rem] px-[0.28rem] pt-[0.2rem]"
-                        style="background-color: var(--ex-bg-white);">
-                        <div class="w-full h-[0.92rem] rounded-[1.3rem] ripple-btn text-[0.36rem] font-semibold flex items-center justify-center"
-                            @click="plus" style="background-color: var(--ex-primary-color);">{{ $t('copy.copy_tab_tab1')
-                            }}</div>
-                    </div>
+                    <div class="h-[1.6rem]"></div>
                 </div>
             </Tab>
             <Tab :title="$t('copy.copy_belong_tab2')" name="1">
@@ -266,7 +256,6 @@
                         </div>
                         <NoData v-if="!orders.length" />
                     </div>
-
                 </div>
             </Tab>
             <Tab :title="$t('copy.copy_belong_tab3')" name="2">
@@ -302,10 +291,22 @@
                 </div>
             </Tab>
         </Tabs>
+
+        <div class="w-full fixed bg-[rgba(26_27_36_0.30)] left-0 bottom-0 h-[1.6rem] rounded-tl-[0.32rem] rounded-tr-[0.32rem] px-[0.28rem] pt-[0.2rem]" v-if="active == 0" style="backdrop-filter: blur(25px);box-shadow: 0px -1px 1px 0px rgba(255, 255, 255, 0.10);">
+            <div class="w-full h-[0.92rem] rounded-[1.3rem] ripple-btn text-[0.36rem] font-semibold flex items-center justify-center"
+                @click="plus" style="background-color: var(--ex-primary-color);">{{ $t('copy.copy_tab_tab1')
+                }}</div>
+        </div>
         <!-- 跟单弹窗 -->
         <BottomPopup v-model:show="showPlus" :title="t('copy.title')" position="bottom" round closeable teleport="body">
-            <FollowSubmit v-if="showPlus" @success="showPlus = false" :item="info" :mode="'follow'" />
+            <FollowSubmit v-if="showPlus" @success="onSuccess" :item="info" :mode="'follow'" />
         </BottomPopup>
+
+        <!-- 详情 -->
+        <Popup teleport="body" v-model:show="showInfo" position="right" :style="{ height: '100%', width: '100%' }">
+            <FollowInfo v-if="showInfo" @back="showInfo = false" style="width: 100%;height: 100%;" />
+        </Popup>
+        
     </div>
 </template>
 
@@ -314,12 +315,13 @@ import Top from "@/components/Top.vue";
 import { getStaticImgUrl } from "@/utils/index.js"
 import { computed, ref, watch } from "vue"
 import NoData from "@/components/NoData.vue"
-import { Tab, Tabs, Button, showToast } from "vant";
+import { Tab, Tabs, Popup, showToast } from "vant";
 import { _copyGet, _copyOrders, _copyUsers } from "@/api/api"
 import SparkLine from "@/components/SparkLine.vue";
 import { useRoute } from "vue-router"
 import BottomPopup from "@/components/BottomPopup.vue";
 import FollowSubmit from "../components/FollowSubmit.vue"
+import FollowInfo from "./FollowInfo.vue";
 import { useI18n } from "vue-i18n";
 import { isEmpty } from "@/utils/isEmpty";
 import store from "@/store";
@@ -327,6 +329,7 @@ import { getPoints } from "@/utils/index.js"
 import follow from "@/store/follow.js";
 import router from "@/router";
 const points = getPoints('id-123456', 100)
+const showInfo = ref(false)
 const token = computed(() => store.state.token)
 const { t } = useI18n()
 const route = useRoute()
@@ -398,6 +401,13 @@ getInfo()
 watch(copyItem, (val) => {
     getInfo();
 })
+
+const onSuccess = ()=>{
+    showPlus.value = false
+    store.commit('setCopyItemDetail', info.value)
+    sessionStorage.setItem('copyItemDetail', JSON.stringify(info.value))
+    showInfo.value = true
+}
 
 </script>
 

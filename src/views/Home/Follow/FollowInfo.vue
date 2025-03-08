@@ -15,6 +15,7 @@ import store from "@/store";
 
 const emits = defineEmits(['back'])
 
+
 const backFunc = () => {
     emits('back')
 }
@@ -23,6 +24,6 @@ const info = computed(() => store.state.copyItemDetail)
 
 <style lang="less">
 .page-followinfo {
-    padding: 1.6rem 0.32rem 0.48rem 0.32rem;
+    padding: 1.2rem 0.32rem 0.48rem 0.32rem;
 }
 </style>

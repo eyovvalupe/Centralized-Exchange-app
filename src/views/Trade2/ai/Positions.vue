@@ -136,7 +136,7 @@ watch(() => store.state.token, () => {
             align-items: center;
             justify-content: center;
             border-radius: 0.24rem;
-            background-color: var(--ex-bg-color);
+            background-color: var(--ex-bg-white2);
 
             img {
                 width: 0.53rem !important;
@@ -158,7 +158,7 @@ watch(() => store.state.token, () => {
             .grid {
                 color: var(--ex-text-color3);
                 font-weight: 400;
-                font-size: 0.25rem;
+                font-size: 0.24rem;
                 margin-top: 0.18rem;
             }
         }

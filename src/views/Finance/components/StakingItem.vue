@@ -1,10 +1,11 @@
 <template>
     <div>
         <div class="staking_item relative" v-if="list.length" v-for="(item, i) in list">
-            <div class="w-[0.66rem] h-[0.48rem] absolute top-[0] right-[0]" v-if="item.hot"><img
-                    v-lazy="getStaticImgUrl('/static/img/finance/hot.svg')" alt="img" /></div>
+            
             <div class="w-full bg-color6 mb-[0.1rem] rounded-[0.2rem]">
-                <div class="w-full h-full px-[0.12rem] pt-[0.4rem] flex flex-col">
+                <div class="w-full h-full px-[0.12rem] pt-[0.4rem] flex flex-col relative">
+                    <div class="w-[0.66rem] h-[0.48rem] absolute top-[0] right-[0]" v-if="item.hot"><img
+                        v-lazy="getStaticImgUrl('/static/img/finance/hot.svg')" alt="img" /></div>
                     <div class="flex flex-col px-[0.16rem] mb-[0.3rem] relative">
                         <div class="text-[0.36rem] mb-[0.15rem]">{{ item.name }}</div>
                         <div class="flex items-center">
@@ -17,6 +18,7 @@
                                 <CryptoIcon :name="'USDT'" />
                             </div>
                         </div>
+                        
                     </div>
                     <!-- 加密代币价格 -->
                     <div class="flex w-full bg-color py-[0.2rem] rounded-[0.32rem] mb-[0.12rem]">

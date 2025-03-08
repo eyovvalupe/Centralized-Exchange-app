@@ -4,13 +4,15 @@
         <div class="form">
             <!-- 数量 -->
             <div class="mb-[0.2rem]">
-                <FormItem :hasScroll="true" :btnText="'USDT'" :placeholder="$t('copy.copy_order_follow_confirm_rage')"
-                    :max="maxStockNum" v-model="amount" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
-                    @btnClick="amount = maxStockNum" @change="changePercent" tip-align="right"
-                    :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''" input-type="number">
+                <FormItem :hasScroll="true" :placeholder="$t('copy.copy_order_follow_confirm_rage')"
+                    :max="maxStockNum" v-model="amount" :show-btn="maxStockNum >= 1" 
+                    @btnClick="amount = maxStockNum" @change="changePercent"  input-type="number">
                     <template #scroll>
                         <!-- 拖动 -->
                         <SlideContainer v-model="sliderValue" @change="onSliderChange" />
+                    </template>
+                    <template #right-con>
+                        <span class="text-color">USDT</span>
                     </template>
                 </FormItem>
             </div>
@@ -50,7 +52,7 @@ import { ref, computed } from "vue"
 import store from "@/store";
 import { getStaticImgUrl } from "@/utils/index.js"
 import { useI18n } from "vue-i18n";
-import { showToast, Button } from "vant"
+import { showToast, Button, showConfirmDialog } from "vant"
 import Decimal from "decimal.js";
 import { _copyApply, _copyAdd } from "@/api/api"
 import router from "@/router";
@@ -71,26 +73,50 @@ const props = defineProps({
 const showPassword = ref(false)
 const safePass = ref('')
 const amount = ref('')
+
+const stockWalletAmount = computed(() => {
+    // 钱包余额
+    const target = store.state.wallet.find(
+        (item) => item.currency == 'USDT'
+    );
+    if (target) return target.amount;
+    return 0;
+});
+
 const maxStockNum = computed(() => {
     // 最大可买 可卖
     return stockWalletAmount.value;
 });
 const userInfo = computed(() => store.state.userInfo)
 const goDeposit = () => {
-    router.push({
-        name: 'topUpCrypto',
-        query: {
-            currency: 'USDT'
-        }
+    showConfirmDialog({
+        title: "提示",
+        message: "即将跳转到充值，将中断当前业务，是否继续？",
+        theme: 'round-button'
+    }).then(() => {
+        router.push({
+            name: 'topUpCrypto',
+            query: {
+                currency: 'USDT'
+            }
+        })
     })
+    
 }
 const goTransfer = () => {
-    router.push({
-        name: 'transfer',
-        query: {
-            to: 'USDT'
-        }
+    showConfirmDialog({
+        title: "提示",
+        message: "即将跳转到划转，将中断当前业务，是否继续？",
+        theme: 'round-button'
+    }).then(() => {
+        router.push({
+            name: 'transfer',
+            query: {
+                to: 'USDT'
+            }
+        })
     })
+    
 }
 const plusLoading = ref(false)
 const submitPlus = () => {
@@ -117,6 +143,8 @@ const submitPlus = () => {
                 }).then(() => {
                     showToast(t('safety.success_title'))
                     emits('success', {})
+                    amount.value = ''
+                    safePass.value = ''
                     store.dispatch('updateMyFollowList')
                     store.dispatch('updateMyCopyData')
                 }).finally(() => {
@@ -147,24 +175,6 @@ const changePercent = val => {
 }
 
 
-
-const wallet = computed(() => store.state.wallet || []);
-const stockWalletAmount = computed(() => {
-    // 钱包余额
-    const target = wallet.value.find(
-        (item) => item.currency == 'USDT'
-    );
-    if (target) return target.amount;
-    return 0;
-});
-
-
-// 余额弹窗
-const showAmountDialog = ref(false);
-const openConfirmBox = () => {
-    showAmountDialog.value = true;
-};
-
 </script>
 
 <style lang="less" scoped>
@@ -186,6 +196,12 @@ const openConfirmBox = () => {
         }
     }
 
+    :deep(.van-slider.slider-dom::after){
+        border-color: #3c424b;   
+    }
+    :deep(.van-slider.slider-dom::before){
+        background-color: #3c424b;   
+    }
     .pass_ipt {
         margin-bottom: 0.4rem;
         border-radius: 0.32rem;

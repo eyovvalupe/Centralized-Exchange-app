@@ -8,7 +8,7 @@
                         <img v-lazy="getStaticImgUrl(`static/avatar/${item.avatar}.png`)" alt="" />
                     </div>
                     <div class="name">{{ props.item.name }}</div>
-                    <div class="level">{{ $t('copy.level', { level: props.item.lv }) }}</div>
+                    <div class="level">LV.{{ props.item.lv }}</div>
                 </div>
                 <div class="bottom">
                     <div class="bottom-info">
