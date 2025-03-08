@@ -857,32 +857,8 @@ router.beforeEach((to, from) => {
   // ) {
   //   return { name: 'home' };
   // }
-  store.commit('setTransitionName', '');
 
-  if (to.name == 'registerSuccess') {
-    store.commit('setTransitionName', 'slide-right');
-    return;
-  }
-  if (from.name == 'registerSuccess') {
-    store.commit('setTransitionName', 'slide-left');
-    return;
-  }
-  if (to.name == 'googleCode') {
-    store.commit('setTransitionName', 'slide-right');
-    return;
-  }
-  if (from.name == 'googleCode') {
-    store.commit('setTransitionName', 'slide-left');
-    return;
-  }
-  if (from.name == 'safety' && to.name == 'google') {
-    store.commit('setTransitionName', 'slide-right');
-    return;
-  }
-  if (to.name == 'safety') {
-    store.commit('setTransitionName', 'slide-right');
-    return;
-  }
+
   if (to.query.inviteCode && to.path === '/') {
     const isBrowser =
       typeof window != 'undefined' && typeof window.document != 'undefined';
@@ -903,17 +879,7 @@ router.beforeEach((to, from) => {
       return { path: '/register', query: { inviteCode: to.query.inviteCode } };
     }
   }
-  // if ((from.meta.pageType == "tab" && to.meta.pageType == "tab") || (from.meta.pageType != "tab" && to.meta.pageType != "tab")) {
-  //   if (to.meta.index > from.meta.index) {
-  //     // 从右往左动画
-  //     transitionName.value = 'slide-left';
-  //   } else if (to.meta.index < from.meta.index) {
-  //     // 从左往右动画
-  //     transitionName.value = 'slide-right';
-  //   } else {
-  //     transitionName.value = '';
-  //   }
-  // }
+  store.commit('setTransitionName', '');
   if (from.meta.pageType == 'tab' && to.meta.pageType == 'child') {
     store.commit('setTransitionName', 'slide-right');
     return;
