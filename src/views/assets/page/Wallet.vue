@@ -1,23 +1,5 @@
 <template>
   <div class="wallet_container">
-    <!-- <Tabs v-model:active="activeTab" type="custom-card" :swipeable="false" animated shrink
-      @change="(e) => changeActiveTab(e)">
-      <Tab :title="t('assets.wallet_header_cash')" name="0">
-        <DefaultWallet :name="t('assets.wallet_cash_balance')" type="cash" />
-        <Btns />
-        <Cash @click="(val) => click(val)" />
-      </Tab>
-      <Tab :title="t('assets.wallet_header_stock')" name="1">
-        <DefaultWallet :name="t('assets.wallet_stock_balance')" type="stock" />
-        <Btns />
-        <StockMyWallet @click="(val) => click(val)" />
-      </Tab>
-      <Tab :title="t('assets.wallet_header_contract')" name="2">
-        <DefaultWallet :name="t('assets.wallet_contract_balance')" type="futures" />
-        <Btns />
-        <CryptoWallet @click="(val) => click(val)" />
-      </Tab>
-    </Tabs> -->
     <div v-if="from == 'cash'">
       <DefaultWallet v-model:showInfo="showInfo" :name="t('assets.wallet_cash_balance')" type="cash" />
       <Btns />

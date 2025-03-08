@@ -135,7 +135,8 @@ const getAddress = () => {
   })
     .then((res) => {
       if (res.code == 200) {
-        console.log("recharging >>> res data ========> ", res.data);
+        store.commit('setSuccessToastText', t('safety.success_title'))
+        store.commit('setShowSuccessToast', true)
         address.value = res.data?.address || "";
         drawQrcode();
         startCountDown(res.data?.timeout || 60);

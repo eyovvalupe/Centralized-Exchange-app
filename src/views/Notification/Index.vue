@@ -17,9 +17,9 @@
                 <div class="text-[0.28rem] text-color3 mb-[0.36rem] leading-[0.48rem]">
                   <TextEllipsis rows="2" :content="item.content" expand-text="more" collapse-text="less" />
                 </div>
-                <div class="w-full flex justify-between mb-[0.32rem]"
+                <div class="w-full flex mb-[0.32rem] gap-[0.1rem]"
                   v-if="item.images && item.images.split(';').length">
-                  <div class="w-[2rem] h-[1.24rem] rounded-[0.2rem] overflow-hidden"
+                  <div class="flex-1 h-[1.24rem] rounded-[0.2rem] overflow-hidden"
                     v-for="(url, i) in item.images.split(';')" @click="showPreview(item.images, i)">
                     <img class="!object-fill" v-lazy="getStaticImgUrl(url)" />
                   </div>

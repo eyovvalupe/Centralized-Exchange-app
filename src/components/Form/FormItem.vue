@@ -21,7 +21,7 @@
           disabled_item: disabled,
           item_focus: from != 'transfer' ? inputFocus : '', '!h-[1.28rem]': height
           // item_focus2: inputFocus && !tip,
-        }" :style="{ background,  paddingBottom: props.hasBot ? '2.6rem' : '', paddingTop: (props.hasLT || props.hasRT) ? '0.5rem' : '' }">
+        }" :style="{ background,  paddingBottom: props.hasBot ? '2.6rem' : '', paddingTop: (props.hasLT || props.hasRT) ? '0.5rem' : '', borderColor: errStatus ? 'var(--ex-error-color)' : '' }">
           <!-- 左侧提示 -->
           <span class="ipt_tip ipt_tip--left" :class="from == 'withdraw' ? '!text-[0.28rem] top-[0.5rem]' : ''"
             v-show="inputFocus">{{ placeholder }}</span>
@@ -49,7 +49,7 @@
               inputBlur();
             " :type="inputType == 'digit' ? 'number' : inputType == 'password' && showPassword ? 'text' : inputType"
               @keydown="validateKeydown" class="ipt" :class="from == 'withdraw' && inputFocus ? 'top-[0.1rem]' : ''"
-              @input="onInput" :placeholder="inputFocus ? '' : placeholder" />
+              @input="onInput" :placeholder="inputFocus ? '' : placeholder"/>
 
             <!-- 密码图标 -->
             <span class="pwd_icon" v-if="inputType == 'password'">
@@ -128,7 +128,7 @@ const emit = defineEmits([
   "btnClick",
   "focus",
   "blur",
-  "input"
+  "input",
 ]);
 const props = defineProps({
   rightContent: {
@@ -202,6 +202,10 @@ const props = defineProps({
     default: 0
   },
   height: {
+    type: Boolean,
+    default: false
+  },
+  errStatus: {
     type: Boolean,
     default: false
   }
@@ -287,6 +291,10 @@ const percentTagClick = (percent) => {
     background-color: var(--ex-bg-white1);
     height: 1.12rem;
 
+    &:has(.ipt:focus) {
+      border-color: var(--ex-primary-color) !important;
+    }
+
     .ipt_tip {
       color: var(--ex-text-color4);
       font-size: 0.24rem;
@@ -350,7 +358,7 @@ const percentTagClick = (percent) => {
 
   .item_focus {
     height: 1.12rem;
-    border: 1px solid var(--ex-primary-color);
+    border: 1px solid var(--ex-primary-color) !important;
 
     .ipt_tip {
       font-size: 0.2rem;

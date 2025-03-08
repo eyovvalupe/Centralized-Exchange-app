@@ -576,6 +576,12 @@ export const _aiquant = (data = {}) => {
     custom: { auth: false, toast: false, retry: true },
   });
 };
+// ai列表2.0
+export const _aiquant2 = (data = {}) => {
+  return http.post(`/anon/v2/item/aiquant`, data, {
+    custom: { auth: false, toast: false, retry: true },
+  });
+};
 // ai交易参数
 export const _aipara = (data = {}) => {
   return http.post(`/anon/v1/aiquant/para`, data, {

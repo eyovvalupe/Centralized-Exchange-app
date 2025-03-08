@@ -70,12 +70,12 @@
       </div>
       <div
         class="transition w-full h-[1.28rem] flex justify-between items-center rounded-[0.32rem] px-[0.28rem] border-[1px] bg-white1 mb-[0.2rem]"
-        :class="{ err_ipt: errStatus, 'border-color3': valueFocusRef }"
+        :class="{ err_ipt: errStatus, 'border-primary': valueFocusRef }"
       >
         <div class="item_content">
           <input
             class="ipt"
-            @focus="valueFocusRef = true"
+            @focus="valueFocusRef = true; errStatus = false"
             @blur="
               errStatus = false;
               valueFocusRef = false;

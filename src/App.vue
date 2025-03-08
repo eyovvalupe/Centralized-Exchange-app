@@ -148,6 +148,7 @@ if (token.value) {
   store.dispatch("updateWallet");
   store.dispatch("updateMyFollowList");
   store.dispatch("updateMyCopyData");
+  store.dispatch("updateNotifiList");
   store.dispatch("updateNotifiJoinList");
   store.dispatch("updateReferralInfo");
 }
