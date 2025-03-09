@@ -14,6 +14,8 @@ export default {
     spot: "Spot",
     option: "Option",
     second: "sec",
+    user: "User Center",
+    futures: 'Futures'
 
   },
   login: {

@@ -14,6 +14,8 @@ export default {
     option: "옵션",
     second: "초",
     hour: "시간",
+    user: "사용자 센터",
+    futures: '계약',
 
   },
   login: {

@@ -11,9 +11,11 @@ export default {
     min: "分",
     no_more: "没有更多了",
     no_wallet: "暂无收款账户",
-    spot: "现货",
+    spot: "币币",
     option: "交易机器人",
     second: "秒",
+    user: "用户中心",
+    futures: '加密货币合约'
   },
   login: {
     login: "登录",
