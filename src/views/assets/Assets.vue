@@ -2,7 +2,7 @@
 <template>
   <div class="page page_assets">
     <!-- 头部 -->
-    <HeaderTabs v-model:active="headActiveTab" :tabs="[
+    <HeaderTabs v-model:active="headActiveTab" @change="changeTab" :tabs="[
       t('assets.assets_center'),
       t('assets.header_order'),
     ]">
@@ -145,7 +145,8 @@ const { t } = useI18n();
 const handle = ref(false);
 // import HintBlock from "@/components/HintBlock.vue"
 const selectedItem = ref({});
-const headActiveTab = ref(0);
+const headActiveTab1 = computed(() => Number(sessionStorage.getItem('assetsType')));
+const headActiveTab = ref(headActiveTab1.value);
 
 const activeTab = ref(0);
 const assetsActiveTab = localStorage.getItem('assetsActiveTab')
@@ -157,6 +158,11 @@ const loadedTab = ref([activeTab.value]);
 const swipe = ref(null);
 
 const token = computed(() => store.state.token)
+
+const changeTab = (val) => {
+  sessionStorage.setItem('assetsType', val)
+  headActiveTab.value = val
+}
 
 const goIn = (item) => {
   handle.value = false;

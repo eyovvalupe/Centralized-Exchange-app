@@ -14,7 +14,7 @@
               backgroundColor:
                 activeItem == item.name ? 'var(--ex-bg-white2)' : '',
             }"
-            @click="goNext(item.name)"
+            @click="goNext(item)"
           >
             <div class="item_h">
               <div class="img_container">
@@ -93,8 +93,13 @@
               "
               v-for="(subItem, i) in item.sub"
               class="item !pl-[0.96rem] text-[0.32rem] mask-btn"
-              :style="{color: subItem == activeSub ? 'var(--ex-primary-color) !important' : ''}"
-              @click="goSub(subItem)"
+              :style="{
+                color:
+                  subItem == activeSub
+                    ? 'var(--ex-primary-color) !important'
+                    : '',
+              }"
+              @click="goSub(subItem, item.jump[subItem])"
             >
               {{
                 subItem == 'optional'
@@ -167,11 +172,12 @@
   import { isEmpty } from '../utils/isEmpty';
   import { useI18n } from 'vue-i18n';
   import { _langMap } from '@/utils/dataMap';
+  import router from '@/router';
 
   const { t, locale } = useI18n();
 
   const itemMap = [
-    { name: 'one_click' },
+    { name: 'one_click', jump: ['trade', false, { marketType: 'one_click' }] },
     {
       name: 'market',
       sub: [
@@ -183,6 +189,15 @@
         'forex',
         'commodities',
       ],
+      jump: {
+        optional: ['trade', true, { marketType: 'optional' }],
+        stock: ['trade', false, { marketType: 'stock' }],
+        spot: ['trade', false, { marketType: 'spot' }],
+        futures: ['trade', false, { marketType: 'futures' }],
+        ai: ['trade', false, { marketType: 'ai' }],
+        forex: ['trade', false, { marketType: 'forex' }],
+        commodities: ['trade', false, { marketType: 'commodities' }],
+      },
     },
     {
       name: 'trade',
@@ -194,22 +209,41 @@
         'forexTrade',
         'commoditiesTrade',
       ],
+      jump: {
+        stockTrade: ['tradeInfo', false, { tradeType: 'stock' }],
+        spotTrade: ['tradeInfo', false, { tradeType: 'spot' }],
+        futuresTrade: ['tradeInfo', false, { tradeType: 'futures' }],
+        aiTrade: ['tradeInfo', false, { tradeType: 'ai' }],
+        forexTrade: ['tradeInfo', false, { tradeType: 'forex' }],
+        commoditiesTrade: ['tradeInfo', false, { tradeType: 'commodities' }],
+      },
     },
     { name: 'finance', sub: ['copy', 'borrow', 'stake', 'ipo'] },
     {
       name: 'assets',
       sub: ['assets', 'deposit', 'withdraw', 'transfer', 'record'],
     },
-    { name: 'order' },
-    { name: 'user', sub: ['user', 'account', 'kyc', 'google', 'safety'] },
-    { name: 'referral' },
-    { name: 'lang' },
-    { name: 'support' },
+    { name: 'order', jump: ['assets', true, { activeType: 'order' }] },
+    {
+      name: 'user',
+      sub: ['user', 'account', 'kyc', 'google', 'safety'],
+      jump: {
+        user: ['user', true],
+        account: ['account', true],
+        kyc: ['kyc', true],
+        google: ['google', true],
+        safety: ['safety', true]
+      },
+    },
+    { name: 'referral', jump: ['inviteFriends', true] },
+    { name: 'lang', jump: ['language', false] },
+    { name: 'support', jump: ['chat', false] },
   ];
 
   const rendered = ref(false);
   const status = computed(() => store.state.showRightMenu);
   const language = computed(() => store.state.language || {});
+  const token = computed(() => store.state.token);
 
   const defaultLang = _langMap.reduce((acc, cur) => {
     if (cur.val == locale.value) acc = cur;
@@ -219,14 +253,15 @@
   const activeSub = ref('');
   const double = ref(false);
 
-  const goNext = (val) => {
+  const goNext = (item) => {
     activeSub.value = '';
-    if (activeItem.value != val) {
-      activeItem.value = val;
+    if (activeItem.value != item.name) {
+      activeItem.value = item.name;
       double.value = false;
+      if (isEmpty(item.sub)) jump(item.jump[0], item.jump[1], item.jump[2]);
       return;
     }
-    if (activeItem.value == val) {
+    if (activeItem.value == item.name) {
       if (!double.value) {
         double.value = true;
         return;
@@ -235,8 +270,9 @@
     }
   };
 
-  const goSub = (val) => {
+  const goSub = (val, jumpItem) => {
     activeSub.value = val;
+    jump(jumpItem[0], jumpItem[1], jumpItem[2]);
   };
 
   const close = () => {
@@ -244,6 +280,108 @@
     activeItem.value = '';
     activeSub.value = '';
     double.value = false;
+  };
+
+  const jump = (name, needToken, query) => {
+    setTimeout(() => {
+      close();
+      if (needToken && !token.value) {
+        goLogin();
+        return;
+      }
+
+      if (name == 'assets' && query.activeType == 'order') {
+        sessionStorage.setItem('assetsType', 1);
+      }
+
+      if (
+        query &&
+        ['spot', 'constract', 'ai', 'stock', 'forex', 'blocktrade'].includes(
+          query.tradeType,
+        )
+      ) {
+        let e;
+        switch (query.tradeType) {
+          case 'spot':
+            e = 1;
+            break;
+          case 'futures':
+            e = 2;
+            break;
+          case 'ai':
+            e = 3;
+            break;
+          case 'stock':
+            e = 4;
+            break;
+          case 'forex':
+            e = 5;
+            break;
+          case 'commodities':
+            e = 6;
+            break;
+          default:
+            e = 4;
+            break;
+        }
+        sessionStorage.setItem('tradeinfo-tab', e);
+      }
+
+      if (
+        query &&
+        [
+          'one_click',
+          'optional',
+          'stock',
+          'spot',
+          'futures',
+          'ai',
+          'forex',
+          'commodities',
+        ].includes(query.marketType)
+      ) {
+        let e;
+        switch (query.marketType) {
+          case 'one_click':
+            e = 5;
+            break;
+          case 'optional':
+            e = 0;
+            break;
+          case 'stock':
+            e = 6;
+            break;
+          case 'spot':
+            e = 1;
+            break;
+          case 'futures':
+            e = 2;
+            break;
+          case 'forex':
+            e = 7;
+            break;
+          case 'commodities':
+            e = 8;
+            break;
+          default:
+            e = 0;
+            break;
+        }
+        sessionStorage.setItem('rec_tab_trade', e);
+      }
+
+      router.push({
+        name,
+        query,
+      });
+    }, 200);
+  };
+
+  const goLogin = () => {
+    close();
+    setTimeout(() => {
+      store.commit('setIsLoginOpen', true);
+    }, 0);
   };
 
   onMounted(() => {
