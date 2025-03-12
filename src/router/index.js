@@ -818,16 +818,7 @@ const routes = [
       title: '质押挖矿',
     },
   },
-  {
-    path: '/stakingOrderDetail',
-    name: 'stakingOrderDetail',
-    component: () => import('../views/Finance/StakingOrderDetail.vue'),
-    meta: {
-      keepAlive: false,
-      pageType: 'child',
-      pageDeep: 1,
-    },
-  },
+
   {
     // 找不到路由时
     path: '/:pathMatch(.*)*',

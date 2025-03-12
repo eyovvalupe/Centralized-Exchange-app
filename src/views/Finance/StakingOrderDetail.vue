@@ -1,7 +1,7 @@
 <template>
     <div v-if="!isEmpty(orderItem)">
         {{ console.log(orderItem) }}
-        <Top :title="$t('trade.ipo_detail_title')" />
+        <Top :title="$t('trade.ipo_detail_title')" :backFunc="backFunc" />
         <div
             class=" mt-[1.08rem] mx-[0.32rem] mb-[0.32rem] h-[2.1rem] bg-color6  rounded-[0.32rem] flex justify-center items-center">
             <div class="h-[1rem] flex flex-col justify-between items-center">
@@ -74,9 +74,11 @@
 <script setup>
 import Top from '@/components/Top.vue';
 import store from '@/store';
-import { getStaticImgUrl } from "@/utils/index.js";
 import { isEmpty } from '@/utils/isEmpty';
 import { computed } from 'vue';
 const orderItem = computed(() => store.state.orderItem)
-
+const props = defineProps({
+    backFunc:Function
+    
+})
 </script>
