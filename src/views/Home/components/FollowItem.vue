@@ -18,7 +18,7 @@
                     <!-- <div class="info-a" v-if="props.showDetail">@{{ props.item.uid }}</div> -->
                 </div>
             </div>
-            <div class="btn ripple-btn"  @click.stop="emits('follow')">{{ $t('copy.copy_tab_tab1') }}</div>
+            <div class="btn ripple-btn"  @click.stop="emits('follow',props.item)">{{ $t('copy.copy_tab_tab1') }}</div>
         </div>
 
         <div class="info-box">

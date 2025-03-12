@@ -15,7 +15,7 @@
                 <div class="pt-[0.32rem] px-[0.32rem] ">
                     <NoData v-if="!loading && !showList.length" />
                     <div class="list-i" v-for="(item, i) in showList" :key="i">
-                        <FollowItem :item="item" :showDetail="true" @follow="plus" />
+                        <FollowItem :item="item" :showDetail="true" @follow="onFollow" />
                     </div>
                 </div>
             </Tab>
@@ -79,12 +79,13 @@ const finish = ref(false)
 
 // 跟单
 const showPlus = ref(false)
-const plus = () => {
+const onFollow = (item) => {
     if (!token.value) {
         showToast('请先登录')
         store.commit("setIsLoginOpen", true);
         return;
     }
+    info.value = item
     showPlus.value = true
 }
 

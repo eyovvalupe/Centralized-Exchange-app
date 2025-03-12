@@ -12,6 +12,7 @@ export default {
   mutations: {
     setCopyItemDetail(state, data) {
       state.copyItemDetail = data
+      sessionStorage.setItem('copyItemDetail', JSON.stringify(data))
     },
     setMyCopyData(state, data) {
       state.myCopyData = data
@@ -42,13 +43,21 @@ export default {
           .catch(() => resolve(false))
       })
     },
-    updateMyFollowList({ commit }) {
+    updateMyFollowList({ commit,state }) {
       // 更新我的跟单列表
       return new Promise(resolve => {
         _copyMyList()
           .then(res => {
-            if (res.code == 200 && res.data) {
-              commit('setMyCopy', res.data || [])
+            if (res.code == 200) {
+              res.data = res.data || []
+              commit('setMyCopy', res.data)
+              if(state.copyItemDetail){
+                res.data.map(item=>{
+                  if(item.id == state.copyItemDetail.id){
+                    commit('setCopyItemDetail',item)
+                  }
+                })
+              }
               resolve(res.data)
             } else {
               resolve(false)

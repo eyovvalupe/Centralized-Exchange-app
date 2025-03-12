@@ -407,7 +407,6 @@ watch(copyItem, (val) => {
 const onSuccess = ()=>{
     showPlus.value = false
     store.commit('setCopyItemDetail', info.value)
-    sessionStorage.setItem('copyItemDetail', JSON.stringify(info.value))
     showInfo.value = true
 }
 

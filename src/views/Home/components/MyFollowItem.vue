@@ -1,8 +1,8 @@
 <!-- 我的跟单元素 -->
 <template>
     <div class="flex flex-col">
-        <div class="myfollow-item bg-color3 mb-[0.24rem]" v-if="!isEmpty(item)">
-            <div class="title-box" @click="goInfo">
+        <div class="myfollow-item bg-color3 mb-[0.24rem]"  @click="goInfo" v-if="!isEmpty(item)">
+            <div class="title-box">
                 <div class="left">
                     <div class="top">
                         <div class="avatar overflow-hidden">
@@ -50,8 +50,8 @@
             </div>
 
             <div class="btns">
-                <div class="btn cancel ripple-primary" @click="cancel">{{ $t('copy.copy_order_detail_cancel') }}</div>
-                <div class="btn add ripple-btn" @click="plus">{{ $t('copy.copy_order_detail_confirm') }}</div>
+                <div class="btn cancel ripple-primary" @click.stop="cancel">{{ $t('copy.copy_order_detail_cancel') }}</div>
+                <div class="btn add ripple-btn" @click.stop="plus">{{ $t('copy.copy_order_detail_confirm') }}</div>
             </div>
         </div>
         <div class="mt-[0.24rem]" v-if="showDetail">
@@ -133,7 +133,6 @@ const plus = () => {
 const goInfo = () => {
     if (props.stopJump) return
     store.commit('setCopyItemDetail', props.item)
-    sessionStorage.setItem('copyItemDetail', JSON.stringify(props.item))
     emits('openInfo', {})
 }
 </script>

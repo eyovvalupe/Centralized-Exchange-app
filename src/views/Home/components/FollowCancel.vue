@@ -96,7 +96,7 @@ const submitCancel = () => {
                     showToast('已撤单')
                     store.dispatch("updateMyFollowList")
                     store.dispatch('updateMyCopyData')
-                    safeword.value = false
+                    safePass.value = false
                     emits('cancel', {})
                 }).finally(() => {
                     cancelLoading.value = false
