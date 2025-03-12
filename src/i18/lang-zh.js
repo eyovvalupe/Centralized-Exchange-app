@@ -1049,7 +1049,7 @@ export default {
     copy_portfolio: "跟单",
     copy_profit_rate: "胜率",
     copy_belong_profit: "收益",
-    copy_belong_title: "带单表现",
+    copy_belong_title: "跟单详情",
     copy_belong_tab1: "表现",
     copy_belong_profit_rate: "收益率",
     copy_belong_profit_amount: "收益金额",

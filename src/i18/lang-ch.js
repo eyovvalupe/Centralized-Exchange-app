@@ -1051,7 +1051,7 @@ export default {
     copy_portfolio: "跟單",
     copy_profit_rate: "勝率",
     copy_belong_profit: "收益",
-    copy_belong_title: "帶單表現",
+    copy_belong_title: "跟單詳情",
     copy_belong_tab1: "表現",
     copy_belong_profit_rate: "收益率",
     copy_belong_profit_amount: "收益金額",
