@@ -56,8 +56,11 @@
             <span class="text-color2">{{ t('finance.defi_borrow_total_due') }}({{ order.symbol }})</span>
             <span class="text-color mt-[0.06rem] text-[0.32rem]">{{ repayAmount }}</span>
         </div>
-        <div class="h-[1px] bg-white2 mt-[0.4rem]"></div>
-        <FormItem v-if="userInfo.role != 'guest'" size="large" class="mt-[0.4rem] mx-[0.32rem]" :placeholder="t('trade.stock_opening_trade_pw')" input-type="password" v-model="safeword" />
+        <div  v-if="userInfo.role != 'guest'">
+            <div class=" mt-[0.4rem]" style="border-top:1px dashed var(--ex-bg-white2);"></div>
+            <div class="text-[0.28rem] leading-[0.44rem] mx-[0.32rem] mt-[0.4rem] mb-[0.2rem]">{{ t('trade.stock_opening_trade_pw') }}</div>
+            <FormItem size="large" class="mx-[0.4rem]" :placeholder="t('trade.stock_opening_trade_pw_placeholder')" input-type="password" v-model="safeword" />
+        </div>
         <div class="pt-[0.4rem] pb-[0.6rem] px-[0.4rem]">
             <Button :loading="isLoading" type="primary" @click="submit" class="submit ripple-btn">
                 <span class="text-[0.32rem] font-bold">{{ t('trade.stock_opening_confirm') }}</span>

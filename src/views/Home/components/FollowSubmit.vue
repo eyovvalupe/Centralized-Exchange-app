@@ -3,7 +3,7 @@
     <div class="follow_dialog">
         <div class="form">
             <!-- 数量 -->
-            <div class="mb-[0.2rem]">
+            <div class="mb-[0.2rem] mx-[0.32rem]">
                 <FormItem :hasScroll="true" :placeholder="$t('copy.copy_order_follow_confirm_rage')"
                     :max="maxStockNum" v-model="amount" :show-btn="maxStockNum >= 1" 
                     @btnClick="amount = maxStockNum" @change="changePercent"  input-type="number">
@@ -16,7 +16,7 @@
                     </template>
                 </FormItem>
             </div>
-            <div class="w-full p-[0.28rem] rounded-[0.32rem] flex flex-col" style="background-color: var(--ex-bg-white2);">
+            <div class="p-[0.28rem] mx-[0.32rem] rounded-[0.32rem] flex flex-col" style="background-color: var(--ex-bg-white2);">
                 <div class="text-[0.32rem] mb-[0.4rem]">{{ $t('assets.wallet_cash_value') }}</div>
                 <div class="flex justify-between mb-[0.52rem] text-[0.28rem]">
                     <div class="text-color2">{{ $t('market.market_faster_available') }}</div>
@@ -27,14 +27,18 @@
                     <div class="w-[3rem] h-[0.6rem] flex items-center justify-center rounded-[1rem] bg-white1 text-white ripple-primary" @click="goTransfer">{{ $t('assets.transfer') }}</div>
                 </div>
             </div>
-            <div class="line"></div>
-            <div class="item pass_ipt" v-if="userInfo.role != 'guest'">
-                <input v-model="safePass" :placeholder="t('trade.stock_opening_trade_pw')"
-                    :type="showPassword ? 'text' : 'password'" class="ipt" />
-                <img v-if="!showPassword" v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')"
-                    @click="showPassword = true" alt="off" />
-                <img v-else v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
-                    @click="showPassword = false" />
+            <div class="line" v-if="userInfo.role != 'guest'"></div>
+            <div class="px-[0.32rem]" v-if="userInfo.role != 'guest'">
+               
+                <div class="text-[0.28rem] leading-[0.44rem] mb-[0.2rem]">{{ t('trade.stock_opening_trade_pw') }}</div>
+                <div class="item pass_ipt">
+                    <input v-model="safePass" :placeholder="t('trade.stock_opening_trade_pw_placeholder')"
+                        :type="showPassword ? 'text' : 'password'" class="ipt" />
+                    <img v-if="!showPassword" v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')"
+                        @click="showPassword = true" alt="off" />
+                    <img v-else v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
+                        @click="showPassword = false" />
+                </div>
             </div>
         </div>
 
@@ -186,7 +190,7 @@ const changePercent = val => {
     }
 
     .form {
-        margin: 0.6rem 0.32rem 0 0.32rem;
+        margin-top:0.6rem;
 
         .line {
             border-top: 1px dashed var(--ex-bg-white2);
@@ -212,7 +216,6 @@ const changePercent = val => {
         box-sizing: border-box;
         position: relative;
         background-color: var(--ex-bg-white2);
-        margin-top: 0.32rem;
 
         .ipt {
             flex: 1;

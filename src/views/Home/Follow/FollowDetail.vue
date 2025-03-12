@@ -318,9 +318,8 @@ import Top from "@/components/Top.vue";
 import { getStaticImgUrl } from "@/utils/index.js"
 import { computed, ref, watch } from "vue"
 import NoData from "@/components/NoData.vue"
-import { Tab, Tabs, Popup, showToast } from "vant";
+import { Tab, Tabs, Popup, showToast, Loading } from "vant";
 import { _copyGet, _copyOrders, _copyUsers } from "@/api/api"
-import SparkLine from "@/components/SparkLine.vue";
 import { useRoute } from "vue-router"
 import BottomPopup from "@/components/BottomPopup.vue";
 import FollowSubmit from "../components/FollowSubmit.vue"

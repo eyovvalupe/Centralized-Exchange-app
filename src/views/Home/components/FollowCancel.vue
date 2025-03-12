@@ -40,13 +40,16 @@
 
     </div>
     <div class="line"></div>
-    <div class="item pass_ipt" :class="{'erript':erript}" v-if="userInfo.role != 'guest'">
-        <input v-model="safePass" @focus="erript=false" :placeholder="t('trade.stock_opening_trade_pw')"
-            :type="showPassword ? 'text' : 'password'" class="ipt" />
-        <img v-if="!showPassword" v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')"
-            @click="showPassword = true" alt="off" />
-        <img v-else v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
-            @click="showPassword = false" />
+    <div class="px-[0.32rem]" v-if="userInfo.role != 'guest'">
+        <div class="text-[0.28rem] leading-[0.44rem] mb-[0.2rem]">{{ t('trade.stock_opening_trade_pw') }}</div>
+        <div class="item pass_ipt" :class="{'erript':erript}">
+            <input v-model="safePass" @focus="erript=false" :placeholder="t('trade.stock_opening_trade_pw_placeholder')"
+                :type="showPassword ? 'text' : 'password'" class="ipt" />
+            <img v-if="!showPassword" v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')"
+                @click="showPassword = true" alt="off" />
+            <img v-else v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
+                @click="showPassword = false" />
+        </div>
     </div>
     
     <div class="px-[0.32rem] pt-[0.4rem]">
@@ -306,7 +309,6 @@ const submitCancel = () => {
     margin: 0.4rem 0;
 }
 .pass_ipt {
-    margin-bottom: 0.4rem;
     border-radius: 0.32rem;
     border: 1px solid transparent;
     height: 1.12rem;
@@ -314,7 +316,6 @@ const submitCancel = () => {
     box-sizing: border-box;
     position: relative;
     background-color: var(--ex-bg-white2);
-    margin: 0.32rem 0.32rem 0 0.32rem;
 
     &.erript{
         border-color:var(--ex-error-color);
