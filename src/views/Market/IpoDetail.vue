@@ -189,7 +189,7 @@ onBeforeUnmount(() => {
   .main_item {
     border-radius: 0.32rem;
     border: 1px solid var(--ex-border-color);
-    background: var(--ex-bg-color2);
+    background: var(--ex-bg-white2);
 
     .name {
       color: var(--ex-text-color);
@@ -260,7 +260,7 @@ onBeforeUnmount(() => {
       align-items: center;
       justify-content: center;
       font-size: 0.24rem;
-      color: var(--ex-black);
+      color: var(--ex-white);
       position: absolute;
       right: 0;
       top: 0;
@@ -295,7 +295,7 @@ onBeforeUnmount(() => {
     border: 1px solid var(--ex-border-color);
     border-bottom: 0px;
     border-radius: 0.32rem;
-    background-color: var(--ex-bg-color);
+    background-color: var(--ex-bg-white2);
     width: calc(100% + 2px);
     left: -1px;
     z-index: 1;
@@ -351,6 +351,9 @@ onBeforeUnmount(() => {
 
   .detail_item_list {
     padding: 0.08rem 0.32rem 0 0.32rem;
+    background-color: var(--ex-bg-white2);
+    border-radius: 0.32rem;
+    margin-top: 0.2rem;
   }
 
   .detail_item {

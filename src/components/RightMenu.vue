@@ -392,11 +392,11 @@
 </script>
 <style lang="less">
   .right_menu {
-    position: absolute;
+    position: fixed;
     z-index: 2000;
     width: 7.5rem;
-    bottom: 0;
-    right: 0;
+    top: 0;
+    margin: 0 auto;
     height: 100vh;
     visibility: hidden;
     display: flex;
@@ -408,7 +408,7 @@
       border-bottom-left-radius: 0.32rem;
       background-color: var(--ex-bg-color9);
       width: 6.8rem;
-      height: calc(100vh - 50px);
+      height: calc(100vh - 0.88rem);
       padding: 0.26rem 0;
       display: flex;
       flex-direction: column;

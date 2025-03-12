@@ -20,7 +20,7 @@
                 <div @click="jump('language')" class="icon icon2 ripple-btn" style="margin-right: 0.12rem;">
                     <img v-lazy="getStaticImgUrl('/static/home2/lang.svg')" alt="">
                 </div>
-                <div @click="openLeftMenu" class="icon icon2 ripple-btn">
+                <div @click="openLeftMenu" class="icon icon2 ripple-btn transition" :class="{icon_active: showRightMenu}">
                     <img v-lazy="getStaticImgUrl('/static/home2/menu.svg')" alt="">
                 </div>
             </div>
@@ -505,6 +505,10 @@ const followList = computed(() => store.state.followList || [])
 
         .icon2 {
             padding: 0.16rem;
+        }
+
+        .icon_active {
+            background-color: var(--ex-primary-color);
         }
     }
 

@@ -99,7 +99,7 @@
 
   <!-- 左侧弹窗 -->
   <LeftMenu :jump="jump" ref="LeftRef" />
-  <RightMenu />
+  <RightMenu class="mx-auto" />
 </template>
 
 <script setup>

@@ -60,7 +60,7 @@
             </FormItem>
 
 
-            <div class="flex" v-if="activeTab == 1">
+            <div class="flex mt-[0.2rem]" v-if="activeTab == 1">
                 <div class="flex-1">
                     <FormItem :placeholder="t('trade.ipo_detail_lever')" disabled :modelValue="currIpo.lever + 'X'">
                     </FormItem>
@@ -275,8 +275,9 @@ import Top from "@/components/Top.vue"
 const params = ref({})
 
 const { t } = useI18n();
-
-const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == params.value.currency) || {}) // 主钱包
+const elseWalletMap = computed(() => store.state.elseWalletMap || [])
+// const mainWallet = computed(() => (store.state.wallet || []).find(a => a.currency == params.value.currency) || {}) // 主钱包
+const mainWallet = computed(() => elseWalletMap.value['stock'].find(a => a.currency == params.value.currency) || {}) // 主钱包
 const route = useRoute()
 
 const currIpo = ref(route.query)

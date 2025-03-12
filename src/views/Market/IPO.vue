@@ -1,13 +1,13 @@
 <!-- IPO -->
 <template>
   <div class="page_ipo">
-    <Tabs v-show="props.page != 'home'" type="custom-card" v-model:active="selectedOption" :swipeable="false" animated
-      :color="'var(--ex-primary-color)'" shrink @change="init(true)">
-      <Tab :title="t('trade.ipo_title_all')" :name="''"></Tab>
+    <Tabs v-show="props.page != 'home'" type="sub" v-model:active="selectedOption" :swipeable="false" animated
+      :color="'var(--ex-primary-color)'" shrink @change="onChange">
+      <Tab :title="t('trade.ipo_title_all')" :name="0"></Tab>
       <!-- <Tab :title="t('trade.ipo_title_pre')" :name="'none'"></Tab> -->
-      <Tab :title="t('trade.ipo_title_going')" :name="'issuing'"></Tab>
+      <Tab :title="t('普通')" :name="1"></Tab>
       <!-- <Tab :title="t('trade.ipo_title_finish')" :name="'done'"></Tab> -->
-      <Tab :title="t('trade.ipo_title_market')" :name="'listed'"></Tab>
+      <Tab :title="t('配资')" :name="2"></Tab>
     </Tabs>
 
     <!-- <Tabs  class="van-tabs--oval-sub" v-model:active="selectedLever" :swipeable="false" animated :color="'var(--ex-primary-color)'"
@@ -16,7 +16,7 @@
             </Tab>
         </Tabs> -->
     <div class="list" :class="props.page == 'home' && 'mt-[-0.32rem]'">
-      <div class="item" v-for="(item, i) in ipoDataList" :key="i" @click="openDetail(item)">
+      <div class="item" v-for="(item, i) in showList" :key="i" @click="openDetail(item)">
         <div class="item_box">
           <div class="name_box">
             <div class="name truncate">{{ item.company_name }}</div>
@@ -214,6 +214,20 @@ const marketMap = ref({
   malaysia: t('market.market_stock_country_malaysia_long'),
 });
 
+const showList = ref(ipoDataList.value)
+
+const onChange = () => {
+  if (selectedOption.value == 0) showList.value = ipoDataList.value;
+  else if (selectedOption.value == 1) showList.value = ipoDataList.value.filter(item => item.lever == '1')
+  else if (selectedOption.value == 2) showList.value = ipoDataList.value.filter(item => Number(item.lever) > 1)
+}
+
+watch(ipoDataList, (val) => {
+  if (selectedOption.value == 0) showList.value = ipoDataList.value;
+  else if (selectedOption.value == 1) showList.value = ipoDataList.value.filter(item => item.lever == '1')
+  else if (selectedOption.value == 2) showList.value = ipoDataList.value.filter(item => Number(item.lever) > 1)
+})
+
 // 初始化
 const init = (reset) => {
   if (reset) {
@@ -230,7 +244,7 @@ const getData = () => {
   loading.value = true;
   page.value++;
   const par = {
-    status: selectedOption.value,
+    status: '',
     page: page.value,
     lever: "",
   };
@@ -281,6 +295,7 @@ const scrollHandler = () => {
 // 倒计时
 let interval = null;
 onMounted(() => {
+  init(true);
   interval = setInterval(() => {
     const arr = ipoDataList.value.map((item) => {
       item._timedown = countdown(item.listing_date);
@@ -361,7 +376,7 @@ function countdown(endTime) {
 
 <style lang="less" scoped>
 .page_ipo {
-  padding: 0.28rem 0.32rem 0 0.32rem;
+  padding: 0 0.32rem 0 0.32rem;
 
   .van-tabs--oval-sub {}
 
@@ -375,7 +390,7 @@ function countdown(endTime) {
     .item {
       border-radius: 0.32rem;
       border: 1px solid var(--ex-border-color);
-      background: var(--ex-bg-color2);
+      background: var(--ex-bg-color3);
       margin-top: 0.2rem;
 
       .name_box {
@@ -454,7 +469,7 @@ function countdown(endTime) {
         align-items: center;
         justify-content: center;
         font-size: 0.24rem;
-        color: var(--ex-black);
+        color: var(--ex-white);
         position: absolute;
         right: 0;
         top: 0;
@@ -478,7 +493,7 @@ function countdown(endTime) {
       .item_info {
         border-radius: 0.32rem;
         border: 1px solid var(--ex-border-color);
-        background: var(--ex-bg-color);
+        background: var(--ex-bg-white2);
         position: relative;
         left: -1px;
         width: calc(100% + 2px);
@@ -492,7 +507,7 @@ function countdown(endTime) {
         }
 
         .info_cell+.info_cell {
-          border-top: 1px dashed var(--ex-border-color);
+          border-top: 1px dashed var(--ex-bg-white2);
         }
 
         .info_name {
