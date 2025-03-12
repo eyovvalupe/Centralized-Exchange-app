@@ -330,7 +330,6 @@ import { isEmpty } from "@/utils/isEmpty";
 import store from "@/store";
 import { getPoints } from "@/utils/index.js"
 import follow from "@/store/follow.js";
-import router from "@/router";
 const points = getPoints('id-123456', 100)
 const showInfo = ref(false)
 const token = computed(() => store.state.token)
@@ -343,7 +342,7 @@ const showPlus = ref(false)
 const plus = () => {
     if (!token.value) {
         showToast('请先登录')
-        router.push({ name: 'login' })
+        store.commit("setIsLoginOpen", true);
         return;
     }
     showPlus.value = true

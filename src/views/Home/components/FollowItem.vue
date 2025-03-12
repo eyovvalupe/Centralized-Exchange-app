@@ -1,6 +1,6 @@
 <!-- 跟单元素 -->
 <template>
-    <div class="follow-item">
+    <div class="follow-item ripple-btn" @click="goFollow">
         <div class="title-box">
             <div class="left">
                 <div class="top">
@@ -18,7 +18,7 @@
                     <!-- <div class="info-a" v-if="props.showDetail">@{{ props.item.uid }}</div> -->
                 </div>
             </div>
-            <div class="btn ripple-btn" @click="goFollow">{{ $t('copy.copy_tab_tab1') }}</div>
+            <div class="btn ripple-btn"  @click.stop="emits('follow')">{{ $t('copy.copy_tab_tab1') }}</div>
         </div>
 
         <div class="info-box">
@@ -60,6 +60,7 @@ import SparkLine from "@/components/SparkLine.vue";
 import router from "@/router";
 import store from "@/store";
 const points = ref(getPoints('id-123456', 100))
+const emits = defineEmits(['follow'])
 const props = defineProps({
     showDetail: { // 是否显示详细信息
         type: Boolean,

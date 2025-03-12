@@ -15,7 +15,7 @@
                 <div class="pt-[0.32rem] px-[0.32rem] ">
                     <NoData v-if="!loading && !showList.length" />
                     <div class="list-i" v-for="(item, i) in showList" :key="i">
-                        <FollowItem :item="item" :showDetail="true" />
+                        <FollowItem :item="item" :showDetail="true" @follow="plus" />
                     </div>
                 </div>
             </Tab>
@@ -30,6 +30,12 @@
     <Popup teleport="body" v-model:show="showInfo" position="right" :style="{ height: '100%', width: '100%' }">
         <FollowInfo v-if="showInfo" @back="showInfo = false" style="width: 100%;height: 100%;" />
     </Popup>
+
+     <!-- 跟单弹窗 -->
+     <BottomPopup v-model:show="showPlus" :title="t('copy.title')" position="bottom" round closeable teleport="body">
+        <FollowSubmit v-if="showPlus" @success="onSuccess" :item="info" :mode="'follow'" />
+    </BottomPopup>
+    
 </template>
 
 <script setup>
@@ -37,13 +43,16 @@ import Top from "@/components/Top.vue";
 import NoData from '@/components/NoData.vue';
 import LoadingMore from "@/components/LoadingMore.vue"
 import FollowItem from "../components/FollowItem.vue"
+import BottomPopup from "@/components/BottomPopup.vue";
+import FollowSubmit from "../components/FollowSubmit.vue"
 import { _copyMyList, _copyList } from '@/api/api'
-import { ref, computed, onMounted, onBeforeUnmount } from "vue"
+import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue"
 import store from "@/store";
-import { Popup, Tabs, Tab } from "vant"
+import { Popup, Tabs, Tab, showToast } from "vant"
 import FollowInfo from "../Follow/FollowInfo.vue"
 import CopyOrders from '../components/CopyOrders.vue'
-
+import { useI18n } from "vue-i18n";
+const { t } = useI18n()
 const props = defineProps({
     from: {
         type: String,
@@ -52,7 +61,7 @@ const props = defineProps({
 })
 const active = ref(1) // 1-跟单  2-订单
 const showInfo = ref(false)
-
+const info = ref({})
 const activeTab = ref(0)
 
 const onChange = (val) => {
@@ -68,6 +77,22 @@ const showList = computed(() => {
 const loading = ref(false)
 const finish = ref(false)
 
+// 跟单
+const showPlus = ref(false)
+const plus = () => {
+    if (!token.value) {
+        showToast('请先登录')
+        store.commit("setIsLoginOpen", true);
+        return;
+    }
+    showPlus.value = true
+}
+
+
+const onSuccess = ()=>{
+    showPlus.value = false
+    showInfo.value = true
+}
 
 // 获取从第二页开始的数据
 const page = ref(2)
@@ -105,11 +130,19 @@ const scrolHandle = () => {
         getMoreData();
     }
 };
-onMounted(() => {
+const init = ()=>{
     store.dispatch('updateFollowList')
     if (token.value) {
         store.dispatch('updateMyFollowList')
     }
+}
+watch(()=>store.state.token,(v)=>{
+    if(v){
+        init()
+    }
+})
+onMounted(() => {
+    init()
     setTimeout(() => {
         try {
             moreDom = document.querySelector(".loading_more");

@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full bg-color6 rounded-[0.32rem] mb-[0.1rem] pb-[0.12rem] pt-[0.24rem]"
+    <div class="w-full bg-white2 rounded-[0.32rem] mb-[0.1rem] pb-[0.12rem] pt-[0.24rem]"
         :class="i == list.length - 1 ? 'mb-[0.5rem]' : ''" v-for="(item, i) in list" @click="jump(item)" v-if="list.length">
         <div class="flex justify-between mx-[0.28rem] mb-[0.3rem]">
             <div class="flex flex-col justify-between">
@@ -15,7 +15,7 @@
                 <div class="text-[0.32rem] text-primary">{{ item.earn > 0 ? '+' + item.earn : item.earn }} <span class="text-color text-[0.24rem]">USDT</span></div>
             </div>
         </div>
-        <div class="flex flex-col bg-color2 justify-between p-[0.28rem] rounded-[0.32rem] mx-[0.12rem]">
+        <div class="flex flex-col bg-white2 justify-between p-[0.28rem] rounded-[0.32rem] mx-[0.12rem]">
             <div class="w-full h-[0.44rem] flex items-center justify-between mb-[0.2rem]">
                 <div class="text-[0.28rem] text-color2">{{ $t('finance.portfolio_mining_noti_duration') }}</div>
                 <div class="text-[0.28rem]">{{ item.days }}{{ item.days > 1 ? $t('finance.portfolio_day_multi') : $t('finance.portfolio_day') }}</div>

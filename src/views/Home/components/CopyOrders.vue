@@ -24,7 +24,10 @@
         <div class="list-i" v-if="myFollowList.length">
             <MyFollowItem @openInfo="openInfo" :item="item"  v-for="(item, i) in myFollowList" :key="i" :showDetail="false" />
         </div>
-        <NoData v-if="!myFollowList.length" />
+        <div class="py-[3rem]" v-if="!token">
+            <UnLogin/>
+        </div>
+        <NoData v-else-if="!myFollowList.length" />
 
         <!-- 详情 -->
         <Popup teleport="body" v-model:show="showInfo" position="right" :style="{ height: '100%', width: '100%' }">
@@ -37,10 +40,12 @@
 import store from '@/store'
 import { isEmpty } from "@/utils/isEmpty";
 import MyFollowItem from "../components/MyFollowItem.vue"
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { Popup } from 'vant'
 import NoData from '@/components/NoData.vue';
 import FollowInfo from "../Follow/FollowInfo.vue"
+import UnLogin from '@/components/UnLogin.vue';
+const token = computed(()=> store.state.token)
 const myFollowList = computed(() => store.state.myCopy)
 const myCopyData = computed(() => store.state.myCopyData)
 const typeChange = ref('option')
