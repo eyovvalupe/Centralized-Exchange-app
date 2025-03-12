@@ -14,7 +14,8 @@ export default {
     option: "オプション",
     second: "秒",
     hour: "小时",
-
+    user: "ユーザーセンター",
+    futures: '契約',
   },
   login: {
     login: "ログイン",

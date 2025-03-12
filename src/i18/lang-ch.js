@@ -10,10 +10,12 @@ export default {
     min: "分",
     no_more: "没有更多了",
     no_wallet: "暫無收款賬戶",
-    spot: "現貨",
+    spot: "幣幣",
     option: "期貨",
     second: "秒",
     hour: "時",
+    user: "用戶中心",
+    futures: '加密貨幣合約'
 
   },
   home: {
