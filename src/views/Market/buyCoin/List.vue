@@ -1,6 +1,8 @@
 <!-- 订单列表 -->
 <template>
-  <div v-if="token" class="buycoin_list" @scroll="scrollHandle">
+  <div v-if="token" class="buycoin_list"
+  :class="from == 'orderCenter' ? 'h-[14rem] !pb-[1.2rem]' : 'h-full'"
+  @scroll="scrollHandle">
     <div class="list">
       <!-- 当前订单 -->
       <div v-for="(item, i) in showList" :key="i"
@@ -279,7 +281,6 @@ defineExpose({
 }
 
 .buycoin_list {
-  height:100%;
   box-sizing: border-box;
   padding: 0.32rem;
   overflow-y: auto;
