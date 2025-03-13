@@ -27,8 +27,7 @@
             v-show="inputFocus">{{ placeholder }}</span>
           <!-- 右侧提示 -->
           <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip"
-            v-show="inputFocus || props.hasScroll">{{ tip
-            }}</span>
+            v-show="inputFocus || props.hasScroll">{{ tip }}</span>
           <!-- 左上角模块 -->
           <div class="lt-box" :class="{ 'lt-box-focus': inputFocus }" v-if="hasLT">
             <slot name="lt" />

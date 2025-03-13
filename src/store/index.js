@@ -59,6 +59,7 @@ const store = createStore({
     showLeftMenu: false,
     successToastText: '',
     showRightMenu: false,
+    showOrderList: false,
     ...market.state,
     ...trade.state,
     ...assets.state,
@@ -67,6 +68,9 @@ const store = createStore({
     ...finance.state,
   },
   mutations: {
+    setShowOrderList(state, data) {
+      state.showOrderList = data
+    },
     setShowRightMenu(state, data) {
       state.showRightMenu = data
     },

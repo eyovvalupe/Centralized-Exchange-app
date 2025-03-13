@@ -67,8 +67,8 @@
                         t('finance.portfolio_mining_header') }}</div>
                 </div>
                 <div class="w-full relative mb-[0.32rem]">
-                    <FormItem  inputHeight="1.12rem" :hasScroll="true" :from="'toTop'"
-                        :placeholder="t('finance.portfolio_mining_header')" :max="maxStockNum" v-model="form1.amount"
+                    <FormItem  inputHeight="1.12rem" hasScroll :from="'toTop'"
+                        :placeholder="t('投资额')" :max="maxStockNum" v-model="form1.amount"
                         @change="changePercent" input-type="number" @input="changePercent">
 
                         <template #scroll>
@@ -469,8 +469,8 @@ watch(stakeInfo, (val) => {
 
     .submit {
         width: 100%;
-        height: 0.96rem;
-        border-radius: 0.32rem;
+        height: 1.12rem;
+        border-radius: 0.6rem;
         background-color: var(--ex-primary-color);
     }
 }
