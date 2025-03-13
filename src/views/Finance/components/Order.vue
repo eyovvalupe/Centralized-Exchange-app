@@ -1,40 +1,38 @@
 <template>
-    <div class="">
-        <div class="order_page mt-[0.32rem]" :class="from == 'order' ? '' : ' mx-[0.32rem]'" v-if="!isEmpty(myEarn)">
-            <div class="flex w-full h-[1.74rem] bg-white2 rounded-[0.32rem]">
-                <div class="flex flex-col items-center justify-center w-1/2">
-                    <div class="text-[0.3rem] text-color2 mb-[0.24rem]">{{ t('finance.portfolio_revenue') }}<span
-                            class="text-[0.24rem] text-color2">(USDT)</span></div>
-                    <div class="text-[0.4rem]">{{ Number(myEarn.earn).toLocaleString() }}</div>
-                </div>
-                <div class="flex flex-col items-center justify-center w-1/2">
-                    <div class="text-[0.3rem] text-color2 mb-[0.24rem]">{{ t('finance.portfolio_investment_amt') }}<span
-                            class="text-[0.24rem] text-color2">(USDT)</span></div>
-                    <div class="text-[0.4rem]">{{ Number(myEarn.amount).toLocaleString() }}</div>
-                </div>
-            </div>
-            <Tabs key="form" :type="from == 'order' ? 'sub-order' : 'sub-stake'" style="margin-top:0.32rem;" v-model="activeTab" :swipeable="false"
-                :color="'var(--ex-primary-color)'" shrink @change="changeTab">
-                <Tab :active="activeTab == 0" style="min-width: 2rem" :title="t('finance.portfolio_order_tab1')"
-                    name="0">
-                    <div ref="orderListRef" class="order_list mt-[0.2rem]">
-                        <NoData v-if="!orderList.length" />
-                        <OrderList :list="orderList" :type="'position'" />
-                    </div>
-                </Tab>
-                <Tab :active="activeTab == 1" style="min-width: 2rem" :title="t('finance.portfolio_order_tab2')"
-                    name="1">
-                    <div class="mt-[0.2rem]">
-                        <NoData v-if="!myOrderList.length" />
-                        <OrderList :list="myOrderList" :type="'redeem'" />
-                    </div>
-                </Tab>
-            </Tabs>
+      <div class="order_page" @scroll="scrolHandle"  v-if="!isEmpty(myEarn)">
+          <div class="flex w-full h-[1.74rem] bg-white2 rounded-[0.32rem]">
+              <div class="flex flex-col items-center justify-center w-1/2">
+                  <div class="text-[0.3rem] text-color2 mb-[0.24rem]">{{ t('finance.portfolio_revenue') }}<span
+                          class="text-[0.24rem] text-color2">(USDT)</span></div>
+                  <div class="text-[0.4rem]">{{ Number(myEarn.earn).toLocaleString() }}</div>
+              </div>
+              <div class="flex flex-col items-center justify-center w-1/2">
+                  <div class="text-[0.3rem] text-color2 mb-[0.24rem]">{{ t('finance.portfolio_investment_amt') }}<span
+                          class="text-[0.24rem] text-color2">(USDT)</span></div>
+                  <div class="text-[0.4rem]">{{ Number(myEarn.amount).toLocaleString() }}</div>
+              </div>
+          </div>
+          <Tabs key="form" :type="from == 'order' ? 'sub-order' : 'sub-stake'" style="margin-top:0.32rem;" v-model="activeTab" :swipeable="false"
+              :color="'var(--ex-primary-color)'" shrink @change="changeTab">
+              <Tab :active="activeTab == 0" style="min-width: 2rem" :title="t('finance.portfolio_order_tab1')"
+                  name="0">
+                  <div ref="orderListRef" class="order_list mt-[0.2rem]">
+                      <NoData v-if="!orderList.length" />
+                      <OrderList :list="orderList" :type="'position'" />
+                  </div>
+              </Tab>
+              <Tab :active="activeTab == 1" style="min-width: 2rem" :title="t('finance.portfolio_order_tab2')"
+                  name="1">
+                  <div class="mt-[0.2rem]">
+                      <NoData v-if="!myOrderList.length" />
+                      <OrderList :list="myOrderList" :type="'redeem'" />
+                  </div>
+              </Tab>
+          </Tabs>
 
-            <LoadingMore :classN="'stakelist-loading'" :loading="loading" :finish="finish"
-                v-if="(finish && (activeTab == 0 ? orderList.length : myOrderList.length)) || !finish" />
-        </div>
-    </div>
+          <LoadingMore :loading="loading" :finish="finish"
+              v-if="(finish && (activeTab == 0 ? orderList.length : myOrderList.length)) || !finish" />
+      </div>
 </template>
 <script setup>
 import { useI18n } from 'vue-i18n';
@@ -147,33 +145,27 @@ const getMyEarn = () => {
         .finally(() => earnLoading.value = false);
 }
 
-let moreDom = null
-const totalHeight = window.innerHeight || document.documentElement.clientHeight;
-const scrolHandle = () => {
-    const rect = moreDom.getBoundingClientRect()
-    if (rect.top <= totalHeight) {
-        // 加载更多
-        console.error('加载更多')
-        getData(activeTab.value);
-    }
-}
+const scrolHandle = (e) => {
+  if (e.target.scrollTop + e.target.offsetHeight + 20 >= e.target.scrollHeight) {
+    // 加载更多
+    console.log("加载更多");
+    getData(activeTab.value);
+  }
+};
+
 
 onMounted(() => {
     getMyEarn();
 
-    setTimeout(() => {
-        try {
-            moreDom = document.querySelector('.stakelist-loading')
-            document.querySelector('.staking_page').addEventListener('scroll', scrolHandle)
-        } catch {
-        }
-    }, 1000)
-})
-onUnmounted(() => {
-    try {
-        document.querySelector('.staking_page').removeEventListener('scroll', scrolHandle)
-    } catch { }
 })
 
+
 </script>
-<style lang="less"></style>
+<style lang="less" scoped>
+.order_page{
+  height: 100%;
+  box-sizing: border-box;
+  padding: 0.32rem;
+  overflow-y: auto;
+}
+</style>
