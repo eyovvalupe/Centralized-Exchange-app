@@ -128,6 +128,10 @@ const props = defineProps({
     type: String,
     default: "",
   },
+  type: {
+    type: String,
+    default: ''
+  }
 });
 
 const statusEnum = {

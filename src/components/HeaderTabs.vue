@@ -7,7 +7,7 @@
                     :class="{ 'active_tab': active == i, 'tab--last': i == tabs.length - 1,}"
                     @click="changeActiveTab(i)">
                     <span class="tab-name">{{ tabName }}</span>
-                    <div class="active_effect w-[26px] h-[8px]" v-if="type == 'custom-line' && active == i">
+                    <div class="active_effect w-[26px] h-[10px]" v-if="type == 'custom-line' && active == i">
                         <img v-lazy="getStaticImgUrl('static/img/common/active_tab.svg')" alt="" />
                     </div>
                     <div class="active_effect w-[15px] h-[2px]" v-if="type == 'line' && active == i">
@@ -278,7 +278,7 @@ onMounted(() => {
     }
 }
 .header_tabs--custom-line {
-    height: 0.88rem;
+    height: 0.64rem;
     position: relative;
     &::after{
         content: '';
@@ -298,21 +298,24 @@ onMounted(() => {
             font-size: .32rem;
             color: var(--ex-text-color2);
             padding: 0 .16rem;
-            height: 0.88rem;
+            height: 0.64rem;
             line-height: 0;
             border-radius: .48rem;
             display: flex;
             padding-bottom: 0.06rem;
-            align-items: center;
+            align-items: start;
             cursor: pointer;
             white-space: nowrap;
             position: relative;
+
+
             .tab-name {
                 position: relative;
                 z-index: 1;
                 transition: .3s;
-                font-size: 0.32rem;
+                font-size: 0.4rem;
                 font-weight: 400;
+                line-height: 0.4rem;
             }
 
         }
@@ -328,6 +331,47 @@ onMounted(() => {
     }
 }
 
+.header_tabs--normal {
+    height: 0.88rem;
+    position: relative;
+    .tabs {
+        .tab_body {
+            height: 0.88rem;
+            margin: 0 0.16rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .tab {
+            color: var(--ex-text-color2);
+            display: flex;
+            padding-bottom: 0.06rem;
+            cursor: pointer;
+            white-space: nowrap;
+            position: relative;
+
+
+            .tab-name {
+                position: relative;
+                z-index: 1;
+                transition: .3s;
+                font-size: 0.4rem;
+                font-weight: 400;
+                line-height: 0.4rem;
+            }
+
+        }
+
+        .active_tab {
+            color: var(--ex-text-color) !important;
+
+            .tab-name {
+                font-size: 0.56rem;
+                font-weight: 600;
+            }
+        }
+    }
+}
 
 .header_tabs--small-card {
     height: 0.7rem;
