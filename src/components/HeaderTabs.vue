@@ -364,15 +364,16 @@
         white-space: nowrap;
         position: relative;
 
-        .tab-name {
-          position: relative;
-          z-index: 1;
-          transition: 0.3s;
-          font-size: 0.4rem;
-          font-weight: 400;
-          line-height: 0.4rem;
+            .tab-name {
+                position: relative;
+                z-index: 1;
+                transition: .3s;
+                font-size: 0.32rem;
+                font-weight: 400;
+                line-height: 0.4rem;
+            }
+
         }
-      }
 
       .active_tab {
         .tab-name {

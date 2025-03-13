@@ -44,7 +44,7 @@ import OrderList from './OrderList.vue';
 import { onMounted, onUnmounted, ref, watch } from 'vue';
 import { _myEarn, _stakeOrder } from '@/api/api';
 import { isEmpty } from '@/utils/isEmpty';
-// import LoadingMore from '@/components/LoadingMore.vue';
+import LoadingMore from '@/components/LoadingMore.vue';
 
 const props = defineProps({
     from: {
