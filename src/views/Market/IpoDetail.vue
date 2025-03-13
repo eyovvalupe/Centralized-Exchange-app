@@ -8,8 +8,7 @@
           <div class="name_box">
             <div class="name">
               {{ currDetail.company_name }}
-              <span class="lever_icon" v-if="currDetail.lever > 1"
-                v-lazy="getStaticImgUrl('/static/img/trade/level.svg')">{{ t('trade.ipo_leveraged_trading') }}</span>
+              <span class="lever_icon" v-if="currDetail.lever > 1">{{ t('trade.ipo_leveraged_trading') }}</span>
             </div>
           </div>
           <div class="pre_times" v-if="currDetail.status == 'none' && currDetail._timedown">
@@ -350,10 +349,13 @@ onBeforeUnmount(() => {
   }
 
   .detail_item_list {
-    padding: 0.08rem 0.32rem 0 0.32rem;
+    padding: 0.28rem;
     background-color: var(--ex-bg-white2);
     border-radius: 0.32rem;
     margin-top: 0.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.28rem;
   }
 
   .detail_item {
@@ -361,8 +363,6 @@ onBeforeUnmount(() => {
     align-items: center;
     justify-content: space-between;
     line-height: 0.44rem;
-    padding: 0.32rem 0 0.2rem 0;
-    border-bottom: 1px solid var(--ex-border-color);
     color: var(--ex-text-color3);
     font-size: 0.28rem;
     font-weight: 400;

@@ -376,7 +376,9 @@ function countdown(endTime) {
 
 <style lang="less" scoped>
 .page_ipo {
-  padding: 0 0.32rem 0 0.32rem;
+  padding: 0.32rem 0.32rem 0.6rem 0.32rem;
+  height: 100%;
+  overflow-y: auto;
 
   .van-tabs--oval-sub {}
 

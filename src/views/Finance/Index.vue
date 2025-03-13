@@ -3,6 +3,8 @@
   <div class="page page_finance">
     <!-- 头部 -->
     <HeaderTabs
+      :from="'finance'"
+      :type="'custom-line'"
       v-model:active="activeTab"
       :tabs="[
         t('copy.title'),
@@ -12,12 +14,6 @@
       ]"
       @change="changeActiveTab(activeTab, true)"
     />
-    <!-- <Tabs :type="'sub-order'" v-model:active="activeTab" @change="changeActiveTab(activeTab, true)">
-      <Tab :name="0" :title="t('copy.title')"></Tab>
-      <Tab :name="1" :title="t('finance.defi_borrow')"></Tab>
-      <Tab :name="2" :title="t('finance.portfolio_title')"></Tab>
-      <Tab :name="3" :title="t('IPO')"></Tab>
-    </Tabs> -->
 
     <Swipe
       v-if="pageLoaded"
@@ -53,7 +49,7 @@
       </SwipeItem>
       <SwipeItem>
         <div
-          style="height: calc(var(--vh) * 100 - 1rem); padding-bottom: 1.4rem"
+          style="height: calc(var(--vh) * 100 - 0.5rem); padding-bottom: 1.4rem"
         >
           <IPO ref="ipoRef" />
         </div>

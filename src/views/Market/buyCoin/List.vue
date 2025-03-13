@@ -42,7 +42,7 @@
           </div>
         </div>
         <!-- 交易信息展示 -->
-         <div class="bg-color rounded-[0.4rem] relative">
+         <div class="bg-white2 rounded-[0.4rem] relative">
             <div class="w-[0.68rem] flex justify-center items-center" :class="['offset-'+item.offset]">  
               <span class="text-[0.32rem] font-600" style="writing-mode:vertical-lr; letter-spacing: 0.06rem;">
                 {{

@@ -13,12 +13,13 @@
           :tabs="[
             t('买币'),
             t('股票'),
-            t('IPO'),
             t('币币'),
             t('合约'),
             t('交易机器人'),
+            t('跟单'),
             t('DeFi借币'),
             t('质押挖矿'),
+            t('IPO'),
           ]"
           @change="changeActiveTab(activeTab)"
         />
@@ -31,10 +32,8 @@
         <div class="tab px-[0.32rem]" v-if="activeTab == 1">
           <StockBlock :from="'order'" class="mt-[0.4rem]" />
         </div>
-        <div class="tab px-[0.32rem]" v-if="activeTab == 2">
-          <IPOstock :from="'order'" />
-        </div>
-        <div class="tab" v-if="activeTab == 3">
+        
+        <div class="tab" v-if="activeTab == 2">
           <Tabs
             type="custom-sub"
             v-model:active="active"
@@ -55,7 +54,7 @@
             </Tab>
           </Tabs>
         </div>
-        <div class="tab px-[0.32rem]" v-if="activeTab == 4">
+        <div class="tab px-[0.32rem]" v-if="activeTab == 3">
           <Tabs
             type="sub-order"
             v-model:active="active"
@@ -72,7 +71,7 @@
             </Tab>
           </Tabs>
         </div>
-        <div class="tab px-[0.32rem]" v-if="activeTab == 5">
+        <div class="tab px-[0.32rem]" v-if="activeTab == 4">
           <Tabs
             type="sub-order"
             v-model:active="active"
@@ -89,11 +88,17 @@
             </Tab>
           </Tabs>
         </div>
+        <div class="tab" v-if="activeTab == 5">
+          <CopyOrders :from="'order'"/>
+        </div>
         <div class="tab" v-if="activeTab == 6">
           <PledgeOrder :from="'order'"/>
         </div>
         <div class="tab" v-if="activeTab == 7">
           <Order :from="'order'" />
+        </div>
+        <div class="tab px-[0.32rem]" v-if="activeTab == 8">
+          <IPOstock :from="'order'" ref="ipoRef"/>
         </div>
       </div>
     </div>
@@ -123,6 +128,7 @@
 
   const { t } = useI18n();
   const activeTab = ref(0);
+  const ipoRef = ref()
   const changeActiveTab = (val) => {
     activeTab.value = val;
   };

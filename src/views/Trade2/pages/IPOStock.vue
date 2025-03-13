@@ -241,6 +241,7 @@ const handleMounted = () => {
 };
 // 倒计时
 onMounted(() => {
+  init(true)
   handleMounted();
 });
 onBeforeUnmount(() => {
@@ -363,7 +364,7 @@ function countdown(endTime) {
         align-items: center;
         justify-content: center;
         font-size: 0.24rem;
-        color: var(--ex-black);
+        color: var(--ex-white);
         position: absolute;
         right: 0;
         top: 0;
@@ -371,17 +372,17 @@ function countdown(endTime) {
 
       .status_failure {
         background-color: var(--ex-status-color1);
-        color: var(--ex-black);
+        color: var(--ex-white);
       }
 
       .status_issuing {
         background-color: var(--ex-text-color3);
-        color: var(--ex-black);
+        color: var(--ex-white);
       }
 
       .status_success {
         background-color: var(--ex-status-color3);
-        color: var(--ex-black);
+        color: var(--ex-white);
       }
 
       .item_box {
@@ -460,7 +461,7 @@ function countdown(endTime) {
         border-radius: 0.32rem;
         border: 1px solid var(--ex-border-color);
         border-bottom: 0px;
-        background: var(--ex-bg-color);
+        background: var(--ex-bg-white2);
         position: relative;
         left: 0.12rem;
         width: calc(100% - 0.24rem);

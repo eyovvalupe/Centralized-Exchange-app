@@ -236,6 +236,7 @@
   import { _cryptoCoin } from '@/api/api';
   import { useI18n } from 'vue-i18n';
   import { isEmpty } from '@/utils/isEmpty';
+  import CryptoIcon from "@/components/CryptoIcon.vue"
 
   const { t } = useI18n();
   const tabActive = ref('cryptocurrency');

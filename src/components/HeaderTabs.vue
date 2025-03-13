@@ -4,11 +4,16 @@
         <div class="tabs"  ref="tabScroller">
             <div class="tab_body">
                 <div class="tab" v-for="(tabName, i) in tabs" :key="i"
-                    :class="{ 'active_tab': active == i, 'tab--last': i == tabs.length - 1 }"
+                    :class="{ 'active_tab': active == i, 'tab--last': i == tabs.length - 1,}"
                     @click="changeActiveTab(i)">
                     <span class="tab-name">{{ tabName }}</span>
+                    <div class="active_effect w-[26px] h-[8px]" v-if="type == 'custom-line' && active == i">
+                        <img v-lazy="getStaticImgUrl('static/img/common/active_tab.svg')" alt="" />
+                    </div>
+                    <div class="active_effect w-[15px] h-[2px]" v-if="type == 'line' && active == i">
+                        <img v-lazy="getStaticImgUrl('static/img/common/active_tab1.svg')" alt="" />
+                    </div>
                 </div>
-
             </div>
         </div>
         <slot name="after" />
@@ -16,6 +21,8 @@
 </template>
 <script setup>
 import { nextTick, onMounted, ref, watch } from 'vue';
+import { getStaticImgUrl } from "@/utils/index.js"
+
 const emit = defineEmits(['update:active', 'change'])
 const props = defineProps({
     type: {
@@ -126,7 +133,7 @@ onMounted(() => {
             font-size: .3rem;
             color: var(--ex-text-color3);
             padding: 0 .14rem 0 0.2rem;
-            height: .66rem;
+            height: .64rem;
             line-height: 0;
             border-radius: .48rem;
             display: flex;
@@ -141,7 +148,12 @@ onMounted(() => {
                 z-index: 1;
                 
             }
-
+            .active_effect {
+                position: absolute;
+                bottom: 0;
+                left: 50%;
+                transform: translateX(-50%);
+            }
         }
 
         .active_tab {
@@ -252,6 +264,70 @@ onMounted(() => {
         }
     }
 }
+.header_tabs--custom-line {
+    height: 0.64rem;
+    position: relative;
+    &::after{
+        content: '';
+        width: 100%;
+        height: 1px;
+        position: absolute;
+        bottom: 0;
+        left:0;
+        background: rgba(255, 255, 255, 0.06);
+    }
+    .tabs {
+        .tab_body {
+            margin: 0 0.16rem;
+        }
+
+        .tab {
+            font-size: .32rem;
+            color: var(--ex-text-color2);
+            padding: 0 .16rem;
+            height: 0.64rem;
+            line-height: 0;
+            border-radius: .48rem;
+            display: flex;
+            padding-bottom: 0.06rem;
+            align-items: center;
+            cursor: pointer;
+            white-space: nowrap;
+            position: relative;
+            .tab-name {
+                position: relative;
+                z-index: 1;
+                transition: .3s;
+                font-size: 0.32rem;
+                font-weight: 400;
+            }
+
+        }
+
+        .active_tab {
+            color: var(--ex-text-color) !important;
+
+            // &::after {
+            //     content: '';
+            //     position: absolute;
+            //     bottom: 0rem;
+            //     left: 50%;
+            //     width: 0.3rem;
+            //     margin: 0 auto;
+            //     height: 0.04rem;
+            //     border-radius: 0.3rem;
+            //     transform: translateX(-50%);
+            //     background-color: var(--ex-primary-color);
+            // }
+
+            .tab-name {
+                font-size: 0.4rem;
+                font-weight: 600;
+            }
+        }
+    }
+}
+
 
 .header_tabs--small-card {
     height: 0.7rem;
