@@ -1,13 +1,11 @@
 <!-- 订单列表 -->
 <template>
-  <div v-if="token" class="buycoin_list" :style="props.from == 'orderCenter'
-      ? 'width: 100%; padding: 0'
-      : 'width: 7.5rem; padding: 0.08rem 0.32rem;'
-    ">
+  <div v-if="token" class="buycoin_list p-[0.32rem]">
     <div class="list">
       <!-- 当前订单 -->
       <div v-for="(item, i) in showList" :key="i"
-        class="relative mb-[0.2rem] w-full  rounded-4 bg-color3 px-[0.12rem] pb-[0.12rem]"
+        class="relative mb-[0.2rem] w-full  rounded-4  px-[0.12rem] pb-[0.12rem]"
+        :class="[props.from == 'trade' ? 'bg-white2' : 'bg-color3']"
         @click="openOrderInfo(item)">
         <!-- 消息右上角小红点 -->
         <div v-if="unreadMessage[item.order_no] > 0"
@@ -251,7 +249,7 @@ const getC2cOrderInfo = async () => {
     }
   });
 };
-watch(() => scrollData.arrivedState.bottom, scrollHandle);
+watch(() => scrollData && scrollData.arrivedState ? scrollData.arrivedState.bottom : null, scrollHandle);
 init();
 
 onActivated(() => {
@@ -301,15 +299,16 @@ defineExpose({
       position: absolute;
       left:0;
       top:0;
+      font-weight:600;
     }
     .offset-sell{
-      color:var(--ex-text-color);
-      background:var(--ex-error-color);
+      color:var(--ex-down-color);
+      background:rgb(var(--ex-down-color-rgb) / 0.1);
       
     }
     .offset-buy{
-      color:var(--ex-text-color);
-      background:var(--ex-success-color);
+      color:var(--ex-up-color);
+      background:rgb(var(--ex-up-color-rgb) / 0.1);
       
     }
     

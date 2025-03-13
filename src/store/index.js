@@ -159,6 +159,7 @@ const store = createStore({
         useSocket().disConnect();
       } catch { }
       setTimeout(() => {
+        console.log("reset")
         // 重置相关数据
         commit('setToken', '');
         commit('setUserInfo', {});

@@ -807,13 +807,13 @@
   <div v-else>
     <FinanceIndex />
   </div>
-  <BottomPopup round :show="showOrderList" @close="closeOrderList()">
-    <div style="height: 90vh;" class="relative pt-[0.24rem]">
-      <div class="size-[0.4rem] absolute right-[0.4rem] top-[0.12rem] z-10" @click="closeOrderList">
-        <img :src="getStaticImgUrl('/static/img/common/close.svg')" />
+  <BottomPopup  round :show="showOrderList" @close="closeOrderList()">
+    <div class="absolute right-[0.22rem] p-[0.1rem] top-[0.3rem] z-10">
+      <div class="size-[0.32rem]" @click="closeOrderList">
+        <img :src="getStaticImgUrl('/static/img/common/close2.svg')" />
       </div>
-      <OrderCenter />
     </div>
+    <OrderCenter />
   </BottomPopup>
 </template>
 

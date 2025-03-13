@@ -209,7 +209,7 @@ onMounted(() => {
 }
 
 .header_tabs--line {
-    height: 0.94rem;
+    height: 0.96rem;
     position: relative;
     &::after{
         content: '';
@@ -224,12 +224,12 @@ onMounted(() => {
         .tab_body {
             margin: 0 0.16rem;
         }
-
         .tab {
-            font-size: .32rem;
+            font-size: .28rem;
             color: var(--ex-text-color2);
-            padding: 0 .16rem;
+            padding: 0 .2rem;
             height: 0.88rem;
+            margin-top:0.08rem;
             line-height: 0;
             border-radius: .48rem;
             display: flex;
@@ -248,7 +248,7 @@ onMounted(() => {
 
         .active_tab {
             color: var(--ex-text-color) !important;
-
+            font-size:0.32rem;
             &::after {
                 content: '';
                 position: absolute;

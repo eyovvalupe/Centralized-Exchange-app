@@ -1,6 +1,6 @@
 <template>
-    <div class="pt-[0.32rem] px-[0.32rem] pb-[1.6rem]">
-        <div class="my-total" v-if="!isEmpty(myCopyData)">
+    <div class="pt-[0.32rem] px-[0.32rem] " :class="[props.from == 'trade' ? '' : ' pb-[1.6rem]']">
+        <div class="my-total" :class="[props.from == 'trade' ? 'bg-white2' : 'bg-color3']" v-if="!isEmpty(myCopyData)">
             <div class="info-flex">
                 <div class="info-item">
                     <div class="name">{{ $t('copy.copy_order_total_profit') }}<span class="text-[0.24rem]">(USDT)</span></div>
@@ -14,15 +14,23 @@
                 </div>
             </div>
         </div>
-        <!-- <div class="flex gap-[0.1rem] mb-[0.2rem]">
-            <div class="w-max px-[0.4rem] h-[0.78rem] rounded-[1rem] text-[0.3rem] font-semibold flex items-center justify-center"
-                :class="typeChange == 'option' ? 'bg-white text-black ripple-primary' : 'text-color2 ripple-btn'"
-                @click="typeChange = 'option'"
-                :style="typeChange == 'option' ? '' : 'background-color: var(--ex-bg-white2)'">{{
-                    $t('common.option') }}</div>
-        </div> -->
+        <div class="pb-[0.32rem]" v-if="!isEmpty(myFollowList)">
+            <Tabs
+            :type="from == 'order' ? 'sub-order' : 'sub-stake'"
+            v-model="typeChange"
+            :swipeable="false"
+            :color="'var(--ex-primary-color)'"
+            shrink
+            >
+            <Tab :title="$t('common.option')"> </Tab>
+            <!-- <Tab
+                :title="$t('common.crypto')"
+            >
+            </Tab> -->
+            </Tabs>
+        </div>
         <div class="list-i" v-if="myFollowList.length">
-            <MyFollowItem @openInfo="openInfo" :item="item"  v-for="(item, i) in myFollowList" :key="i" :showDetail="false" />
+            <MyFollowItem :from="from" @openInfo="openInfo" :item="item"  v-for="(item, i) in myFollowList" :key="i" :showDetail="false" />
         </div>
         <div class="py-[3rem]" v-if="!token">
             <UnLogin/>
@@ -39,16 +47,22 @@
 <script setup>
 import store from '@/store'
 import { isEmpty } from "@/utils/isEmpty";
-import MyFollowItem from "../components/MyFollowItem.vue"
+import MyFollowItem from "./MyFollowItem.vue"
 import { computed, ref } from 'vue';
-import { Popup } from 'vant'
+import { Popup,Tabs,Tab } from 'vant'
 import NoData from '@/components/NoData.vue';
 import FollowInfo from "../Follow/FollowInfo.vue"
 import UnLogin from '@/components/UnLogin.vue';
+const props = defineProps({
+    from: {
+        type: String,
+        default: "",
+    },
+});
 const token = computed(()=> store.state.token)
 const myFollowList = computed(() => store.state.myCopy)
 const myCopyData = computed(() => store.state.myCopyData)
-const typeChange = ref('option')
+const typeChange = ref(0)
 const showInfo = ref(false)
 // 跟单详情
 const openInfo = () => {
@@ -63,10 +77,8 @@ const openInfo = () => {
 
 .my-total {
     border-radius: 0.32rem;
-    background: var(--ex-bg-color3);
     padding: 0.12rem;
     margin-bottom: 0.2rem;
-    border:1px solid var(--ex-bg-white2);
 
     .info-flex {
         display: flex;

@@ -1,7 +1,7 @@
 <!-- 我的跟单元素 -->
 <template>
     <div class="flex flex-col">
-        <div class="myfollow-item bg-color3 mb-[0.24rem]"  @click="goInfo" v-if="!isEmpty(item)">
+        <div class="myfollow-item mb-[0.24rem]" :class="[props.from == 'trade' ? 'bg-white1' : 'bg-color3']" @click="goInfo" v-if="!isEmpty(item)">
             <div class="title-box">
                 <div class="left">
                     <div class="top">
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <div class="btns">
+            <div class="btns" >
                 <div class="btn cancel ripple-primary" @click.stop="cancel">{{ $t('copy.copy_order_detail_cancel') }}</div>
                 <div class="btn add ripple-btn" @click.stop="plus">{{ $t('copy.copy_order_detail_confirm') }}</div>
             </div>
@@ -101,7 +101,11 @@ const props = defineProps({
     stopJump: { // 禁止跳转
         type: Boolean,
         default: false
-    }
+    },
+    from: {
+        type: String,
+        default: "",
+    },
 })
 
 const activeTab = ref(0)
