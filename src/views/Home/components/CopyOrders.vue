@@ -1,43 +1,41 @@
 <template>
-  <div :class="from != 'order' ? 'pt-[0.32rem] px-[0.32rem] pb-[1.6rem]' : ''">
-    <div class="my-total" v-if="!isEmpty(myCopyData)">
-      <div class="info-flex">
-        <div class="info-item">
-          <div class="name">
-            {{ $t('copy.copy_order_total_profit')
-            }}<span class="text-[0.24rem]">(USDT)</span>
-          </div>
-          <div
-            class="val"
-            :class="[myCopyData.returnamount >= 0 ? 'up' : 'down']"
-          >
-            {{ myCopyData.returnamount }}
-          </div>
+    <div class="" :class="[props.from == 'trade' ? '' : ' pb-[1.6rem]', from == 'order' ? '' : 'pt-[0.32rem] px-[0.32rem]']">
+        <div class="my-total" :class="[props.from == 'trade' ? 'bg-white2' : 'bg-color3']" v-if="!isEmpty(myCopyData)">
+            <div class="info-flex">
+                <div class="info-item">
+                    <div class="name">{{ $t('copy.copy_order_total_profit') }}<span class="text-[0.24rem]">(USDT)</span></div>
+                    <div class="val" :class="[myCopyData.returnamount >= 0 ? 'up' : 'down']">{{ myCopyData.returnamount }}</div>
+                </div>
+                <div class="info-item" style="text-align: right;">
+                    <div class="name">{{ $t('copy.copy_order_total_amount') }}<span class="text-[0.24rem]">(USDT)</span></div>
+                    <div class="val" @click="plus">
+                        <span>{{ myCopyData.amount }}</span>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="info-item" style="text-align: right">
-          <div class="name">
-            {{ $t('copy.copy_order_total_amount')
-            }}<span class="text-[0.24rem]">(USDT)</span>
-          </div>
-          <div class="val" @click="plus">
-            <span>{{ myCopyData.amount }}</span>
-          </div>
+        <div class="pb-[0.32rem]" v-if="!isEmpty(myFollowList)">
+            <Tabs
+            :type="from == 'order' ? 'sub-order' : 'sub-stake'"
+            v-model="typeChange"
+            :swipeable="false"
+            :color="'var(--ex-primary-color)'"
+            shrink
+            >
+            <Tab :title="$t('期权')"> </Tab>
+            <!-- <Tab
+                :title="$t('common.crypto')"
+            >
+            </Tab> -->
+            </Tabs>
         </div>
-      </div>
-    </div>
-    <div class="list-i" v-if="myFollowList.length">
-      <MyFollowItem
-        @openInfo="openInfo"
-        :item="item"
-        v-for="(item, i) in myFollowList"
-        :key="i"
-        :showDetail="false"
-      />
-    </div>
-    <div class="py-[3rem]" v-if="!token">
-      <UnLogin />
-    </div>
-    <NoData v-else-if="!myFollowList.length" />
+        <div class="list-i" v-if="myFollowList.length">
+            <MyFollowItem :from="from" @openInfo="openInfo" :item="item"  v-for="(item, i) in myFollowList" :key="i" :showDetail="false" />
+        </div>
+        <div class="py-[3rem]" v-if="!token">
+            <UnLogin/>
+        </div>
+        <NoData v-else-if="!myFollowList.length" />
 
     <!-- 详情 -->
     <Popup
@@ -55,50 +53,30 @@
   </div>
 </template>
 <script setup>
-  import store from '@/store';
-  import { isEmpty } from '@/utils/isEmpty';
-  import MyFollowItem from '../components/MyFollowItem.vue';
-  import { computed, ref } from 'vue';
-  import { Popup } from 'vant';
-  import NoData from '@/components/NoData.vue';
-  import FollowInfo from '../Follow/FollowInfo.vue';
-  import UnLogin from '@/components/UnLogin.vue';
-
-  const props = defineProps({
+import store from '@/store'
+import { isEmpty } from "@/utils/isEmpty";
+import MyFollowItem from "./MyFollowItem.vue"
+import { computed, ref } from 'vue';
+import { Popup,Tabs,Tab } from 'vant'
+import NoData from '@/components/NoData.vue';
+import FollowInfo from "../Follow/FollowInfo.vue"
+import UnLogin from '@/components/UnLogin.vue';
+const props = defineProps({
     from: {
-      type: String,
-      default: '',
+        type: String,
+        default: "",
     },
-  });
+});
+const token = computed(()=> store.state.token)
+const myFollowList = computed(() => store.state.myCopy)
+const myCopyData = computed(() => store.state.myCopyData)
+const typeChange = ref(0)
+const showInfo = ref(false)
+// 跟单详情
+const openInfo = () => {
+    showInfo.value = true
+}
 
-  const token = computed(() => store.state.token);
-  const myFollowList = computed(() => store.state.myCopy);
-  const myCopyData = computed(() => store.state.myCopyData);
-  const typeChange = ref('option');
-  const showInfo = ref(false);
-  // 跟单详情
-  const openInfo = () => {
-    showInfo.value = true;
-  };
-  const init = () => {
-    if (!token.value) {
-      return;
-    }
-    store.dispatch('updateMyFollowList');
-    store.dispatch('updateMyCopyData');
-  };
-
-  watch(token, (val) => {
-    if (val) init();
-  });
-
-  onMounted(() => {
-    if (token.value) init();
-  });
-
-  defineExpose({
-    init,
-  });
 </script>
 <style lang="less" scoped>
   .list-i {
@@ -107,10 +85,8 @@
 
   .my-total {
     border-radius: 0.32rem;
-    background: var(--ex-bg-color3);
     padding: 0.12rem;
     margin-bottom: 0.2rem;
-    border: 1px solid var(--ex-bg-white2);
 
     .info-flex {
       display: flex;

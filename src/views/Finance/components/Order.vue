@@ -1,7 +1,7 @@
 <template>
     <div class="">
-        <div class="order_page mt-[0.32rem] mx-[0.32rem]" v-if="!isEmpty(myEarn)">
-            <div class="flex w-full h-[1.74rem] bg-white2 rounded-[0.32rem]" v-if="from != 'order'">
+        <div class="order_page mt-[0.32rem]" :class="from == 'order' ? '' : ' mx-[0.32rem]'" v-if="!isEmpty(myEarn)">
+            <div class="flex w-full h-[1.74rem] bg-white2 rounded-[0.32rem]">
                 <div class="flex flex-col items-center justify-center w-1/2">
                     <div class="text-[0.3rem] text-color2 mb-[0.24rem]">{{ t('finance.portfolio_revenue') }}<span
                             class="text-[0.24rem] text-color2">(USDT)</span></div>
@@ -13,7 +13,7 @@
                     <div class="text-[0.4rem]">{{ Number(myEarn.amount).toLocaleString() }}</div>
                 </div>
             </div>
-            <Tabs key="form" :type="from == 'order' ? 'sub-order' : 'sub-stake'" style="margin-top:0.2rem;" v-model="activeTab" :swipeable="false"
+            <Tabs key="form" :type="from == 'order' ? 'sub-order' : 'sub-stake'" style="margin-top:0.32rem;" v-model="activeTab" :swipeable="false"
                 :color="'var(--ex-primary-color)'" shrink @change="changeTab">
                 <Tab :active="activeTab == 0" style="min-width: 2rem" :title="t('finance.portfolio_order_tab1')"
                     name="0">

@@ -17,7 +17,7 @@
         </div>
       </template>
     </HeaderTabs>
-    <Tabs v-model:active="activeTab" type="custom-card-stake" @change="changeActiveTab(activeTab, true)"
+    <Tabs v-model:active="activeTab" type="custom-card-assets" @change="changeActiveTab(activeTab, true)" class="mt-[0.32rem]"
       v-if="headActiveTab == 0">
       <Tab :title="t('assets.header_total')" />
       <Tab :title="t('assets.wallet_cash_value')" />

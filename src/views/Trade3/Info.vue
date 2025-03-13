@@ -808,10 +808,13 @@
   <div class="pt-[0.32rem]" v-else>
     <Finance />
   </div>
-  <BottomPopup round :show="showOrderList" @close="closeOrderList()" :closeable="true">
-    <div style="height: 90vh;" class="relative">
-      <OrderCenter />
+  <BottomPopup  round :show="showOrderList" @close="closeOrderList()">
+    <div class="absolute right-[0.22rem] p-[0.1rem] top-[0.3rem] z-10">
+      <div class="size-[0.32rem]" @click="closeOrderList">
+        <img :src="getStaticImgUrl('/static/img/common/close2.svg')" />
+      </div>
     </div>
+    <OrderCenter />
   </BottomPopup>
 </template>
 

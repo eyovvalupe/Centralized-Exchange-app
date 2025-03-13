@@ -9,8 +9,8 @@
       @change="(e) => onChange(e)"
     >
       <Tab :title="'买币订单'" :name="0">
-        <div class="p-[0.32rem]">
-          <List :from="'orderCenter'" :type="'modal'" />
+        <div class="trade_order_tab trade_order_tab2">
+            <List from="trade" :type="'modal'" />
         </div>
       </Tab>
       <Tab :title="'交易订单'" :name="1">
@@ -63,13 +63,13 @@
             :tabs="[t('跟单'), t('DeFi借币'), t('质押挖矿'), t('IPO')]"
             @change="changeActiveTab1(activeFinanceTab)"
           />
-          <div class="trade_order_tab p-[0.32rem]" v-if="activeFinanceTab == 0">
+          <div class="trade_order_tab" v-if="activeFinanceTab == 0">
             <CopyOrders :from="'trade'" />
           </div>
-          <div class="trade_order_tab p-[0.32rem]" v-if="activeFinanceTab == 1">
+          <div class="trade_order_tab" v-if="activeFinanceTab == 1">
             <PledgeOrder :from="'trade'" />
           </div>
-          <div class="trade_order_tab p-[0.32rem]" v-if="activeFinanceTab == 2">
+          <div class="trade_order_tab" v-if="activeFinanceTab == 2">
             <Order :from="'trade'" />
           </div>
           <div class="trade_order_tab p-[0.32rem]" v-if="activeFinanceTab == 3">
@@ -159,24 +159,26 @@ watch(tradeOrderTab, (val) => {
           }
         }
         > .van-tabs__line {
-          width: 0
+          display:none;
         }
       }
     }
   }
 
   .trade_order_tab {
+    height:80vh;
+    overflow-y:auto;
     .page_ipo_stock {
       padding: 0;
     }
 
-    .btns {
-      padding: 0;
-    }
 
     .tabs {
       padding: 0 !important;
     }
+  }
+  .trade_order_tab2{
+    height:calc(80vh + 0.96rem)
   }
 }
 </style>

@@ -9,7 +9,7 @@
       @change="(e) => onChange(e)"
     >
       <Tab :title="'买币订单'" :name="0">
-        <div class="p-[0.32rem]">
+        <div class="">
           <List :from="'orderCenter'"/>
         </div>
       </Tab>
@@ -66,17 +66,17 @@
           <div class="trade_order_tab pt-[0.4rem]" v-if="activeFinanceTab == 0">
             <CopyOrders :from="'order'" />
           </div>
-          <div class="trade_order_tab pt-[0.4rem]" v-if="activeFinanceTab == 1">
+          <div class="trade_order_tab pt-[0.08rem]" v-if="activeFinanceTab == 1">
             <PledgeOrder :from="'order'" />
           </div>
-          <div class="trade_order_tab pt-[0.4rem]" v-if="activeFinanceTab == 2">
+          <div class="trade_order_tab pt-[0.08rem]" v-if="activeFinanceTab == 2">
             <Order :from="'order'" />
           </div>
-          <div class="trade_order_tab pt-[0.4rem]" v-if="activeFinanceTab == 3">
+          <div class="trade_order_tab pt-[0.08rem]" v-if="activeFinanceTab == 3">
             <IPOStock
               ref="IPOStockRef"
               scrollDom="#assets_order_center_body"
-              :from="'trade'"
+              :from="'order'"
             />
           </div>
         </div>

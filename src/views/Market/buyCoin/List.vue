@@ -1,13 +1,11 @@
 <!-- 订单列表 -->
 <template>
-  <div v-if="token" class="buycoin_list" :style="props.from == 'orderCenter'
-      ? 'width: 100%; padding: 0'
-      : 'width: 7.5rem; padding: 0.08rem 0.32rem;'
-    ">
-    <div class="list" :class="type == 'modal' ? 'h-[13rem] overflow-auto' : ''">
+  <div v-if="token" class="buycoin_list" @scroll="scrollHandle">
+    <div class="list">
       <!-- 当前订单 -->
       <div v-for="(item, i) in showList" :key="i"
-        class="relative mb-[0.2rem] w-full  rounded-4 bg-color3 px-[0.12rem] pb-[0.12rem]"
+        class="relative mb-[0.2rem] w-full  rounded-4  px-[0.12rem] pb-[0.12rem]"
+        :class="[props.from == 'trade' ? 'bg-white2' : 'bg-color3']"
         @click="openOrderInfo(item)">
         <!-- 消息右上角小红点 -->
         <div v-if="unreadMessage[item.order_no] > 0"
@@ -143,7 +141,6 @@ const statusEnum = {
   cancel: { name: t('market.market_already_done'), color: "var(--ex-text-color3)" },
 };
 const { active, subs } = useBuyCoinState();
-const scrollData = inject("scrollData");
 
 // 解构赋值，分别获取c2cList（上次的c2c列表），token（用户令牌），c2cUnread（未读的c2c消息数）
 const {
@@ -235,12 +232,16 @@ const showList = computed(() => {
   return [...c2cLasttime.value, ...list.value];
 });
 
-// 监听
-const scrollHandle = (bottom) => {
-  if (active.value !== "2") return;
-  // 加载更多
-  if (bottom) getData(true);
+const scrollHandle = (e) => {
+  // 获取当前滚动位置
+  
+  if (e.target.scrollTop + e.target.offsetHeight + 20 > e.target.scrollHeight) {
+    // 加载更多
+    getData(true);
+  }
 };
+
+
 
 const getC2cOrderInfo = async () => {
   const res = await _c2cOrderInfo({
@@ -255,7 +256,7 @@ const getC2cOrderInfo = async () => {
     }
   });
 };
-watch(() => scrollData && scrollData.arrivedState ? scrollData.arrivedState.bottom : null, scrollHandle);
+
 init();
 
 onActivated(() => {
@@ -286,7 +287,10 @@ defineExpose({
 }
 
 .buycoin_list {
-
+  height:100%;
+  box-sizing: border-box;
+  padding: 0.32rem;
+  overflow-y: auto;
   .list {
     
     .item-body{
@@ -305,15 +309,16 @@ defineExpose({
       position: absolute;
       left:0;
       top:0;
+      font-weight:600;
     }
     .offset-sell{
-      color:var(--ex-text-color);
-      background:var(--ex-error-color);
+      color:var(--ex-down-color);
+      background:rgb(var(--ex-down-color-rgb) / 0.1);
       
     }
     .offset-buy{
-      color:var(--ex-text-color);
-      background:var(--ex-success-color);
+      color:var(--ex-up-color);
+      background:rgb(var(--ex-up-color-rgb) / 0.1);
       
     }
     

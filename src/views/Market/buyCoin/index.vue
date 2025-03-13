@@ -16,8 +16,10 @@
       <Tab :title="t('market.market_buy_title2')" name="1">
         <Self ref="selfRef" />
       </Tab>
-      <Tab :title="t('账户闪兑')" name="2">
-        
+      <Tab :title="t('market.market_buy_title3')" name="2">
+        <div style="height:calc(var(--vh) * 100 - 3.24rem); overflow-y:auto;">
+          <List />
+        </div>
       </Tab>
     </Tabs>
   </div>

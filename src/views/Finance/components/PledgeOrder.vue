@@ -1,7 +1,7 @@
 <template>
-    <div class="pledge_order_list_page px-[0.32rem]">
+    <div class="pledge_order_list_page" :class="from == 'order' ? '' :' px-[0.32rem]'" @scroll="scrollHandle">
        
-        <Tabs key="form" :type="from == 'order' ? 'sub-order' : 'sub-stake'" style="margin-top:0.32rem;" v-model:active="activeTab" @click-tab="onTabClick" :swipeable="false" shrink>
+        <Tabs key="form" :type="from == 'order' ? 'sub-order' : 'sub-stake'" v-model:active="activeTab" @click-tab="onTabClick" :swipeable="false" shrink>
             <Tab name="open" style="min-width: 2rem" :title="t('finance.defi_borrow_on')">
             </Tab>
             <Tab name="close" style="min-width: 2rem" :title="t('finance.defi_borrow_repaid')">
@@ -91,6 +91,16 @@ const onPledgeLoad = ()=>{
     }
     getList(currentPage.value + 1)
 }
+const scrollHandle = (e) => {
+  // 获取当前滚动位置
+  
+  if (e.target.scrollTop + e.target.offsetHeight + 20 > e.target.scrollHeight) {
+    // 加载更多
+    onPledgeLoad();
+  }
+};
+
+
 const onTabClick = ()=>{
     list.value = []
     getList()
@@ -101,10 +111,14 @@ const onPledgeSuccess = ()=>{
 }
 onMounted(()=>{
     eventBus.on("pledgeSuccess",onPledgeSuccess)
-    eventBus.on("pledgeLoad",onPledgeLoad)
 })
 onBeforeUnmount(()=>{
     eventBus.off("pledgeSuccess",onPledgeSuccess)
-    eventBus.off("pledgeLoad",onPledgeLoad)
 })
 </script>
+<style scoped>
+.pledge_order_list_page{
+    height:100%;
+    overflow-y:auto;
+}
+</style>

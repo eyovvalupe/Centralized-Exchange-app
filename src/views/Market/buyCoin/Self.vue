@@ -256,7 +256,7 @@ const scrollHandle = (bottom) => {
   // 加载更多
   if (bottom) getData();
 };
-watch(() => scrollData.arrivedState.bottom, scrollHandle);
+watch(() => scrollData && scrollData.arrivedState ? scrollData.arrivedState.bottom : null, scrollHandle);
 
 onActivated(() => {
   setTimeout(() => {

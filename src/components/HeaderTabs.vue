@@ -15,10 +15,7 @@
         >
           <span
             class="tab-name transEffect"
-            :class="
-              (from == 'assets' ? 'text-[0.4rem]' : '',
-              from == 'assets' && active == i ? '!text-[0.56rem]' : '')
-            "
+            :style="{fontSize: from == 'assets' && active == i ? '0.58rem' : from == 'assets' && active != i ? '0.4rem' : ''}"
             >{{ tabName }}</span
           >
           <div
@@ -267,8 +264,8 @@
     }
   }
 
-  .header_tabs--line {
-    height: 0.94rem;
+.header_tabs--line {
+    height: 0.96rem;
     position: relative;
     &::after {
       content: '';
@@ -280,46 +277,47 @@
       background: rgba(255, 255, 255, 0.06);
     }
     .tabs {
-      .tab_body {
-        margin: 0 0.16rem;
-      }
-
-      .tab {
-        font-size: 0.32rem;
-        color: var(--ex-text-color2);
-        padding: 0 0.16rem;
-        height: 0.88rem;
-        line-height: 0;
-        border-radius: 0.48rem;
-        display: flex;
-        padding-bottom: 0.06rem;
-        align-items: center;
-        cursor: pointer;
-        white-space: nowrap;
-        position: relative;
-        .tab-name {
-          position: relative;
-          z-index: 1;
-          transition: 0.3s;
+        .tab_body {
+            margin: 0 0.16rem;
         }
-      }
+        .tab {
+            font-size: .28rem;
+            color: var(--ex-text-color2);
+            padding: 0 .2rem;
+            height: 0.88rem;
+            margin-top:0.08rem;
+            line-height: 0;
+            border-radius: .48rem;
+            display: flex;
+            padding-bottom: 0.06rem;
+            align-items: center;
+            cursor: pointer;
+            white-space: nowrap;
+            position: relative;
+            .tab-name {
+                position: relative;
+                z-index: 1;
+                transition: .3s;
+            }
 
-      .active_tab {
-        color: var(--ex-text-color) !important;
-
-        &::after {
-          content: '';
-          position: absolute;
-          bottom: 0rem;
-          left: 50%;
-          width: 0.3rem;
-          margin: 0 auto;
-          height: 0.04rem;
-          border-radius: 0.3rem;
-          transform: translateX(-50%);
-          background-color: var(--ex-primary-color);
         }
-      }
+
+        .active_tab {
+            color: var(--ex-text-color) !important;
+            font-size:0.32rem;
+            &::after {
+                content: '';
+                position: absolute;
+                bottom: 0rem;
+                left: 50%;
+                width: 0.3rem;
+                margin: 0 auto;
+                height: 0.04rem;
+                border-radius: 0.3rem;
+                transform: translateX(-50%);
+                background-color: var(--ex-primary-color);
+            }
+        }
     }
   }
   .header_tabs--large {
