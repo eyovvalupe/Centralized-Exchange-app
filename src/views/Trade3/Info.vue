@@ -27,7 +27,7 @@
       <div style="height: 2rem"></div>
       <Loaidng :loading="true" />
     </div>
-    <div class="market-trade-body" v-if="item.symbol && !chartLoading">
+    <div class="market-trade-body mt-[0.32rem]" v-if="item.symbol && !chartLoading">
       <Tabs
         @change="changeTab2"
         :key="'main'"
@@ -805,14 +805,11 @@
       </div>
     </Popup>
   </div>
-  <div v-else>
+  <div class="pt-[0.32rem]" v-else>
     <Finance />
   </div>
-  <BottomPopup round :show="showOrderList" @close="closeOrderList()">
-    <div style="height: 90vh;" class="relative pt-[0.24rem]">
-      <div class="size-[0.4rem] absolute right-[0.4rem] top-[0.12rem] z-10" @click="closeOrderList">
-        <img :src="getStaticImgUrl('/static/img/common/close.svg')" />
-      </div>
+  <BottomPopup round :show="showOrderList" @close="closeOrderList()" :closeable="true">
+    <div style="height: 90vh;" class="relative">
       <OrderCenter />
     </div>
   </BottomPopup>

@@ -4,7 +4,7 @@
       ? 'width: 100%; padding: 0'
       : 'width: 7.5rem; padding: 0.08rem 0.32rem;'
     ">
-    <div class="list">
+    <div class="list" :class="type == 'modal' ? 'h-[13rem] overflow-auto' : ''">
       <!-- 当前订单 -->
       <div v-for="(item, i) in showList" :key="i"
         class="relative mb-[0.2rem] w-full  rounded-4 bg-color3 px-[0.12rem] pb-[0.12rem]"
@@ -255,7 +255,7 @@ const getC2cOrderInfo = async () => {
     }
   });
 };
-watch(() => scrollData.arrivedState.bottom, scrollHandle);
+watch(() => scrollData && scrollData.arrivedState ? scrollData.arrivedState.bottom : null, scrollHandle);
 init();
 
 onActivated(() => {
