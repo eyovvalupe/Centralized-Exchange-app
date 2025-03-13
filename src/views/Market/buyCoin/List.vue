@@ -174,7 +174,7 @@ const copy = (text) => {
 
 
 const list = ref([]);
-const page = ref(0);
+const page = ref(1);
 const getData = (isBottom) => {
   if (loading.value || finish.value) return;
   loading.value = true;
