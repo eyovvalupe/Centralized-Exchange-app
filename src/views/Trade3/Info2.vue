@@ -7,13 +7,14 @@
       :type="'custom-line'"
       v-model:active="activeTab"
       :tabs="[
-        t('copy.title'),
-        t('finance.defi_borrow'),
-        t('finance.portfolio_title'),
-        t('IPO'),
+        t('股票'),
+        t('币币'),
+        t('加密货币合约'),
+        t('交易机器人'),
       ]"
       @change="changeActiveTab(activeTab, true)"
     />
+
     <Swipe
       v-if="pageLoaded"
       :autoplay="0"
@@ -29,14 +30,14 @@
         <div
           style="height: calc(var(--vh) * 100 - 1rem); padding-bottom: 1.4rem"
         >
-          <Follow :from="'finance'" />
+        a
         </div>
       </SwipeItem>
       <SwipeItem>
         <div
           style="height: calc(var(--vh) * 100 - 1rem); padding-bottom: 1.4rem"
         >
-          <Pledge />
+        s
         </div>
       </SwipeItem>
       <SwipeItem>
@@ -50,7 +51,7 @@
         <div
           style="height: calc(var(--vh) * 100 - 0.5rem); padding-bottom: 1.4rem"
         >
-          <IPO ref="ipoRef" />
+        a
         </div>
       </SwipeItem>
     </Swipe>
@@ -63,10 +64,6 @@
   import { useRoute } from 'vue-router';
   import HeaderTabs from '@/components/HeaderTabs.vue';
   import { useI18n } from 'vue-i18n';
-  import Stake from './Stake.vue';
-  import Pledge from './Pledge.vue';
-  import Follow from '../Home/Follow/Index.vue';
-  import IPO from '../Market/IPO.vue';
 
   const { t } = useI18n();
 
@@ -77,7 +74,6 @@
       ? Number(route.query.activeTab)
       : Number(localStorage.getItem('financeActiveTab')) || 0,
   );
-  console.log(route.query.activeTab);
   const initialSwipe = ref(activeTab.value);
   const loadedTab = ref([activeTab.value]);
   const swipe = ref(null);
@@ -101,7 +97,6 @@
   };
   const swipeChange = (val) => {
     changeActiveTab(val);
-    if (val == 3) ipoRef.value.init();
   };
 
   const pageLoaded = ref(false);

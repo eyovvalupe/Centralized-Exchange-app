@@ -3,26 +3,12 @@
     <div class="page-follow" :class="from != 'finance' ? 'pt-[1.28rem]' : ''">
         <Top :title="$t('copy.copy_ground')" v-if="from != 'finance'"></Top>
 
-        <!-- Tab -->
-        <!-- <div class="tabs">
-            <div class="tab" :class="{ 'active_tab': active == 1 }" @click="changeTab(1)">{{ $t('copy.copy_portfolio')
-                }}</div>
-            <div class="tab" :class="{ 'active_tab': active == 2 }" @click="changeTab(2)">{{ $t('copy.copy_tab_tab2') }}
+        <div class="pt-[0.32rem] px-[0.32rem] ">
+            <NoData v-if="!loading && !showList.length" />
+            <div class="list-i" v-for="(item, i) in showList" :key="i">
+                <FollowItem :item="item" :showDetail="true" @follow="onFollow" />
             </div>
-        </div> -->
-        <Tabs type="custom-card-stake" @change="onChange" v-model="activeTab" :swipeable="false" animated>
-            <Tab :title="$t('copy.copy_portfolio')" :active="activeTab == 0" :name="'0'">
-                <div class="pt-[0.32rem] px-[0.32rem] ">
-                    <NoData v-if="!loading && !showList.length" />
-                    <div class="list-i" v-for="(item, i) in showList" :key="i">
-                        <FollowItem :item="item" :showDetail="true" @follow="onFollow" />
-                    </div>
-                </div>
-            </Tab>
-            <Tab class="mb-[1.2rem]" :title="$t('copy.copy_tab_tab2')" :active="activeTab == 1" :name="'1'">
-                <CopyOrders />
-            </Tab>
-        </Tabs>
+        </div>
         <LoadingMore :loading="loading" :finish="finish" v-if="(finish && showList.length) || !finish" />
     </div>
 
@@ -48,9 +34,8 @@ import FollowSubmit from "../components/FollowSubmit.vue"
 import { _copyMyList, _copyList } from '@/api/api'
 import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue"
 import store from "@/store";
-import { Popup, Tabs, Tab, showToast } from "vant"
+import { Popup,  showToast } from "vant"
 import FollowInfo from "../Follow/FollowInfo.vue"
-import CopyOrders from '../components/CopyOrders.vue'
 import { useI18n } from "vue-i18n";
 const { t } = useI18n()
 const props = defineProps({

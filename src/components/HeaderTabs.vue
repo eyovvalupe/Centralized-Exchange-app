@@ -264,6 +264,19 @@ onMounted(() => {
         }
     }
 }
+.header_tabs--large{
+    height:0.96rem;
+    .tabs {
+        .tab {
+            font-size:0.4rem;
+        }
+        .active_tab{
+            .tab-name{
+                font-size:0.56rem;
+            }
+        }
+    }
+}
 .header_tabs--custom-line {
     height: 0.64rem;
     position: relative;
@@ -308,24 +321,11 @@ onMounted(() => {
         }
 
         .active_tab {
-            color: var(--ex-text-color) !important;
-
-            // &::after {
-            //     content: '';
-            //     position: absolute;
-            //     bottom: 0rem;
-            //     left: 50%;
-            //     width: 0.3rem;
-            //     margin: 0 auto;
-            //     height: 0.04rem;
-            //     border-radius: 0.3rem;
-            //     transform: translateX(-50%);
-            //     background-color: var(--ex-primary-color);
-            // }
-
+            
             .tab-name {
                 font-size: 0.4rem;
                 font-weight: 600;
+                color: var(--ex-text-color);
             }
         }
     }
