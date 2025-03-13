@@ -313,7 +313,7 @@ onMounted(() => {
                 position: relative;
                 z-index: 1;
                 transition: .3s;
-                font-size: 0.4rem;
+                font-size: 0.32rem;
                 font-weight: 400;
                 line-height: 0.4rem;
             }

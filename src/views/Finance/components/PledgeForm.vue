@@ -107,8 +107,10 @@
 
     <div class="h-[0.6rem]"></div>
 
-    <!-- 售出币种 -->
-    <BottomPopup v-model:show="showDialog" closeable :safe-area-inset-top="true" :safe-area-inset-bottom="true"
+  
+  </div>
+  <!-- 售出币种 -->
+  <BottomPopup v-model:show="showDialog" closeable :safe-area-inset-top="true" :safe-area-inset-bottom="true"
       :title="t('market.market_buy_fast_search_title')">
       <div class="pledge_accounr_dialog">
         <div class="search_box">
@@ -139,12 +141,14 @@
         :interest="Math.round(param.interest * 1000) / 10" :totalInterest="totalInterest" :total="total" :loan="loan"
         :days="param.days" @success="onPledgeSuccess" v-if="visible" />
     </BottomPopup>
-  </div>
+    <Popup teleport="body" v-model:show="orderDetailVisible" @open="showOrderDetail=true" @closed="showOrderDetail=false" position="right" :style="{ height: '100%', width: '100%' }">
+        <PledgeOrderDetail :order="order" :backFunc="backFunc" v-if="showOrderDetail" />
+    </Popup>
 </template>
 
 <script setup>
 import { ref, reactive, computed, nextTick, watch } from 'vue'
-import { Button, Loading, showToast } from 'vant'
+import { Button, Loading, showToast,Popup } from 'vant'
 import SlideContainer from "@/components/SlideContainer.vue";
 import FormItem from "@/components/Form/FormItem.vue";
 import { useI18n } from "vue-i18n";
@@ -155,6 +159,7 @@ import { _pledgePara } from '@/api/api'
 import BottomPopup from '@/components/BottomPopup.vue'
 import PledgeConfirm from './PledgeConfirm.vue'
 import router from '@/router';
+import PledgeOrderDetail from '../PledgeOrderDetail.vue'
 
 const pageLoading = ref(true)
 const searchValue = ref("");
@@ -163,6 +168,13 @@ const filterSearchValue = (data) => {
     item.name.toLowerCase().includes(searchValue.value.toLowerCase())
   );
 };
+
+const showOrderDetail = ref(false)
+const orderDetailVisible = ref(false)
+const backFunc = ()=>{
+  orderDetailVisible.value = false
+}
+
 const currIn = ref({}); // 当前收到钱包
 const token = computed(() => store.state.token)
 const wallet = computed(() => {

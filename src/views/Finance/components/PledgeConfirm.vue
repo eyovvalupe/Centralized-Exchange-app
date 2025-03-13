@@ -1,44 +1,56 @@
 <template>
     <div class="pt-[0.4rem]">
-        <div class="p-[0.02rem] mx-[0.4rem] bg-white2 rounded-[0.32rem]">
-            <div class="h-[0.92rem] flex items-center text-color text-[0.32rem] px-[0.26rem] gap-[0.16rem]">
-                <div v-if="paramCurrency" class="size-[0.4rem]">
-                    <CryptoIcon :name="paramCurrency.toUpperCase()" />
+           
+        <div class="px-[0.4rem] py-[0.32rem] rounded-[0.32rem] bg-white2 mx-[0.32rem]">
+            <div class="flex justify-between items-center leading-[0.44rem]">
+                <span class="text-color2">{{t('借币币种') }}</span>
+                <div class="flex items-center text-color text-[0.28rem] gap-[0.08rem]">
+                    <div v-if="paramCurrency" class="size-[0.32rem]">
+                        <CryptoIcon :name="paramCurrency.toUpperCase()" />
+                    </div>
+                    {{ paramCurrency }}
                 </div>
-                {{ paramCurrency }}
             </div>
-            <div class="p-[0.4rem] rounded-[0.32rem] bg-color9">
-                <div class="flex justify-between items-center leading-[0.44rem]">
-                    <span class="text-color2">{{t('finance.defi_borrow_stake_amount') }}</span>
-                    <span class="text-color">{{ numb }} <span class="text-[0.24rem]">{{ paramCurrency }}</span></span>
-                </div>
-                <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
-                    <span class="text-color2">{{ t('finance.defi_borrow_borrow_amount') }}</span>
-                    <span class="text-color">{{ loan }} <span class="text-[0.24rem]">{{ paramCurrency }}</span></span>
-                </div>
-                <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
-                    <span class="text-color2">{{ t('finance.defi_borrow_period') }}</span>
-                    <span class="text-color">{{days}}{{ t('finance.portfolio_day_multi') }}</span>
-                </div>
-                <div class="flex justify-between items-center mt-[0.2rem] leading-[0.44rem]">
-                    <span class="text-color2">{{ t('finance.defi_daily_interest') }}</span>
-                    <span class="text-color">{{interest}}%</span>
-                </div>
-                <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
-                    <span class="text-color2">{{ t('finance.defi_total_interest') }}</span>
-                    <span class="text-color">{{ totalInterest }} <span class="text-[0.24rem]">{{ paramCurrency }}</span></span>
-                </div>
-                <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
-                    <span class="text-color2">{{ t('finance.defi_service_charge') }}</span>
-                    <span class="text-color">{{ fee }} <span class="text-[0.24rem]">{{ paramCurrency }}</span></span>
-                </div>
+            <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
+                <span class="text-color2">{{ t('finance.defi_borrow_period') }}</span>
+                <span class="text-color">{{days}}{{ t('finance.portfolio_day_multi') }}</span>
+            </div>
+            <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
+                <span class="text-color2">{{ t('finance.portfolio_order_finish_time') }}</span>
+                <span class="text-color">
+                    {{ days ? dayjs().add(days, 'day').format('YYYY-MM-DD HH:mm:ss') : '--' }}
+                </span>
             </div>
             
+            <div class="flex justify-between items-center mt-[0.2rem] leading-[0.44rem]">
+                <span class="text-color2">{{t('finance.defi_borrow_stake_amount') }}</span>
+                <span class="text-color">{{ numb }} <span class="text-[0.24rem]">{{ paramCurrency }}</span></span>
+            </div>
+            <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
+                <span class="text-color2">{{ t('finance.defi_borrow_borrow_amount') }}</span>
+                <span class="text-color">{{ loan }} <span class="text-[0.24rem]">{{ paramCurrency }}</span></span>
+            </div>
+            
+            <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
+                <span class="text-color2">{{ t('到期利息') }}</span>
+                <span class="text-color">{{ totalInterest }} <span class="text-[0.24rem]">{{ paramCurrency }}</span></span>
+            </div>
+            <div class="flex justify-between  items-center mt-[0.2rem] leading-[0.44rem]">
+                <span class="text-color2">{{ t('finance.defi_service_charge') }}</span>
+                <span class="text-color">{{ fee }} <span class="text-[0.24rem]">{{ paramCurrency }}</span></span>
+            </div>
         </div>
-        <div
-            class="flex items-center justify-center flex-col h-[1.4rem] mt-[0.2rem] bg-white2 rounded-[0.32rem] mx-[0.4rem]">
-            <span class="text-color2">{{ t('finance.defi_repayment_due') }}({{ paramCurrency }})</span>
-            <span class="text-color mt-[0.06rem] text-[0.32rem]">{{ total }}</span>
+        
+        
+        <div class="bg-white2 rounded-[0.32rem] mx-[0.32rem] px-[0.4rem] leading-[1] py-[0.3rem] mt-[0.2rem]">
+            <div class="text-color3 text-right">
+                <span>{{ t('finance.defi_repayment_due')}}</span>
+                <span class="px-1 text-[0.36rem] font-[600] text-color">{{ total }}</span>
+                <span>{{ paramCurrency }}</span>
+            </div>
+            <div class="mt-[0.2rem] text-color3 text-right">
+                {{ t('finance.defi_borrow_borrow_amount')}} <span class="text-color">{{ loan }}</span> + {{ t('finance.defi_total_interest')}} <span class="text-color">{{ totalInterest }}</span> + {{ t('finance.defi_service_charge')}} <span class="text-color">{{ fee }}</span>
+            </div>
         </div>
         <div  v-if="userInfo.role != 'guest'">
             <div class=" mt-[0.4rem]" style="border-top:1px dashed var(--ex-bg-white2);"></div>
@@ -58,6 +70,7 @@ import { useI18n } from "vue-i18n";
 import {_pledgeApply} from '@/api/api'
 import eventBus from "@/utils/eventBus";
 import store from "@/store";
+import dayjs from 'dayjs'
 const { t } = useI18n();
 const props = defineProps({
     paramCurrency: String,
