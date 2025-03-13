@@ -210,7 +210,7 @@
         :title="t('trade.stock_opening_stop')">
       </ActionSheet>
     </div>
-    <UnLogin style="margin:0.6rem 0;" @loginfinish="loginfinish" v-else />
+    <UnLogin @loginfinish="loginfinish" v-else />
   </div>
 
 

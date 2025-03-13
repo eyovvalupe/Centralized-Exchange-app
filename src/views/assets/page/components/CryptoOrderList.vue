@@ -1,6 +1,6 @@
 <template>
   <div class="crypto_order_list">
-    <div class="crypto_order_tabs mb-[0.32rem]">
+    <div class="crypto_order_tabs">
       <span class="crypto_order_tab" :class="activeTab == 0 ? 'actived' : ''"
         @click="changeActiveTab(0)">{{ t('assets.order_current_position') }}</span>
       <span class="crypto_order_tab" :class="activeTab == 1 ? 'actived' : ''" @click="changeActiveTab(1)">{{
@@ -55,11 +55,11 @@ const changeActiveTab = (val) => {
 
   .tab {
     .positions {
-      padding: 0;
+      padding-top: 0.32rem;
     }
 
     .inquire {
-      padding: 0;
+      padding-top: 0.32rem;
     }
   }
 }

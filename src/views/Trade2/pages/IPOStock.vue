@@ -167,7 +167,7 @@
     </teleport>
   </div>
 
-  <UnLogin @loginfinish="loginfinish" v-show="!token" />
+  <UnLogin class="mt-[0.32rem]" @loginfinish="loginfinish" v-show="!token" />
 </template>
 
 <script setup>

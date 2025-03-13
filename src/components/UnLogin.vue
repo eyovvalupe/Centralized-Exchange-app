@@ -1,6 +1,7 @@
 <!-- 未登录 -->
 <template>
   <div class="unlogin_box">
+    <NoData />
     <div class="unlogin" @click="goLogin">
       <span>{{ t('trade.stock_position_unlogin_title') }}</span>
       <span class="link">{{ t('trade.stock_position_unlogin_con') }}</span>
@@ -13,6 +14,7 @@ import { useRoute } from "vue-router";
 import eventBus from "@/utils/eventBus";
 import store from "@/store";
 import { useI18n } from "vue-i18n";
+import NoData from "./NoData.vue";
 
 const { t } = useI18n();
 const route = useRoute();

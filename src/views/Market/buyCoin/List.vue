@@ -98,14 +98,6 @@
     </div>
   </div>
   <UnLogin v-show="!token" @loginfinish="loginfinish" />
-
-  <!-- 订单弹窗 -->
-  <!-- <Popup v-model:show="showPopupInfo" teleport="body" round position="bottom" closeable>
-    <div class="buycoin_orderinfo_dialog">
-      <div class="orderinfo_dialog_title">{{ $t('订单详情') }}</div>
-      <OrderInfo v-if="showPopupInfo" ref="OrderInfoRef" @success-hanlde="successOrder" />
-    </div>
-  </Popup> -->
 </template>
 
 <script setup>

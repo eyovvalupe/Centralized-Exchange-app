@@ -45,7 +45,7 @@
             <CryptoOrderList :from="'order'"/>
           </div>
 
-          <div class="trade_order_tab pt-[0.32rem]" v-if="activeTab == 3">
+          <div class="trade_order_tab pt-[0.4rem]" v-if="activeTab == 3">
             <AIOrderList :from="'trade'" />
           </div>
         </div>

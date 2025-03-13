@@ -49,7 +49,7 @@ const changeActiveTab = (val) => {
     border-bottom: 0.02rem solid var(--ex-bg-white2);
 
     .stock_order_tab {
-      font-size: 0.24rem;
+      font-size: 0.32rem;
       color: var(--ex-text-color2);
     }
 

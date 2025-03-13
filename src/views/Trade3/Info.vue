@@ -1,18 +1,31 @@
 <!-- 交易页 -->
 <template>
-  
   <!-- 头部 -->
-  <HeaderTabs type="large" @change="changeTab" v-model:active="headActiveTab" :tabs="[t('交易'), t('理财')]">
+  <HeaderTabs
+    type="large"
+    @change="changeTab"
+    v-model:active="headActiveTab"
+    :tabs="[t('交易'), t('理财')]"
+  >
     <template #after>
       <div class="flex items-center gap-[0.16rem] mr-[0.34rem]">
-        
-        <div class="size-[0.72rem] bg-white1 rounded-full ripple-btn flex items-center justify-center transition" @click="openOrderList">
+        <div
+          class="size-[0.72rem] bg-white1 rounded-full ripple-btn flex items-center justify-center transition"
+          @click="openOrderList"
+        >
           <div class="size-[0.44rem]">
-            <img v-lazy="getStaticImgUrl('/static/img/common/right_order.svg')" alt="" />
+            <img
+              v-lazy="getStaticImgUrl('/static/img/common/right_order.svg')"
+              alt=""
+            />
           </div>
         </div>
 
-        <div class="size-[0.72rem] bg-white1 rounded-full ripple-btn flex items-center justify-center transition" @click="openRightMenu" :class="{'bg-primary':showRightMenu}">
+        <div
+          class="size-[0.72rem] bg-white1 rounded-full ripple-btn flex items-center justify-center transition"
+          @click="openRightMenu"
+          :class="{ 'bg-primary': showRightMenu }"
+        >
           <div class="size-[0.44rem]">
             <img v-lazy="getStaticImgUrl('/static/home2/menu.svg')" alt="" />
           </div>
@@ -20,14 +33,16 @@
       </div>
     </template>
   </HeaderTabs>
- 
-  <div class="page-marketinfo2" v-if="headActiveTab == 0">
 
+  <div class="page-marketinfo2" v-if="headActiveTab == 0">
     <div v-if="!item.symbol">
       <div style="height: 2rem"></div>
       <Loaidng :loading="true" />
     </div>
-    <div class="market-trade-body mt-[0.32rem]" v-if="item.symbol && !chartLoading">
+    <div
+      class="market-trade-body mt-[0.32rem]"
+      v-if="item.symbol && !chartLoading"
+    >
       <Tabs
         @change="changeTab2"
         :key="'main'"
@@ -681,7 +696,6 @@
         </Tab>
       </Tabs>
     </div>
-    
 
     <!-- 搜索列表 -->
     <BottomPopup
@@ -808,7 +822,7 @@
   <div class="pt-[0.32rem]" v-else>
     <Finance />
   </div>
-  <BottomPopup  round :show="showOrderList" @close="closeOrderList()">
+  <BottomPopup round :show="showOrderList" @close="closeOrderList()">
     <div class="absolute right-[0.22rem] p-[0.1rem] top-[0.3rem] z-10">
       <div class="size-[0.32rem]" @click="closeOrderList">
         <img :src="getStaticImgUrl('/static/img/common/close2.svg')" />
@@ -857,7 +871,7 @@
   import Index from './Index.vue';
   import HeaderTabs from '../../components/HeaderTabs.vue';
   import Finance from '@/views/Finance/Index.vue';
-  import OrderCenter from './OrderCenter.vue'
+  import OrderCenter from './OrderCenter.vue';
 
   const props = defineProps({
     type: {
@@ -880,20 +894,20 @@
   const { t } = useI18n();
   const route = useRoute();
   const token = computed(() => store.state.token);
-  const headActiveTab = ref(0)
-  const showOrderList = ref(false)
+  const headActiveTab = ref(0);
+  const showOrderList = ref(false);
 
   const changeTab = (val) => {
-    headActiveTab.value = val
-  }
+    headActiveTab.value = val;
+  };
 
   const openOrderList = () => {
-    showOrderList.value = true
-  }
+    showOrderList.value = true;
+  };
 
   const closeOrderList = () => {
-    showOrderList.value = false
-  }
+    showOrderList.value = false;
+  };
 
   // 详情弹窗
   const showInfoDialog = ref(false);
@@ -1510,6 +1524,15 @@
   const openRightMenu = () => {
     store.commit('setShowRightMenu', !showRightMenu.value);
   };
+
+  watch(
+    () => store.state.isLoginOpen,
+    (v) => {
+      if (v) {
+        closeOrderList();
+      }
+    },
+  );
 
   onActivated(() => {
     eventBus.on('clickStock', clickStockHandle);

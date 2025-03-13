@@ -60,7 +60,7 @@
         :showDetail="false"
       />
     </div>
-    <div class="py-[3rem]" v-if="!token">
+    <div class="" v-if="!token">
       <UnLogin />
     </div>
     <NoData v-else-if="!myFollowList.length" />

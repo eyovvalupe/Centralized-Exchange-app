@@ -34,15 +34,15 @@
           />
 
           <div class="trade_order_tab p-[0.32rem]" v-if="activeTab == 0">
-            <StockOrderList :from="'order'" :type="'modal'" />
+            <StockOrderList :from="'trade'" />
           </div>
 
           <div class="trade_order_tab p-[0.32rem]" v-if="activeTab == 1">
-            <SpotOrderList :from="'order'" :type="'modal'" />
+            <SpotOrderList :from="'trade'" />
           </div>
 
           <div class="trade_order_tab p-[0.32rem]" v-if="activeTab == 2">
-            <CryptoOrderList :from="'order'" :type="'modal'" />
+            <CryptoOrderList :from="'trade'" />
           </div>
 
           <div class="trade_order_tab p-[0.32rem]" v-if="activeTab == 3">

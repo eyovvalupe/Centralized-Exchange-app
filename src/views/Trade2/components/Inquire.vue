@@ -75,7 +75,7 @@
       <LoadingMore :loading="loading" :finish="finish" v-if="(finish && inquireList.length) || !finish" />
     </div>
 
-    <UnLogin style="margin:0.6rem 0;" @loginfinish="loginfinish" v-else />
+    <UnLogin @loginfinish="loginfinish" v-else />
   </div>
 
 
@@ -241,7 +241,7 @@ defineExpose({
 
   .tr {
     padding: 0.24rem 0;
-    border-bottom: 1px solid var(--ex-border-color);
+    border-bottom: 1px solid var(--ex-bg-white2);
     display: flex;
     align-items: stretch;
   }
