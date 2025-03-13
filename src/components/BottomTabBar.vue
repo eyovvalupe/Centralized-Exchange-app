@@ -46,13 +46,13 @@ const navs = ref([
     name: t("home.market"), route: "trade", icon: "/static/img/bottom/shichang1.svg", icon2: "/static/img/bottom/shichang2.svg"
   },
   { name: t("home.trade"), route: "tradeInfo", icon: "/static/img/bottom/jiaoyi1.svg", icon2: "/static/img/bottom/jiaoyi2.svg" },
-  {
-    name: t('home.finance'),
-    route: "finance",
-    children: ["market_info", "financial_info", "trading_rules"],
-    icon: "/static/img/bottom/licai1.svg",
-    icon2: "/static/img/bottom/licai2.svg",
-  },
+  // {
+  //   name: t('home.finance'),
+  //   route: "finance",
+  //   children: ["market_info", "financial_info", "trading_rules"],
+  //   icon: "/static/img/bottom/licai1.svg",
+  //   icon2: "/static/img/bottom/licai2.svg",
+  // },
   {
     name: t("home.assets"),
     route: "assets",
@@ -61,13 +61,13 @@ const navs = ref([
     icon2: "/static/img/bottom/zichan2.svg",
     needLogin: true,
   },
-  // {
-  //   name: t("home.user"),
-  //   route: "user",
-  //   children: ["account"],
-  //   icon: "/static/img/bottom/yonghu1.svg",
-  //   icon2: "/static/img/bottom/yonghu2.svg",
-  // },
+  {
+    name: t("home.user"),
+    route: "user",
+    children: ["account"],
+    icon: "/static/img/bottom/yonghu1.svg",
+    icon2: "/static/img/bottom/yonghu2.svg",
+  },
 ]);
 
 const touchLoading = ref(false);

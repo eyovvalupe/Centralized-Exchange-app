@@ -9,7 +9,7 @@
       @change="ipoOnChange"
       :color="'var(--ex-primary-color)'"
       shrink
-      v-if="props.from != 'order'"
+      v-if="from != 'order' && from != 'trade'"
     >
       <Tab :title="t('trade.ipo_lottery_title1')" name=""> </Tab>
       <Tab :title="t('trade.ipo_lottery_title2')" name="lock"> </Tab>
@@ -19,6 +19,7 @@
     <div class="list" :class="from == 'order' ? '!px-[0]' : ''">
       <div
         class="item"
+        :style="{backgroundColor: from == 'trade' ? 'var(--ex-bg-white2)' : ''}"
         v-for="(item, i) in ipoStockList"
         :key="i"
         @click="ipoOrderDetail(item)"
@@ -58,7 +59,7 @@
             {{ t('trade.ipo_lottery_title2') }}
           </div>
         </div>
-        <div class="item_info mask-btn">
+        <div class="item_info mask-btn" :class="from == 'trade' ? '!border-[0]' : ''">
           <div class="info_cell">
             <span class="info_name">{{ t('trade.ipo_detail_item10') }}</span>
             <span class="info_val"

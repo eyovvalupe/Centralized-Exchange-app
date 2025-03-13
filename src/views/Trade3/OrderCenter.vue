@@ -38,7 +38,7 @@
           </div>
 
           <div class="trade_order_tab p-[0.32rem]" v-if="activeTab == 1">
-            <!-- <SpotOrderList :from="'order'" :type="'modal'" /> -->
+            <SpotOrderList :from="'order'" :type="'modal'" />
           </div>
 
           <div class="trade_order_tab p-[0.32rem]" v-if="activeTab == 2">
@@ -72,7 +72,7 @@
           <div class="trade_order_tab" v-if="activeFinanceTab == 2">
             <Order :from="'trade'" />
           </div>
-          <div class="trade_order_tab p-[0.32rem]" v-if="activeFinanceTab == 3">
+          <div class="trade_order_tab" v-if="activeFinanceTab == 3">
             <IPOStock
               ref="IPOStockRef"
               scrollDom="#assets_order_center_body"
@@ -97,7 +97,7 @@ import { Tabs, Tab } from "vant";
 import CopyOrders from "../Home/components/CopyOrders.vue";
 import PledgeOrder from "@/views/Finance/components/PledgeOrder.vue";
 import Order from "@/views/Finance/components/Order.vue";
-// import SpotOrderList from "../assets/page/components/SpotOrderList.vue";
+import SpotOrderList from "../assets/page/components/SpotOrderList.vue";
 import store from "@/store";
 
 const { t } = useI18n();

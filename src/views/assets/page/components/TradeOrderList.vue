@@ -1,5 +1,5 @@
 <template>
-  <div class="trade_order_list">
+  <div class="trade_order_list1">
     <div class="trade_order_tabs">
       <span
         class="trade_order_tab mr-[0.12rem]"
@@ -41,7 +41,7 @@ const changeActiveTab = (val) => {
 };
 </script>
 <style lang="less">
-.trade_order_list {
+.trade_order_list1 {
   padding: 0 0.32rem;
   .trade_order_tabs {
     height: 0.78rem;

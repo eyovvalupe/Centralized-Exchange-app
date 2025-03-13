@@ -16,7 +16,7 @@
       <div class="tr " @click="OpeningForm(item)" v-for="(item, i) in positionsList" :key="i">
 
         <div class="mask-btn"
-          style="margin-top: 0.2rem;background-color: var(--ex-bg-color3);border-radius: 0.4rem;display: flex;width: 100%;padding: 0.24rem;">
+          style="margin-top: 0.2rem;background-color: var(--ex-bg-white2);border-radius: 0.4rem;display: flex;width: 100%;padding: 0.24rem;">
           <div class="td td-5">
             <div class="name van-omit1">{{ item.symbol }}</div>
             <div class="lever">
