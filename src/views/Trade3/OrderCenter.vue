@@ -103,8 +103,8 @@ import store from "@/store";
 const { t } = useI18n();
 const activeTab = ref(0);
 const activeFinanceTab = ref(0);
-const tradeOrderTab = computed(() => store.state.tradeTabType);
-const activeMainTab = ref(tradeOrderTab.value + 1);
+const tradeOrderTab = computed(() => store.state.tradeTypeTab)
+const activeMainTab = ref(Number(tradeOrderTab.value) + 1);
 const IPOStockRef = ref();
 
 const onChange = () => {};

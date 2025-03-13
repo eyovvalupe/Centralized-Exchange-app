@@ -16,8 +16,12 @@ export default {
     c2cUnreadTotal: 0, // 总未读消息
     c2cLasttime: {}, // 列表已读时间记录   { order_no: lasttime }
     openInfoStatus: false,
+    tradeTypeTab: Number(sessionStorage.getItem('tradeType')),
   },
   mutations: {
+    setTradeTypeTab(state,data) {
+      state.tradeTypeTab = data
+    },
     setOpenInfoStatus(state, data) {
       state.openInfoStatus = data
     },

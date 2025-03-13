@@ -894,10 +894,12 @@
   const { t } = useI18n();
   const route = useRoute();
   const token = computed(() => store.state.token);
-  const headActiveTab = ref(0);
+  const headActiveTab = ref(Number(sessionStorage.getItem("tradeType")));
   const showOrderList = ref(false);
 
   const changeTab = (val) => {
+    store.commit('setTradeTypeTab', val);
+    sessionStorage.setItem('tradeType', val);
     headActiveTab.value = val;
   };
 
