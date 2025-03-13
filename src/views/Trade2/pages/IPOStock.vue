@@ -16,7 +16,7 @@
       <Tab :title="t('trade.ipo_lottery_title3')" name="success"> </Tab>
       <Tab :title="t('trade.ipo_lottery_title4')" name="failure"> </Tab>
     </Tabs>
-    <div class="list" :class="from == 'order' ? '!px-[0]' : ''">
+    <div class="list" :class="from == 'order' ? '!px-[0] h-[13rem] overflow-auto !pb-[0.6rem]' : ''">
       <div
         class="item"
         :style="{backgroundColor: from == 'trade' ? 'var(--ex-bg-white2)' : ''}"

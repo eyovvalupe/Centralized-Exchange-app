@@ -2,7 +2,6 @@
   <div
     class=""
     :class="[
-      props.from == 'trade' ? '' : ' pb-[1.6rem]',
       from == 'order' ? '' : 'pt-[0.32rem] px-[0.32rem]',
     ]"
   >
@@ -50,20 +49,22 @@
             </Tab> -->
       </Tabs>
     </div>
-    <div class="list-i" v-if="myFollowList.length">
-      <MyFollowItem
-        :from="from"
-        @openInfo="openInfo"
-        :item="item"
-        v-for="(item, i) in myFollowList"
-        :key="i"
-        :showDetail="false"
-      />
+    <div :class="from == 'order' ? 'h-[9rem] overflow-auto pb-[0.4rem]' : from == 'trade' ? 'h-[9.2rem] overflow-auto' : ''">
+      <div class="list-i" v-if="myFollowList.length">
+        <MyFollowItem
+          :from="from"
+          @openInfo="openInfo"
+          :item="item"
+          v-for="(item, i) in myFollowList"
+          :key="i"
+          :showDetail="false"
+        />
+      </div>
+      <div class="" v-if="!token">
+        <UnLogin />
+      </div>
+      <NoData v-else-if="!myFollowList.length" />
     </div>
-    <div class="" v-if="!token">
-      <UnLogin />
-    </div>
-    <NoData v-else-if="!myFollowList.length" />
 
     <!-- 详情 -->
     <Popup

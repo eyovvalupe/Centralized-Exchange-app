@@ -1,5 +1,10 @@
 <template>
-  <div class="order_page" @scroll="scrolHandle" v-if="!isEmpty(myEarn)">
+  <div
+    class="order_page"
+    :class="from == 'order' ? '!px-[0]' : ''"
+    @scroll="scrolHandle"
+    v-if="!isEmpty(myEarn)"
+  >
     <div class="flex w-full h-[1.74rem] bg-white2 rounded-[0.32rem]">
       <div class="flex flex-col items-center justify-center w-1/2">
         <div class="text-[0.3rem] text-color2 mb-[0.24rem]">
@@ -36,9 +41,22 @@
         :title="t('finance.portfolio_order_tab1')"
         name="0"
       >
-        <div ref="orderListRef" class="order_list mt-[0.2rem]">
+        <div
+          ref="orderListRef"
+          class="order_list mt-[0.2rem]"
+          :class="
+            from == 'order'
+              ? 'h-[9rem] overflow-auto pb-[0.4rem]'
+              : from == 'trade'
+              ? 'h-[9.2rem] overflow-auto'
+              : ''
+          "
+        >
           <NoData v-if="!orderList.length" />
-          <OrderList :list="orderList" :type="'position'" />
+          <OrderList
+            :list="orderList"
+            :type="'position'"
+          />
         </div>
       </Tab>
       <Tab
@@ -47,7 +65,16 @@
         :title="t('finance.portfolio_order_tab2')"
         name="1"
       >
-        <div class="mt-[0.2rem]">
+        <div
+          class="mt-[0.2rem]"
+          :class="
+            from == 'order'
+              ? 'h-[9rem] overflow-auto pb-[0.4rem]'
+              : from == 'trade'
+              ? 'h-[9.2rem] overflow-auto'
+              : ''
+          "
+        >
           <NoData v-if="!myOrderList.length" />
           <OrderList :list="myOrderList" :type="'redeem'" />
         </div>
