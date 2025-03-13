@@ -17,7 +17,9 @@
         <Self ref="selfRef" />
       </Tab>
       <Tab :title="t('market.market_buy_title3')" name="2">
-        <List/>
+        <div style="height:calc(var(--vh) * 100 - 3.24rem); overflow-y:auto;">
+          <List />
+        </div>
       </Tab>
     </Tabs>
   </div>

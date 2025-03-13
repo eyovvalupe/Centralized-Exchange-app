@@ -1,6 +1,6 @@
 <!-- 订单列表 -->
 <template>
-  <div v-if="token" class="buycoin_list p-[0.32rem]">
+  <div v-if="token" class="buycoin_list" @scroll="scrollHandle">
     <div class="list">
       <!-- 当前订单 -->
       <div v-for="(item, i) in showList" :key="i"
@@ -141,7 +141,6 @@ const statusEnum = {
   cancel: { name: t('market.market_already_done'), color: "var(--ex-text-color3)" },
 };
 const { active, subs } = useBuyCoinState();
-const scrollData = inject("scrollData");
 
 // 解构赋值，分别获取c2cList（上次的c2c列表），token（用户令牌），c2cUnread（未读的c2c消息数）
 const {
@@ -233,12 +232,16 @@ const showList = computed(() => {
   return [...c2cLasttime.value, ...list.value];
 });
 
-// 监听
-const scrollHandle = (bottom) => {
-  if (active.value !== "2") return;
-  // 加载更多
-  if (bottom) getData(true);
+const scrollHandle = (e) => {
+  // 获取当前滚动位置
+  
+  if (e.target.scrollTop + e.target.offsetHeight + 20 > e.target.scrollHeight) {
+    // 加载更多
+    getData(true);
+  }
 };
+
+
 
 const getC2cOrderInfo = async () => {
   const res = await _c2cOrderInfo({
@@ -253,7 +256,7 @@ const getC2cOrderInfo = async () => {
     }
   });
 };
-watch(() => scrollData && scrollData.arrivedState ? scrollData.arrivedState.bottom : null, scrollHandle);
+
 init();
 
 onActivated(() => {
@@ -284,7 +287,10 @@ defineExpose({
 }
 
 .buycoin_list {
-
+  height:100%;
+  box-sizing: border-box;
+  padding: 0.32rem;
+  overflow-y: auto;
   .list {
     
     .item-body{
