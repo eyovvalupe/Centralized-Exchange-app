@@ -6,10 +6,26 @@
       <span class="ai_order_tab" :class="activeTab == 1 ? 'actived' : ''" @click="changeActiveTab(1)">{{
         t("assets.order_history") }}</span>
     </div>
-    <div class="tab" v-if="activeTab == 0">
+    <div class="tab" v-if="activeTab == 0"
+    :class="
+        from == 'trade'
+          ? 'h-[11.8rem] overflow-auto'
+          : from == 'order'
+          ? 'h-[12rem] pb-[1.2rem] overflow-auto'
+          : ''
+      "
+    >
       <Positions />
     </div>
-    <div class="tab" v-if="activeTab == 1">
+    <div class="tab" v-if="activeTab == 1"
+    :class="
+        from == 'trade'
+          ? 'h-[11.8rem] overflow-auto'
+          : from == 'order'
+          ? 'h-[12rem] pb-[1.2rem] overflow-auto'
+          : ''
+      "
+    >
       <Inquire scrollDom="#assets_order_center_body" ref="InquireRef" />
     </div>
   </div>
@@ -19,6 +35,13 @@ import Inquire from "@/views/Trade2/ai/Inquire.vue";
 import Positions from "@/views/Trade2/ai/Positions.vue";
 import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
+
+const props = defineProps({
+    from: {
+      type: String,
+      default: '',
+    },
+  });
 
 const { t } = useI18n();
 const activeTab = ref(0);

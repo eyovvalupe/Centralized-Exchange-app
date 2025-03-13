@@ -46,7 +46,7 @@
           </div>
 
           <div class="trade_order_tab pt-[0.4rem]" v-if="activeTab == 3">
-            <AIOrderList :from="'trade'" />
+            <AIOrderList :from="'order'" />
           </div>
         </div>
       </Tab>

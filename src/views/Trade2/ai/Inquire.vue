@@ -155,7 +155,7 @@ defineExpose({
         padding: 0.32rem 0.28rem;
         border-radius: 0.32rem;
         margin-bottom: 0.2rem;
-        background-color: var(--ex-bg-color3);
+        background-color: var(--ex-bg-white2);
 
         .ai_icon {
             width: 0.8rem;
