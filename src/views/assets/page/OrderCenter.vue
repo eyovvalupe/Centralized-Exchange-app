@@ -1,157 +1,186 @@
 <template>
-  <div class="order_container">
-    <div>
-      <div
-        class="order_tabs"
-        @touchstart.stop=""
-        @touchmove.stop=""
-        @touchend.stop=""
-      >
-        <HeaderTabs
-          type="line"
-          v-model:active="activeTab"
-          :tabs="[
-            t('买币'),
-            t('股票'),
-            t('币币'),
-            t('合约'),
-            t('交易机器人'),
-            t('跟单'),
-            t('DeFi借币'),
-            t('质押挖矿'),
-            t('IPO'),
-          ]"
-          @change="changeActiveTab(activeTab)"
-        />
-      </div>
-      <div id="assets_order_center_body" ref="orderCenterRef">
-        <div class="tab pt-[0.4rem]" v-if="activeTab == 0">
-          <RecordBuyCoin :from="'order'" />
+  <div class="trade_order_container1">
+    <Tabs
+      class="trade_head_tabs"
+      v-model:active="activeMainTab"
+      :swipeable="false"
+      animated
+      shrink
+      @change="(e) => onChange(e)"
+    >
+      <Tab :title="'买币订单'" :name="0">
+        <div class="p-[0.32rem]">
+          <List :from="'orderCenter'"/>
         </div>
+      </Tab>
+      <Tab :title="'交易订单'" :name="1">
+        <div
+          class="order_tabs px-[0.32rem] pt-[0.32rem]"
+          @touchstart.stop=""
+          @touchmove.stop=""
+          @touchend.stop=""
+        >
+          <HeaderTabs
+            type="green-card"
+            v-model:active="activeTab"
+            :tabs="[
+              t('assets.order_title_stock'),
+              t('币币'),
+              t('加密货币合约'),
+              t('trade.left_bot'),
+              // t('assets.order_title_ipo'),
+            ]"
+            @change="changeActiveTab(activeTab)"
+          />
 
-        <div class="tab px-[0.32rem]" v-if="activeTab == 1">
-          <StockBlock :from="'order'" class="mt-[0.4rem]" />
+          <div class="trade_order_tab pt-[0.4rem]" v-if="activeTab == 0">
+            <StockOrderList :from="'order'" />
+          </div>
+
+          <div class="trade_order_tab pt-[0.4rem]" v-if="activeTab == 1">
+            <SpotOrderList :from="'order'" />
+          </div>
+
+          <div class="trade_order_tab pt-[0.4rem]" v-if="activeTab == 2">
+            <CryptoOrderList :from="'order'"/>
+          </div>
+
+          <div class="trade_order_tab pt-[0.32rem]" v-if="activeTab == 3">
+            <AIOrderList :from="'trade'" />
+          </div>
         </div>
-        
-        <div class="tab" v-if="activeTab == 2">
-          <Tabs
-            type="custom-sub"
-            v-model:active="active"
-            :swipeable="false"
-            :color="'var(--ex-primary-color)'"
-            shrink
-            @change="onChange"
-          >
-            <Tab :title="'当前委托'" :name="0">
-              <div class="px-[0.32rem]">
-                <SpotPosition />
-              </div>
-            </Tab>
-            <Tab :title="'历史订单'" :name="1">
-              <div class="px-[0.32rem]">
-                <SpotInquire />
-              </div>
-            </Tab>
-          </Tabs>
+      </Tab>
+      <Tab :title="'理财订单'" :name="2">
+        <div
+          class="order_tabs px-[0.32rem] pt-[0.32rem]"
+          @touchstart.stop=""
+          @touchmove.stop=""
+          @touchend.stop=""
+        >
+          <HeaderTabs
+            type="green-card"
+            v-model:active="activeFinanceTab"
+            :tabs="[t('跟单'), t('DeFi借币'), t('质押挖矿'), t('IPO')]"
+            @change="changeActiveTab1(activeFinanceTab)"
+          />
+          <div class="trade_order_tab pt-[0.4rem]" v-if="activeFinanceTab == 0">
+            <CopyOrders :from="'order'" />
+          </div>
+          <div class="trade_order_tab pt-[0.4rem]" v-if="activeFinanceTab == 1">
+            <PledgeOrder :from="'order'" />
+          </div>
+          <div class="trade_order_tab pt-[0.4rem]" v-if="activeFinanceTab == 2">
+            <Order :from="'order'" />
+          </div>
+          <div class="trade_order_tab pt-[0.4rem]" v-if="activeFinanceTab == 3">
+            <IPOStock
+              ref="IPOStockRef"
+              scrollDom="#assets_order_center_body"
+              :from="'trade'"
+            />
+          </div>
         </div>
-        <div class="tab px-[0.32rem]" v-if="activeTab == 3">
-          <Tabs
-            type="sub-order"
-            v-model:active="active"
-            :swipeable="false"
-            :color="'var(--ex-primary-color)'"
-            shrink
-            @change="onChange"
-          >
-            <Tab :title="'当前委托'" :name="0" class="pt-[0.32rem]">
-              <ContractPosition />
-            </Tab>
-            <Tab :title="'历史订单'" :name="1" class="pt-[0.32rem]">
-              <ContractInquire />
-            </Tab>
-          </Tabs>
-        </div>
-        <div class="tab px-[0.32rem]" v-if="activeTab == 4">
-          <Tabs
-            type="sub-order"
-            v-model:active="active"
-            :swipeable="false"
-            :color="'var(--ex-primary-color)'"
-            shrink
-            @change="onChange"
-          >
-            <Tab :title="'当前委托'" :name="0">
-              <AiPosition />
-            </Tab>
-            <Tab :title="'历史订单'" :name="1">
-              <AiInquire />
-            </Tab>
-          </Tabs>
-        </div>
-        <div class="tab" v-if="activeTab == 5">
-          <CopyOrders :from="'order'"/>
-        </div>
-        <div class="tab" v-if="activeTab == 6">
-          <PledgeOrder :from="'order'"/>
-        </div>
-        <div class="tab" v-if="activeTab == 7">
-          <Order :from="'order'" />
-        </div>
-        <div class="tab px-[0.32rem]" v-if="activeTab == 8">
-          <IPOstock :from="'order'" ref="ipoRef"/>
-        </div>
-      </div>
-    </div>
+      </Tab>
+    </Tabs>
   </div>
 </template>
 <script setup>
-  import { ref } from 'vue';
-  import HeaderTabs from '@/components/HeaderTabs.vue';
-  import TradeOrderList from './components/TradeOrderList.vue';
-  import CryptoOrderList from './components/CryptoOrderList.vue';
-  import Order from '@/views/Finance/components/Order.vue';
-  import PledgeOrder from '@/views/Finance/components/PledgeOrder.vue';
-  import { useI18n } from 'vue-i18n';
-  import AIOrderList from './components/AIOrderList.vue';
-  import CopyOrders from '../../Home/components/CopyOrders.vue';
-  import eventBus from '@/utils/eventBus';
-  import RecordBuyCoin from '@/views/Market/buyCoin/List.vue';
-  import { Tabs, Tab } from 'vant';
-  import StockBlock from '../../Trade2/pages/StockBlock.vue';
-  import IPOstock from '../../Trade2/pages/IPOStock.vue';
-  import SpotPosition from '@/views/Trade2/spot/Positions.vue';
-  import SpotInquire from '@/views/Trade2/spot/Inquire.vue';
-  import ContractPosition from '@/views/Trade2/contract/Positions.vue';
-  import ContractInquire from '@/views/Trade2/contract/Inquire.vue';
-  import AiPosition from '@/views/Trade2/ai/Positions.vue';
-  import AiInquire from '@/views/Trade2/ai/Inquire.vue';
+import { computed, ref, watch } from "vue";
+import HeaderTabs from "@/components/HeaderTabs.vue";
+import StockOrderList from "./components/StockOrderList.vue";
+import CryptoOrderList from "./components/CryptoOrderList.vue";
+import IPOStock from "@/views/Trade2/pages/IPOStock.vue";
+import AIOrderList from "./components/AIOrderList.vue";
+import List from "@/views/Market/buyCoin/List.vue";
+import { useI18n } from "vue-i18n";
+import { Tabs, Tab } from "vant";
+import CopyOrders from '../../Home/components/CopyOrders.vue';
+import PledgeOrder from '@/views/Finance/components/PledgeOrder.vue';
+import Order from "@/views/Finance/components/Order.vue";
+import SpotOrderList from "./components/SpotOrderList.vue";
+import store from "@/store";
 
-  const { t } = useI18n();
-  const activeTab = ref(0);
-  const ipoRef = ref()
-  const changeActiveTab = (val) => {
-    activeTab.value = val;
-  };
+const { t } = useI18n();
+const activeTab = ref(0);
+const activeFinanceTab = ref(0);
+const tradeOrderTab = computed(() => store.state.tradeTabType);
+const activeMainTab = ref(tradeOrderTab.value + 1);
+const IPOStockRef = ref();
 
-  const orderCenterRef = ref(null);
-  const scrollData = useScroll(orderCenterRef, {
-    throttle: 200,
-    onScroll: (e) => {
-      if (
-        e.target.offsetHeight + e.target.scrollTop + 20 >
-          e.target.scrollHeight &&
-        activeTab.value == 4
-      ) {
-        eventBus.emit('pledgeLoad');
-      }
-    },
-  });
-  provide('scrollData', scrollData);
+const onChange = () => {};
+
+const changeActiveTab = (val) => {
+  activeTab.value = val;
+};
+
+const changeActiveTab1 = (val) => {
+  activeFinanceTab.value = val;
+  if (val == 3) {
+    setTimeout(() => {
+      IPOStockRef.value && IPOStockRef.value.init();
+    }, 0);
+  }
+};
+
+watch(tradeOrderTab, (val) => {
+  activeMainTab.value = val + 1
+})
+
 </script>
 <style lang="less">
-  #assets_order_center_body {
-    overflow-y: auto;
-    height: calc(var(--vh) * 100 - 2.52rem);
-    padding-bottom: 1rem;
+.trade_order_container1 {
+  width: 100%;
+  padding-top: 0.32rem;
+
+  .order-tab {
+    position: relative;
+    width: 100%;
   }
+
+  .trade_head_tabs {
+    > .van-tabs__wrap {
+      height: 0.64rem;
+      border-bottom: 0.02rem solid var(--ex-bg-white2) !important;
+      overflow: visible;
+      > .van-tabs__nav {
+        background:none;
+        display: flex;
+        align-items: start;
+        > .van-tab {
+          position: relative;
+          z-index: 11;
+          .van-tab__text {
+            font-size: 0.32rem !important;
+            color: var(--ex-text-color3);
+          }
+        }
+        > .van-tab--active {
+          .van-tab__text {
+            font-size: 0.4rem !important;
+            font-weight: 600;
+            color: var(--ex-text-color);
+          }
+        }
+        > .van-tabs__line {
+          width: 0.3rem;
+          height: 0.04rem;
+        }
+      }
+    }
+  }
+
+  .trade_order_tab {
+    .page_ipo_stock {
+      padding: 0;
+    }
+
+    .btns {
+      padding: 0;
+    }
+
+    .tabs {
+      padding: 0 !important;
+    }
+  }
+}
 </style>

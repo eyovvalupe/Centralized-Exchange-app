@@ -1,7 +1,7 @@
 <template>
   <div class="crypto_order_list">
-    <div class="crypto_order_tabs">
-      <span class="crypto_order_tab mr-[0.12rem]" :class="activeTab == 0 ? 'actived' : ''"
+    <div class="crypto_order_tabs mb-[0.32rem]">
+      <span class="crypto_order_tab" :class="activeTab == 0 ? 'actived' : ''"
         @click="changeActiveTab(0)">{{ t('assets.order_current_position') }}</span>
       <span class="crypto_order_tab" :class="activeTab == 1 ? 'actived' : ''" @click="changeActiveTab(1)">{{
         t('assets.order_history') }}</span>
@@ -34,28 +34,22 @@ const changeActiveTab = (val) => {
 </script>
 <style lang="less">
 .crypto_order_list {
-  padding: 0 0.32rem;
 
   .crypto_order_tabs {
-    height: 0.78rem;
+    height: 0.52rem;
     display: flex;
-    margin-top: 0.32rem;
+    gap: 0.6rem;
+    border-bottom: 0.02rem solid var(--ex-bg-white2);
 
     .crypto_order_tab {
-      font-size: 0.3rem;
+      font-size: 0.32rem;
       color: var(--ex-text-color2);
-      background-color: var(--ex-bg-white2);
-      height: 0.78rem;
-      padding: 0 0.32rem;
       display: flex;
-      align-items: center;
-      border-radius: 0.6rem;
     }
 
     .actived {
-      background-color: var(--ex-white);
       font-weight: 600;
-      color: var(--ex-black);
+      color: var(--ex-white);
     }
   }
 

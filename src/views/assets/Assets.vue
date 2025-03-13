@@ -2,14 +2,15 @@
 <template>
   <div class="page page_assets">
     <!-- 头部 -->
-    <HeaderTabs v-model:active="headActiveTab" @change="changeTab" :tabs="[
+    <HeaderTabs :from="'assets'" v-model:active="headActiveTab" @change="changeTab" :tabs="[
       t('assets.assets_center'),
       t('assets.header_order'),
     ]">
 
       <template #after>
-        <div class="size-[0.72rem] rounded-full bg-white1 flex items-center justify-center mr-[0.32rem]"
-          @click="eventBus.emit('leftOpen')">
+        <div class="size-[0.72rem] rounded-full flex items-center justify-center mr-[0.32rem] transition"
+        :class="showRightMenu ? 'bg-primary' : 'bg-white1'"
+          @click="openRightMenu">
           <span class="size-[0.4rem]">
             <img :src="getStaticImgUrl('/static/home2/menu.svg')" />
           </span>
@@ -147,6 +148,7 @@ const handle = ref(false);
 const selectedItem = ref({});
 const headActiveTab1 = computed(() => Number(sessionStorage.getItem('assetsType')));
 const headActiveTab = ref(headActiveTab1.value);
+const showRightMenu = computed(() => store.state.showRightMenu)
 
 const activeTab = ref(0);
 const assetsActiveTab = localStorage.getItem('assetsActiveTab')
@@ -158,6 +160,10 @@ const loadedTab = ref([activeTab.value]);
 const swipe = ref(null);
 
 const token = computed(() => store.state.token)
+
+const openRightMenu = () => {
+  store.commit('setShowRightMenu', !showRightMenu.value)
+}
 
 const changeTab = (val) => {
   sessionStorage.setItem('assetsType', val)

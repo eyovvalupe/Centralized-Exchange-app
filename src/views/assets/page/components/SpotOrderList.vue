@@ -1,28 +1,39 @@
 <template>
-  <div class="ai_order_list">
-    <div class="ai_order_tabs">
-      <span class="ai_order_tab mr-[0.12rem]" :class="activeTab == 0 ? 'actived' : ''" @click="changeActiveTab(0)">{{
-        t("assets.order_current_position") }}</span>
-      <span class="ai_order_tab" :class="activeTab == 1 ? 'actived' : ''" @click="changeActiveTab(1)">{{
-        t("assets.order_history") }}</span>
+  <div class="crypto_order_list1" :class="from == 'order' ? '!px-[0]' : ''">
+    <div class="crypto_order_tabs">
+      <span class="crypto_order_tab" :class="activeTab == 0 ? 'actived' : ''"
+        @click="changeActiveTab(0)">{{ t('assets.order_current_position') }}</span>
+      <span class="crypto_order_tab" :class="activeTab == 1 ? 'actived' : ''" @click="changeActiveTab(1)">{{
+        t('assets.order_history') }}</span>
     </div>
     <div class="tab" v-if="activeTab == 0">
       <Positions />
     </div>
     <div class="tab" v-if="activeTab == 1">
-      <Inquire scrollDom="#assets_order_center_body" ref="InquireRef" />
+      <Inquire ref="InquireRef" scrollDom="#assets_order_center_body" />
     </div>
   </div>
 </template>
 <script setup>
-import Inquire from "@/views/Trade2/ai/Inquire.vue";
-import Positions from "@/views/Trade2/ai/Positions.vue";
+import Inquire from "@/views/Trade2/spot/Inquire.vue";
+import Positions from "@/views/Trade2/spot/Positions.vue";
 import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 
+const props = defineProps({
+  from: {
+    type: String,
+    default: ''
+  },
+  type: {
+    type: String,
+    default: ''
+  },
+})
+
 const { t } = useI18n();
-const activeTab = ref(0);
 const InquireRef = ref();
+const activeTab = ref(0);
 const changeActiveTab = (val) => {
   activeTab.value = val;
   if (val == 1) {
@@ -33,15 +44,16 @@ const changeActiveTab = (val) => {
 };
 </script>
 <style lang="less">
-.ai_order_list {
+.crypto_order_list1 {
+  padding: 0 0.32rem;
 
-  .ai_order_tabs {
+  .crypto_order_tabs {
     height: 0.52rem;
     display: flex;
     gap: 0.6rem;
     border-bottom: 0.02rem solid var(--ex-bg-white2);
 
-    .ai_order_tab {
+    .crypto_order_tab {
       font-size: 0.32rem;
       color: var(--ex-text-color2);
       display: flex;

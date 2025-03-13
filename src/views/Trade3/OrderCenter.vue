@@ -159,10 +159,7 @@ watch(tradeOrderTab, (val) => {
           }
         }
         > .van-tabs__line {
-          width: 0.6rem;
-          height: 0.2rem;
-          border-radius: 1rem;
-          bottom: 0.4rem;
+          width: 0
         }
       }
     }
