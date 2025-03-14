@@ -394,7 +394,7 @@
   .right_menu {
     position: absolute;
     z-index: 2000;
-    width: 7.5rem;
+    // width: 7.5rem;
     top: 0;
     margin: 0 auto;
     height: 100vh;
@@ -465,18 +465,30 @@
   @keyframes fade_in_animation {
     0% {
       transform: translateX(100%);
+      width: 0;
+    }
+    1% {
+      transform: translateX(99%);
+      width: 7.5rem;
     }
     100% {
       transform: translateX(0);
+      width: 7.5rem;
     }
   }
 
   @keyframes fade_out_animation {
     0% {
       transform: translateX(0);
+      width: 7.5rem;
+    }
+    99% {
+      transform: translateX(99%);
+      width: 7.5rem;
     }
     100% {
       transform: translateX(100%);
+      width: 0;
     }
   }
 </style>
