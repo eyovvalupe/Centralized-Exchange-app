@@ -42,14 +42,14 @@
         :color="'var(--ex-primary-color)'"
         shrink
       >
-        <Tab :title="$t('期权')"> </Tab>
+        <Tab :title="$t('common.option')"> </Tab>
         <!-- <Tab
                 :title="$t('common.crypto')"
             >
             </Tab> -->
       </Tabs>
     </div>
-    <div :class="from == 'order' ? 'h-[9rem] overflow-auto pb-[0.4rem]' : from == 'trade' ? 'h-[9.2rem] overflow-auto' : ''">
+    <div :class="from == 'order' ? 'h-[9rem] overflow-auto pb-[0.4rem]' : ''">
       <div class="list-i" v-if="myFollowList.length">
         <MyFollowItem
           :from="from"
