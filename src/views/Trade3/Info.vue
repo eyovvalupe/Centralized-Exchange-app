@@ -2,7 +2,7 @@
 <template>
   <!-- 头部 -->
   <HeaderTabs
-    type="large"
+    type="normal"
     @change="changeTab"
     v-model:active="headActiveTab"
     :tabs="[t('交易'), t('理财')]"

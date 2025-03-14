@@ -15,7 +15,6 @@
         >
           <span
             class="tab-name transEffect"
-            :style="{fontSize: from == 'assets' && active == i ? '0.58rem' : from == 'assets' && active != i ? '0.4rem' : ''}"
             >{{ tabName }}</span
           >
           <div
@@ -408,7 +407,7 @@
           position: relative;
           z-index: 1;
           transition: 0.3s;
-          font-size: 0.4rem;
+          font-size: 0.38rem;
           font-weight: 400;
           line-height: 0.4rem;
         }
@@ -418,7 +417,7 @@
         color: var(--ex-text-color) !important;
 
         .tab-name {
-          font-size: 0.56rem;
+          font-size: 0.48rem;
           font-weight: 600;
         }
       }
