@@ -392,7 +392,7 @@
 </script>
 <style lang="less">
   .right_menu {
-    position: fixed;
+    position: absolute;
     z-index: 2000;
     width: 7.5rem;
     top: 0;
