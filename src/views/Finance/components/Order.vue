@@ -47,8 +47,7 @@
           :class="
             from == 'order'
               ? 'h-[9rem] overflow-auto pb-[0.4rem]'
-              : from == 'trade'
-              ? 'h-[9.2rem] overflow-auto'
+             
               : ''
           "
         >
