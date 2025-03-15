@@ -43,9 +43,9 @@
           </div>
         </div>
         <!-- 数量 -->
-        <FormItem style="height: 3.6rem;" :hasBot="true" :hasRT="true" :hasScroll="true" input-type="number" v-model="form1.grid"
-          :tip="maxgrid > 0 ? '≤' + maxgrid : ''" :placeholder="t('trade.ai_opening_network_amount')"
-          btn-show-mode="focus" :max="maxgrid" @change="changeGrid">
+        <FormItem style="height: 3.6rem;" :hasBot="true" :hasRT="true" :hasScroll="true" input-type="number"
+          v-model="form1.grid" :tip="maxgrid > 0 ? '≤' + maxgrid : ''"
+          :placeholder="t('trade.ai_opening_network_amount')" btn-show-mode="focus" :max="maxgrid" @change="changeGrid">
 
           <template #right-content-title>
             <div class="subtitle">{{ t('trade.ai_opening_profit_margin') }}</div>
@@ -69,10 +69,9 @@
 
         <!-- 投资额 -->
         <div style="height: 0.2rem;"></div>
-        <FormItem  :hasScroll="true" input-type="number" v-model="form1.volume"
-          :placeholder="t('trade.ai_opening_invest_amount')" btn-show-mode="focus"
-          :tip="'≥' + minamount" :show-btn="usdt.amount > 0" @change="changePercent"
-          @btnClick="onSliderChange(100)">
+        <FormItem :hasScroll="true" input-type="number" v-model="form1.volume"
+          :placeholder="t('trade.ai_opening_invest_amount')" btn-show-mode="focus" :tip="'≥' + minamount"
+          :show-btn="usdt.amount > 0" @change="changePercent" @btnClick="onSliderChange(100)">
           <!-- <template #title-right>
             <span v-if="token" style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox"><span
                 style="color: var(--ex-text-color2)">{{
@@ -98,33 +97,33 @@
         </FormItem>
 
         <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box pb-[0.4rem]">
-        <div class="flex justify-between mb-[0.32rem] gap-[0.2rem]">
-          <div
-            class="flex-1 h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
-            @click="store.commit('setIsLoginOpen', true), emits('success')">
-            {{ t("trade.stock_opening_token_login") }}
+          <div class="flex justify-between mb-[0.32rem] gap-[0.2rem]">
+            <div
+              class="flex-1 h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
+              @click="store.commit('setIsLoginOpen', true), emits('success')">
+              {{ t("trade.stock_opening_token_login") }}
+            </div>
+            <div
+              class="flex-1 h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn btn2 ripple-primary"
+              @click="jump('register')">
+              {{ t("trade.stock_opening_token_register") }}
+            </div>
           </div>
-          <div
-            class="flex-1 h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn btn2 ripple-primary"
-            @click="jump('register')">
-            {{ t("trade.stock_opening_token_register") }}
-          </div>
-        </div>
-        <!-- <div
+          <!-- <div
           class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
           @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
             ">
           {{ t("trade.contract_create_guest_btn") }}
         </div> -->
-      </div>
-      <div class="btns" v-else>
-        <Button :loading="loading || submitLoading" @click="checkForm" v-if="token" size="large" class="btn ripple-btn"
-          :color="tab == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'" round>
-          <span style="color: var(--ex-white);">{{
-            tab == 1 ? t("trade.stock_open_long") : t("trade.stock_open_short")
-          }}</span>
-        </Button>
-      </div>
+        </div>
+        <div class="btns" v-else>
+          <Button :loading="loading || submitLoading" @click="checkForm" v-if="token" size="large"
+            class="btn ripple-btn" :color="tab == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'" round>
+            <span style="color: var(--ex-white);">{{
+              tab == 1 ? t("trade.stock_open_long") : t("trade.stock_open_short")
+            }}</span>
+          </Button>
+        </div>
       </div>
 
       <div class="account-box" v-if="token">
@@ -139,10 +138,12 @@
 
         <div class="btns">
           <div class="btn ripple-primary" @click="jump('topUpCrypto')">{{ t('assets.recharge') }}</div>
-          <div class="btn ripple-primary" style="margin-left: 0.28rem;" @click="jump('transfer')">{{ t('assets.transfer') }}</div>
+          <div class="btn ripple-primary" style="margin-left: 0.28rem;" @click="jump('transfer')">{{
+            t('assets.transfer') }}
+          </div>
         </div>
       </div>
-     
+
     </div>
 
     <!-- 开仓确认弹窗 -->
@@ -154,50 +155,51 @@
       <div class="stock_submit_box">
         <div class="stock_submit_box_inner">
           <div class="item">
-          <div class="item_name">{{ t("trade.ai_opening_product_type") }}</div>
-          <div class="item_val">
-            <div style="width: 0.4rem;height: 0.4rem;margin-right: 0.16rem;" v-if="form1.name && form1.name.replace('/USDT', '')">
-              <CryptoIcon :name="form1.name.replace('/USDT', '').toUpperCase()" />
-            </div>
-            <div class="item_val_text">{{ form1.name }}</div>
-          </div>
-        </div>
-        <div class="item">
-          <div class="item_name">{{ t("trade.ai_opening_time_zone") }}</div>
-          <div class="item_val">
-            <div class="item_val_text">
-              {{ currTime.time }}{{ _dateUnitMap[currTime.unit] }}
+            <div class="item_name">{{ t("trade.ai_opening_product_type") }}</div>
+            <div class="item_val">
+              <div style="width: 0.4rem;height: 0.4rem;margin-right: 0.16rem;"
+                v-if="form1.name && form1.name.replace('/USDT', '')">
+                <CryptoIcon :name="form1.name.replace('/USDT', '').toUpperCase()" />
+              </div>
+              <div class="item_val_text">{{ form1.name }}</div>
             </div>
           </div>
-        </div>
-        <div class="item">
-          <div class="item_name">
-            {{ t("trade.ai_opening_network_amount") }}
+          <div class="item">
+            <div class="item_name">{{ t("trade.ai_opening_time_zone") }}</div>
+            <div class="item_val">
+              <div class="item_val_text">
+                {{ currTime.time }}{{ _dateUnitMap[currTime.unit] }}
+              </div>
+            </div>
           </div>
-          <div class="item_val">
-            <div class="item_val_text">{{ form1.grid }}</div>
+          <div class="item">
+            <div class="item_name">
+              {{ t("trade.ai_opening_network_amount") }}
+            </div>
+            <div class="item_val">
+              <div class="item_val_text">{{ form1.grid }}</div>
+            </div>
           </div>
-        </div>
-        <div class="item">
-          <div class="item_name">{{ t("trade.ai_opening_invest_amount") }}</div>
-          <div class="item_val">
-            <div class="item_val_text">{{ form1.volume }}</div>
-            <div class="item_val_unit">USDT</div>
+          <div class="item">
+            <div class="item_name">{{ t("trade.ai_opening_invest_amount") }}</div>
+            <div class="item_val">
+              <div class="item_val_text">{{ form1.volume }}</div>
+              <div class="item_val_unit">USDT</div>
+            </div>
           </div>
-        </div>
-        <div class="item">
-          <div class="item_name">
-            {{ t("trade.ai_opening_predict_profit") }}
+          <div class="item">
+            <div class="item_name">
+              {{ t("trade.ai_opening_predict_profit") }}
+            </div>
+            <div class="item_val">
+              <div class="item_val_text">{{ getRange() }}</div>
+              <div class="item_val_unit">USDT</div>
+            </div>
           </div>
-          <div class="item_val">
-            <div class="item_val_text">{{ getRange() }}</div>
-            <div class="item_val_unit">USDT</div>
-          </div>
-        </div>
         </div>
 
-        <FormItem style="margin-top: 0.4rem;" v-model="form1.safeword" v-if="userInfo.role != 'guest'" size="large" input-type="password"
-          :placeholder="t('trade.stock_opening_trade_pw')">
+        <FormItem style="margin-top: 0.4rem;" v-model="form1.safeword" v-if="userInfo.role != 'guest'" size="large"
+          input-type="password" :placeholder="t('trade.stock_opening_trade_pw')">
         </FormItem>
 
         <Button :loading="submitLoading" @click="submitForm(form1.safeword)" size="large" class="submit ripple-btn"
@@ -247,7 +249,7 @@ import router from "@/router";
 import AiInfo from "../components/AiInfo.vue";
 import AiItem from "../../Market/components/AiItem.vue";
 import { useRoute } from "vue-router";
-import { _aipara, _aibuy, _aiquant } from "@/api/api";
+import { _aipara, _aibuy, _aiquant2 } from "@/api/api";
 import SafePassword from "@/components/SafePassword.vue";
 import { _dateUnitMap } from "@/utils/dataMap";
 import StockPopup from "../../trade/StockPopup.vue";
@@ -263,6 +265,10 @@ import { getStaticImgUrl } from "@/utils/index.js"
 const { t } = useI18n();
 const props = defineProps({
   mode: {
+    type: String,
+    default: "page",
+  },
+  type: {
     type: String,
     default: "page",
   },
@@ -408,7 +414,7 @@ const checkForm = () => {
 
 const submitLoading = ref(false);
 const submitForm = (s) => {
-  if(userInfo.value.role == 'guest'){
+  if (userInfo.value.role == 'guest') {
     s = '000000'
   }
   if (submitLoading.value) return;
@@ -564,17 +570,21 @@ const chooseItem = (item) => {
   getParams();
   sessionStorage.setItem('currAi', JSON.stringify(item))
 };
-_aiquant({
-  orderby: "",
-}).then((res) => {
-  store.commit("setMarketAiList", res.data || []);
-  setTimeout(() => {
-    store.dispatch("subList", {
-      commitKey: "setMarketAiList",
-      listKey: "marketAiList",
-    });
-  }, 500);
-});
+if (!marketAiList.value.length) {
+  _aiquant2({
+    name: "",
+    page: 1,
+  }).then((res) => {
+    store.commit("setMarketAiList", res.data || []);
+    setTimeout(() => {
+      store.dispatch("subList", {
+        commitKey: "setMarketAiList",
+        listKey: "marketAiList",
+      });
+    }, 500);
+  });
+}
+
 
 const init = () => {
   error1.value = false;
@@ -600,45 +610,47 @@ defineExpose({
   padding: 0.2rem 0.16rem 0.4rem 0.16rem;
   border-radius: 0.32rem;
   background-color: var(--ex-bg-color3);
-  border-bottom:1px solid var(--ex-bg-white2);
+  border-bottom: 1px solid var(--ex-bg-white2);
 }
+
 .account-box {
-      border-radius: 0.32rem;
-      background-color: var(--ex-bg-color3);
-      padding: 0.36rem 0.32rem;
-      margin-top: 0.1rem;
+  border-radius: 0.32rem;
+  background-color: var(--ex-bg-color3);
+  padding: 0.36rem 0.32rem;
+  margin-top: 0.1rem;
 
-      .title {
-        font-size: 0.32rem;
-        color: var(--white);
-        margin-bottom: 0.4rem;
-      }
+  .title {
+    font-size: 0.32rem;
+    color: var(--white);
+    margin-bottom: 0.4rem;
+  }
 
-      .info {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color: var(--ex-placeholder-color);
-      }
+  .info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--ex-placeholder-color);
+  }
 
-      .btns {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 0.52rem;
-        .btn {
-          flex: 1;
-          height: 0.68rem;
-          border-radius: 1rem!important;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--ex-white);
-          font-size: 0.28rem;
-          background-color: var(--ex-bg-white1);
-        }
-      }
+  .btns {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 0.52rem;
+
+    .btn {
+      flex: 1;
+      height: 0.68rem;
+      border-radius: 1rem !important;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--ex-white);
+      font-size: 0.28rem;
+      background-color: var(--ex-bg-white1);
     }
+  }
+}
 
 .time_popup {
   :deep(.van-popup__close-icon) {
@@ -727,7 +739,7 @@ defineExpose({
 }
 
 .trade_ai {
-  
+
   .btns {
     // padding: 0.32rem 0.16rem 0.4rem 0.16rem;
     padding: 0.32rem 0 0.08rem 0;
@@ -745,6 +757,7 @@ defineExpose({
       background-color: var(--ex-white);
       color: var(--ex-bg-color);
     }
+
     .btn2 {
       background-color: var(--ex-primary-color);
       color: var(--ex-white);
@@ -950,6 +963,7 @@ defineExpose({
 
 .tabs-container {
   padding-top: 0.1rem;
+
   .type_tabs {
     height: 0.96rem;
     display: flex;

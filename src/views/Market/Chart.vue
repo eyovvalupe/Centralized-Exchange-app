@@ -123,19 +123,31 @@ const switchZipo = () => {
 
 // 股票信息
 const item = computed(() => {
-  let it = {};
-  const type = props.type;
-  switch (type) {
-    case "constract": // 合约
-      it = store.state.currConstact || {};
+  let obj = {};
+  switch (periodType.value) {
+    case "constract":
+    case "crypto":
+      obj = store.state.currConstact || {};
       break;
-    case "ai": // 合约
-      it = store.state.currAi || {};
+    case "spot":
+      obj = store.state.currSpot || {};
       break;
-    default:
-      it = store.state.currStockItem || {};
+    case "foreign":
+    case "forex":
+      obj = store.state.currForeign || {};
+      break;
+    case "commodities":
+    case "blocktrade":
+      obj = store.state.currCommodities || {};
+      break;
+    case 'ai': // ai
+      obj = store.state.currAi || {};
+      break;
+    case "stock": //股票
+      obj = store.state.currStockItem || {};
+      break
   }
-  return it;
+  return obj;
 });
 
 // 图表信息  Time 1m 5m 10m 15m 30m 1h 4h 1D 1W 1M 1Y

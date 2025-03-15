@@ -11,15 +11,15 @@
         </div>
 
         <!-- 标题 -->
-        <div class="title" v-if="type == 'stock'">
+        <div class="title" v-if="route.query.type == 'stock'">
           <div class="title_name">{{ item.symbol || "--" }} </div>
           <div v-if="showDate" class=" leading-[0.4rem]">
             {{ showDate }}
           </div>
         </div>
-        <div class="title" v-else @click="showSearchDialog = true">
+        <div class="title" v-else>
           <div class="title_name">{{ item.name || "--" }}
-            <Icon name="arrow-down" />
+            <!-- <Icon name="arrow-down" /> -->
           </div>
         </div>
         <!-- 详情 -->
@@ -34,7 +34,7 @@
 
       </div>
       <div :style="{ backgroundColor: props.innerPage ? 'var(--ex-bg-white2)' : 'var(--ex-bg-color3)' }"
-        style="border-radius: 0.32rem;padding: 0.28rem">
+        style="border-radius: 0.32rem;padding: 0.08rem 0.08rem 0.2rem 0.28rem">
 
         <div class="flex items-center justify-center gap-[0.2rem]">
 
@@ -83,18 +83,15 @@
               <span class="num text-white">{{ item.close || '--'
               }}</span>
             </div>
+            <div class="count_item">
+              <span class="text-color3">{{ t('market.market_marketinfo_value') }}</span>
+              <span class="num text-white">{{ _formatNumber(item.amount) }}</span>
+            </div>
+            <div class="count_item">
+              <span class="text-color3">{{ t('market.market_marketinfo_amount') }}</span>
+              <span class="num text-white">{{ _formatNumber(item.volume) }}</span>
+            </div>
           </div>
-        </div>
-        <div class="flex text-[0.24rem] pt-[0.2rem] gap-[0.2rem]">
-          <div class="w-[2.6rem] flex-shrink-0">
-            <span class="text-color3">{{ t('market.market_marketinfo_value') }}</span>
-            <span class="text-color ml-[0.12rem]">{{ _formatNumber(item.amount) }}</span>
-          </div>
-          <div class="flex-1">
-            <span class="text-color3">{{ t('market.market_marketinfo_amount') }}</span>
-            <span class="text-color ml-[0.12rem]">{{ _formatNumber(item.volume) }}</span>
-          </div>
-
         </div>
       </div>
     </div>
@@ -102,7 +99,8 @@
     <!-- 内容 -->
     <div :class="[props.innerPage ? 'inner-marketinfo' : '']" style="padding: 0 0.1rem;margin-top: 0.1rem;"
       :style="{ backgroundColor: props.innerPage ? 'var(--ex-none' : 'var(--ex-bg-color)' }">
-      <Tabs :style="{ backgroundColor: props.innerPage ? 'var(--ex-bg-white2)' : 'var(--ex-bg-color3)' }"
+      <Tabs v-if="!chartLoading"
+        :style="{ backgroundColor: props.innerPage ? 'var(--ex-bg-white2)' : 'var(--ex-bg-color3)' }"
         style="border-radius: 0.32rem 0.32rem 0 0;" class="van-tabs--sub_line van-tabs--sub_bg" :sticky="true"
         :color="'var(--ex-primary-color)'" v-model:active="activeTab" animated shrink>
         <!-- <Tab :name="1" :title="'开仓'">
@@ -115,20 +113,21 @@
         </Tab> -->
         <Tab :name="2" :title="$t('market.market_item_detail')">
           <div class="market-box">
-            <Chart ref="chartRef" v-if="!chartLoading" :type="type" />
+            <Chart ref="chartRef" v-if="activeTab == 2 && !chartLoading" :type="'constract'" />
           </div>
         </Tab>
-        <Tab :name="3" :title="$t('market.market_item_order')" v-if="item.type == 'crypto'">
+        <Tab :name="3" :title="$t('market.market_item_order')" v-if="item.type == 'crypto' && type != 'ai'">
           <div class="market-box">
-            <OrderingSpot :innerPage="innerPage" v-if="activeTab == 3" :key="'o'" type="nomal" />
+            <OrderingSpot :tradeType="type" :innerPage="innerPage" v-if="activeTab == 3" :key="'o'" type="nomal" />
           </div>
         </Tab>
-        <Tab :name="4" :title="$t('market.market_item_news')" v-if="item.type == 'crypto'">
+        <Tab :name="4" :title="$t('market.market_item_news')" v-if="item.type == 'crypto' && type != 'ai'">
           <div class="market-box">
-            <OrderingSpot :innerpage="innerPage" v-if="activeTab == 4" :key="'n'" type="news" />
+            <OrderingSpot :tradeType="type" :innerpage="innerPage" v-if="activeTab == 4" :key="'n'" type="news" />
           </div>
         </Tab>
       </Tabs>
+      <div v-else style="height:60vh"></div>
     </div>
 
     <!-- 去交易按钮 -->
@@ -272,7 +271,6 @@ import BottomPopup from "@/components/BottomPopup.vue";
 import StockTable from "@/components/StockTable.vue";
 import OrderingSpot from "./OrderingSpot.vue"
 import Chart from "./Chart.vue"
-import { formatTimestamp } from '@/utils/time';
 
 
 
@@ -303,38 +301,38 @@ const gotrade = () => {
 
 const activeTab = ref(2)
 const showInfo = ref(false);
-const type = ref(route.query.type || props.type)
+const type = computed(() => route.query.tradeType || props.type)
 
 // 股票信息
 const item = computed(() => {
-  let it = {};
-  const type2 = type.value;
-  switch (type2) {
-    case "constract": // 合约
-      it = store.state.currConstact || {};
+  let obj = {};
+  const type = route.query.type || props.type;
+  switch (type) {
+    case "constract":
+    case "crypto":
+      obj = store.state.currConstact || {};
       break;
-    case "ai": // 合约
-      it = store.state.currAi || {};
+    case "spot":
+      obj = store.state.currSpot || {};
       break;
-    case "stock": // 股票
-      it = store.state.currStockItem || {};
+    case "foreign":
+    case "forex":
+      obj = store.state.currForeign || {};
+      break;
+    case "commodities":
+    case "blocktrade":
+      obj = store.state.currCommodities || {};
+      break;
+    case 'ai': // ai
+      obj = store.state.currAi || {};
+      break;
+    case "stock": //股票
+      obj = store.state.currStockItem || {};
       break
-    default:
-      it = store.state.currStockItem || {};
   }
-  return it;
+  return obj;
 });
 
-const showDate = computed(() => {
-  // 展示的数据时间
-  if (item.value.timestamp || item.value.ts) {
-    return formatTimestamp(
-      item.value.timestamp || item.value.ts,
-      item.value.timezone,
-    );
-  }
-  return '';
-});
 
 
 const updown = computed(() => {
@@ -349,21 +347,10 @@ const getBasic = (obj) => {
   _basic({ symbol: obj.symbol }).then((res) => {
     if (res.code == 200) {
       if (res.data.symbol == item.value.symbol) {
-        switch (type.value) {
+        const type = route.query.type || props.type;
+        switch (type) {
           case "constract": // 合约
             store.commit("setCurrConstract", {
-              ...obj,
-              ...res.data,
-            });
-            break;
-          case "stock": // 股票
-            store.commit("setCurrStockItem", {
-              ...obj,
-              ...res.data,
-            });
-            break;
-          case "ai": // 股票
-            store.commit("setCurrAi", {
               ...obj,
               ...res.data,
             });
@@ -380,7 +367,7 @@ const chartLoading = ref(true)
 onMounted(() => {
   setTimeout(() => {
     chartLoading.value = false
-  }, 300)
+  }, 500)
 })
 const handleClick = (obj) => {
   if (obj.type != 'crypto' && ['3', '4'].includes(activeTab.value)) { // 非加密货币的没有订单薄
@@ -409,13 +396,10 @@ const addCollect = () => {
       .then((res) => {
         if (res.code == 200) {
           store.dispatch('updateMarketWatchList');
-          switch (type.value) {
+          switch (route.query.type) {
             case "constract": // 合约
               store.commit("setCurrConstract", { watchlist: 1 });
               break;
-            case "ai": // ai
-              store.commit("setCurrAi", { watchlist: 1 });
-              break
             default:
               store.commit("setCurrStockItem", { watchlist: 1 });
           }
@@ -432,13 +416,10 @@ const addCollect = () => {
       .then((res) => {
         if (res.code == 200) {
           store.dispatch('updateMarketWatchList');
-          switch (type.value) {
+          switch (route.query.type) {
             case "constract": // 合约
               store.commit("setCurrConstract", { watchlist: 0 });
               break;
-            case "ai": // ai
-              store.commit("setCurrAi", { watchlist: 0 });
-              break
             default:
               store.commit("setCurrStockItem", { watchlist: 0 });
           }
@@ -683,7 +664,7 @@ setTimeout(() => {
 
       .count_item {
         color: var(--ex-text-color2);
-        font-size: 0.24rem;
+        font-size: 0.22rem;
         font-weight: 400;
         line-height: 0.36rem;
         width: 50%;

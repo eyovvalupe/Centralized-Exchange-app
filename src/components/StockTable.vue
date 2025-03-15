@@ -3,7 +3,7 @@
   <div class="stock_table">
     <Loading :type="'circular'" v-show="!props.list.length && props.loading" />
     <div v-if="list.length" v-for="(item, i) in props.list" class="tr" :class="page == 'trade' &&
-      (type == 'stock' && item.symbol == currStockItem.symbol || type == 'future' && item.name == currConstractItem.name)
+      (type == 'stock' && item.symbol == currStockItem.symbol || type == 'future' && item.name == currConstract.name)
       ? 'current_item_effect'
       : ''
       " :key="item.symbol" v-show="props.marketType == 'all' || props.marketType == item.type">
@@ -23,7 +23,7 @@ import { computed, ref } from "vue";
 import store from "@/store";
 
 const currStockItem = computed(() => store.state.currStockItem)
-const currConstractItem = computed(() => store.state.currConstractItem)
+const currConstract = computed(() => store.state.currConstract)
 
 const emits = defineEmits(["remove"]);
 const props = defineProps({

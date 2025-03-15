@@ -179,7 +179,7 @@ const initData = async () => {
             if (datas[0] && datas[0].timezone) {
                 chart.setTimezone(datas[0].timezone)
             }
-            chart.applyNewData(datas.map(item => {
+            const dd = datas.map(item => {
                 const data = {
                     close: Number(item.close),
                     high: Number(item.high),
@@ -189,7 +189,9 @@ const initData = async () => {
                     volume: Number(item.volume)
                 }
                 return data
-            })) // 重设图表数据
+            })
+            chart.applyNewData(dd) // 重设图表数据
+            chart.zoomAtTimestamp(2, dd[dd.length - 1].timestamp, 300)
             subs()
             resetSize()
         } else {
