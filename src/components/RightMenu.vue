@@ -5,10 +5,8 @@
     :class="status ? 'fade_inner_action' : 'fade_outer_action'"
     @click.self="close"
   >
-    <div class="blur_container">
-      <div class="main"
-      :class="status ? 'fade_in_action' : 'fade_out_action'"
-      >
+    <div class="blur_container" @click.self="close">
+      <div class="main" :class="status ? 'fade_in_action' : 'fade_out_action'">
         <div class="w-full h-full overflow-auto">
           <div class="flex flex-col" v-for="(item, i) in itemMap">
             <div
@@ -519,60 +517,60 @@
   }
 
   .fade_inner_action {
-  animation-name: fade_inner;
-  animation-timing-function: ease-out;
-  animation-duration: 0.3s;
-  animation-fill-mode: forwards;
-}
-
-.fade_outer_action {
-  animation-name: fade_outer;
-  animation-timing-function: ease-out;
-  animation-duration: 0.3s;
-  animation-fill-mode: forwards;
-}
-
-@keyframes fade_inner {
-  0% {
-    z-index: -1;
-    opacity: 0;
+    animation-name: fade_inner;
+    animation-timing-function: ease-out;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
   }
 
-  1% {
-    z-index: 2000;
-    opacity: 0;
+  .fade_outer_action {
+    animation-name: fade_outer;
+    animation-timing-function: ease-out;
+    animation-duration: 0.3s;
+    animation-fill-mode: forwards;
   }
 
-  50% {
-    z-index: 2000;
-    opacity: 1;
+  @keyframes fade_inner {
+    0% {
+      z-index: -1;
+      opacity: 0;
+    }
+
+    1% {
+      z-index: 2000;
+      opacity: 0;
+    }
+
+    50% {
+      z-index: 2000;
+      opacity: 1;
+    }
+
+    100% {
+      z-index: 2000;
+      opacity: 1;
+    }
   }
 
-  100% {
-    z-index: 2000;
-    opacity: 1;
-  }
-}
+  @keyframes fade_outer {
+    0% {
+      z-index: 2000;
+      opacity: 1;
+    }
 
-@keyframes fade_outer {
-  0% {
-    z-index: 2000;
-    opacity: 1;
-  }
+    50% {
+      z-index: 2000;
+      opacity: 1;
+    }
 
-  50% {
-    z-index: 2000;
-    opacity: 1;
-  }
+    99% {
+      z-index: 2000;
+      opacity: 0;
+    }
 
-  99% {
-    z-index: 2000;
-    opacity: 0;
+    100% {
+      z-index: -1;
+      opacity: 0;
+    }
   }
-
-  100% {
-    z-index: -1;
-    opacity: 0;
-  }
-}
 </style>
