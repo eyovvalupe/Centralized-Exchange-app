@@ -246,7 +246,7 @@ const changeTab = (val) => {
     init()
   }
 };
-if (props.innerPage) {
+if (props.innerPage || !token.value) {
   headActiveTab.value = 2
 }
 watch(route, (val) => {
