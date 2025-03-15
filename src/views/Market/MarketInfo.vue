@@ -480,19 +480,31 @@ const periodType = computed(() => route.query.type || props.type);
 const tradeType = ref(route.query.tradeType);
 // 股票信息
 const item = computed(() => {
-  let it = {};
-  const type = route.query.type || props.type;
-  switch (type) {
-    case 'constract': // 合约
-      it = store.state.currConstact || {};
+  let obj = {};
+  switch (periodType.value) {
+    case "constract":
+    case "crypto":
+      obj = store.state.currConstact || {};
       break;
-    case 'ai': // 合约
-      it = store.state.currAi || {};
+    case "spot":
+      obj = store.state.currSpot || {};
       break;
-    default:
-      it = store.state.currStockItem || {};
+    case "foreign":
+    case "forex":
+      obj = store.state.currForeign || {};
+      break;
+    case "commodities":
+    case "blocktrade":
+      obj = store.state.currCommodities || {};
+      break;
+    case 'ai': // ai
+      obj = store.state.currAi || {};
+      break;
+    case "stock": //股票
+      obj = store.state.currStockItem || {};
+      break
   }
-  return it;
+  return obj;
 });
 
 const showDate = computed(() => {

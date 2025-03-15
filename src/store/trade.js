@@ -10,7 +10,6 @@ export default {
     inquireList: [], // 股票列表
     contractInquireList: [], // 合约历史列表
     aiInquireList: [], // ai历史列表
-    currConstractItem: sessionStorage.getItem('currConstract') ? JSON.parse(sessionStorage.getItem('currConstract')) : {},
     c2cList: [], // c2c订单列表
     c2cUnread: {}, // 未读消息
     c2cUnreadTotal: 0, // 总未读消息
@@ -19,14 +18,11 @@ export default {
     tradeTypeTab: Number(sessionStorage.getItem('tradeType')),
   },
   mutations: {
-    setTradeTypeTab(state,data) {
+    setTradeTypeTab(state, data) {
       state.tradeTypeTab = data
     },
     setOpenInfoStatus(state, data) {
       state.openInfoStatus = data
-    },
-    setCurrConstractItem(state, data) {
-      state.currConstractItem = data
     },
     setPositionsList(state, data) {
       state.positionsList = data

@@ -502,7 +502,12 @@ export const _userExist = (data = {}) => {
     custom: { auth: false, toast: false, retry: true },
   });
 };
-
+// 现货列表
+export const _trade = (data = {}) => {
+  return http.post(`/anon/v1/item/trade`, data, {
+    custom: { auth: false, toast: false, retry: true },
+  });
+};
 // 合约列表
 export const _futures = (data = {}) => {
   return http.post(`/anon/v1/item/futures`, data, {
@@ -666,6 +671,7 @@ export const _blocktradeSell = (data = {}) => {
     custom: { auth: true, toast: true, retry: true },
   });
 };
+
 //质押挖矿
 export const _miningList = (data = {}) => {
   return http.post(`/anon/v1/mining/list`, data, {
@@ -714,7 +720,7 @@ export const _copyMyList = (data = {}) => {
     custom: { auth: true, toast: false, retry: true },
   });
 };
-// 我的跟单列表
+// 取消跟单
 export const _copyCancel = (data = {}) => {
   return http.post(`/authc/v1/copy/cancel`, data, {
     custom: { auth: true, toast: true, retry: true },

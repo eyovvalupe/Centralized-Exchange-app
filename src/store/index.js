@@ -289,7 +289,7 @@ const store = createStore({
   plugins: [
     createPersistedState({
       key: 'sunx',
-      paths: ['token', 'userInfo', ...onlySaveSymbols, ...onlySaveSymbolsList],
+      paths: ['token', 'userInfo'],
       // storage: window.localStorage,
       // setState: (path, state) => {
       //   onlySaveSymbols.forEach(key => { // 这几个数据只缓存symbol字段

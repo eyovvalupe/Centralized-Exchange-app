@@ -69,7 +69,7 @@ onMounted(() => {
         chart = init('chat_k')
         chart.setStyles(klineConfig)
         chart?.setScrollEnabled(true) // 是否滚动
-        chart?.setOffsetRightDistance(50) // 设置右边距
+        chart?.setOffsetRightDistance(0) // 设置右边距
         chart?.setMaxOffsetLeftDistance(0) // 设置左边最大空出的边距
         chart?.setMaxOffsetRightDistance(50) // 设置右边最大空出的边距
         chart.setStyles({
@@ -117,7 +117,7 @@ const initData = async () => { // 初始化数据
             const maxTail = _maxTail(datas[0].high)
             if (num > maxTail) num = maxTail
             chart.setPriceVolumePrecision(num, 2)
-            chart.applyNewData(datas.map(item => {
+            const dd = datas.map(item => {
                 const data = {
                     close: Number(item.close),
                     high: Number(item.high),
@@ -127,10 +127,12 @@ const initData = async () => { // 初始化数据
                     volume: Number(item.volume)
                 }
                 return data
-            })) // 重设图表数据
-            if (datas[0] && datas[0].timezone) {
-                chart.setTimezone(datas[0].timezone)
+            })
+            chart.applyNewData(dd) // 重设图表数据
+            if (dd[0] && dd[0].timezone) {
+                chart.setTimezone(dd[0].timezone)
             }
+            chart.zoomAtTimestamp(2, dd[dd.length - 1].timestamp, 300)
             // 同步数据到股票详情
             // setCurrData(datas[datas.length - 1] || {})
             chart.loadMore(loadMoreData)
@@ -257,28 +259,6 @@ defineExpose({
 })
 
 
-const setCurrData = (item) => {
-    let obj = {}
-    switch (route.query.type) {
-        case 'constract':
-            obj = {
-                ...store.state.currConstact,
-                ...item,
-                price: item.close
-            }
-            console.error('---这里提交', obj)
-            store.commit('setCurrConstract', obj)
-            break
-        default:
-            obj = {
-                ...store.state.currStockItem,
-                ...item,
-                price: item.close
-            }
-            store.commit('setCurrStockItem', obj)
-            break
-    }
-}
 </script>
 
 <style lang="less" scoped>

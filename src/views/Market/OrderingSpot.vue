@@ -5,9 +5,10 @@
         <!-- 竖排 -->
         <div style="display: flex;flex: 1;" v-if="props.type == 'infinite'">
             <div class="ordering-box" :style="{ background: innerPage ? 'none' : '' }" style="height: 100%;">
-                <div class="lists-tr lists-title" v-if="currStock.symbol">
+                <div class="lists-tr lists-title" v-if="currStockItem.symbol">
                     <div class="lists-td">{{ $t('market.market_buy_list_price') }}(USDT)</div>
-                    <div class="lists-td">{{ $t('market.market_buy_list_amount') }}({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
+                    <div class="lists-td">{{ $t('market.market_buy_list_amount') }}({{
+                        currStockItem.symbol.replace('usdt', '').toUpperCase() }})</div>
                 </div>
                 <Loaidng :loading="loading" v-if="loading" />
                 <div class="lists-box" ref="listBox">
@@ -23,9 +24,10 @@
                 </div>
             </div>
             <div class="ordering-box" style="height: 100%;margin-left: 0.1rem;">
-                <div class="lists-tr lists-title" v-if="currStock.symbol">
+                <div class="lists-tr lists-title" v-if="currStockItem.symbol">
                     <div class="lists-td">{{ $t('market.market_buy_list_price') }}(USDT)</div>
-                    <div class="lists-td">{{ $t('market.market_buy_list_amount') }}({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
+                    <div class="lists-td">{{ $t('market.market_buy_list_amount') }}({{
+                        currStockItem.symbol.replace('usdt', '').toUpperCase() }})</div>
                 </div>
                 <Loaidng :loading="loading" v-if="loading" />
                 <div class="lists-box" ref="listBox">
@@ -94,9 +96,10 @@
                     </div> -->
                 </div>
             </div>
-            <div class="lists-tr lists-title" v-if="currStock.symbol">
+            <div class="lists-tr lists-title" v-if="currStockItem.symbol">
                 <div class="lists-td">{{ $t('market.market_buy_list_price') }}(USDT)</div>
-                <div class="lists-td">{{ $t('market.market_buy_list_amount') }}({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
+                <div class="lists-td">{{ $t('market.market_buy_list_amount') }}({{ currStockItem.symbol.replace('usdt',
+                    '').toUpperCase() }})</div>
             </div>
             <Loaidng :loading="loading" v-if="loading" />
             <div class="lists-box" ref="listBox">
@@ -114,7 +117,7 @@
                     <div class="arr" v-show="midData[2] >= 0">↑</div>
                     <div class="arr" v-show="midData[2] < 0">↓</div>
                     <div class="tip" style="color: var(--ex-text-color3);" v-show="midData[3]">{{ Math.abs(midData[3])
-                        }}</div>
+                    }}</div>
                 </div>
                 <div class="lists-down" v-if="currNav != 3">
                     <div class="lists-item" @click="clickItem(item)" v-for="(item, i) in showBids" :key="i">
@@ -130,9 +133,10 @@
 
         <!-- 最新 -->
         <div class="ordering-box bbo-box" v-if="props.type == 'news'">
-            <div class="lists-tr lists-title" v-if="currStock.symbol">
+            <div class="lists-tr lists-title" v-if="currStockItem.symbol">
                 <div class="lists-td">{{ $t('market.market_buy_list_price') }}(USDT)</div>
-                <div class="lists-td">{{ $t('market.market_buy_list_amount') }}({{ currStock.symbol.replace('usdt', '').toUpperCase() }})</div>
+                <div class="lists-td">{{ $t('market.market_buy_list_amount') }}({{ currStockItem.symbol.replace('usdt',
+                    '').toUpperCase() }})</div>
                 <div class="lists-td">{{ $t('trade.spot_time') }}</div>
             </div>
             <div class="lists-box" style="overflow-y: auto;">
@@ -181,7 +185,11 @@ const props = defineProps({
     innerPage: {
         type: Boolean,
         default: false
-    }
+    },
+    tradeType: {
+        type: String,
+        default: 'crypto'
+    },
 })
 
 const clickItem = item => {
@@ -247,8 +255,24 @@ const news = ref([])
 
 
 // 数据订阅
-const currStock = computed(() => { // 当前合约
-    return store.state.currConstact || {};
+const currStockItem = computed(() => { // 当前合约
+    switch (props.tradeType) {
+        case "constract":
+        case "crypto":
+            return store.state.currConstact || {};
+        case "spot":
+            return store.state.currSpot || {};
+        case "foreign":
+        case "forex":
+            return store.state.currForeign || {};
+        case "commodities":
+        case "blocktrade":
+            return store.state.currCommodities || {};
+        case 'ai': // ai
+            return store.state.currAi || {};
+        case "stock": //股票
+            return store.state.currStockItem || {};
+    }
 });
 const { startSocket } = useSocket();
 // 订阅
@@ -258,16 +282,16 @@ const lastSymbol = ref('')
 const lastType = ref('')
 const subs = () => {
     const socket = startSocket(() => {
-        if (lastSymbol.value == currStock.value.symbol && lastType.value == pipType.value) return
-        if (lastSymbol.value != currStock.value.symbol) {
+        if (lastSymbol.value == currStockItem.value.symbol && lastType.value == pipType.value) return
+        if (lastSymbol.value != currStockItem.value.symbol) {
             pipType.value = 'step0'
         }
         asks.value = []
         bids.value = []
-        lastSymbol.value = currStock.value.symbol
+        lastSymbol.value = currStockItem.value.symbol
         lastType.value = pipType.value
         socket && socket.off("depth");
-        socket && socket.emit("depth", JSON.stringify({ type: pipType.value, symbol: currStock.value.symbol }));
+        socket && socket.emit("depth", JSON.stringify({ type: pipType.value, symbol: currStockItem.value.symbol }));
         loading.value = true;
         reset()
         socket.on("depth", (res) => {
@@ -287,7 +311,7 @@ const subs = () => {
         });
 
         loading2.value = true
-        socket && socket.emit("bbo", JSON.stringify({ symbol: currStock.value.symbol }));
+        socket && socket.emit("bbo", JSON.stringify({ symbol: currStockItem.value.symbol }));
         socket.on("bbo", (res) => {
             news.value = res.data || []
             loading2.value = false
@@ -302,8 +326,8 @@ const cancelSubs = () => {
     });
 };
 
-watch(() => currStock.value, val => {
-    if (val && val.symbol && val.pip) {
+watch(() => currStockItem.value, val => {
+    if (val && val.symbol) {
         pips.value = []
         let p = Number(val.pip) || 1
         pips.value.push({ key: p, value: 'step0' })

@@ -6,7 +6,7 @@ import { _watchlist } from '@/api/api'
 const { startSocket } = useSocket()
 
 // 主组件的所有key
-const recommendArr = ['marketStockList', 'marketWatchList', 'contractList', 'marketForeignList', 'marketCommoditiesList', 'marketAiList', 'marketStockDataList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList', 'marketStockGermanyDataList', 'marketStockUkDataList', 'marketStockSingaporeDataList', 'marketStockHongkongDataList', 'marketStockMalaysiaDataList']
+const recommendArr = ['marketStockList', 'spotList', 'marketWatchList', 'contractList', 'marketForeignList', 'marketCommoditiesList', 'marketAiList', 'marketStockDataList', 'marketStockUsDataList', 'marketStockIndiaDataList', 'marketStockJapanDataList', 'marketStockKoreaDataList', 'marketStockGermanyDataList', 'marketStockUkDataList', 'marketStockSingaporeDataList', 'marketStockHongkongDataList', 'marketStockMalaysiaDataList']
 // 不同页面对应的监听列表 key
 const pageKeys = {
     'home': [
@@ -39,6 +39,10 @@ const setCurr = (keyName, state, data) => {
         }
     }
     state[keyName] = Object.assign({}, state[keyName], data);
+
+    setTimeout(() => {
+        sessionStorage.setItem('market_' + keyName, JSON.stringify(state[keyName]))
+    }, 200)
 }
 
 export default {
@@ -48,7 +52,7 @@ export default {
         checkCryptoList: [],
         marketType: "all",
 
-        currStockItem: {}, // 当前股票的数据
+        currStockItem: sessionStorage.getItem('market_currStockItem') ? JSON.parse(sessionStorage.getItem('market_currStockItem')) : {}, // 当前股票的数据
         marketSearchStr: '', // 当前搜索的文本
         marketSearchTextList: [],
         marketSearchList: [], // 当前搜索的结果-股票
@@ -57,7 +61,7 @@ export default {
         forexSearchList: [], // 当前搜索的结果-外汇
 
         // marketWatchList: [], // 当前订阅的列表数据
-        marketWatchList: sessionStorage.getItem('market_watch_list') ? JSON.parse(sessionStorage.getItem('market_watch_list')) : [], // 当前订阅的列表数据
+        marketWatchList: [], // 当前订阅的列表数据
         marketVolumeList: [], // 首页活跃列表
         marketUpList: [], // 首页涨幅列表
         marketDownList: [], // 首页跌幅列表
@@ -72,19 +76,22 @@ export default {
 
         marketWatchKeys: [], // 除了主列表，还需要额外监听的股票 symbol数组
 
-        currConstact: {}, // 当前合约的数据
+        currConstact: sessionStorage.getItem('market_currConstact') ? JSON.parse(sessionStorage.getItem('market_currConstact')) : {}, // 当前合约的数据
         contractList: [], // 合约列表
 
-        currAi: {}, // 当前ai量化数据
+        currSpot: sessionStorage.getItem('market_currSpot') ? JSON.parse(sessionStorage.getItem('market_currSpot')) : {}, // 当前现货数据
+        spotList: [], // 现货列表
+
+        currAi: sessionStorage.getItem('market_currAi') ? JSON.parse(sessionStorage.getItem('market_currAi')) : {}, // 当前ai量化数据
         marketAiList: [], // ai量化默认列表
         marketAiHisList: [], // ai量化历史收益率列表
         marketAi24List: [], // ai量化24小时收益率列表
         marketAiGridList: [], // ai量化最大网格(杠杆)列表
 
-        currForeign: {}, // 当前外汇数据
+        currForeign: sessionStorage.getItem('market_currForeign') ? JSON.parse(sessionStorage.getItem('market_currForeign')) : {}, // 当前外汇数据
         marketForeignList: [], // 外汇默认列表
 
-        currCommodities: {}, // 当前大宗交易
+        currCommodities: sessionStorage.getItem('market_currCommodities') ? JSON.parse(sessionStorage.getItem('market_currCommodities')) : {}, // 当前大宗交易
         marketCommoditiesList: [], // 大宗交易默认列表
 
 
@@ -291,6 +298,9 @@ export default {
         setContractList(state, data) {
             state.contractList = data
         },
+        setSpotList(state, data) {
+            state.spotList = data
+        },
         setMarketWatchKeys(state, data) {
             state.marketWatchKeys = data;
         },
@@ -357,12 +367,16 @@ export default {
             state.marketAiGridList = data || [];
         },
         setCurrStockItem(state, data) {
-            sessionStorage.setItem('currStock', JSON.stringify(data))
+            sessionStorage.setItem('currStockItem', JSON.stringify(data))
             setCurr('currStockItem', state, data)
         },
         setCurrConstract(state, data) {
             sessionStorage.setItem('currConstact', JSON.stringify(data))
             setCurr('currConstact', state, data)
+        },
+        setCurrSpot(state, data) {
+            sessionStorage.setItem('currSpot', JSON.stringify(data))
+            setCurr('currSpot', state, data)
         },
         setCurrAi(state, data) {
             sessionStorage.setItem('currAi', JSON.stringify(data))
@@ -434,7 +448,6 @@ export default {
                     ...state.marketWatchKeys,
                 ]))
                 console.error('订阅', keys)
-                sessionStorage.setItem('subKeys', JSON.stringify(keys))
                 socket && socket.off('realtime')
                 socket && socket.emit('realtime', keys.join(',')) // 价格变化
                 socket && socket.on('realtime', res => {

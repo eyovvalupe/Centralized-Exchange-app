@@ -1,13 +1,13 @@
 <!-- 股票列表 -->
 <template>
-    <div style="padding-top: 0.32rem;">
-        <div class="search" @click="jump('search')">
+    <div style="padding-top: 0.24rem;">
+        <!-- <div class="search" @click="jump('search')">
             <div class="icon">
                 <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
             </div>
 
             <span>搜索</span>
-        </div>
+        </div> -->
 
         <NoData v-if="!loading && !showList.length" />
         <div class="list-i">

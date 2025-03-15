@@ -145,10 +145,13 @@ import { _add, _del } from "@/api/api";
 import NoData from "@/components/NoData.vue";
 import eventBus from "@/utils/eventBus";
 import { useI18n } from "vue-i18n";
-import CryptoIcon from "@/components/CryptoIcon.vue"
 
 const { t } = useI18n();
-
+const market = {
+  stock: "股票",
+  crypto: "合约",
+  forex: "外汇",
+};
 const marketStyle = {
   stock: "tag-stock",
   crypto: "tag-crypto",
@@ -191,12 +194,6 @@ const getData = () => {
         search: search.value,
         list: res.data || [],
       });
-
-      store.dispatch("subList", {
-        commitKey: "setMarketSearchList",
-        listKey: "marketSearchList",
-      });
-
     })
     .finally(() => {
       loading.value = false;
@@ -298,7 +295,7 @@ const collect = (item) => {
     if (!reqMap[item.watchlist || 0]) return (collectLoading.value = false);
     showLoadingToast({
       duration: 0,
-      loadingType: "circular",
+      loadingType: "spinner",
     });
     reqMap[item.watchlist || 0]({
       symbol: item.symbol,

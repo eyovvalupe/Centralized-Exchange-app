@@ -24,7 +24,7 @@
 import { ref, onMounted, computed } from "vue";
 import { Tabs, Tab } from "vant";
 import AiItem from "./AiItem.vue";
-import { _aiquant } from "@/api/api";
+import { _aiquant2 } from "@/api/api";
 import Loaidng from "@/components/Loaidng.vue";
 import NoData from "@/components/NoData.vue";
 import store from "@/store/index";
@@ -80,8 +80,10 @@ const loading = ref(false);
 const getList = () => {
   loading.value = true;
   const by = orderby.value;
-  _aiquant({
+  _aiquant2({
     orderby: by,
+    page: 1,
+    name: ""
   })
     .then((res) => {
       const list = res.data || [];
