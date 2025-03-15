@@ -1,5 +1,5 @@
 <template>
-    <div ref="chartDom" class="h-[5.6rem]"></div>
+    <div ref="chartDom" class="w-[6.3rem] h-[5.8rem]"></div>
 </template>
 <script setup>
 import { onMounted, ref } from 'vue'
@@ -18,7 +18,6 @@ echarts.use([
 ]);
 
 const chartDom = ref();
-
 const data = [
     {
         "value": -1.1618426259,
@@ -555,7 +554,7 @@ const data = [
         "u": 0.057073314
     },
     {
-        "value": 3.0034165915,
+        "value": -0.0034165915,
         "date": "2012-12-27",
         "l": -0.0907151292,
         "u": 0.0561479112
@@ -573,7 +572,6 @@ const base = -data.reduce(function (min, val) {
 
 onMounted(()=>{
     const myChart = echarts.init(chartDom.value, 'dark');
-        
     myChart.setOption({
         backgroundColor:"",
         tooltip: {
@@ -582,13 +580,13 @@ onMounted(()=>{
             type: 'cross',
             animation: false,
             label: {
-            backgroundColor: '#31373E',
-            borderColor: '',
-            borderWidth: 0,
-            shadowBlur: 0,
-            shadowOffsetX: 0,
-            shadowOffsetY: 0,
-            color: '#fff'
+                backgroundColor: '#31373E',
+                borderColor: '',
+                borderWidth: 0,
+                shadowBlur: 0,
+                shadowOffsetX: 0,
+                shadowOffsetY: 0,
+                color: '#fff'
             }
         },
         backgroundColor: '#31373E',
@@ -610,7 +608,7 @@ onMounted(()=>{
         grid: {
             left: '3%',
             right: '4%',
-            bottom: '6%',
+            bottom: '3%',
             containLabel: true
         },
         xAxis: {
@@ -620,7 +618,7 @@ onMounted(()=>{
         }),
         axisLine: {
             lineStyle: {
-            color: 'rgba(255,255,255,0.1)'
+                color: 'rgba(255,255,255,0.1)'
             }
         },
 

@@ -157,17 +157,17 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex items-center justify-between mb-[0.36rem]">
+                            <div class="flex items-center justify-between">
                                 <div class="text-[0.6rem] font-[600]" :class="true ? 'text-up' : 'text-down'">
                                     {{ info.returnrate > 0 ? '+' + info.returnrate : info.returnrate }}%
                                 </div>
-                                <!-- <div class="flex items-center">
-                                    <div class="text-[0.24rem] text-color mr-[0.1rem]">{{ $t('copy.copy_order_time1') }}
+                                <div class="flex items-center">
+                                    <div class="text-[0.24rem] text-color mr-[0.2rem]">{{ $t('copy.copy_order_time1') }}
                                     </div>
                                     <div class="w-[0.32rem] h-[0.32rem]">
                                         <img v-lazy="getStaticImgUrl('static/img/common/down.svg')" alt="" />
                                     </div>
-                                </div> -->
+                                </div>
                             </div>
                             <div class="flex flex-col">
                                 <FollowDataCharts />
