@@ -26,7 +26,7 @@
       >
       </Tab>
     </Tabs>
-    <div class="min-h-[10rem] mt-[0.32rem]" :class="from == 'order' ? 'h-[11.2rem] pb-[1rem] overflow-auto'  : ''">
+    <div class="min-h-[10rem] mt-[0.32rem]" >
       <UnLogin
         v-if="!isLoading && !list.length && !token"
         @loginfinish="getList()"

@@ -44,12 +44,6 @@
         <div
           ref="orderListRef"
           class="order_list mt-[0.2rem]"
-          :class="
-            from == 'order'
-              ? 'h-[9rem] overflow-auto pb-[0.4rem]'
-             
-              : ''
-          "
         >
           <NoData v-if="!orderList.length" />
           <OrderList
@@ -66,13 +60,6 @@
       >
         <div
           class="mt-[0.2rem]"
-          :class="
-            from == 'order'
-              ? 'h-[9rem] overflow-auto pb-[0.4rem]'
-              : from == 'trade'
-              ? 'h-[9.2rem] overflow-auto'
-              : ''
-          "
         >
           <NoData v-if="!myOrderList.length" />
           <OrderList :list="myOrderList" :type="'redeem'" />

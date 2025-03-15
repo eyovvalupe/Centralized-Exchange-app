@@ -1,10 +1,8 @@
 <template>
   <div
-    class=""
-    :class="[
-      from == 'order' ? '' : 'pt-[0.32rem] px-[0.32rem]',
-    ]"
-  >
+    class="my_follow_list"
+    :class="from == 'order' ? 'py-[0.32rem]' : 'p-[0.32rem]'">
+  
     <div
       class="my-total"
       :class="[props.from == 'trade' ? 'bg-white2' : 'bg-color3']"
@@ -49,22 +47,21 @@
             </Tab> -->
       </Tabs>
     </div>
-    <div :class="from == 'order' ? 'h-[9rem] overflow-auto pb-[0.4rem]' : ''">
-      <div class="list-i" v-if="myFollowList.length">
-        <MyFollowItem
-          :from="from"
-          @openInfo="openInfo"
-          :item="item"
-          v-for="(item, i) in myFollowList"
-          :key="i"
-          :showDetail="false"
-        />
-      </div>
-      <div class="" v-if="!token">
-        <UnLogin />
-      </div>
-      <NoData v-else-if="!myFollowList.length" />
+   
+    <div class="list-i" v-if="myFollowList.length">
+      <MyFollowItem
+        :from="from"
+        @openInfo="openInfo"
+        :item="item"
+        v-for="(item, i) in myFollowList"
+        :key="i"
+        :showDetail="false"
+      />
     </div>
+    <div class="" v-if="!token">
+      <UnLogin />
+    </div>
+    <NoData v-else-if="!myFollowList.length" />
 
     <!-- 详情 -->
     <Popup
@@ -127,6 +124,10 @@
   });
 </script>
 <style lang="less" scoped>
+.my_follow_list {
+  height: 100%;
+  overflow-y: auto;
+  box-sizing: border-box;
   .list-i {
     margin-bottom: 0.24rem;
   }
@@ -189,4 +190,5 @@
       }
     }
   }
+}
 </style>

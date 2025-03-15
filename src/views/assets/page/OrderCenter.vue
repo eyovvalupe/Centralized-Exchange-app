@@ -63,13 +63,13 @@
             :tabs="[t('跟单'), t('DeFi借币'), t('质押挖矿'), t('IPO')]"
             @change="changeActiveTab1(activeFinanceTab)"
           />
-          <div class="trade_order_tab pt-[0.4rem]" v-if="activeFinanceTab == 0">
+          <div class="trade_order_tab finance-tab" v-if="activeFinanceTab == 0">
             <CopyOrders :from="'order'" />
           </div>
-          <div class="trade_order_tab pt-[0.08rem]" v-if="activeFinanceTab == 1">
+          <div class="trade_order_tab finance-tab" v-if="activeFinanceTab == 1">
             <PledgeOrder :from="'order'" />
           </div>
-          <div class="trade_order_tab pt-[0.08rem]" v-if="activeFinanceTab == 2">
+          <div class="trade_order_tab finance-tab" v-if="activeFinanceTab == 2">
             <Order :from="'order'" />
           </div>
           <div class="trade_order_tab pt-[0.08rem]" v-if="activeFinanceTab == 3">
@@ -181,6 +181,11 @@ watch(tradeOrderTab, (val) => {
     .tabs {
       padding: 0 !important;
     }
+  }
+  .finance-tab{
+    height: calc(var(--vh) * 100 - 4.56rem);
+    overflow-y: auto;
+    box-sizing: border-box;
   }
 }
 </style>
