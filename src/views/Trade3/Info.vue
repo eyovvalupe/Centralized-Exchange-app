@@ -1090,7 +1090,6 @@ onActivated(() => {
   }, 500);
 
   setTimeout(() => {
-    console.error('active监听到', route.query.tradeType)
     if (!route.query.tradeType) {
       router.replace({
         name: 'tradeInfo',

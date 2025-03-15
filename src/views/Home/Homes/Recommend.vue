@@ -8,6 +8,7 @@
             <Tab :name="6" :title="'股票'">
                 <StockList :handleClick="props.innerPage ? handleClick : null" v-if="loaded && activeTab == 6" />
             </Tab>
+
             <!-- 现货 -->
             <Tab :name="1" :title="t('common.spot')">
                 <div v-if="loaded && activeTab == 1" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
@@ -22,7 +23,7 @@
                 </div>
             </Tab>
             <!-- 合约 -->
-            <Tab :name="2" :title="$t('common.crypto')">
+            <Tab :name="2" :title="$t('加密货币合约')">
                 <div v-if="loaded && activeTab == 2" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
                     :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 2">
@@ -31,6 +32,19 @@
                             :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
                             :showIcon="true" :item="item" v-for="(item, i) in filterList(showList)" :key="'c_' + i"
                             menuType="constract" marketType="crypto" page="home" />
+                    </div>
+                </div>
+            </Tab>
+             <!-- 交易机器人 -->
+             <Tab :name="3" :title="$t('common.option')">
+                <div v-if="loaded && activeTab == 3" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
+                    :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
+                    <div style="padding-bottom: 0.2rem;" v-if="activeTab == 3">
+                        <StockItem :handleClick="props.innerPage ? handleClick : null"
+                            :page="from == 'home' ? 'home' : ''" :padding="true"
+                            :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
+                            :showIcon="false" :item="item" v-for="(item, i) in filterList(showList)" :key="'c_' + i"
+                            menuType="ai" marketType="ai" page="home" />
                     </div>
                 </div>
             </Tab>
@@ -60,19 +74,7 @@
                     </div>
                 </div>
             </Tab>
-            <!-- 交易机器人 -->
-            <Tab :name="3" :title="$t('common.option')">
-                <div v-if="loaded && activeTab == 3" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
-                    <div style="padding-bottom: 0.2rem;" v-if="activeTab == 3">
-                        <StockItem :handleClick="props.innerPage ? handleClick : null"
-                            :page="from == 'home' ? 'home' : ''" :padding="true"
-                            :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
-                            :showIcon="false" :item="item" v-for="(item, i) in filterList(showList)" :key="'c_' + i"
-                            menuType="ai" marketType="ai" page="home" />
-                    </div>
-                </div>
-            </Tab>
+           
             <!-- ETF -->
             <!-- <Tab :name="4" :title="'ETF'">
                 <div class="pl-[0.32rem] pr-[0.24rem]" :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']">
@@ -122,7 +124,7 @@ const props = defineProps({
     }
 })
 
-const activeTab = ref(60);
+const activeTab = ref(6);
 const setTab = () => {
     if (!token.value) {
         activeTab.value = 6
