@@ -124,7 +124,7 @@ const props = defineProps({
     }
 })
 
-const activeTab = ref(60);
+const activeTab = ref(6);
 const setTab = () => {
     if (!token.value) {
         activeTab.value = 6
