@@ -37,7 +37,6 @@
                             <div class="info-box pb-[0.12rem]">
                                 <div class="flex justify-between mb-[0.48rem]">
                                     <div class="flex ml-[0.28rem] mt-[0.28rem] items-center">
-                                    
                                         <div class="text-[0.4rem]">{{ $t('copy.copy_order_status') }}
                                         </div>
                                     </div>
@@ -171,20 +170,7 @@
                                 </div> -->
                             </div>
                             <div class="flex flex-col">
-                                <div class="flex w-full">
-                                    <div class="flex flex-col mt-[0.2rem] mr-[0.2rem]">
-                                        <div class="w-[1rem] text-[0.24rem] text-color2 mb-[0.38rem]"
-                                            v-for="(item, i) in percentageAxios">
-                                            {{ item + '%' }}
-                                        </div>
-                                    </div>
-                                    <div class="flex-1">
-                                        <img v-lazy="getStaticImgUrl('static/img/follow/chart.svg')" alt="" />
-                                    </div>
-                                </div>
-                                <div class="flex pl-[1.2rem] justify-between">
-                                    <div class="text-[0.24rem] text-color2" v-for="(item, i) in dateAxios">{{ item }}</div>
-                                </div>
+                                <FollowDataCharts />
                             </div>
                         </div>
 
@@ -296,8 +282,7 @@
             </Tabs>
 
             <div class="w-full max-width fixed bg-[rgba(26_27_36_0.30)] left-0 right-0 mx-auto bottom-0 h-[1.6rem] rounded-tl-[0.32rem] rounded-tr-[0.32rem] px-[0.28rem] pt-[0.2rem]" v-if="active == 0" style="backdrop-filter: blur(25px);box-shadow: 0px -1px 1px 0px rgba(255, 255, 255, 0.10);">
-                <div class="w-full h-[0.92rem] rounded-[1.3rem] ripple-btn text-[0.36rem] font-semibold flex items-center justify-center"
-                    @click="plus" style="background-color: var(--ex-primary-color);">{{ $t('copy.copy_tab_tab1')
+                <div class="w-full h-[0.92rem] rounded-[1.3rem] ripple-btn text-[0.36rem] font-semibold flex items-center justify-center" @click="plus" style="background-color: var(--ex-primary-color);">{{ $t('copy.copy_tab_tab1')
                     }}</div>
             </div>
             <!-- 跟单弹窗 -->
@@ -328,7 +313,7 @@ import { useI18n } from "vue-i18n";
 import { isEmpty } from "@/utils/isEmpty";
 import store from "@/store";
 import { getPoints } from "@/utils/index.js"
-import follow from "@/store/follow.js";
+import FollowDataCharts from '../components/FollowDataCharts.vue'
 const points = getPoints('id-123456', 100)
 const showInfo = ref(false)
 const token = computed(() => store.state.token)
