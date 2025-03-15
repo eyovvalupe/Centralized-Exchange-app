@@ -169,7 +169,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="flex flex-col">
+                            <div class="flex flex-col relative z-[1]">
                                 <FollowDataCharts />
                             </div>
                         </div>
@@ -281,7 +281,7 @@
                 </Tab>
             </Tabs>
 
-            <div class="w-full max-width fixed bg-[rgba(26_27_36_0.30)] left-0 right-0 mx-auto bottom-0 h-[1.6rem] rounded-tl-[0.32rem] rounded-tr-[0.32rem] px-[0.28rem] pt-[0.2rem]" v-if="active == 0" style="backdrop-filter: blur(25px);box-shadow: 0px -1px 1px 0px rgba(255, 255, 255, 0.10);">
+            <div class="w-full max-width fixed bg-[rgba(26_27_36_0.30)] left-0 right-0 mx-auto bottom-0 h-[1.6rem] rounded-tl-[0.32rem] rounded-tr-[0.32rem] px-[0.28rem] pt-[0.2rem] z-[100]" v-if="active == 0" style="backdrop-filter: blur(25px);box-shadow: 0px -1px 1px 0px rgba(255, 255, 255, 0.10);">
                 <div class="w-full h-[0.92rem] rounded-[1.3rem] ripple-btn text-[0.36rem] font-semibold flex items-center justify-center" @click="plus" style="background-color: var(--ex-primary-color);">{{ $t('copy.copy_tab_tab1')
                     }}</div>
             </div>
