@@ -8,7 +8,7 @@
     <div class="item_box mt-[0.32rem]">
       <div class="item_box_right">
         <FormItem :hasLT="true" :hasScroll="true" :hasBot="true" :placeholder="t('finance.defi_borrow_stake_amount')"
-          v-model="numb" @input="changePercent2" @btnClick="onSliderChange2(100)" class="yz-form-item"
+          v-model="numb" :errStatus="token && numb > walletAmount ? true : false" @input="changePercent2" @btnClick="onSliderChange2(100)" class="yz-form-item"
           input-type="number">
 
           <template #lt>
@@ -28,7 +28,7 @@
           </template>
           <template #scroll>
             <!-- 拖动 -->
-            <SlideContainer v-model="sliderValue2" @change="onSliderChange2" />
+            <SlideContainer :status="token && numb > walletAmount ? 'error' : ''"  v-model="sliderValue2" @change="onSliderChange2" />
 
           </template>
           <template #bottom-con>
@@ -41,6 +41,7 @@
             </div>
           </template>
         </FormItem>
+        <div class="text-error mt-[0.2rem]" v-if="token && numb > walletAmount">可用金额不足</div>
       </div>
     </div>
     <!-- 可借数量 -->
@@ -100,7 +101,10 @@
         {{ t('finance.defi_borrow_agreement1') }}<span>“{{ t('finance.defi_borrow_agreement2') }}”</span>
       </label>
 
-      <Button type="primary" class="submit ripple-btn" @click="openConfirm">
+      <Button type="primary" class="submit ripple-btn" v-if="(!token && numb > 0) || (token && numb > 0 && numb <= walletAmount)" @click="openConfirm">
+        <span class="text-[0.32rem] font-bold">{{ t('finance.defi_borrow_now') }}</span>
+      </Button>
+      <Button type="primary" class="submit opacity-30" v-else>
         <span class="text-[0.32rem] font-bold">{{ t('finance.defi_borrow_now') }}</span>
       </Button>
     </div>
@@ -207,6 +211,9 @@ const { t } = useI18n();
 const visible = ref(false)
 const checked = ref(true)
 const walletAmount = computed(() => {
+  if(!token.value){
+    return '--'
+  }
   // 钱包余额
   const target = store.state.wallet.find(
     (item) => item.currency == currIn.value.currency
