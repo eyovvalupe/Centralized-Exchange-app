@@ -735,7 +735,7 @@
       span {
         border-radius: 0.7rem;
         display: block;
-        border: 1px solid var(--ex-border-color);
+        border: 1px solid var(--ex-bg-white2);
         display: flex;
         align-items: center;
         justify-content: center;
@@ -953,7 +953,7 @@
       .van-tabs__nav {
         .van-tab--active {
           &::after {
-            background-image: url('static/img/common/active_tab2.svg');
+            background-image: url('/static/img/common/active_tab2.svg');
           }
         }
       }

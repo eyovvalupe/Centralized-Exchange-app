@@ -490,7 +490,7 @@ import OpeningContract from '@/views/Trade2/contract/Opening.vue';
 import PositionsContract from '@/views/Trade2/contract/Positions.vue';
 import InquireContract from '@/views/Trade2/contract/Inquire.vue';
 // 交易机器人
-import OpeningAi from '@/views/Trade2/ai/Opening1.vue';
+import OpeningAi from '@/views/Trade2/ai/Opening.vue';
 import PositionsAi from '@/views/Trade2/ai/Positions.vue';
 import InquireAi from '@/views/Trade2/ai/Inquire.vue';
 // 详情
