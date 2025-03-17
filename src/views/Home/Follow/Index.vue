@@ -4,12 +4,16 @@
         <Top :title="$t('copy.copy_ground')" v-if="from != 'finance'"></Top>
 
         <div class="pt-[0.32rem] px-[0.32rem] ">
-            <NoData v-if="!loading && !showList.length" />
-            <div class="list-i" v-for="(item, i) in showList" :key="i">
-                <FollowItem :item="item" :showDetail="true" @follow="onFollow" />
+            <NoData v-if="!loading && !followList.length" />
+            <div v-else>
+                <div class="list-i" v-for="(item, i) in followList" :key="i">
+                    <FollowItem :item="item" :showDetail="true" @follow="onFollow" />
+                </div>
             </div>
         </div>
-        <LoadingMore :loading="loading" :finish="finish" v-if="(finish && showList.length) || !finish" />
+        <div class="py-[0.24rem]">
+            <LoadingMore :loading="loading" :finish="finish" v-if="(finish && followList.length) || !finish" />
+        </div>
     </div>
 
     <!-- 详情 -->
@@ -53,14 +57,6 @@ const onChange = (val) => {
     activeTab.value = val
 }
 const token = computed(() => store.state.token)
-// 我的跟单统计
-const followList = computed(() => store.state.followList)
-const followList2 = ref([])
-const showList = computed(() => {
-    return [...followList.value, ...followList2.value]
-})
-const loading = ref(false)
-const finish = ref(false)
 
 // 跟单
 const showPlus = ref(false)
@@ -80,29 +76,34 @@ const onSuccess = ()=>{
     showInfo.value = true
 }
 
+// 我的跟单统计
+const followList = ref([])
+
+const loading = ref(false)
+const finish = ref(false)
+
 // 获取从第二页开始的数据
-const page = ref(2)
+const page = ref(1)
 const getMoreData = () => {
-    if (activeTab.value == 0) { // 跟单
-        if (loading.value || finish.value) return;
-        loading.value = true;
-        _copyList({
-            page: page.value
-        })
-            .then((res) => {
-                page.value++
-                res.data = res.data || [];
-                followList2.value.concat(res.data)
-                if (!res.data.length) {
-                    finish.value = true;
-                }
-            })
-            .finally(() => {
-                setTimeout(() => {
-                    loading.value = false;
-                }, 300)
-            });
-    }
+    if (loading.value || finish.value) return;
+    loading.value = true;
+    _copyList({
+        page: page.value
+    })
+    .then((res) => {
+        res.data = res.data || [];
+        followList.value = page.value == 1 ? res.data : followList.value.concat(res.data)
+        page.value++
+        
+        if (!res.data.length) {
+            finish.value = true;
+        }
+    })
+    .finally(() => {
+        setTimeout(() => {
+            loading.value = false;
+        }, 300)
+    });
 }
 
 
@@ -117,7 +118,8 @@ const scrolHandle = () => {
     }
 };
 const init = ()=>{
-    store.dispatch('updateFollowList')
+    page.value = 1
+    getMoreData()
     if (token.value) {
         store.dispatch('updateMyFollowList')
     }
