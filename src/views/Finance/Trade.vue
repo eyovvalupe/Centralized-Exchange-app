@@ -35,27 +35,27 @@
                 <div class="w-full flex flex-col">
                     <div class="w-full flex justify-between mb-[0.2rem]">
                         <div class="text-color3">{{ t('finance.portfolio_mining_operation') }}</div>
-                        <div>{{ stakeInfo.days + t('Days') }}</div>
+                        <div class="w-[4.8rem] text-right">{{ stakeInfo.days + t('Days') }}</div>
                     </div>
                     <div class="w-full flex justify-between mb-[0.2rem]">
                         <div class="text-color3">{{ t('finance.portfolio_yield') }}</div>
-                        <div>{{ stakeInfo.returnrate ? stakeInfo.returnrate.split(',')[0] + '-' +
+                        <div class="w-[4.8rem] text-right">{{ stakeInfo.returnrate ? stakeInfo.returnrate.split(',')[0] + '-' +
                             stakeInfo.returnrate.split(',')[1] + '%' : '--' }}</div>
                     </div>
                     <div class="w-full flex justify-between mb-[0.2rem]">
                         <div class="text-color3">{{ t('finance.portfolio_mining_noti_est') }}</div>
-                        <div>{{ stakeInfo.returnrate ? (Number(stakeInfo.returnrate.split(',')[0]) *
-                            form1.amount).toFixed(2) + '-' + (Number(stakeInfo.returnrate.split(',')[1]) *
-                                form1.amount).toFixed(2) : '--' }}</div>
+                        <div class="w-[4.8rem] text-right">{{ stakeInfo.returnrate ? (Number(stakeInfo.returnrate.split(',')[0]) *
+                            form.amount).toFixed(2) + '-' + (Number(stakeInfo.returnrate.split(',')[1]) *
+                                form.amount).toFixed(2) : '--' }}<span class="text-[0.24rem] ml-[0.12rem]">USDT</span></div>
                     </div>
                     <div class="w-full flex justify-between mb-[0.2rem]">
                         <div class="text-color3">{{ t('finance.portfolio_mining_investment') }}</div>
-                        <div>{{ stakeInfo.limits ? stakeInfo.limits.split(',')[0] + '-' + stakeInfo.limits.split(',')[1]
-                            : '--' }}</div>
+                        <div class="w-[4.8rem] text-right">{{ stakeInfo.limits ? stakeInfo.limits.split(',')[0] + '-' + stakeInfo.limits.split(',')[1]
+                            : '--' }}<span class="text-[0.24rem] ml-[0.12rem]">USDT</span></div>
                     </div>
                     <div class="w-full flex justify-between">
                         <div class="text-color3">{{ t('finance.portfolio_mining_fee') }}</div>
-                        <div>{{ stakeInfo.fee ? stakeInfo.fee : '--' }}</div>
+                        <div class="w-[4rem] text-right">{{ stakeInfo.fee ? stakeInfo.fee : '--' }}<span class="text-[0.24rem] ml-[0.12rem]">USDT</span></div>
                     </div>
                 </div>
             </div>
@@ -67,18 +67,21 @@
                         t('finance.portfolio_mining_header') }}</div>
                 </div>
                 <div class="w-full relative mb-[0.32rem]">
-                    <FormItem  inputHeight="1.12rem" hasScroll :from="'toTop'"
-                        :placeholder="t('投资额')" :max="maxStockNum" v-model="form1.amount"
+                    <FormItem :errStatus="sliderStatus == 'error'" inputHeight="1.12rem" hasScroll :from="'toTop'"
+                        :placeholder="t('投资额')" :max="maxStockNum" v-model="form.amount"
                         @change="changePercent" input-type="number" @input="changePercent">
 
                         <template #scroll>
-                            <SlideContainer :status="amountStatus" v-model="sliderValue" @change="onSliderChange" />
+                            <SlideContainer :status="sliderStatus" v-model="sliderValue" @change="onSliderChange" />
                         </template>
                        
                     </FormItem>
 
                 </div>
-                <Button class="submit ripple-btn" @click="openConfirm"><span class="text-[0.36rem]">{{
+                <Button class="submit ripple-btn" v-if="sliderStatus == 'success'" round @click="openConfirm"><span class="text-[0.36rem]">{{
+                    t('finance.portfolio_mining_btn')
+                        }}</span></Button>
+                <Button class="submit opacity-30" round v-else><span class="text-[0.36rem]">{{
                     t('finance.portfolio_mining_btn')
                         }}</span></Button>
             </div>
@@ -142,8 +145,8 @@
                                 </div>
                                 <div class="text-[0.28rem]">{{ stakeInfo.returnrate ?
                                     (Number(stakeInfo.returnrate.split(',')[0]) *
-                                        form1.amount).toFixed(2) + '-' + (Number(stakeInfo.returnrate.split(',')[1]) *
-                                            form1.amount).toFixed(2) : '--' }}<span class="text-[0.24rem]">&nbsp;USDT</span>
+                                        form.amount).toFixed(2) + '-' + (Number(stakeInfo.returnrate.split(',')[1]) *
+                                            form.amount).toFixed(2) : '--' }}<span class="text-[0.24rem]">&nbsp;USDT</span>
                                 </div>
                             </div>
                         </div>
@@ -153,10 +156,10 @@
                         <div class="w-full flex justify-center items-center h-[0.36rem] mb-[0.2rem] text-color2">{{
                             t('trade.stock_opening_pay') }}<span
                                 class="text-[0.36rem] text-white font-semibold">&nbsp;{{
-                                    form1.amount }}</span></div>
+                                    form.amount }}</span></div>
                         <div class="w-full flex justify-center items-center text-color2 text-[0.24rem]">{{
                             t('finance.portfolio_mining_header')
-                            }}<span class="text-white">&nbsp;{{ form1.amount }}</span><span>&nbsp;+&nbsp;</span><span>{{
+                            }}<span class="text-white">&nbsp;{{ form.amount }}</span><span>&nbsp;+&nbsp;</span><span>{{
                                 t('finance.portfolio_mining_noti_fee')
                                 }}</span><span class="text-white">&nbsp;{{ stakeInfo.fee }}</span></div>
                     </div>
@@ -167,7 +170,7 @@
                     v-if="userInfo.role != 'guest'">
                     <div class="text-[0.28rem] leading-[0.44rem] mb-[0.2rem]">{{ t('trade.stock_opening_trade_pw') }}</div>
                     <div class="rounded-[0.32rem] bg-white2 border-transparent border-[1px] overflow-hidden mb-[0.6rem] relative item">
-                        <input class="w-full h-[1.2rem] ipt px-[0.32rem] text-[0.32rem]" v-model="form1.safeword"
+                        <input class="w-full h-[1.2rem] ipt px-[0.32rem] text-[0.32rem]" v-model="form.safeword"
                             :type="showPw ? 'text' : 'password'" :placeholder="t('trade.stock_opening_trade_pw_placeholder')" />
                         <div class="w-[0.4rem] h-[0.4rem] absolute top-[0.36rem] right-[0.24rem]" v-if="!showPw"
                             @click="showPw = true">
@@ -180,10 +183,12 @@
                     </div>
                 </div>
                 <div class="px-[0.32rem]">
+                    
                     <Button :loading="submitLoading"
                     style="width: 100%; height: 1.12rem; background-color: var(--ex-primary-color); border-radius: 1.3rem;"
                     class="ripple-btn" @click="submit"><span class="text-[0.36rem]">{{ t('trade.stock_opening_confirm')
                         }}</span></Button>
+                   
                 </div>
             </div>
         </BottomPopup>
@@ -197,44 +202,94 @@ import { getStaticImgUrl } from "@/utils/index.js";
 import { Button, showToast, showConfirmDialog, Loading } from 'vant';
 import Decimal from "decimal.js";
 import BottomPopup from '@/components/BottomPopup.vue';
-import { computed, onMounted, watch } from 'vue';
+import { computed, nextTick, onMounted, watch } from 'vue';
 import SlideContainer from '@/components/SlideContainer.vue';
 import FormItem from '@/components/Form/FormItem.vue';
-import { useRoute } from 'vue-router';
 import { _realtime, _stake, _stakeGet } from '@/api/api';
 import store from '@/store';
 import router from '@/router';
 import { isEmpty } from '@/utils/isEmpty';
 
-
-const route = useRoute();
 const { t } = useI18n();
 
-const value = ref(0)
 const showPw = ref(false)
 const showConfirm = ref(false)
 const loaded = ref(false)
-const form1 = ref({
+const form = ref({
     id: "",
     amount: "",
     token: "",
     safeword: ""
 });
 
-const amountStatus = ref('normal');
-
+const goDeposit = () => {
+    if(!token.value){
+        store.commit('setIsLoginOpen', true)
+        return;
+    }
+    showConfirmDialog({
+        title: "提示",
+        message: "即将跳转到充值，将中断当前业务，是否继续？",
+    }).then(() => {
+        router.push({
+            name: 'topUpCrypto',
+            query: {
+                currency: 'USDT'
+            }
+        })
+    })
+    
+}
+const goTransfer = () => {
+    if(!token.value){
+        store.commit('setIsLoginOpen', true)
+        return;
+    }
+    showConfirmDialog({
+        title: "提示",
+        message: "即将跳转到划转，将中断当前业务，是否继续？",
+    }).then(() => {
+        router.push({
+            name: 'transfer',
+            query: {
+                to: 'USDT'
+            }
+        })
+    })
+    
+}
 const token = computed(() => store.state.token)
 const sessionToken = computed(() => store.state.sessionToken)
 const userInfo = computed(() => store.state.userInfo)
 const maxStockNum = computed(() => {
-
-    const usdtWallet = store.state.wallet.find(item => item.name == 'USDT')
-    return usdtWallet ? usdtWallet.amount : ''
+    if(!token.value){
+        return '--'
+    }
+    if (store.state.wallet.length) {
+        const usdtWallet = store.state.wallet.find(item => item.name == 'USDT')
+        return usdtWallet.amount
+    }
+    return '--'
 })
 const itemList = computed(() => {
     if (!isEmpty(stakeInfo.value)) return stakeInfo.value.items
     else return [];
 })
+
+const sliderStatus = computed(()=>{
+    if (!form.value.amount) {
+        return 'normal'
+      
+    }
+    if (form.value.amount < minAmount.value || form.value.amount > maxAmount.value) { 
+        return 'error'    
+    }
+    if(token.value && form.value.amount > maxStockNum.value){
+        return 'error' 
+    }
+    return 'success'
+})
+
 const loadingRealtime = ref(false)
 const itemsMap = ref({})
 const getItemsMapData = async () => {
@@ -256,7 +311,6 @@ const getItemsMapData = async () => {
 const stakeId = computed(() => store.state.stakeId);
 
 const sliderValue = ref(0);
-const step = ref(1)
 
 const maxAmount = computed(() => {
     if (stakeInfo.value.limits) {
@@ -270,48 +324,13 @@ const minAmount = computed(() => {
     } else 0
 })
 
-const goDeposit = () => {
-    showConfirmDialog({
-        title: "提示",
-        message: "即将跳转到充值，将中断当前业务，是否继续？",
-        theme: 'round-button'
-    }).then(() => {
-        router.push({
-            name: 'topUpCrypto',
-            query: {
-                currency: 'USDT'
-            }
-        })
-    })
-    
-}
-const goTransfer = () => {
-    showConfirmDialog({
-        title: "提示",
-        message: "即将跳转到划转，将中断当前业务，是否继续？",
-        theme: 'round-button'
-    }).then(() => {
-        router.push({
-            name: 'transfer',
-            query: {
-                to: 'USDT'
-            }
-        })
-    })
-    
-}
-
 const openConfirm = () => {
     if (!token.value) {
         showToast('请先登录再质押')
-        setTimeout(() => {
-            router.push({
-                name: 'login'
-            })
-        }, 50);
+        store.commit('setIsLoginOpen', true)
         return;
     }
-    if (amountStatus.value != 'success') {
+    if (sliderStatus.value != 'success') {
         showToast('请输入限额范围');
         return;
     }
@@ -319,43 +338,35 @@ const openConfirm = () => {
 }
 
 const onSliderChange = (newValue) => {
-    if (!maxStockNum.value) {
-        sliderValue.value = 0
-        form1.value.amount = ''
+    if (!token.value || maxStockNum.value == '--') {
+        nextTick(()=>{
+            sliderValue.value = 0;
+        })
         return;
     }
-    if ((newValue * maxStockNum.value / 100) < minAmount.value || (newValue * maxStockNum.value / 100) > maxAmount.value) { amountStatus.value = 'error' }
-    else amountStatus.value = 'success';
+    
     sliderValue.value = newValue;
-    if (maxStockNum.value == "--") return (sliderValue.value = 0);
-    let v = new Decimal(maxStockNum.value).mul(newValue).div(100);
-    v = v.sub(v.mod(step.value));
-    form1.value.amount = v.toNumber();
-    setTimeout(() => {
-        changePercent();
-    }, 0);
-};
+    
+    form.value.amount = (Number(maxStockNum.value) * Number(newValue) / 100).toFixed(2);
+    if(form.value.amount <= 0){
+        form.value.amount = ''
+    }
+}
 
 const changePercent = () => {
-    if (!maxStockNum.value) {
-        sliderValue.value = 0
-        form1.value.amount = ''
+    if (!token.value) {
+        sliderValue.value = 0;
         return;
     }
-    if (maxStockNum.value == "--" || !form1.value.amount)
-        return (sliderValue.value = 0);
-    if (form1.value.amount < minAmount.value || form1.value.amount > maxAmount.value) { amountStatus.value = 'error' }
-    else amountStatus.value = 'success';
-    let v = new Decimal(form1.value.amount);
-    form1.value.amount = v.sub(v.mod(step.value));
-    let p = new Decimal(form1.value.amount)
-        .div(maxStockNum.value)
-        .mul(100)
-        .toNumber();
-    if (p < 0) p = 0;
-    if (p > 100) p = 100;
+    if (maxStockNum.value == '--' || !form.value.amount) {
+        sliderValue.value = 0
+        return
+    }
+    let v = Number(form.value.amount);
+    let p = (v / maxStockNum.value * 100).toFixed(0);
+    p = Math.min(100,p)
     sliderValue.value = Number(p);
-};
+}
 
 const stakeInfo = ref({})
 
@@ -373,39 +384,41 @@ const getStakeData = async () => {
 }
 
 const resetForm = () => {
-    form1.value.amount = ''
-    form1.value.safeword = ''
+    form.value.amount = ''
+    form.value.safeword = ''
+    sliderValue.value = 0
 }
 const submitLoading = ref(false)
 const submit = () => {
     if (submitLoading.value) return;
     if (userInfo.value.role == 'guest') {
-        form1.value.safeword = '000000'
+        form.value.safeword = '000000'
     }
-    if (!form1.value.safeword || !Number(form1.value.amount)) {
+    if (!form.value.safeword || !Number(form.value.amount)) {
         showToast(t('trade.ai_opening_trade_password'))
+        return
     }
     submitLoading.value = true;
     _stake({
         id: stakeId.value,
-        amount: Number(form1.value.amount),
+        amount: Number(form.value.amount),
         token: sessionToken.value,
-        safeword: form1.value.safeword
+        safeword: form.value.safeword
     })
-        .then(res => {
-            if (res.code == 200) {
-                console.log("then data ==========>", res.data)
-                showConfirm.value = false
-                resetForm()
-                showToast('申购成功')
-            }
-        })
-        .catch(err => console.error(err))
-        .finally(() => {
-            submitLoading.value = false;
-            getSessionToken();
-            store.dispatch("updateWallet");
-        })
+    .then(res => {
+        if (res.code == 200) {
+            console.log("then data ==========>", res.data)
+            showConfirm.value = false
+            resetForm()
+            showToast('申购成功')
+        }
+    })
+    .catch(err => console.error(err))
+    .finally(() => {
+        submitLoading.value = false;
+        getSessionToken();
+        store.dispatch("updateWallet");
+    })
 }
 const getSessionToken = () => {
     store.dispatch("updateSessionToken");

@@ -1,7 +1,7 @@
 <template>
     <!-- 拖动 -->
     <div style="width: 100%;">
-        <div class="slider-container">
+        <div class="slider-container" :class="['slider-container--'+status]">
             <Slider class="slider-dom" v-model="sliderValue" bar-height="0.28rem" :active-color="statusMap[status]"
                 inactive-color="var(--ex-bg-white2)" @change="onSliderChange">
                 <template #button>
@@ -70,9 +70,17 @@ const onSliderChange = (newValue) => {
         // width: calc(100% - 1rem);
     }
 
-
 }
-
+.slider-container--error{
+    :deep(.slider-custom-num) {
+        background: var(--ex-error-color) !important;
+    }
+}
+.slider-container--success{
+    :deep(.slider-custom-num) {
+        background: var(--ex-success-color) !important;
+    }
+}
 .percentages {
     display: flex;
     justify-content: space-between;
