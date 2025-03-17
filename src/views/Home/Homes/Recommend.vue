@@ -35,8 +35,8 @@
                     </div>
                 </div>
             </Tab>
-             <!-- 交易机器人 -->
-             <Tab :name="3" :title="$t('common.option')">
+            <!-- 交易机器人 -->
+            <Tab :name="3" :title="$t('common.option')">
                 <div v-if="loaded && activeTab == 3" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
                     :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 3">
@@ -74,7 +74,7 @@
                     </div>
                 </div>
             </Tab>
-           
+
             <!-- ETF -->
             <!-- <Tab :name="4" :title="'ETF'">
                 <div class="pl-[0.32rem] pr-[0.24rem]" :class="['home-tab-box-' + props.from, 'mt-[0.32rem]']">
@@ -509,6 +509,11 @@ const filterList = list => {
             color: var(--ex-text-color2);
             min-width: 1.2rem;
             font-size: 0.28rem;
+            padding: 0.12rem 0.16rem;
+            border-radius: 1rem;
+            height: 0.76rem;
+            margin-right: 0.12rem;
+            background-color: var(--ex-bg-white1);
         }
 
         .van-tab--active {

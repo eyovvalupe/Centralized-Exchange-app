@@ -20,7 +20,8 @@
                 <div @click="jump('language')" class="icon icon2 ripple-btn" style="margin-right: 0.12rem;">
                     <img v-lazy="getStaticImgUrl('/static/home2/lang.svg')" alt="">
                 </div>
-                <div @click="openLeftMenu" class="icon icon2 ripple-btn transition" :class="{icon_active: showRightMenu}">
+                <div @click="openLeftMenu" class="icon icon2 ripple-btn transition"
+                    :class="{ icon_active: showRightMenu }">
                     <img v-lazy="getStaticImgUrl('/static/home2/menu.svg')" alt="">
                 </div>
             </div>
@@ -152,28 +153,6 @@
                 <div class="date">10/16 16:10</div>
             </div>
 
-            <!-- 交易机器人 -->
-            <div class="box" id="ai-box" v-show="marketAiList.length">
-                <div class="recommend-title" v-if="pageLoaded">
-                    <div class="wow slideInRight" style="flex: 1;" data-wow-duration="0.6s">交易机器人</div>
-                </div>
-
-                <div class="swiper-row" v-if="pageLoaded">
-                    <Swipe :loop="false" :width="sWidth">
-                        <SwipeItem v-for="(item, i) in marketAiList" :key="i">
-                            <div class="swiper-row-item">
-                                <AiItem :from="'home'" :item="item" style="width: 100%;" />
-                            </div>
-                        </SwipeItem>
-                        <template #indicator="{ active, total }">
-                            <Teleport to="#ai-box">
-                                <div class="custom-indicator2"><span>{{ active + 1 }}</span>/{{ total }}</div>
-                            </Teleport>
-                        </template>
-                    </Swipe>
-                </div>
-            </div>
-
             <!-- 跟单 -->
             <div class="box" id="follow-box" v-show="followList.length">
                 <div class="recommend-title" v-if="pageLoaded">
@@ -227,7 +206,7 @@
                 </div>
 
                 <!-- Tabs -->
-                <Recommend :from="'home'" :activated="activated" />
+                <Recommend v-if="activated" :from="'home'" :activated="activated" />
             </div>
 
             <!-- ad -->
@@ -362,7 +341,7 @@ let wowObj = {}
 onActivated(() => {
     store.commit("setMarketWatchKeys", []);
     activated.value = true;
-    subs();
+    // subs();
     setTimeout(() => {
         vidRef.value && vidRef.value.play()
     }, 100)
@@ -387,7 +366,7 @@ onMounted(() => {
     setTimeout(() => {
         pageLoaded.value = true
     }, 1000)
-    subs();
+    // subs();
     wowObj = new Wow({
         boxClass: 'wow',
         animateClass: 'animated',
