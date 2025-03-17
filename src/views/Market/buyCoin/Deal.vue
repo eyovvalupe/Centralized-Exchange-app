@@ -35,9 +35,9 @@
         </div>
       </div>
 
-      <template v-if="info.offset == 'buy'">
+      <div class="px-[0.32rem]" v-if="info.offset == 'buy'">
 
-        <div class="item mx-[0.32rem] bg-white2 rounded-[0.32rem] mt-[0.32rem] px-[0.28rem] pt-[0.36rem]">
+        <div class="item bg-white2 rounded-[0.32rem] mt-[0.32rem] px-[0.28rem] pt-[0.36rem]" :class="{'item--error':isErrAmount && amount != ''}">
           <div class="flex justify-between items-center">
             <div class="text-[0.3rem]">{{ t('market.market_buy_list_amount') }}</div>
             <div class="flex items-center justify-center rounded-[0.32rem]">
@@ -56,77 +56,76 @@
           </div>
     
         </div>
-
+        <div class="text-error mt-[0.2rem]" v-if="isErrAmount && amount != ''">{{ t('market.market_buy_optional_order_limit') }} {{ info.limitmin }}-{{ info.limitmax }}</div>
+        
         <div
-          class="flex justify-between items-center bg-white1 rounded-[0.4rem] h-[1.3rem] mt-[0.32rem] px-[0.3rem] text-[0.3rem] mx-[0.32rem]">
+          class="flex justify-between items-center bg-white1 rounded-[0.4rem] h-[1.3rem] mt-[0.32rem] px-[0.3rem] text-[0.3rem]">
           <span>{{ t('market.market_buy_list_pre_pay') }} </span>
-          <span><strong class="text-[0.4rem] mr-[0.16rem]">{{ showAmount }}</strong>
+          <span class=" flex items-center overflow-hidden"><strong class="text-[0.4rem] mr-[0.16rem]  max-w-[3.6rem] truncate">{{ showAmount }}</strong>
             {{ info.currWallet }}</span>
         </div>
         
-        <div class="mx-[0.32rem]">
-          <Button size="large" class="btn btn--buy bg-buy bg-buy-text-color ripple-btn" round :loading="loading" type="primary"
-          @click="goSubmit">
-          <span style="color: var(--ex-white);">{{
-            t('market.market_buy_fast_buy')
-          }}</span></Button>
-        </div>
-      </template>
+        <Button size="large" class="btn btn--buy bg-buy bg-buy-text-color ripple-btn" round :loading="loading" type="primary"
+        v-if="!isErrAmount"
+        @click="goSubmit">{{ t('market.market_buy_fast_buy')}}</Button>
+        <Button size="large" class="btn btn--buy opacity-30 bg-buy bg-buy-text-color" round type="primary"
+        v-else>{{ t('market.market_buy_fast_buy') }}</Button>
+      </div>
 
       <template v-else-if="info.offset == 'sell'">
         <!-- 卖出 -->
         <!-- 二层容器 -->
-
-        <div class="item bg-white2 mx-[0.32rem] rounded-[0.32rem] mt-[0.32rem]  pt-[0.36rem]">
-          <div class="px-[0.28rem]">
-            <div class="flex justify-between items-center">
-              <div class="text-[0.3rem]">{{ t('market.market_buy_list_amount') }}</div>
+        <div class=" mx-[0.32rem]">
+          <div class="item bg-white2 rounded-[0.32rem] mt-[0.32rem]  pt-[0.36rem]" :class="{'item--error':isErrAmount && amount != ''}">
+            <div class="px-[0.28rem]">
+              <div class="flex justify-between items-center">
+                <div class="text-[0.3rem]">{{ t('market.market_buy_list_amount') }}</div>
+                <div class="flex items-center justify-center">
+                  <span class="size-[0.52rem] mr-[0.16rem]" v-if="info.currCrypto">
+                    <CryptoIcon :name="info.currCrypto.toUpperCase()" />
+                  </span>
+                  {{ title }}{{ info.currCrypto }}
+                </div>
+              </div>
+              <div class="form_item">
+                <div class="flex-1">
+                  <input v-model="amount" placeholder="0" type="number" @blur="amountBlur" class="ipt" />
+                </div>
+                <!-- <div class="all" @click="amount = currWallet.amount > info.limitmax ? info.limitmax : currWallet.amount">{{ t('trade.stock_position_all') }}</div> -->
+                <span class="text-[0.3rem]">{{ info.currCrypto }}</span>
+              </div>
+            </div>
+            <div class="h-[1px] bg-white2"></div>
+            <div class="flex items-center justify-between px-[0.28rem]">
               <div class="flex items-center justify-center">
-                <span class="size-[0.52rem] mr-[0.16rem]" v-if="info.currCrypto">
+                <span class="size-[0.4rem] mr-[0.1rem]" v-if="info.currCrypto">
                   <CryptoIcon :name="info.currCrypto.toUpperCase()" />
                 </span>
-                {{ title }}{{ info.currCrypto }}
+                <span class="text-[0.28rem]">{{ info.currCrypto }}</span>
               </div>
-            </div>
-            <div class="form_item">
-              <div class="flex-1">
-                <input v-model="amount" placeholder="0" type="number" @blur="amountBlur" class="ipt" />
-              </div>
-              <!-- <div class="all" @click="amount = currWallet.amount > info.limitmax ? info.limitmax : currWallet.amount">{{ t('trade.stock_position_all') }}</div> -->
-              <span class="text-[0.3rem]">{{ info.currCrypto }}</span>
+              
+              <div class="flex items-center h-[0.88rem]">
+                  <span class="text-primary flex items-center gap-[0.1rem] text-[0.24rem]" @click="openConfirmBox">
+                    <span class="text-color3">{{ t('assets.wallet_available_sim') }}</span>
+                    <span>{{ currWallet.amount }}</span>
+                    <span>{{ currWallet.name }}</span>
+                  </span>
+                  <Icon name="arrow" class="ml-[0.1rem]" color="var(--ex-text-color2)" size="0.22rem" />
+                </div>
             </div>
           </div>
-          <div class="h-[1px] bg-white2"></div>
-          <div class="flex items-center justify-between px-[0.28rem]">
-            <div class="flex items-center justify-center">
-              <span class="size-[0.4rem] mr-[0.1rem]" v-if="info.currCrypto">
-                <CryptoIcon :name="info.currCrypto.toUpperCase()" />
-              </span>
-              <span class="text-[0.28rem]">{{ info.currCrypto }}</span>
-            </div>
-            
-            <div class="flex items-center h-[0.88rem]">
-                <span class="text-primary flex items-center gap-[0.1rem] text-[0.24rem]" @click="openConfirmBox">
-                  <span class="text-color3">{{ t('assets.wallet_available_sim') }}</span>
-                  <span>{{ currWallet.amount }}</span>
-                  <span>{{ currWallet.name }}</span>
-                </span>
-                <Icon name="arrow" class="ml-[0.1rem]" color="var(--ex-text-color2)" size="0.22rem" />
-              </div>
+
+          <div class="text-error mt-[0.2rem]" v-if="isErrAmount && amount != ''">{{ t('market.market_buy_optional_order_limit') }} {{ info.limitmin }}-{{ info.limitmax }}</div>
+
+          <!-- 三层容器 -->
+          <div
+            class="flex justify-between items-center bg-color3 rounded-[0.32rem] h-[1.3rem] mt-[0.32rem] px-[0.36rem] text-[0.3rem]">
+            <span>{{ t('market.market_buy_optional_estreceive') }} </span>
+            <span class=" flex items-center overflow-hidden">
+              <strong class="text-[0.4rem] mr-[0.14rem] max-w-[3.6rem] truncate">{{ showAmount }}</strong>
+              {{ info.currWallet }}</span>
           </div>
         </div>
-
-        <!-- 三层容器 -->
-        <div
-          class="flex justify-between items-center bg-color3 rounded-[0.32rem] h-[1.3rem] mt-[0.32rem] px-[0.36rem] text-[0.3rem] mx-[0.32rem]">
-          <span>{{ t('market.market_buy_optional_estreceive') }} </span>
-          <span>
-            <strong class="text-[0.4rem] mr-[0.14rem]">{{ showAmount }}</strong>
-            {{ info.currWallet }}</span>
-        </div>
-
-
-
         <div class="h-[1px] bg-white2 mt-[0.4rem]"></div>
         <div class="mt-[0.4rem] bg-white1 rounded-[0.32rem] mx-[0.32rem] flex flex-col">
           <div class="text-[0.32rem] text-color3 pt-[0.24rem] px-[0.28rem] flex justify-between items-center">
@@ -168,8 +167,9 @@
           </div>
         </div>
         <div class="mx-[0.32rem]">
-          <Button size="large" class="btn btn--sell bg-sell bg-sell-text-color ripple-btn" round :loading="loading"
-          @click="goSubmit"><span style="color: var(--ex-white);">{{ t('market.market_buy_fast_sell') }}</span></Button>
+          <Button size="large" class="btn btn--sell bg-sell bg-sell-text-color ripple-btn" round :loading="loading" v-if="!isErrAmount"
+          @click="goSubmit">{{ t('market.market_buy_fast_sell') }}</Button>
+          <Button size="large" class="btn btn--sell bg-sell bg-sell-text-color opacity-30" round  v-else>{{ t('market.market_buy_fast_sell') }}</Button>
         </div>
 
       </template>
@@ -217,6 +217,14 @@ const title = ref(route.query.offset == 'buy' ? t('market.market_buy_fast_buy') 
 const loading = ref(false)
 const info = ref(route.query || {})
 const amount = ref('')
+const isErrAmount = computed(() => {
+  const val = Number(amount.value)
+  if (val < info.value.limitmin || val > info.value.limitmax) {
+    return true
+  }
+  return false
+})
+
 const showAmount = computed(() => {
   if (!amount.value || amount.value <= 0) return '--'
   return new Decimal(amount.value).mul(info.value.price).toFixed(3).slice(0, -1)
@@ -370,7 +378,6 @@ const getSessionToken = () => {
       display: flex;
       align-items: center;
       justify-content: center;
-
       .ipt {
         width: 100%;
         height: 0.8rem;
@@ -382,6 +389,12 @@ const getSessionToken = () => {
         color: var(--ex-primary-color);
       }
 
+    }
+    .item{
+      border:1px solid transparent;
+    }
+    .item--error{
+      border-color:var(--ex-error-color);
     }
 
     .info {
