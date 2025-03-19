@@ -799,7 +799,6 @@ const stockWalletAmount = computed(() => {
 });
 const currencyAmount = computed(() => {
   // 持有币种数量
-  console.error('持有币种数量', currStock.value)
   const target = wallet.value.find(
     (item) => item.currency == (currStock.value.symbol && currStock.value.symbol.replace('usdt', '').toUpperCase())
   );
@@ -856,31 +855,24 @@ const percentTagClick = (percent) => {
 
 // 市价
 const currStock = computed(() => {
-  let obj = {};
   switch (props.type) {
+    case "spot":
+      return store.state.currSpot || {};
     case "constract":
     case "crypto":
-      obj = store.state.currConstact || {};
-      break;
-    case "spot":
-      obj = store.state.currSpot || {};
-      break;
+      return store.state.currConstact || {};
     case "foreign":
     case "forex":
-      obj = store.state.currForeign || {};
-      break;
+      return store.state.currForeign || {};
     case "commodities":
     case "blocktrade":
-      obj = store.state.currCommodities || {};
-      break;
+      return store.state.currCommodities || {};
     case 'ai': // ai
-      obj = store.state.currAi || {};
-      break;
+      return store.state.currAi || {};
     case "stock": //股票
-      obj = store.state.currStockItem || {};
-      break
+      return store.state.currStockItem || {};
   }
-  return obj;
+  return {};
 }); // 当前
 const currName = computed(() => {
   let str = '/'

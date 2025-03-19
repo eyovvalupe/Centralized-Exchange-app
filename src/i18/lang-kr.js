@@ -554,7 +554,7 @@ export default {
     stock_opening_amount_mode: "보증금 모드",
     stock_opening_amount_limit_mode: "한정가 모드",
     stock_opening_show_jump_type: "이체/환전/충전",
-    stock_opening_amount_title: "수량(주)",
+    stock_opening_amount_title: "수량",
     stock_opening_no_balance: "계좌 잔액 부족",
     stock_opening_enough_balance: "잔액",
     stock_opening_token_login: "로그인",

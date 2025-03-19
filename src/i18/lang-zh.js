@@ -550,7 +550,7 @@ export default {
     stock_opening_amount_mode: "保证金模式",
     stock_opening_amount_limit_mode: "限价模式",
     stock_opening_show_jump_type: "划转/兑换/充值",
-    stock_opening_amount_title: "数量(股)",
+    stock_opening_amount_title: "数量",
     stock_opening_no_balance: "账户余额不足",
     stock_opening_enough_balance: "余额",
     stock_opening_token_login: "登录",

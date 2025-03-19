@@ -553,7 +553,7 @@ export default {
     stock_opening_amount_mode: "保證金模式",
     stock_opening_amount_limit_mode: "限價模式",
     stock_opening_show_jump_type: "劃轉/兌換/儲值",
-    stock_opening_amount_title: "數量(股)",
+    stock_opening_amount_title: "數量",
     stock_opening_no_balance: "帳戶餘額不足",
     stock_opening_enough_balance: "餘額",
     stock_opening_token_login: "登入",
@@ -793,7 +793,7 @@ export default {
     user: "用戶",
     performance: "業績",
 
-    
+
   },
   market: {
     market_header_optional: "自選",

@@ -4,43 +4,42 @@
     <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
       <div class="stock_item_bg"
         :class="[`${' stock_item_' + updownStatus} ${props.page == 'home' ? '' : 'px-[0.28rem]'}`]"
-        @click="goInfo(props.item.type)" v-if="props.item">
+        @click="goInfo(itemType)" v-if="props.item">
         <div :class="['stock_item']">
           <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center"
-            v-if="['crypto', 'forex'].includes(item.type)">
-
-            <CryptoIcon v-if="item.type == 'crypto'" :name="item.name.split('/')[0]" />
-            <CryptoIcon v-if="item.type == 'forex'" :name="item.symbol" />
+            v-if="props.showIcon === true || (props.showIcon !== false && ['crypto', 'forex'].includes(itemType))">
+            <CryptoIcon v-if="itemType == 'spot'" :name="item.name.split('/')[0]" />
+            <CryptoIcon v-if="itemType == 'crypto'" :name="item.name.split('/')[0]" />
+            <CryptoIcon v-if="itemType == 'forex'" :name="item.symbol" />
           </div>
           <div class="td5" :class="{ 'td5--ac': showIcon }">
             <div class="item_name flex items-center gap-1 mb-[0.2rem]">
-              <span class="truncate" v-if="item.type != 'stock'">{{
+              <span class="truncate" v-if="itemType != 'stock'">{{
                 props.item.name
               }}</span>
               <template v-else>
                 <span class="truncate">{{ props.item.symbol }}</span>
-                <span v-if="marketMap[props.item.type]"
-                  :class="`${marketStyle[props.item.type]
+                <span v-if="marketMap[itemType]"
+                  :class="`${marketStyle[itemType]
                     } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center ]`">
                   {{
-                    marketMap[props.item.type]
+                    marketMap[itemType]
                   }}
                 </span>
               </template>
 
 
             </div>
-            <div class="item_info" v-show="props.item.type == 'stock'">
+            <div class="item_info" v-show="itemType == 'stock'">
               {{ props.item.name || "--" }}
             </div>
 
-            <!-- <div v-if="item.type != 'stock'" class="flex items-center"> -->
-            <div class="flex items-center" v-if="item.type != 'stock'">
-              <span v-if="marketMap[props.item.type]"
-                :class="`${marketStyle[props.item.type]
+            <div class="flex items-center" v-if="itemType != 'stock'">
+              <span v-if="marketMap[itemType]"
+                :class="`${marketStyle[itemType]
                   } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center ]`">
                 {{
-                  marketMap[props.item.type]
+                  marketMap[itemType]
                 }}
               </span>
             </div>
@@ -159,6 +158,9 @@ const props = defineProps({
   menuType: String,
 });
 
+const itemType = computed(() => {
+  return props.item.type || props.type
+})
 const mode = ref(1);
 const updown = computed(() => {
   // 1-涨 -1-跌 0-平

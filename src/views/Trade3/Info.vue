@@ -129,7 +129,7 @@
               <Tabs :key="'sub'" class="van-tabs--sub_line van-tabs--sub_bg van-tabs--market2"
                 :color="'var(--ex-primary-color)'" v-model:active="activeTab2" animated shrink>
                 <Tab :name="11" :title="$t('trade.stock_open')">
-                  <OpeningSpot type="'spot'" :item="item" ref="openingRef2" :from="'trade'" />
+                  <OpeningSpot :type="'spot'" :item="item" ref="openingRef2" :from="'trade'" />
                 </Tab>
                 <Tab :name="22" :title="$t('market.market_item_order')" v-if="item.type == 'crypto'">
                   <div style="height: 0.08rem"></div>
@@ -467,7 +467,7 @@ import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
 import store from '@/store';
 import { getStaticImgUrl, _formatNumber } from '@/utils/index.js';
-import { _futures, _basic, _add, _del, _stock, _aiquant2 } from '@/api/api';
+import { _futures, _basic, _add, _del, _stock, _aiquant2, _trade } from '@/api/api';
 import BottomPopup from '@/components/BottomPopup.vue';
 import Loaidng from '@/components/Loaidng.vue';
 import router from '@/router';
@@ -549,6 +549,8 @@ const activeTab = ref(1); // 一级
 const setTab = () => {
   if (route.query.tradeType == "constract" || route.query.tradeType == "crypto") {
     activeTab.value = 2;
+  } else if (route.query.tradeType == "spot") {
+    activeTab.value = 1;
   } else if (route.query.tradeType == "ai") {
     activeTab.value = 3;
   } else if (route.query.tradeType == "stock") {
@@ -628,6 +630,8 @@ const item = computed(() => {
       it = store.state.currStockItem || {};
       break;
     case 1: // 现货
+      it = store.state.currSpot || {};
+      break;
     case 2: // 合约
       it = store.state.currConstact || {};
       break;
@@ -657,6 +661,11 @@ const getBasic = (obj, tab) => {
             });
             break;
           case 1: // 现货
+            store.commit('setCurrSpot', {
+              ...obj,
+              ...res.data,
+            });
+            break;
           case 2: // 合约
             store.commit('setCurrConstract', {
               ...obj,
@@ -700,7 +709,10 @@ const handleClick = (obj) => {
   obj = JSON.parse(JSON.stringify(obj));
   showSearchDialog.value = false;
   chartLoading.value = true;
-  if (activeTab.value == 1 || activeTab.value == 2) {
+  if (activeTab.value == 1) {
+    store.commit('setCurrSpot', obj);
+  }
+  if (activeTab.value == 2) {
     store.commit('setCurrConstract', obj);
   }
   if (activeTab.value == 3) {
@@ -778,6 +790,8 @@ const addCollect = (tab) => {
           store.dispatch('updateMarketWatchList');
           switch (tab) {
             case 1: // 现货
+              store.commit('setCurrSpot', { watchlist: 1 });
+              break;
             case 2: // 合约
               store.commit('setCurrConstract', { watchlist: 1 });
               break;
@@ -808,6 +822,8 @@ const addCollect = (tab) => {
           store.dispatch('updateMarketWatchList');
           switch (tab) {
             case 1: // 现货
+              store.commit('setCurrSpot', { watchlist: 0 });
+              break;
             case 2: // 合约
               store.commit('setCurrConstract', { watchlist: 0 });
               break;
@@ -833,8 +849,10 @@ const addCollect = (tab) => {
 };
 
 // 搜索
-const marketSearchList2 = computed(() => {
+const showList = computed(() => {
   switch (activeTab.value) {
+    case 1:
+      return spotList.value;
     case 4: // 股票
       return marketStockList.value;
     case 3: // ai
@@ -851,13 +869,14 @@ const marketSearchList2 = computed(() => {
 const subs = () => {
   setTimeout(() => {
     store.dispatch('subList', {
-      allKeys: marketSearchList2.value.map((item) => item.symbol),
+      allKeys: showList.value.map((item) => item.symbol),
     });
   }, 500);
 };
 subs();
 
 // 列表数据
+const spotList = computed(() => store.state.spotList || []);
 const marketStockList = computed(() => store.state.marketStockList || []); // 股票列表
 const marketAiList = computed(() => store.state.marketAiList || []); // ai量化默认列表
 const contractList = computed(() => store.state.contractList || []); // 现货/合约
@@ -886,13 +905,13 @@ const finish = ref(false);
 const handleData = (res, more, tab) => {
   let arr = [];
   if (more === true) {
-    arr = [...marketSearchList2.value, ...res.data];
+    arr = [...showList.value, ...res.data];
     if (!res.data || !res.data.length) {
       finish.value = true;
     }
   } else {
     arr = (res.data || []).map((item) => {
-      const target = marketSearchList2.value.find(
+      const target = showList.value.find(
         (a) => a.symbol == item.symbol,
       );
       if (target)
@@ -905,6 +924,8 @@ const handleData = (res, more, tab) => {
   }
   switch (tab) {
     case 1:
+      store.commit('setSpotList', arr);
+      break;
     case 2:
       store.commit('setContractList', arr);
       break;
@@ -927,6 +948,8 @@ const handleData = (res, more, tab) => {
     const obj = arr[0];
     switch (activeTab.value) {
       case 1:
+        store.commit('setCurrSpot', obj || {});
+        break;
       case 2:
         store.commit('setCurrConstract', obj || {});
         break;
@@ -983,11 +1006,22 @@ const initTabList = (more) => {
         .finally(() => {
           searchLoading2.value = false;
         });
+    } else if (activeTab.value == 1) {
+      // 现货
+      _trade({
+        name: searchDialogStr.value,
+        page: page.value,
+      })
+        .then((res) => {
+          handleData(res, more, tab);
+        })
+        .finally(() => {
+          searchLoading2.value = false;
+        });
     } else {
       // 合约下分类
       let type = '';
       switch (tab) {
-        case 1:
         case 2:
           type = 'crypto';
           break;
@@ -1062,7 +1096,6 @@ const openMenu = () => {
 
 // 选择股票
 const clickStockHandle = () => {
-  console.error('收到');
   chartLoading.value = true;
   setTimeout(() => {
     chartLoading.value = false;

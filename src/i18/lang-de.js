@@ -542,7 +542,7 @@ export default {
     stock_opening_amount_mode: "Margin-Modus",
     stock_opening_amount_limit_mode: "Limit-Modus",
     stock_opening_show_jump_type: "Übertragen/Umtauschen/Einzahlen",
-    stock_opening_amount_title: "Menge (Aktien)",
+    stock_opening_amount_title: "Menge",
     stock_opening_no_balance: "Nicht genügend Kontostand",
     stock_opening_enough_balance: "Guthaben",
     stock_opening_token_login: "Anmelden",
