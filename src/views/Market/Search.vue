@@ -204,6 +204,10 @@ const getData = () => {
         search: search.value,
         list: res.data || [],
       });
+      store.dispatch("subList", {
+        commitKey: "setMarketSearchList",
+        listKey: "marketSearchList",
+      });
     })
     .finally(() => {
       loading.value = false;
@@ -452,22 +456,24 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
       color: var(--ex-text-color2);
     }
 
-    .item_info_box {
-      margin-top: 0.18rem;
 
-      .item_percent {
-        text-align: center;
-        width: 1rem;
-        height: 0.4rem;
-        line-height: 0.4rem;
-        font-size: 0.24rem;
-        display: inline-block;
-        font-weight: 400;
-        color: var(--ex-white);
-        border-radius: 0.12rem;
-      }
+  }
 
+  .item_info_box {
+    margin-top: 0.18rem;
+
+    .item_percent {
+      text-align: center;
+      width: 1rem;
+      height: 0.4rem;
+      line-height: 0.4rem;
+      font-size: 0.24rem;
+      display: inline-block;
+      font-weight: 400;
+      color: var(--ex-white);
+      border-radius: 0.12rem;
     }
+
   }
 
   .td_r {
