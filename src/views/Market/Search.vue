@@ -475,6 +475,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
 
   .td_r {
     text-align: right;
+    flex:2;
   }
 }
 </style>

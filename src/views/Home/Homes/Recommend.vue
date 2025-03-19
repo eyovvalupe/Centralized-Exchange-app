@@ -12,7 +12,7 @@
             <!-- 现货 -->
             <Tab :name="1" :title="t('common.spot')">
                 <div v-if="loaded && activeTab == 1" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
+                    >
                     <div class="" style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 1">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
                             :page="from == 'home' ? 'home' : ''" :padding="true"
@@ -25,7 +25,7 @@
             <!-- 合约 -->
             <Tab :name="2" :title="$t('加密货币合约')">
                 <div v-if="loaded && activeTab == 2" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
+                    >
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 2">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
                             :page="from == 'home' ? 'home' : ''" :padding="true"
@@ -38,7 +38,7 @@
             <!-- 交易机器人 -->
             <Tab :name="3" :title="$t('common.option')">
                 <div v-if="loaded && activeTab == 3" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
+                    >
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 3">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
                             :page="from == 'home' ? 'home' : ''" :padding="true"
@@ -51,7 +51,7 @@
             <!-- 外汇 -->
             <Tab :name="7" :title="'外汇'">
                 <div v-if="loaded && activeTab == 7" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
+                    >
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 7">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
                             :page="from == 'home' ? 'home' : ''" :padding="true"
@@ -64,7 +64,7 @@
             <!-- 大宗交易 -->
             <Tab :name="8" :title="'大宗交易'">
                 <div v-if="loaded && activeTab == 8" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    :style="{ borderTop: props.from == 'home' ? '' : '1px solid var(--ex-border-color)' }">
+                    >
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 8">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
                             :page="from == 'home' ? 'home' : ''" :padding="true"

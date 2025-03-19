@@ -13,7 +13,7 @@
             <CryptoIcon v-if="itemType == 'forex'" :name="item.symbol" />
           </div>
           <div class="td5" :class="{ 'td5--ac': showIcon }">
-            <div class="item_name flex items-center gap-1 mb-[0.2rem]">
+            <div class="item_name flex items-center gap-1 mb-[0.16rem]">
               <span class="truncate" v-if="itemType != 'stock'">{{
                 props.item.name
               }}</span>
@@ -45,7 +45,7 @@
             </div>
 
           </div>
-          <div style="flex: 1.5;" :class="['spark_line_box']" v-if="showSparkLine">
+          <div style="flex: 1.1;" :class="['spark_line_box']" v-if="showSparkLine">
             <SparkLine :style="['width: 100%; height: 0.6rem;']" v-if="props.item.points" :points="props.item.points"
               :ratio="props.item.ratio" />
           </div>
@@ -287,22 +287,17 @@ const removeStock = (item) => {
 .stock_item {
   display: flex;
   align-items: center;
-  height: 1.44rem;
+  height: 1.34rem;
   // padding: 0 0.3rem;
   position: relative;
   // background-color: var(--ex-bg-white2);
   // border-radius: 0.4rem;
   // margin-top: 0.2rem;
-  // border-bottom: 1px solid var(--ex-bg-white2);
-
-  &:first-child {
-    // border-top: 1px solid var(--ex-bg-white2);
-  }
+  border-bottom: 1px solid var(--ex-bg-white2);
 
   .td5 {
     flex-shrink: 0;
-    // width: 3rem;
-    flex: 3;
+    flex: 3.4;
     overflow: hidden;
 
     .item_name {
@@ -341,7 +336,7 @@ const removeStock = (item) => {
     }
 
     .item_info_box {
-      margin-top: 0.18rem;
+      margin-top: 0.12rem;
 
       .item_percent {
         text-align: center;
