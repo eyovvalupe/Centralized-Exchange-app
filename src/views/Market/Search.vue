@@ -57,16 +57,16 @@
       <Loading v-show="!searchList.length && loading" />
       <NoData v-if="!searchList.length && !loading" />
 
-      <div class="item" v-for="(item, i) in searchList" :key="i" @click="goItem(item)">
+      <div class="item" v-for="(item, i) in searchList" :key="i" @click="checkGoTrade(item)">
         <!-- <div @click.stop="collect(item)">
           <div class="size-[0.48rem]">
             <img v-if="item.watchlist == 1" v-lazy="getStaticImgUrl('/static/img/market/star.svg')" alt="">
             <img v-else v-lazy="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
           </div>
         </div> -->
-        <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center">
+        <!-- <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center">
           <CryptoIcon :name="item.name.split('/')[0]" />
-        </div>
+        </div> -->
         <div class="info">
           <div class="title flex items-center gap-1">
             {{ item.type == "stock" ? item.symbol || "--" : item.name || "--" }}
@@ -86,7 +86,8 @@
           </div>
 
           <!-- 给了定值，需要用后端数据该代码 -->
-          <div class="text" v-if="item.type == 'stock'">{{ item.name }}</div>
+          <div class="text" style="white-space: nowrap;width: 100%;overflow: hidden;text-overflow: ellipsis;"
+            v-if="item.type == 'stock'">{{ item.name }}</div>
           <div class="text flex items-center" v-else>
             <div
               :class="`${marketStyle[item.type]
@@ -104,7 +105,7 @@
           </div>
         </div>
 
-        <div class="td2 td_r">
+        <div class="td_r">
           <div class="item_num" :class="[item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down']">
             {{ item.price ? item.price : "--" }}
           </div>
@@ -123,10 +124,13 @@
 
       </div>
     </div>
+
+    <CheckJump ref="CheckJumpRef" />
   </div>
 </template>
 
 <script setup>
+import CheckJump from "@/components/CheckJump.vue"
 import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue";
 import {
@@ -160,6 +164,12 @@ const marketStyle = {
 onBeforeUnmount(() => {
   eventBus.off("loginSuccess");
 });
+
+// 检测并跳转
+const CheckJumpRef = ref();
+const checkGoTrade = item => {
+  CheckJumpRef.value && CheckJumpRef.value.check(item)
+}
 
 const iptRef = ref();
 const search = ref("");
