@@ -58,21 +58,18 @@
       <NoData v-if="!searchList.length && !loading" />
 
       <div class="item" v-for="(item, i) in searchList" :key="i" @click="goItem(item)">
-        <!-- <div @click.stop="collect(item)">
-          <div class="size-[0.48rem]">
+        <div @click.stop="collect(item)">
+          <div class="size-[0.32rem]">
             <img v-if="item.watchlist == 1" v-lazy="getStaticImgUrl('/static/img/market/star.svg')" alt="">
             <img v-else v-lazy="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
           </div>
-        </div> -->
-        <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center">
-          <CryptoIcon :name="item.name.split('/')[0]" />
         </div>
+        
         <div class="info">
           <div class="title flex items-center gap-1">
             {{ item.type == "stock" ? item.symbol || "--" : item.name || "--" }}
             <div v-if="item.type == 'stock'"
-              :class="`${marketStyle[item.type]
-                } font-normal text-[0.22rem] flex items-center justify-center rounded-[0.08rem] px-[0.05rem] h-[0.3rem] `">
+              :class="`bg-white1 font-normal text-[0.22rem] flex items-center justify-center rounded-[0.12rem] px-[0.08rem] h-[0.3rem] `">
               {{
                 item.type == "stock"
                   ? t("market.market_optional_stock")
@@ -86,7 +83,7 @@
           </div>
 
           <!-- 给了定值，需要用后端数据该代码 -->
-          <div class="text" v-if="item.type == 'stock'">{{ item.name }}</div>
+          <div class="text truncate" v-if="item.type == 'stock'">{{ item.name }}</div>
           <div class="text flex items-center" v-else>
             <div
               :class="`${marketStyle[item.type]
@@ -194,6 +191,12 @@ const getData = () => {
         search: search.value,
         list: res.data || [],
       });
+      setTimeout(() => {
+        store.dispatch("subList", {
+            commitKey: "setMarketSearchList",
+            listKey: "marketSearchList",
+        });
+    }, 300)
     })
     .finally(() => {
       loading.value = false;
@@ -302,9 +305,6 @@ const collect = (item) => {
     })
       .then((res) => {
         if (res.code == 200) {
-          setTimeout(() => {
-            showToast(item.watchlist ? "添加成功" : "移除成功");
-          }, 300);
           const i = searchList.value.find((a) => a.symbol == item.symbol);
           if (i) {
             i.watchlist = i.watchlist == 1 ? 0 : 1;
@@ -341,6 +341,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
     background-color: var(--ex-bg-color3);
     border-radius: 0.5rem;
     border: 1px solid rgba(0, 0, 0, 0);
+    transition: .3s;
 
     .type_select {
       right: 0;
@@ -386,7 +387,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
     overflow-y: auto;
 
     .item {
-      height: 1.62rem;
+      height: 1.24rem;
       display: flex;
       align-items: center;
       background-color: var(--ex-bg-white2);
@@ -395,20 +396,21 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
       padding-inline: 0.26rem;
 
       .info {
-        flex: 1;
+        flex: 4;
         overflow: hidden;
-        margin-left: 0.28rem;
+        margin-left: 0.2rem;
 
         .title {
           color: var(--ex-text-color);
           font-size: 0.32rem;
+          font-weight: 500;
         }
 
         .text {
           color: var(--ex-text-color3);
           font-size: 0.24rem;
           font-weight: 400;
-          margin-top: 0.26rem;
+          margin-top: 0.2rem;
         }
       }
 
