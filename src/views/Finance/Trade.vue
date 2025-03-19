@@ -76,7 +76,6 @@
                         </template>
                        
                     </FormItem>
-
                 </div>
                 <Button class="submit ripple-btn" v-if="sliderStatus == 'success'" round @click="openConfirm"><span class="text-[0.36rem]">{{
                     t('finance.portfolio_mining_btn')
@@ -276,6 +275,18 @@ const itemList = computed(() => {
     else return [];
 })
 
+const errTips = computed(()=>{
+    if (!form.value.amount) {
+        return ''
+    }
+    if (form.value.amount < minAmount.value || form.value.amount > maxAmount.value) { 
+        return '可申购金额 '+ (stakeInfo.value.limits ? stakeInfo.value.limits.split(',')[0] + '-' + stakeInfo.limits.split(',')[1] : '--')
+    }
+    if(token.value && form.value.amount > maxStockNum.value){
+        return '可用金额不足' 
+    }
+    return ''
+})
 const sliderStatus = computed(()=>{
     if (!form.value.amount) {
         return 'normal'
