@@ -624,28 +624,14 @@ const changeTab2 = (e) => {
 
 // 股票信息
 const item = computed(() => {
-  let it = {};
-  switch (activeTab.value) {
-    case 4: //股票
-      it = store.state.currStockItem || {};
-      break;
-    case 1: // 现货
-      it = store.state.currSpot || {};
-      break;
-    case 2: // 合约
-      it = store.state.currConstact || {};
-      break;
-    case 3: // ai
-      it = store.state.currAi || {};
-      break;
-    case 5: // 外汇
-      it = store.state.currForeign;
-      break;
-    case 6: // 大宗商品
-      it = store.state.currCommodities;
-      break;
-  }
-  return it;
+  return {
+    1: store.state.currSpot, // 现货
+    2: store.state.currConstact, // 合约 
+    3: store.state.currAi,
+    4: store.state.currStockItem,
+    5: store.state.currForeign,
+    6: store.state.currCommodities
+  }[activeTab.value] || {}
 });
 
 // 获取股票最新信息
@@ -705,7 +691,6 @@ onMounted(() => {
   }, 500);
 });
 const handleClick = (obj) => {
-  console.error('handleClick', obj)
   obj = JSON.parse(JSON.stringify(obj));
   showSearchDialog.value = false;
   chartLoading.value = true;
@@ -746,7 +731,6 @@ const handleClick = (obj) => {
   }, 200);
 };
 const handleClickIndex = ({ item, type }) => {
-  console.error('handleClickIndex', type)
   if (type) {
     switch (type) {
       case 'stock':
@@ -944,7 +928,7 @@ const handleData = (res, more, tab) => {
   }
 
   // 这里如果当前没有item的值 就设置下
-  if (!item.symbol) {
+  if (!item.value.symbol) {
     const obj = arr[0];
     switch (activeTab.value) {
       case 1:

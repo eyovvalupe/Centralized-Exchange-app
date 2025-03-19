@@ -101,7 +101,7 @@
           </div>
         </div>
 
-        <div class="td2 td_r">
+        <div class="td_r">
           <div class="item_num" :class="[item.ratio === 0 ? '' : item.ratio > 0 ? 'up' : 'down']">
             {{ item.price ? item.price : "--" }}
           </div>
@@ -120,10 +120,13 @@
 
       </div>
     </div>
+
+    <CheckJump ref="CheckJumpRef" />
   </div>
 </template>
 
 <script setup>
+import CheckJump from "@/components/CheckJump.vue"
 import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue";
 import {
@@ -157,6 +160,12 @@ const marketStyle = {
 onBeforeUnmount(() => {
   eventBus.off("loginSuccess");
 });
+
+// 检测并跳转
+const CheckJumpRef = ref();
+const checkGoTrade = item => {
+  CheckJumpRef.value && CheckJumpRef.value.check(item)
+}
 
 const iptRef = ref();
 const search = ref("");
@@ -444,22 +453,24 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
       color: var(--ex-text-color2);
     }
 
-    .item_info_box {
-      margin-top: 0.18rem;
 
-      .item_percent {
-        text-align: center;
-        width: 1rem;
-        height: 0.4rem;
-        line-height: 0.4rem;
-        font-size: 0.24rem;
-        display: inline-block;
-        font-weight: 400;
-        color: var(--ex-white);
-        border-radius: 0.12rem;
-      }
+  }
 
+  .item_info_box {
+    margin-top: 0.18rem;
+
+    .item_percent {
+      text-align: center;
+      width: 1rem;
+      height: 0.4rem;
+      line-height: 0.4rem;
+      font-size: 0.24rem;
+      display: inline-block;
+      font-weight: 400;
+      color: var(--ex-white);
+      border-radius: 0.12rem;
     }
+
   }
 
   .td_r {

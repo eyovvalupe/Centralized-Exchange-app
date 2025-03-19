@@ -55,7 +55,7 @@ const routes = [
       title: '跟单',
     },
   },
- 
+
   {
     // 用户
     path: '/user',

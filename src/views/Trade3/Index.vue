@@ -30,7 +30,7 @@
         <template #after>
           <div class="flex items-center gap-[0.16rem] mr-[0.34rem]">
             <div class="size-[0.72rem] bg-white1 rounded-full ripple-btn flex items-center justify-center transition"
-              @click="openOrderList">
+              @click="router.push({ name: 'search' })">
               <div class="size-[0.44rem]">
                 <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="" />
               </div>
@@ -55,8 +55,8 @@
           <div v-if="token">
             <Loaidng v-if="watchListLoading" :loading="watchListLoading" />
             <div style="padding-bottom: 0.2rem;overflow: visible;" v-if="headActiveTab == 0 && !watchListLoading">
-              <StockItem :handleClick="handleClick" :padding="true" :showIcon="['crypto'].includes(item.type)"
-                :item=item v-for="(item, i) in (watchList)" :key="'c_' + i" menuType="option" marketType="crypto" />
+              <StockItem :handleClick="checkGoTrade" :padding="true" :showIcon="false" :item=item
+                v-for="(item, i) in (watchList)" :key="'c_' + i" menuType="option" marketType="crypto" />
             </div>
             <NoData v-if="!watchListLoading && !watchList.length" />
           </div>
@@ -198,6 +198,8 @@
       </div>
     </div>
   </Popup>
+
+  <CheckJump ref="CheckJumpRef" />
 </template>
 
 <script setup>
@@ -226,6 +228,7 @@ import HeaderTabs from "@/components/HeaderTabs.vue";
 import Loaidng from "@/components/Loaidng.vue";
 import { _watchlist } from "@/api/api";
 import StockItem from "@/components/StockItem.vue";
+import CheckJump from "@/components/CheckJump.vue"
 
 const route = useRoute();
 const emits = defineEmits(["handleClick"]);
@@ -237,6 +240,11 @@ const props = defineProps({
   },
 });
 
+// 检测并跳转
+const CheckJumpRef = ref();
+const checkGoTrade = item => {
+  CheckJumpRef.value && CheckJumpRef.value.check(item)
+}
 
 const headActiveTab = ref(Number(sessionStorage.getItem("tradeMarketType")));
 const changeTab = (val) => {
