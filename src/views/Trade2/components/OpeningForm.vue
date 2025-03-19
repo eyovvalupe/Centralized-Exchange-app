@@ -162,7 +162,7 @@
       <div class="item_box_right">
         <FormItem :hasScroll="true" :placeholder="t('trade.stock_opening_amount_title')" :max="maxStockNum"
           v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus" @btnClick="putAll"
-          @change="changePercent" tip-align="right" :tip="maxStockNum > 0 ? '≤' + maxStockNum : ''" input-type="number">
+          @change="changePercent" tip-align="right" :tip="'≤' + maxStockNum" input-type="number">
           <!-- <template #title-right v-if="token">
             <span style="color: var(--ex-primary-color); font-size: 12px" @click="openConfirmBox"><span
                 style="color: var(--ex-text-color2)">{{
@@ -1292,7 +1292,7 @@ defineExpose({
 }
 
 .form {
-  padding: 0.32rem 0;
+  padding: 0.32rem 0 0 0;
   position: relative;
 
   .subtitle {
@@ -1489,7 +1489,7 @@ defineExpose({
 
   .submit {
     margin-top: 0.2rem;
-    border-radius: 0.4rem;
+    border-radius: 1rem;
   }
 }
 

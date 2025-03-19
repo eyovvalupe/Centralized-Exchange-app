@@ -1,5 +1,5 @@
 <template>
-  <div class="form-item"  :class="{ 'form-item--large': size == 'large', 'form-item--scroll': props.hasScroll }">
+  <div class="form-item" :class="{ 'form-item--large': size == 'large', 'form-item--scroll': props.hasScroll }">
     <div class="form-item-title" v-if="title">
       <div class="form-item-title_content">
         <!-- <span>{{ title }}</span> -->
@@ -21,7 +21,8 @@
           disabled_item: disabled,
           item_focus: from != 'transfer' ? inputFocus : '', '!h-[1.28rem]': height
           // item_focus2: inputFocus && !tip,
-        }" :style="{ background,  paddingBottom: props.hasBot ? '2.6rem' : '', paddingTop: (props.hasLT || props.hasRT) ? '0.5rem' : '', borderColor: errStatus ? 'var(--ex-error-color)' : '' }">
+        }"
+          :style="{ background, paddingBottom: props.hasBot ? '2.6rem' : '', paddingTop: (props.hasLT || props.hasRT) ? '0.5rem' : '', borderColor: errStatus ? 'var(--ex-error-color)' : '' }">
           <!-- 左侧提示 -->
           <span class="ipt_tip ipt_tip--left" :class="from == 'withdraw' ? '!text-[0.28rem] top-[0.5rem]' : ''"
             v-show="inputFocus">{{ placeholder }}</span>
@@ -33,22 +34,23 @@
             <slot name="lt" />
           </div>
           <!-- 右上角模块 -->
-          <div class="rt-box" :class="[inputFocus && tip ? 'rt-box-focus' : '', from == 'toTop' ? '-mt-[0.1rem]' : '']" v-if="hasRT">
+          <div class="rt-box" :class="[inputFocus && tip ? 'rt-box-focus' : '', from == 'toTop' ? '-mt-[0.1rem]' : '']"
+            v-if="hasRT">
             <slot name="rt" />
           </div>
-        
+
           <div class="relative flex flex-1">
-              <!-- 自定义输入框 -->
+            <!-- 自定义输入框 -->
             <slot v-if="custom" />
             <!-- 输入框 -->
-            <input :disabled="disabled" :style="{height:inputHeight}" v-else v-model="inputVal" @focus="
+            <input :disabled="disabled" :style="{ height: inputHeight }" v-else v-model="inputVal" @focus="
               inputFocus = true;
             emit('focus');
             " @blur="
               inputBlur();
             " :type="inputType == 'digit' ? 'number' : inputType == 'password' && showPassword ? 'text' : inputType"
               @keydown="validateKeydown" class="ipt" :class="from == 'withdraw' && inputFocus ? 'top-[0.1rem]' : ''"
-              @input="onInput" :placeholder="inputFocus ? '' : placeholder"/>
+              @input="onInput" :placeholder="inputFocus ? '' : placeholder" />
 
             <!-- 密码图标 -->
             <span class="pwd_icon" v-if="inputType == 'password'">
@@ -58,9 +60,9 @@
                 @click="showPassword = false" />
             </span>
 
-          
+
             <!--  输入框右侧 全部按钮或提示 -->
-         
+
             <span class="put_all put_all_place" v-if="
               showBtn && btnPlaceholder && !inputFocus && btnShowMode == 'focus'
             ">{{ btnPlaceholder }}</span>
@@ -155,9 +157,9 @@ const props = defineProps({
   custom: Boolean,
   btnPlaceholder: String,
   placeholder: String,
-  inputHeight:{
-    type:String,
-    default:'100%'
+  inputHeight: {
+    type: String,
+    default: '100%'
   },
   percentTags: {
     type: Array,
@@ -250,14 +252,14 @@ const validateKeydown = (e) => {
 };
 
 const onInput = () => {
-  if (
-    (props.inputType == "digit" || props.inputType == "number") &&
-    inputVal.value > props.max
-  ) {
-    inputVal.value = props.max;
-  }
+  // if (
+  //   (props.inputType == "digit" || props.inputType == "number") &&
+  //   inputVal.value > props.max
+  // ) {
+  //   inputVal.value = props.max;
+  // }
   emit("update:modelValue", inputVal.value);
-  emit('input',inputVal.value)
+  emit('input', inputVal.value)
 };
 const percentTagClick = (percent) => {
   emit("percentTagClick", percent);
@@ -342,6 +344,7 @@ const percentTagClick = (percent) => {
       transition: all ease-in .3s;
       transform-origin: 0 0;
     }
+
     .lt-box-focus {
       top: 0.08rem;
       transform: scale(0.8);
@@ -390,11 +393,11 @@ const percentTagClick = (percent) => {
   .put_all {
     color: var(--ex-primary-color);
     position: absolute;
-    right: 0.32rem;
-    top:50%;
+    right: 0rem;
+    top: 50%;
     line-height: 0.32rem;
     margin-top: -0.16rem;
-    font-size: 0.3rem;
+    font-size: 0.28rem;
     z-index: 9;
     transition: all ease-in 0.3s;
   }
@@ -469,7 +472,7 @@ const percentTagClick = (percent) => {
 
 .form-item--scroll {
   height: 2.54rem;
- 
+
   .form-item-box {
     height: 100%;
 

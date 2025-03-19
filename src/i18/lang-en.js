@@ -563,7 +563,7 @@ export default {
     stock_opening_amount_mode: "Margin Mode",
     stock_opening_amount_limit_mode: "Limit",
     stock_opening_show_jump_type: "Transfer/Exchange/Deposit",
-    stock_opening_amount_title: "Qty(Shares)",
+    stock_opening_amount_title: "Qty",
     stock_opening_no_balance: "Insufficient balance",
     stock_opening_enough_balance: "Balance",
     stock_opening_token_login: "Log In",
@@ -806,7 +806,7 @@ export default {
     user: "User",
     performance: "Performance",
 
-    
+
   },
   market: {
     market_header_optional: "Favorites",

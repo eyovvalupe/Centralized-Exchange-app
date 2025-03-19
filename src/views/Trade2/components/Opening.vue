@@ -1,51 +1,89 @@
 <!-- 开仓 -->
 <template>
-  <div class="opening">
-    <div class="type_tabs">
-      <div @click="activeType = 1" class="type_tab tab_ani" :class="{ active_type_tab: activeType == 1 }">
-        <span class="type_tab_text">{{ t('trade.stock_open_long_tab') }}</span>
-      </div>
-      <div @click="activeType = 2" class="type_tab tab_ani"
-        :class="{ 'active_type_tab active_type_tab2': activeType == 2 }">
-        <span class="type_tab_text">{{ t('trade.stock_open_short_tab') }}</span>
-      </div>
+
+  <div>
+    <!-- 股票分类 -->
+    <div class="stock-tabs">
+      <div class="stock-tab" :class="{ 'stock-tab-active': stockTab == 1 }" @click="changeTab(1)">交易</div>
+      <div class="stock-tab" :class="{ 'stock-tab-active': stockTab == 2 }" @click="changeTab(2)">融资</div>
+      <div class="stock-tab" :class="{ 'stock-tab-active': stockTab == 3 }" @click="changeTab(3)">融卷</div>
+      <div class="stock-tab" :class="{ 'stock-tab-active': stockTab == 4 }" @click="changeTab(4)">盘前</div>
     </div>
 
-    <!-- Tabs -->
-    <div class="open_tab_box" :class="{ 'trade-dialog': props.from == 'trade' }">
 
-      <div
-        style="border-radius: 0.32rem;background-color: var(--ex-bg-color3);padding: 0.2rem 0.16rem 0.4rem 0.16rem;border-bottom:1px solid var(--ex-bg-white2);">
-        <Tabs key="form" class="van-tabs--sub_line van-tabs--sub_bg" animated @change="(e) => (activeTab = e)"
-          v-model="activeTab" :swipeable="false" :color="'var(--ex-primary-color)'" shrink>
-          <Tab :title="t('trade.stock_market_price')" name="0">
-            <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
-              v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType" />
-          </Tab>
-          <Tab :title="t('trade.stock_limit_price')" name="1">
-            <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
-              v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :activeTab="activeTab" :activeType="activeType" />
-          </Tab>
-          <Tab :title="t('trade.stock_take_stop')" name="2">
-            <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
-              v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :activeTab="activeTab" :activeType="activeType" />
-          </Tab>
-        </Tabs>
+    <div class="opening">
+
+      <!-- 盘前 -->
+      <div class="type_tabs" v-if="stockTab == 4">
+        <div @click="activeType = 1" class="type_tab" :class="{ active_type_tab: activeType == 1 }">
+          <span class="type_tab_text">配资</span>
+        </div>
+        <div @click="activeType = 2" class="type_tab"
+          :class="{ active_type_tab: activeType == 2, active_type_tab2: activeType == 2 }">
+          <span class="type_tab_text">做空</span>
+        </div>
+      </div>
+      <div class="type_tabs" v-else>
+        <div @click="activeType = 1" class="type_tab tab_ani" :class="{ active_type_tab: activeType == 1 }">
+          <span class="type_tab_text">{{ t('trade.stock_open_long_tab') }}</span>
+        </div>
+        <div @click="activeType = 2" class="type_tab tab_ani"
+          :class="{ 'active_type_tab active_type_tab2': activeType == 2 }">
+          <span class="type_tab_text">{{ t('trade.stock_open_short_tab') }}</span>
+        </div>
       </div>
 
-      <div class="account-box" v-if="token">
-        <div class="title">股票账户</div>
-        <div class="info">
-          <div>{{ $t('market.market_faster_available') }}</div>
-          <div>
-            <span style="font-size: 0.32rem;color:var(--ex-primary-color)">{{ stockWalletAmount || '0' }}</span>
-            <span style="color:var(--ex-white)">USDT</span>
-          </div>
+      <!-- Tabs -->
+      <div class="open_tab_box" :class="{ 'trade-dialog': props.from == 'trade' }">
+
+        <div
+          style="border-radius: 0.32rem;background-color: var(--ex-bg-color3);padding: 0 0.16rem 0.4rem 0.16rem;border-bottom:1px solid var(--ex-bg-white2);">
+          <Tabs key="form" class="van-tabs--sub_line van-tabs--sub_bg" animated @change="(e) => (activeTab = e)"
+            v-model="activeTab" :swipeable="false" :color="'var(--ex-primary-color)'" shrink>
+            <Tab :title="t('trade.stock_market_price')" name="0">
+              <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
+                v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType" />
+            </Tab>
+            <Tab :title="t('trade.stock_limit_price')" name="1">
+              <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
+                v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :activeTab="activeTab" :activeType="activeType" />
+            </Tab>
+            <Tab :title="t('trade.stock_take_stop')" name="2">
+              <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
+                v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :activeTab="activeTab" :activeType="activeType" />
+            </Tab>
+          </Tabs>
         </div>
 
-        <div class="btns">
-          <div class="btn ripple-primary" @click="jump('topUpCrypto')">{{ $t('home.recharge') }}</div>
-          <div class="btn ripple-primary" @click="jump('transfer')">{{ $t('assets.transfer') }}</div>
+        <div class="account-box" v-if="token">
+          <div class="title">股票账户</div>
+          <div class="info">
+            <div>{{ $t('market.market_faster_available') }}</div>
+            <div>
+              <span style="font-size: 0.32rem;color:var(--ex-primary-color);margin-right: 0.08rem;">{{ stockWalletAmount
+                || '0' }}</span>
+              <span style="color:var(--ex-white)">USDT</span>
+            </div>
+          </div>
+          <div class="info">
+            <div>{{ $t('保证金') }}</div>
+            <div>
+              <span style="font-size: 0.32rem;color:var(--ex-primary-color);margin-right: 0.08rem;">--</span>
+              <span style="color:var(--ex-white)">USDT</span>
+            </div>
+          </div>
+          <div class="info">
+            <div>{{ $t('保证金风险率') }}</div>
+            <div>
+              <span style="font-size: 0.32rem;color:var(--ex-primary-color);margin-right: 0.08rem;">--</span>
+              <span style="color:var(--ex-white)">%</span>
+            </div>
+          </div>
+
+          <div class="btns">
+            <div class="btn ripple-primary" @click="jump('topUpCrypto')">{{ $t('home.recharge') }}</div>
+            <div class="btn ripple-primary" @click="jump('transfer')">{{ $t('assets.transfer') }}</div>
+          </div>
         </div>
       </div>
     </div>
@@ -71,6 +109,12 @@ const props = defineProps({
     default: ''
   }
 })
+
+// 分类
+const stockTab = ref(1)
+const changeTab = val => {
+  stockTab.value = val
+}
 
 const { t } = useI18n();
 const emits = defineEmits(["showNavDialog", "success"]);
@@ -121,6 +165,31 @@ defineExpose({
 </script>
 
 <style lang="less" scoped>
+.stock-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--ex-bg-white1);
+  margin: 0.4rem 0.28rem 0.2rem 0.28rem;
+  height: 0.68rem;
+  border-radius: 0.2rem;
+
+  .stock-tab {
+    height: 100%;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--ex-text-color3);
+    border-radius: 0.2rem;
+  }
+
+  .stock-tab-active {
+    background-color: var(--ex-primary-color);
+    color: var(--ex-white);
+  }
+}
+
 .opening {
   padding: 0 0 0.32rem 0;
 
@@ -163,6 +232,7 @@ defineExpose({
         align-items: center;
         justify-content: space-between;
         color: var(--ex-placeholder-color);
+        margin-bottom: 0.4rem;
       }
 
       .btns {
@@ -196,8 +266,8 @@ defineExpose({
     width: 3rem;
     position: absolute;
     z-index: 9999;
-    left: 0.24rem;
-    top: 0.16rem;
+    left: 0.28rem;
+    top: 1.24rem;
 
     .type_tab {
       flex: 1;

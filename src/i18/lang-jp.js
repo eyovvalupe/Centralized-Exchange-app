@@ -555,7 +555,7 @@ export default {
     stock_opening_amount_mode: "証拠金モード",
     stock_opening_amount_limit_mode: "指値モード",
     stock_opening_show_jump_type: "転送/交換/入金",
-    stock_opening_amount_title: "数量（株）",
+    stock_opening_amount_title: "数量",
     stock_opening_no_balance: "残高不足",
     stock_opening_enough_balance: "残高",
     stock_opening_token_login: "ログイン",
@@ -795,7 +795,7 @@ export default {
     user: "ユーザー",
     performance: "実績",
 
-   
+
   },
   market: {
     market_header_optional: "自選",
