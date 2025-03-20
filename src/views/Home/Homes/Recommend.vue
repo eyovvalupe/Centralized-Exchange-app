@@ -18,7 +18,7 @@
                             :page="from == 'home' ? 'home' : ''" :padding="true"
                             :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
                             :showIcon="true" :item="{ ...item, type: 'spot' }" v-for="(item, i) in filterList(showList)"
-                            :key="'c_' + i" menuType="spot" marketType="spot" page="home" />
+                            :key="'c_' + i" menuType="spot" hideMarketTag marketType="spot" page="home" />
                     </div>
                 </div>
             </Tab>
@@ -31,7 +31,7 @@
                             :page="from == 'home' ? 'home' : ''" :padding="true"
                             :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
                             :showIcon="true" :item="item" v-for="(item, i) in filterList(showList)" :key="'c_' + i"
-                            menuType="constract" marketType="crypto" page="home" />
+                            menuType="constract" hideMarketTag marketType="crypto" page="home" />
                     </div>
                 </div>
             </Tab>
@@ -56,8 +56,8 @@
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
                             :page="from == 'home' ? 'home' : ''" :padding="true"
                             :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
-                            :showIcon="false" :item="item" v-for="(item, i) in filterList(showList)" :key="'c_' + i"
-                            menuType="foreign" marketType="crypto" page="home" />
+                            :showIcon="true" :item="item" v-for="(item, i) in filterList(showList)" :key="'c_' + i"
+                            menuType="foreign" hideMarketTag marketType="crypto" page="home" />
                     </div>
                 </div>
             </Tab>
@@ -70,7 +70,7 @@
                             :page="from == 'home' ? 'home' : ''" :padding="true"
                             :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
                             :showIcon="false" :item="item" v-for="(item, i) in filterList(showList)" :key="'c_' + i"
-                            menuType="commodities" marketType="crypto" page="home" />
+                            menuType="commodities" hideMarketTag  marketType="crypto" page="home" />
                     </div>
                 </div>
             </Tab>

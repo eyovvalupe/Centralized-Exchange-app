@@ -11,7 +11,7 @@
 
         <NoData v-if="!loading && !showList.length" />
         <div class="list-i">
-            <StockItem :showSparkLine="false" :menuType="'stock'" :handleClick="handleClick" :padding="true" :showIcon="false" :item="item"
+            <StockItem :showSparkLine="false" hideMarketTag :menuType="'stock'" :handleClick="handleClick" :padding="true" :showIcon="false" :item="item"
                 v-for="(item, i) in showList" :key="'s_' + i" />
         </div>
 

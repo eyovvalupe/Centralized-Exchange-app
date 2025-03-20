@@ -13,13 +13,13 @@
             <CryptoIcon v-if="itemType == 'forex'" :name="item.symbol" />
           </div>
           <div class="td5" :class="{ 'td5--ac': showIcon }">
-            <div class="item_name flex items-center gap-1 mb-[0.16rem]">
-              <span class="truncate" v-if="itemType != 'stock'">{{
+            <div class="item_name flex items-center gap-1">
+              <span class="truncate" v-if="itemType != 'stock' && itemType != 'blocktrade'">{{
                 props.item.name
               }}</span>
               <template v-else>
-                <span class="truncate">{{ props.item.symbol }}</span>
-                <span v-if="marketMap[itemType]"
+                <span class="truncate" :class="page == 'home' ? '!text-[0.32rem]' : ''">{{ props.item.symbol }}</span>
+                <span v-if="page != 'home' && marketMap[itemType] && !hideMarketTag"
                   :class="`${marketStyle[itemType]
                     } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center ]`">
                   {{
@@ -30,12 +30,11 @@
 
 
             </div>
-            <div class="item_info" v-show="itemType == 'stock'">
+            <div class="item_info mt-[0.16rem]" v-if="itemType == 'stock' || itemType == 'blocktrade'">
               {{ props.item.name || "--" }}
             </div>
-
-            <div class="flex items-center" v-if="itemType != 'stock'">
-              <span v-if="marketMap[itemType]"
+            <div class="flex items-center mt-[0.16rem]" v-else-if="!hideMarketTag && marketMap[itemType]">
+              <span 
                 :class="`${marketStyle[itemType]
                   } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center ]`">
                 {{
@@ -156,6 +155,7 @@ const props = defineProps({
   },
   showIcon: Boolean,
   menuType: String,
+  hideMarketTag:Boolean
 });
 
 const itemType = computed(() => {
