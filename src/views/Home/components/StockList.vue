@@ -11,7 +11,7 @@
 
         <NoData v-if="!loading && !showList.length" />
         <div class="list-i">
-            <StockItem :menuType="'stock'" :handleClick="handleClick" :padding="true" :showIcon="false" :item="item"
+            <StockItem :showSparkLine="false" :menuType="'stock'" :handleClick="handleClick" :padding="true" :showIcon="false" :item="item"
                 v-for="(item, i) in showList" :key="'s_' + i" />
         </div>
 
@@ -77,7 +77,8 @@ const showList = computed(() => store.getters.getMarketStockCurrentList || [])
 const subs = () => {
     setTimeout(() => {
         store.dispatch('subList', {
-            allKeys: showList.value.map(item => item.symbol)
+            allKeys: showList.value.map(item => item.symbol),
+            snapshot:false
         })
     }, 500)
 }

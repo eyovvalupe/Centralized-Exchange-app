@@ -411,7 +411,7 @@ export default {
            2. 需要同时订阅多个列表数据，则把symbol字段数组组合后，传 allKeys：所有symbol。此时ws会订阅 allKeys 所有数据
            3. 在订阅了 A 列表之后，还需要订阅 B 列表，甚至 C 列表时，通过 marketWatchKeys 实现，marketWatchKeys中的key会始终订阅，不影响后来的订阅。
        */
-        subList({ commit, state }, { commitKey, listKey, allKeys }) {
+        subList({ commit, state }, { commitKey, listKey, allKeys,snapshot=true }) {
             let proxyKeys = []
             if (listKey) {
                 const proxyListValue = state[listKey]
@@ -497,29 +497,30 @@ export default {
 
                     }
                 })
-
-
-                socket && socket.off('snapshot')
-                socket && socket.emit('snapshot', keys.join(',')) // 快照数据
-                socket && socket.on('snapshot', res => {
-                    if (res.code == 200) {
-                        let points = '';
-                        if (res.data) {
-                            points = _getSnapshotLine(res.data)
-                            // commit('setRealtimeItemData', {
-                            //     symbol: res.symbol,
-                            //     points
-                            // })
-                        }
-                        // // 根据不同页面，同步页面内模块的数据2
-                        (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
-                            const target = state[ck].find(item => item.symbol == res.symbol)
-                            if (target) {
-                                target.points = points
+                //是否订阅快照数据，2025-03-20调整，因股票列表获取快照数据影响后端性能，snapshot 会传false
+                if(snapshot){
+                    socket && socket.off('snapshot')
+                    socket && socket.emit('snapshot', keys.join(',')) // 快照数据
+                    socket && socket.on('snapshot', res => {
+                        if (res.code == 200) {
+                            let points = '';
+                            if (res.data) {
+                                points = _getSnapshotLine(res.data)
+                                // commit('setRealtimeItemData', {
+                                //     symbol: res.symbol,
+                                //     points
+                                // })
                             }
-                        })
-                    }
-                })
+                            // // 根据不同页面，同步页面内模块的数据2
+                            (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
+                                const target = state[ck].find(item => item.symbol == res.symbol)
+                                if (target) {
+                                    target.points = points
+                                }
+                            })
+                        }
+                    })
+                }
             })
         },
         setMarketType({ commit, state }) {
