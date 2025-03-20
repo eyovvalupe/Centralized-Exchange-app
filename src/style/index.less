@@ -162,13 +162,16 @@ input[type='number'] {
   border: 1px solid rgba(0, 0, 0, 0);
   transition: 0.3s;
 
-  &:has(.ipt:focus) {
+  &:not(.item--error):has(.ipt:focus) {
     border: 1px solid var(--ex-border-color3) !important;
   }
 
   .ipt::placeholder {
     color: var(--ex-text-color4);
   }
+}
+.item.item--error{
+  border:1px solid var(--ex-error-color)
 }
 
 // 点击波纹效果

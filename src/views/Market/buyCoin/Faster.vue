@@ -61,7 +61,7 @@
         </div>
         <!-- 收到 -->
         <div class="flex mt-[0.4rem] gap-[0.1rem]">
-          <div class="item item_box flex-1">
+          <div class="item item_box flex-1" :class="{'item--error': isSellErr && form1.volume != ''}">
             <div class="text-[0.32rem] leading-[0.32rem]">
               {{
                   form1.offset == "buy" ? t('market.market_buy_fast_receive') : t('market.market_buy_fast_sell')
@@ -90,9 +90,7 @@
               <img v-lazy="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
             </div>
           </div>
-          
         </div>
-        
       </div>
 
       <div v-if="rate" class="tip">
@@ -140,12 +138,22 @@
         </div>
       </div>
       </template>
-
-      <Button size="large" class="submit ripple-btn" :class="['submit--' + form1.offset]" round :loading="loading" @click="sell">
-        <span style="color: var(--ex-white);">{{
-          form1.offset == "sell" ?
-            t('market.market_buy_fast_sell_btn') : t('market.market_buy_fast_buy_btn') }}</span>
+      <template v-if="form1.offset == 'buy'">
+      <Button size="large" class="submit opacity-30" :class="['submit--' + form1.offset]" round v-if="isBuyErr">
+        {{ t('market.market_buy_fast_buy_btn') }}
       </Button>
+      <Button size="large" :loading="loading" class="submit ripple-btn" :class="['submit--' + form1.offset]" round v-else @click="sell">
+        {{ t('market.market_buy_fast_buy_btn') }}
+      </Button>
+      </template>
+      <template v-else>
+      <Button size="large" class="submit opacity-30" :class="['submit--' + form1.offset]" round v-if="isSellErr">
+        {{ t('market.market_buy_fast_sell_btn') }}
+      </Button>
+      <Button size="large" :loading="loading" class="submit ripple-btn" :class="['submit--' + form1.offset]" round v-else @click="sell">
+        {{ t('market.market_buy_fast_sell_btn') }}
+      </Button>
+      </template>
     </div>
   </div>
 
@@ -395,9 +403,6 @@ const volumeBlur = () => {
     form1.value.volume = ''
     return
   }
-  if (form1.value.offset == 'sell' && form1.value.volume > currWallet.value.amount) {
-    form1.value.volume = currWallet.value.amount
-  }
 }
 
 const volumeInput = () => {
@@ -413,6 +418,24 @@ const putAll = () => {
   form1.value.volume = currWallet.value.amount;
   volumeInput()
 }
+
+const isBuyErr = computed(()=>{
+  if(!money.value || money.value <= 0){
+    return true
+  }
+  return false
+})
+
+const isSellErr = computed(() => {
+  if(!form1.value.volume || form1.value.volume <= 0){
+    return true
+  }
+  if(token.value && currWallet.value && currWallet.value.amount < form1.value.volume && form1.value.offset == 'sell'){
+    return true
+  }
+  return false
+})
+
 
 const showAmountDialog = ref(false)
 const openConfirmBox = () => {
@@ -536,7 +559,6 @@ watch(() => store.state.deWeightCurrencyList, () => {
       background-color: var(--ex-bg-white1);
       border-radius: 0.32rem;
       padding: 0.4rem 0.4rem 0 0.4rem;
-      border: 1px solid rgba(0, 0, 0, 0);
       height:2rem;
       display: flex;
       flex-direction: column;
@@ -559,13 +581,12 @@ watch(() => store.state.deWeightCurrencyList, () => {
         height: 0.36rem;
         margin-left: 0.08rem;
       }
-
     }
   }
 
   .submit {
     margin-top: 0.6rem;
-    color: var(--ex-text-color--bg-light);
+    color:var(--ex-white);
     font-weight: 600;
   }
 

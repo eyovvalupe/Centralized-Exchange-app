@@ -20,14 +20,14 @@
         <template v-if="offset == 'buy'">
           <div class="text-[0.32rem] text-color">{{ t('market.market_buy_will_pay') }}</div>
           <div class="flex items-center">
-            <strong class="text-color text-[0.48rem]">{{ money }}</strong>
+            <strong class="text-color max-w-[3.6rem] truncate" :class="[money.toString().length > 10 ? 'text-[0.36rem]' : 'text-[0.48rem]']">{{ money }}</strong>
             <span class="text-[0.28rem] text-color ml-[0.1rem] relative top-[0.04rem]">{{ payCurrency }}</span>
           </div>
         </template>
         <template v-else>
           <div class="text-[0.32rem] text-color">{{ t('market.market_buy_will_sell') }}</div>
           <div class="flex items-center">
-            <strong class="text-color text-[0.48rem]">{{ volume }}</strong>
+            <strong class="text-color max-w-[3.6rem] truncate" :class="[volume.toString().length > 10 ? 'text-[0.36rem]' : 'text-[0.48rem]']">{{ volume }}</strong>
             <span class="text-[0.28rem] text-color ml-[0.1rem] relative top-[0.04rem]">{{ currency }}</span>
           </div>
         </template>
@@ -35,11 +35,11 @@
       <div class="mt-[0.2rem] flex justify-between items-center px-[0.32rem] h-[1.2rem] bg-white1 rounded-[0.32rem]">
         <div class="text-[0.32rem] text-color">{{ t('market.market_buy_will_receive') }}</div>
         <div class="flex items-center" v-if="offset == 'buy'">
-          <strong class="text-color text-[0.48rem]">{{ volume }}</strong>
+          <strong class="text-color max-w-[3.6rem] truncate" :class="[volume.toString().length > 10 ? 'text-[0.36rem]' : 'text-[0.48rem]']">{{ volume }}</strong>
           <span class="text-[0.28rem] text-color ml-[0.1rem] relative top-[0.04rem]">{{ currency }}</span>
         </div>
         <div class="flex items-center" v-else>
-          <strong class="text-color text-[0.48rem]">{{ money }}</strong>
+          <strong class="text-color max-w-[3.6rem] truncate" :class="[money.toString().length > 10 ? 'text-[0.36rem]' : 'text-[0.48rem]']">{{ money }}</strong>
           <span class="text-[0.28rem] text-color ml-[0.1rem] relative top-[0.04rem]">{{ payCurrency }}</span>
         </div>
       </div>

@@ -187,50 +187,56 @@ watch(price, (newVal, oldVal) => {
 
 const goInfo = (type) => {
   if (props.handleClick) return props.handleClick(props.item, props.menuType);
-  if (type == "stock") {
-    store.commit("setCurrStockItem", props.item);
-    router.push({
-      name: "market_info",
-      query: {
-        symbol: props.item.symbol,
-        type: "stock",
-      },
-    });
+  switch (type) {
+    case 'stock': // 股票
+      store.commit("setCurrStockItem", props.item);
+      break
+    case 'spot': // 现货
+      store.commit("setCurrSpot", props.item);
+      break
+    case 'ai': // ai
+      store.commit("setCurrAi", props.item);
+      break;
+    case 'crypto': // 合约
+    case "constract":
+      if (props.item.tradeType == 'ai') { // ai
+        store.commit("setCurrAi", props.item);
+        type = 'ai'
+      } else {
+        store.commit("setCurrConstract", props.item);
+      }
+      break
+    case 'forex': // 外汇
+    case "foreign":
+      store.commit("setCurrForeign", props.item);
+      break
+    case 'blocktrade': // 大宗
+    case "commodities":
+      store.commit("setCurrCommodities", props.item);
+      break
   }
-  if (type == "spot") {
-    store.commit("setCurrConstract", props.item);
-    router.push({
-      name: "market_info",
-      query: {
-        symbol: props.item.symbol,
-        type: "constract",
-        tradeType: 'spot'
-      },
-    });
-  }
-  if (type == "crypto") {
-    store.commit("setCurrConstract", props.item);
-    router.push({
-      name: "market_info",
-      query: {
-        symbol: props.item.symbol,
-        type: "constract",
-        tradeType: 'constract'
-      },
-    });
-  }
-  if (props.type === "trade") {
-    const data = [
-      {
-        name: props.item.name,
-        symbol: props.item.symbol,
-      },
-    ];
-    store.commit("setShowLeft", false);
-    store.commit("setChooseSymbol", data);
-    return;
-  }
+  router.push({
+    name: "market_info",
+    query: {
+      symbol: props.item.symbol,
+      tradeType: type,
+      type: type,
+    },
+  });
+  // 左侧菜单点击
+  // if (props.type === "trade") {
+  //   const data = [
+  //     {
+  //       name: props.item.name,
+  //       symbol: props.item.symbol,
+  //     },
+  //   ];
+  //   store.commit("setShowLeft", false);
+  //   store.commit("setChooseSymbol", data);
+  //   return;
+  // }
 };
+
 
 const removeStock = (item) => {
   emits("remove", item);
