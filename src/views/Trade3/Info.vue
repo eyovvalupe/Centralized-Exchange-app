@@ -411,7 +411,7 @@
         <div
           style="text-align: center;color: var(--ex-text-color);font-size: 0.32rem;padding: 0.1rem 0 0.2rem 0;font-weight: bold;">
           {{
-            activeTab == 4 ? item.symbol : item.name }}</div>
+            item.type == 'stock' ? item.symbol : item.name }}</div>
         <MarketInfo2 :innerPage="true" />
       </div>
     </BottomPopup>

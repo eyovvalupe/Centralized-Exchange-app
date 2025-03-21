@@ -319,7 +319,7 @@ const tab = ref(1); // 1-看涨 2-看跌
 const showModel = ref(false);
 
 // 表单
-
+const currAi = computed(() => store.state.currAi || {})
 const form1 = ref({
   name: "",
   symbol: "",
@@ -328,22 +328,9 @@ const form1 = ref({
   safeword: "",
 });
 
-if (props.tradeType == 3) { // 机器人
-  form1.value.name = route.query.name || ""
-  form1.value.symbol = ciper.decrypt(route.query.symbol) || ""
-}
-
-// 缓存
-let obj = {}
-try {
-  obj = JSON.parse(sessionStorage.getItem('currAi') || '{}')
-} catch {
-  obj = {}
-}
-if (obj.symbol) {
-  form1.value.name = obj.name;
-  form1.value.symbol = obj.symbol;
-  store.commit("setCurrAi", obj);
+if (currAi.value.symbol) { // 机器人
+  form1.value.name = currAi.value.name || ""
+  form1.value.symbol = currAi.value.symbol || ""
 }
 
 
@@ -533,7 +520,9 @@ const getParams = () => {
       loading.value = false;
     });
 };
-getParams();
+setTimeout(() => {
+  getParams();
+}, 200)
 
 // sessionToken
 const sessionToken = computed(() => store.state.sessionToken || "");

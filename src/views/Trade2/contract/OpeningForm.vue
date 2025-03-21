@@ -1220,54 +1220,40 @@ const handleClick = (item) => {
   });
 };
 
-// 初始化
+
 setTimeout(() => {
   if (currStock.value.symbol) {
-    handleClick(currStock.value);
-  }
-}, 500);
-
-// url参数处理
-if (props.tradeType == 2) {
-  // 合约
-  if (route.query.symbol) {
     handleClick({
-      symbol: ciper.decrypt(route.query.symbol),
+      symbol: currStock.value.symbol,
     });
-  } else {
-    let obj = {};
-    try {
-      switch (props.type) {
-        case 'constract':
-          obj = JSON.parse(sessionStorage.getItem('currConstract') || '{}');
-          break;
-        case 'foreign':
-          obj = JSON.parse(sessionStorage.getItem('currForeign') || '{}');
-          break;
-        case 'commodities':
-          obj = JSON.parse(sessionStorage.getItem('currCommodities') || '{}');
-          break;
-      }
-    } catch {
-      obj = {};
-    }
-    if (obj.symbol) {
-      handleClick(obj);
-    } else {
-      initParam();
-    }
   }
-}
+  // else {
+  //   let obj = {};
+  //   try {
+  //     switch (props.type) {
+  //       case "constract":
+  //         obj = JSON.parse(sessionStorage.getItem("currConstract") || "{}");
+  //         break;
+  //       case "foreign":
+  //         obj = JSON.parse(sessionStorage.getItem("currForeign") || "{}");
+  //         break;
+  //       case "commodities":
+  //         obj = JSON.parse(sessionStorage.getItem("currCommodities") || "{}");
+  //         break;
+  //     }
+  //   } catch {
+  //     obj = {};
+  //   }
+  //   if (obj.symbol) {
+  //     handleClick(obj);
+  //   } else {
+  //     initParam();
+  //   }
+  // }
 
-const openTypeDialog = () => {
-  if (!levers.value.length) {
-    if (!currStock.value.symbol) {
-      showToast(t('trade.contract_opening_err_contract'));
-    }
-    return;
-  }
-  showTypeDialog.value = true;
-};
+}, 500)
+
+
 
 // 开仓
 const params = ref({});

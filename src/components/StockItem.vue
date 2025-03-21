@@ -4,41 +4,41 @@
     <SwipeCell :class="['stock_item_box']" @touchstart.start="" @touchmove.stop="" @touchend.stop="">
       <div class="stock_item_bg"
         :class="[`${' stock_item_' + updownStatus} ${props.page == 'home' ? '' : 'px-[0.28rem]'}`]"
-        @click="goInfo(itemType)" v-if="props.item">
+        @click="goInfo(props.type || props.item.type)" v-if="props.item">
         <div :class="['stock_item']">
           <div class="size-[0.8rem] mr-[0.2rem] flex justify-center items-center"
-            v-if="props.showIcon === true || (props.showIcon !== false && ['crypto', 'forex'].includes(itemType))">
-            <CryptoIcon v-if="itemType == 'spot'" :name="item.name.split('/')[0]" />
-            <CryptoIcon v-if="itemType == 'crypto'" :name="item.name.split('/')[0]" />
-            <CryptoIcon v-if="itemType == 'forex'" :name="item.symbol" />
+            v-if="props.showIcon === true || (props.showIcon !== false && ['crypto', 'forex'].includes(props.item.type))">
+            <CryptoIcon v-if="props.item.type == 'spot'" :name="item.name.split('/')[0]" />
+            <CryptoIcon v-if="props.item.type == 'crypto'" :name="item.name.split('/')[0]" />
+            <CryptoIcon v-if="props.item.type == 'forex'" :name="item.symbol" />
           </div>
           <div class="td5" :class="{ 'td5--ac': showIcon }">
             <div class="item_name flex items-center gap-1">
-              <span class="truncate" v-if="itemType != 'stock' && itemType != 'blocktrade'">{{
+              <span class="truncate" v-if="props.item.type != 'stock' && props.item.type != 'blocktrade'">{{
                 props.item.name
               }}</span>
               <template v-else>
                 <span class="truncate" :class="page == 'home' ? '!text-[0.32rem]' : ''">{{ props.item.symbol }}</span>
-                <span v-if="page != 'home' && marketMap[itemType] && !hideMarketTag"
-                  :class="`${marketStyle[itemType]
+                <span v-if="page != 'home' && marketMap[props.item.type] && !hideMarketTag"
+                  :class="`${marketStyle[props.item.type]
                     } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center ]`">
                   {{
-                    marketMap[itemType]
+                    marketMap[props.item.type]
                   }}
                 </span>
               </template>
 
 
             </div>
-            <div class="item_info mt-[0.16rem]" v-if="itemType == 'stock' || itemType == 'blocktrade'">
+            <div class="item_info mt-[0.16rem]" v-if="props.item.type == 'stock' || props.item.type == 'blocktrade'">
               {{ props.item.name || "--" }}
             </div>
-            <div class="flex items-center mt-[0.16rem]" v-else-if="!hideMarketTag && marketMap[itemType]">
+            <div class="flex items-center mt-[0.16rem]" v-else-if="!hideMarketTag && marketMap[props.item.type]">
               <span
-                :class="`${marketStyle[itemType]
+                :class="`${marketStyle[props.item.type]
                   } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center ]`">
                 {{
-                  marketMap[itemType]
+                  marketMap[props.item.type]
                 }}
               </span>
             </div>
@@ -158,9 +158,7 @@ const props = defineProps({
   hideMarketTag: Boolean
 });
 
-const itemType = computed(() => {
-  return props.item.type || props.type
-})
+
 const mode = ref(1);
 const updown = computed(() => {
   // 1-涨 -1-跌 0-平

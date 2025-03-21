@@ -248,9 +248,9 @@ import { getStaticImgUrl, _formatNumber } from "@/utils/index.js"
 import { Tab, Tabs, Icon, showToast } from "vant";
 import { _futures, _basic, _add, _del } from "@/api/api";
 import BottomPopup from "@/components/BottomPopup.vue";
-import StockTable from "@/components/StockTable.vue";
 import OrderingSpot from "./OrderingSpot.vue"
 import Chart from "./Chart.vue"
+import { formatTimestamp } from '@/utils/time';
 
 
 
@@ -313,6 +313,16 @@ const item = computed(() => {
 });
 
 
+const showDate = computed(() => {
+  // 展示的数据时间
+  if (item.value.timestamp || item.value.ts) {
+    return formatTimestamp(
+      item.value.timestamp || item.value.ts,
+      item.value.timezone,
+    );
+  }
+  return '';
+});
 
 const updown = computed(() => {
   // 1-涨 -1-跌 0-平
@@ -538,6 +548,7 @@ const addCollect = () => {
       font-size: 0.32rem;
       padding: 0 0.4rem;
       margin-right: 0.12rem;
+      white-space: nowrap;
     }
 
     .btn {

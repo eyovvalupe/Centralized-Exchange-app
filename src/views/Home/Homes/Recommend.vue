@@ -17,7 +17,7 @@
                             :page="from == 'home' ? 'home' : ''" :padding="true"
                             :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
                             :showIcon="true" :item="{ ...item, type: 'spot' }" v-for="(item, i) in filterList(showList)"
-                            :key="'c_' + i" menuType="spot" hideMarketTag marketType="spot" page="home" />
+                            :key="'c_' + i" type="spot" hideMarketTag page="home" />
                     </div>
                 </div>
             </Tab>
@@ -29,7 +29,7 @@
                             :page="from == 'home' ? 'home' : ''" :padding="true"
                             :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
                             :showIcon="true" :item="item" v-for="(item, i) in filterList(showList)" :key="'c_' + i"
-                            menuType="constract" hideMarketTag marketType="crypto" page="home" />
+                            type="constract" hideMarketTag page="home" />
                     </div>
                 </div>
             </Tab>
@@ -41,7 +41,7 @@
                             :page="from == 'home' ? 'home' : ''" :padding="true"
                             :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
                             :showIcon="false" :item="item" v-for="(item, i) in filterList(showList)" :key="'c_' + i"
-                            menuType="ai" marketType="ai" page="home" />
+                            type="ai" page="home" />
                     </div>
                 </div>
             </Tab>
@@ -53,7 +53,7 @@
                             :page="from == 'home' ? 'home' : ''" :padding="true"
                             :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
                             :showIcon="true" :item="item" v-for="(item, i) in filterList(showList)" :key="'c_' + i"
-                            menuType="foreign" hideMarketTag marketType="crypto" page="home" />
+                            type="foreign" hideMarketTag page="home" />
                     </div>
                 </div>
             </Tab>
@@ -65,7 +65,7 @@
                             :page="from == 'home' ? 'home' : ''" :padding="true"
                             :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
                             :showIcon="false" :item="item" v-for="(item, i) in filterList(showList)" :key="'c_' + i"
-                            menuType="commodities" hideMarketTag marketType="crypto" page="home" />
+                            type="commodities" hideMarketTag page="home" />
                     </div>
                 </div>
             </Tab>
