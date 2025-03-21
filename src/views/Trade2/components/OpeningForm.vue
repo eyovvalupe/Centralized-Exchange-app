@@ -552,6 +552,7 @@
 </template>
 
 <script setup>
+import ciper from "@/utils/ciper.js"
 import { getStaticImgUrl } from "@/utils/index.js";
 import { Loading, Button, showToast, Popup, ActionSheet, Picker } from "vant";
 import { ref, computed, watch, nextTick } from "vue";
@@ -637,6 +638,7 @@ const goDialogSearch = (market) => {
           store.commit("setMarketSearchList", arr);
 
           setTimeout(() => {
+            console.error('-------', 11)
             store.dispatch("subList", {
               commitKey: "setMarketSearchList",
               listKey: "marketSearchList",
@@ -1028,7 +1030,7 @@ const changePercent = () => {
   if (maxStockNum.value == "--" || !form1.value.volume)
     return (sliderValue.value = 0);
   let v = new Decimal(form1.value.volume);
-  form1.value.volume = v.sub(v.mod(step.value));
+  form1.value.volume = v.sub(v.mod(step.value)).toNumber();
   let p = new Decimal(form1.value.volume)
     .div(maxStockNum.value)
     .mul(100)
@@ -1147,7 +1149,7 @@ if (props.tradeType == 1) {
   // 股票页
   if (route.query.symbol) {
     handleClick({
-      symbol: route.query.symbol,
+      symbol: ciper.decrypt(route.query.symbol),
     });
   } else {
     try {

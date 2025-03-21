@@ -63,6 +63,7 @@
 </template>
 
 <script setup>
+import ciper from "@/utils/ciper.js"
 import { getStaticImgUrl } from "@/utils/index.js"
 import store from "@/store";
 import router from "@/router";
@@ -103,7 +104,7 @@ const goInfo = (item) => {
     router.push({
       name: "tradeInfo",
       query: {
-        symbol: item.symbol,
+        symbol: ciper.encrypt(item.symbol),
         type: "stock",
       },
     });

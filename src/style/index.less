@@ -15,7 +15,8 @@ body,
   color: var(--ex-text-color);
   background-color: var(--ex-bg-color);
   user-select: none;
-  font-family: BinancePlex,'PingFang SC', sans-serif;
+  font-family: BinancePlex, 'PingFang SC', sans-serif;
+  -webkit-overflow-scrolling: touch;
 
   img {
     width: 100%;
@@ -170,8 +171,9 @@ input[type='number'] {
     color: var(--ex-text-color4);
   }
 }
-.item.item--error{
-  border:1px solid var(--ex-error-color)
+
+.item.item--error {
+  border: 1px solid var(--ex-error-color)
 }
 
 // 点击波纹效果
@@ -201,12 +203,14 @@ input[type='number'] {
     pointer-events: none;
   }
 }
+
 @keyframes ripple-animation1 {
   to {
     transform: scale(2);
     opacity: 0;
   }
 }
+
 .ripple-info {
   position: relative;
   cursor: pointer;
@@ -312,6 +316,7 @@ input[type='number'] {
   0% {
     transform: rotate(0deg);
   }
+
   100% {
     transform: rotate(360deg);
   }

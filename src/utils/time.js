@@ -6,6 +6,9 @@ export function getTimestr(timestamp, key) {
   if (!timestamp) return " ";
   if (isNaN(Number(timestamp))) return timestamp;
   timestamp = Number(timestamp); // 原始时间戳
+  if (timestamp > 1000000000000000) {
+    timestamp /= 1000
+  }
   // 获取本地时区的偏移量
   const localTimeZoneOffset =
     new Date(timestamp).getTimezoneOffset() * 60 * 1000;
@@ -105,7 +108,6 @@ export function formatSec2(seconds, zeroFill = false) {
 
 // 时间戳和时区 转换成 时间
 export function formatTimestamp(timestamp, timezone) {
-  console.log(timestamp, timezone)
   try {
     if (timestamp > 1000000000000000) timestamp = timestamp / 1000
     const date = new Date(timestamp);
@@ -151,7 +153,7 @@ export function formatTimestamp(timestamp, timezone) {
 
     return `${formattedDate[0]}-${formattedDate[1]}-${formattedDate[2]} ${formattedDate[3]}:${formattedDate[4]}:${formattedDate[5]}`;
   } catch {
-    // console.error(`-- format error --  timestamp:${timestamp}  timezone:${timezone}`)
+    console.error(`-- format error --  timestamp:${timestamp}  timezone:${timezone}`)
     return getTimestr(timestamp)
   }
 

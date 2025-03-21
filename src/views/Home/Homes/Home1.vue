@@ -331,6 +331,7 @@ Promise.all([
 // 订阅
 const subs = () => {
     store.commit("setMarketWatchKeysByPage");
+    console.error('-------', 30)
     store.dispatch("subList", {});
 };
 

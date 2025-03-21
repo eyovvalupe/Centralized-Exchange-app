@@ -11,7 +11,7 @@
         </div>
 
         <!-- 标题 -->
-        <div class="title" v-if="route.query.type == 'stock'">
+        <div class="title" v-if="item.type == 'stock'">
           <div class="title_name">{{ item.symbol || "--" }} </div>
           <div v-if="showDate" class=" leading-[0.4rem]">
             {{ showDate }}
@@ -143,27 +143,7 @@
     <div v-else style="height:0.12rem"></div>
 
 
-    <!-- 搜索列表 -->
-    <BottomPopup round v-model:show="showSearchDialog" position="bottom" closeable teleport="body">
-      <div class="van-popup-custom-title">
-        {{ t("trade.stock_opening_search") }}
-      </div>
-      <div class="search_dialog_trade">
-        <!-- 搜索 -->
-        <div class="item search_box">
-          <div class="search_icon">
-            <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
-          </div>
-          <input v-model.trim="searchDialogStr" @keyup="goDialogSearch" type="text" class="ipt" style="width: 100%"
-            :placeholder="t('trade.stock_opening_search')" />
-        </div>
 
-        <div class="lists">
-          <StockTable :showIcon="true" theme="classic" :handleClick="handleClick" :loading="searchLoading"
-            :key="'search'" :list="marketSearchList" />
-        </div>
-      </div>
-    </BottomPopup>
 
     <!-- 数据弹窗 -->
     <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" v-model:show="showInfo"
@@ -306,8 +286,7 @@ const type = computed(() => route.query.tradeType || props.type)
 // 股票信息
 const item = computed(() => {
   let obj = {};
-  const type = route.query.type || props.type;
-  switch (type) {
+  switch (type.value) {
     case "constract":
     case "crypto":
       obj = store.state.currConstact || {};
@@ -347,10 +326,36 @@ const getBasic = (obj) => {
   _basic({ symbol: obj.symbol }).then((res) => {
     if (res.code == 200) {
       if (res.data.symbol == item.value.symbol) {
-        const type = route.query.type || props.type;
-        switch (type) {
-          case "constract": // 合约
+        switch (type.value) {
+          case "spot":
+            store.commit("setCurrSpot", {
+              ...obj,
+              ...res.data,
+            });
+            break;
+          case 'crypto':
+          case "constract":
             store.commit("setCurrConstract", {
+              ...obj,
+              ...res.data,
+            });
+            break
+          case "ai":
+            store.commit("setCurrAi", {
+              ...obj,
+              ...res.data,
+            });
+            break
+          case 'forex': // 外汇
+          case "foreign":
+            store.commit("setCurrForeign", {
+              ...obj,
+              ...res.data,
+            });
+            break;
+          case 'blocktrade': // 大宗
+          case "commodities":
+            store.commit("setCurrCommodities", {
               ...obj,
               ...res.data,
             });
@@ -369,19 +374,6 @@ onMounted(() => {
     chartLoading.value = false
   }, 500)
 })
-const handleClick = (obj) => {
-  if (obj.type != 'crypto' && ['3', '4'].includes(activeTab.value)) { // 非加密货币的没有订单薄
-    activeTab.value = 1
-  }
-  showSearchDialog.value = false
-  chartLoading.value = true
-  store.commit("setCurrConstract", obj);
-  getBasic(obj)
-  setTimeout(() => {
-    chartLoading.value = false
-  }, 100)
-};
-
 
 // 添加自选
 const loading = ref(false);
@@ -396,12 +388,25 @@ const addCollect = () => {
       .then((res) => {
         if (res.code == 200) {
           store.dispatch('updateMarketWatchList');
-          switch (route.query.type) {
-            case "constract": // 合约
-              store.commit("setCurrConstract", { watchlist: 1 });
+          switch (type.value) {
+            case "spot":
+              store.commit("setCurrSpot", { watchlist: 1 });
               break;
-            default:
-              store.commit("setCurrStockItem", { watchlist: 1 });
+            case 'crypto':
+            case "constract":
+              store.commit("setCurrConstract", { watchlist: 1 });
+              break
+            case "ai":
+              store.commit("setCurrAi", { watchlist: 1 });
+              break
+            case 'forex': // 外汇
+            case "foreign":
+              store.commit("setCurrForeign", { watchlist: 1 });
+              break;
+            case 'blocktrade': // 大宗
+            case "commodities":
+              store.commit("setCurrCommodities", { watchlist: 1 });
+              break;
           }
           // showToast(t('market.market_optional_add_success'));
         }
@@ -416,12 +421,25 @@ const addCollect = () => {
       .then((res) => {
         if (res.code == 200) {
           store.dispatch('updateMarketWatchList');
-          switch (route.query.type) {
-            case "constract": // 合约
-              store.commit("setCurrConstract", { watchlist: 0 });
+          switch (type.value) {
+            case "spot":
+              store.commit("setCurrSpot", { watchlist: 0 });
               break;
-            default:
-              store.commit("setCurrStockItem", { watchlist: 0 });
+            case 'crypto':
+            case "constract":
+              store.commit("setCurrConstract", { watchlist: 0 });
+              break
+            case "ai":
+              store.commit("setCurrAi", { watchlist: 0 });
+              break
+            case 'forex': // 外汇
+            case "foreign":
+              store.commit("setCurrForeign", { watchlist: 0 });
+              break;
+            case 'blocktrade': // 大宗
+            case "commodities":
+              store.commit("setCurrCommodities", { watchlist: 0 });
+              break;
           }
           // showToast(t('market.market_optioanl_del_success'));
         }
@@ -432,50 +450,6 @@ const addCollect = () => {
   }
 };
 
-
-// 搜索
-const marketSearchList = computed(() => store.state.futuresSearchList)
-const showSearchDialog = ref(false);
-const searchDialogStr = ref("");
-let searchTimeout = null;
-const searchLoading = ref(false);
-const goDialogSearch = () => {
-  if (searchTimeout) clearTimeout(searchTimeout);
-  searchLoading.value = true;
-  let s = searchDialogStr.value;
-  searchTimeout = setTimeout(() => {
-    _futures({
-      name: s,
-      type: "",
-    })
-      .then((res) => {
-        if (searchDialogStr.value == s) {
-          let arr = (res.data || []).map((item) => {
-            const target = marketSearchList.value.find(
-              (a) => a.symbol == item.symbol
-            );
-            if (target)
-              return {
-                ...target,
-                ...item,
-              };
-            return item;
-          });
-          store.commit("setFuturesSearchList", arr);
-          store.dispatch("subList", {
-            commitKey: "setFuturesSearchList",
-            listKey: "futuresSearchList",
-          });
-        }
-      })
-      .finally(() => {
-        searchLoading.value = false;
-      });
-  }, 100);
-};
-setTimeout(() => {
-  goDialogSearch()
-}, 2000)
 </script>
 
 <style lang="less" scoped>

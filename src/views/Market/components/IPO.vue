@@ -10,7 +10,8 @@
       <Tab :title="t('trade.ipo_title_market')" :name="'listed'"></Tab>
     </Tabs>
     <div class="list" :class="props.page == 'home' && 'mt-[-0.32rem]'">
-      <div class="item " :class="{'wow fadeInUp': props.page == 'home'}" :data-wow-delay="( 0.05 * i) + 's'" v-for="(item, i) in ipoDataList" :key="i" @click="openDetail(item)">
+      <div class="item " :class="{ 'wow fadeInUp': props.page == 'home' }" :data-wow-delay="(0.05 * i) + 's'"
+        v-for="(item, i) in ipoDataList" :key="i" @click="openDetail(item)">
         <div class="item_box">
           <div class="name_box">
             <div class="name truncate">{{ item.company_name }}</div>
@@ -269,7 +270,7 @@ const totalHeight = window.innerHeight || document.documentElement.clientHeight;
 const scrollHandler = () => {
   if (!loadingMore) return;
   const rect = loadingMore.getBoundingClientRect();
-  if (rect.top <= totalHeight) {
+  if (rect && rect.top <= totalHeight) {
     // 加载更多
     getData();
   }

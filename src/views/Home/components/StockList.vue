@@ -11,8 +11,8 @@
 
         <NoData v-if="!loading && !showList.length" />
         <div class="list-i">
-            <StockItem :showSparkLine="false" hideMarketTag :menuType="'stock'" :handleClick="handleClick" :padding="true" :showIcon="false" :item="item"
-                v-for="(item, i) in showList" :key="'s_' + i" />
+            <StockItem :showSparkLine="false" hideMarketTag :menuType="'stock'" :handleClick="handleClick"
+                :padding="true" :showIcon="false" :item="item" v-for="(item, i) in showList" :key="'s_' + i" />
         </div>
 
         <LoadingMore :classN="'loading_more_stock'" :loading="loading" :finish="finish"
@@ -76,9 +76,10 @@ const marketCurrent = computed(() => store.state.marketCurrent)
 const showList = computed(() => store.getters.getMarketStockCurrentList || [])
 const subs = () => {
     setTimeout(() => {
+        console.error('-------', 31)
         store.dispatch('subList', {
             allKeys: showList.value.map(item => item.symbol),
-            snapshot:false
+            snapshot: false
         })
     }, 500)
 }
@@ -202,7 +203,7 @@ let target = null;
 const scrollHandler = () => {
     if (!target) return;
     const rect = target.getBoundingClientRect();
-    if (rect.top <= totalHeight) {
+    if (rect && rect.top <= totalHeight) {
         // 加载更多
         getAll()
     }

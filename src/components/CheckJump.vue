@@ -10,6 +10,7 @@
 </template>
 
 <script setup>
+import ciper from "@/utils/ciper.js"
 import { showLoadingToast, closeToast, showToast } from "vant"
 import { _basic } from "@/api/api.js"
 import { ref } from "vue"
@@ -89,7 +90,7 @@ const clickItem = type => {
     router.push({
         name: 'tradeInfo',
         query: {
-            symbol: target.value.symbol,
+            symbol: ciper.encrypt(target.value.symbol),
             tradeType: tradeTypeMap[type]
         }
     })

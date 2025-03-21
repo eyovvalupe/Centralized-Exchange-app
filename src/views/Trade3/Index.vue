@@ -2,30 +2,8 @@
   <div class="w-full h-full">
     <div class="page-trade3 relative" ref="tradePageRef">
 
-      <!-- 作为内页的菜单 -->
-      <div class="z-[1] pt-[0.4rem] pb-[0.4rem] bg-color" v-if="props.innerPage">
-        <div
-          class="transition flex justify-between px-[0.32rem] py-[0.18rem] rounded-[1rem] gap-[0.2rem] h-[0.8rem] mx-[0.4rem] items-center border-[0.02rem]"
-          :class="focusRef ? 'border-white' : ''" style="background-color: var(--ex-bg-white1)">
-          <div class="w-[0.5rem] h-[0.5rem]">
-            <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="" />
-          </div>
-          <div class="text-[0.32rem] text-color2 leading-[0.5rem] flex-1 px-[0.1rem]">
-            <input style="flex: 1; width: 100%" v-model.trim="searchRef" class="text-white"
-              :placeholder="$t('market.market_input_crypto_set')" @input="inputHandle" @focus="focusRef = true"
-              @blur="focusRef = false" />
-          </div>
-        </div>
-      </div>
-      <!-- <div style="height: 0.24rem;" v-else>
-        <div @click="jump('search')"
-          style="width: 0.72rem;height: 0.72rem;border-radius: 50%;background-color: var(--ex-bg-white1);position: absolute;right: 0.24rem;top: 0.08rem;z-index: 99;padding: 0.11rem 0.12rem 0.13rem 0.12rem;">
-          <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="">
-        </div>
-      </div> -->
-
       <!-- 作为完整页面的菜单 -->
-      <HeaderTabs type="normal" v-else @change="changeTab" :from="'tradeInfo'" v-model:active="headActiveTab"
+      <HeaderTabs type="normal" @change="changeTab" :from="'tradeInfo'" v-model:active="headActiveTab"
         :tabs="[t('自选'), t('买币'), t('行情')]">
         <template #after>
           <div class="flex items-center gap-[0.16rem] mr-[0.34rem]">
@@ -82,60 +60,20 @@
           </div>
         </div>
       </div>
-      <div v-if="headActiveTab == 1 && !props.innerPage">
+      <div v-if="headActiveTab == 1">
         <BuyCoin style="padding-top: 0.04rem;" v-if="loaded && headActiveTab == 1" />
       </div>
-      <div v-if="headActiveTab == 2 && !focusRef && !searchRef">
+      <div v-if="headActiveTab == 2">
         <div style="height: 0.12rem;"></div>
         <Recommend @handleClick="handleClick" :innerPage="props.innerPage"
           v-if="(props.innerPage && loaded) || (activated && loaded)" ref="recommendRef" from="trade" :sticky="false"
           :activated="activated" />
       </div>
 
-      <div v-if="focusRef || searchRef">
-        <div class="pl-[0.38rem] pr-[0.32rem] text-[0.28rem] leading-[0.4rem] pb-[0.08rem]" style="
-            border-bottom: 1px solid var(--ex-border-color5);
-            color: var(--ex-text-color2);
-          ">
-          搜索结果
-        </div>
-        <div class="lists" style="
-            border-radius: 0.32rem;
-            margin-left: 0.32rem;
-            margin-right: 0.32rem;
-            padding-left: 0;
-            padding-right: 0;
-            min-height: calc(var(--vh) * 100 - 4rem);
-          ">
-          <StockTable :from="'trade'" :showIcon="true" theme="classic" :handleClick="goInfo" :loading="searchLoading"
-            :key="'search'" :list="searchList" />
-        </div>
-      </div>
     </div>
   </div>
 
-  <!-- 搜索列表 -->
-  <BottomPopup round v-model:show="showSearchDialog" position="bottom" closeable teleport="body">
-    <div class="van-popup-custom-title">
-      {{ recommendRef.activeTab == 0 ? $t("common.spot") : $t("common.crypto")
-      }}{{ t("trade.stock_opening_search") }}
-    </div>
-    <div class="search_dialog_trade">
-      <!-- 搜索 -->
-      <div class="item search_box">
-        <div class="search_icon">
-          <img v-lazy="getStaticImgUrl('/static/img/common/search.svg')" alt="🔍" />
-        </div>
-        <input v-model.trim="searchDialogStr" @keyup="goDialogSearch" type="text" class="ipt" style="width: 100%"
-          :placeholder="t('trade.stock_opening_search')" />
-      </div>
 
-      <div class="lists">
-        <StockTable :from="'trade'" :showIcon="true" theme="classic" :handleClick="goInfo" :loading="searchLoading"
-          :key="'search'" :list="marketSearchList" />
-      </div>
-    </div>
-  </BottomPopup>
 
   <!-- 弹出菜单 -->
   <Popup round v-model:show="showRight" position="right" :style="{ width: '70%', height: '100%' }">
@@ -293,11 +231,7 @@ const contractList = computed(() => store.state.contractList);
 const showRightMenu = computed(() => store.state.showRightMenu);
 const searchRef = ref("");
 const { startSocket } = useSocket();
-// 订阅
-const subs = () => {
-  store.commit("setMarketWatchKeysByPage");
-  store.dispatch("subList", {});
-};
+
 
 let timeout = null;
 const inputHandle = () => {
@@ -322,6 +256,7 @@ const goSearch = () => {
   })
     .then((res) => {
       store.commit("setSearchList", res.data);
+      console.error('-------', 3)
       store.dispatch("subList", {
         listKey: "searchList",
       });
@@ -332,7 +267,6 @@ const goSearch = () => {
 const activated = ref(false);
 const act = () => {
   store.commit("setMarketWatchKeys", []);
-  subs();
   if (route.query.tab) {
     sessionStorage.setItem(`rec_tab_trade`, route.query.tab);
   }
@@ -380,73 +314,8 @@ const handleClick = (obj) => {
 };
 
 const recommendRef = ref();
-const goInfo = (item) => {
-  // 作为页面点击元素
-  if (props.innerPage) return handleClick({ item: item });
-  showSearchDialog.value = false;
-  store.commit("setCurrConstract", item);
-  router.push({
-    name: "market_info",
-    query: {
-      symbol: item.name,
-      type: "constract",
-      tradeType:
-        recommendRef.value && recommendRef.value.activeTab == 0
-          ? "spot"
-          : "constract",
-    },
-  });
-};
-
-// 搜索
-const marketSearchList = computed(() => store.state.futuresSearchList);
-const showSearchDialog = ref(false);
-const searchDialogStr = ref("");
-let searchTimeout = null;
-const searchLoading = ref(false);
-const goDialogSearch = () => {
-  if (searchTimeout) clearTimeout(searchTimeout);
-  searchLoading.value = true;
-  let s = searchDialogStr.value;
-  searchTimeout = setTimeout(() => {
-    _futures({
-      name: s,
-      type: "",
-    })
-      .then((res) => {
-        if (searchDialogStr.value == s) {
-          let arr = (res.data || []).map((item) => {
-            const target = marketSearchList.value.find(
-              (a) => a.symbol == item.symbol
-            );
-            if (target)
-              return {
-                ...target,
-                ...item,
-              };
-            return item;
-          });
-          store.commit("setFuturesSearchList", arr);
-          store.dispatch("subList", {
-            commitKey: "setFuturesSearchList",
-            listKey: "futuresSearchList",
-          });
-        }
-      })
-      .finally(() => {
-        searchLoading.value = false;
-      });
-  }, 100);
-};
 
 
-// watch(searchRef, (val) => {
-//   if (!val) {
-//     setTimeout(() => {
-//       store.commit('setSearchList', [])
-//     }, 100);
-//   }
-// })
 
 
 
@@ -468,6 +337,7 @@ const getWatchList = () => {
         store.commit("setMarketWatchList", list || []);
         sessionStorage.setItem('market_watch_list', JSON.stringify(list || []))
         setTimeout(() => {
+          console.error('-------', 2)
           store.dispatch('subList', {
             commitKey: 'setMarketWatchList',
             listKey: 'marketWatchList'
@@ -475,12 +345,11 @@ const getWatchList = () => {
         }, 50);
       }
     })
-    .catch(err => console.error(err))
     .finally(() => watchListLoading.value = false);
 }
 
 const init = () => {
-  if (token.value) getWatchList();
+  if (token.value && headActiveTab.value == 0) getWatchList();
 }
 
 init()

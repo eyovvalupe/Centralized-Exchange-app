@@ -24,14 +24,15 @@
     <!-- 表单 -->
     <div class="form">
       <!-- <div class="form_title" v-show="activeTab == 0">{{ $t("login.email") }}</div> -->
-      <div class="form_item margin_item transition" :style="{borderColor: emailError ? 'var(--ex-error-color)' : ''}" v-show="activeTab == 0">
+      <div class="form_item margin_item transition" :style="{ borderColor: emailError ? 'var(--ex-error-color)' : '' }"
+        v-show="activeTab == 0">
         <div class="form_item_user">
           <div class="envelope-icon">
             <img v-lazy="getStaticImgUrl('/static/img/user/envelope.svg')" alt="">
           </div>
         </div>
         <input @change="changeAccount" v-model.trim="form.email" :placeholder="t('login.pw_placeholder1')" type="text"
-          class="item_input" @focus="emailError = false"/>
+          class="item_input" @focus="emailError = false" />
         <Loading v-if="accountLoading" :size="'0.32rem'" type="circular" />
         <div class="form_item_clear" v-show="form.email" @click="form.email = null">
           <div class="cross-icon">
@@ -41,7 +42,8 @@
       </div>
 
       <!-- <div class="form_title" v-show="activeTab == 1">{{ $t("login.phone_number") }}</div> -->
-      <div class="form_item margin_item transition" :style="{borderColor: phoneError ? 'var(--ex-error-color)' : ''}" v-show="activeTab == 1">
+      <div class="form_item margin_item transition" :style="{ borderColor: phoneError ? 'var(--ex-error-color)' : '' }"
+        v-show="activeTab == 1">
         <div class="code" @click="
           showDialog = true;
         searchStr = '';
@@ -55,10 +57,10 @@
           </div>
         </div>
         <input maxlength="20" v-model.trim="form.phone" type="text" :placeholder="t('login.pw_placeholder2')"
-          class="item_input" @focus="phoneError = false"/>
+          class="item_input" @focus="phoneError = false" />
       </div>
       <!-- <div class="form_title">{{ $t("login.password") }}</div> -->
-      <div class="form_item transition" :style="{borderColor: pwError ? 'var(--ex-error-color)' : ''}">
+      <div class="form_item transition" :style="{ borderColor: pwError ? 'var(--ex-error-color)' : '' }">
         <!-- 显示密码输入时的锁图标 -->
         <div class="form_item_user">
           <div class="lock-icon">
@@ -68,7 +70,7 @@
 
         <!-- 密码输入框，使用 v-if/v-else 优化 -->
         <input maxlength="20" :type="showPass ? 'text' : 'password'" v-model.trim="form.password"
-          :placeholder="t('login.pw_placeholder3')" class="item_input" @focus="pwError = false"/>
+          :placeholder="t('login.pw_placeholder3')" class="item_input" @focus="pwError = false" />
 
         <!-- 切换显示/隐藏密码的图标 -->
         <div class="form_item_icon" @click="showPass = !showPass">
@@ -311,7 +313,7 @@ const submit = () => {
           .then((res) => {
             if (res.code == 200) {
               store.commit("setMarketWatchList", res.data || []);
-
+              console.error('-------', 15)
               store.dispatch("subList", {
                 commitKey: "setMarketWatchList",
                 listKey: "marketWatchList",

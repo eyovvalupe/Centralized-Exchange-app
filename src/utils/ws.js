@@ -35,7 +35,7 @@ export const useSocket = () => {
           try {
             arr = JSON.parse(sessionStorage.getItem('subKeys') || '[]')
           } catch { }
-
+          console.error('-------', 32)
           store.dispatch("subList", {
             allKeys: arr
           });

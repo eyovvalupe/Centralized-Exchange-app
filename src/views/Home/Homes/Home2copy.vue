@@ -60,7 +60,7 @@
             <div class="recommend-title">
                 <div class="wow slideInLeft" data-wow-duration="0.6s" style="flex: 1;">{{ t('home.finance') }}</div>
                 <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">{{ t('home.landing_more')
-                    }}</span>
+                }}</span>
                 <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s"
                     @click="fActive == 1 ? jump('finance', true, 1) : jump('follow', false)">
                     <img v-lazy="getStaticImgUrl('/static/img/user/right_gray.svg')" alt="">
@@ -93,7 +93,7 @@
                 <div class="wow slideInLeft" style="flex: 1;" data-wow-duration="0.6s">{{ t('home.market_trend') }}
                 </div>
                 <span class="recommend-more wow slideInRight" data-wow-duration="0.6s">{{ t('home.landing_more')
-                    }}</span>
+                }}</span>
                 <div class="recommend-icon wow slideInRight ripple-primary" data-wow-duration="0.6s">
                     <img v-lazy="getStaticImgUrl('/static/img/user/right_gray.svg')" alt="">
                 </div>
@@ -229,6 +229,7 @@ Promise.all([
 // 订阅
 const subs = () => {
     store.commit("setMarketWatchKeysByPage");
+    console.error('-------', 28)
     store.dispatch("subList", {});
 };
 

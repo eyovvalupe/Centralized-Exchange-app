@@ -6,7 +6,7 @@
         :class="[`${' stock_item_' + updownStatus} ${props.page == 'home' ? '' : 'px-[0.28rem]'}`]"
         @click="goInfo(itemType)" v-if="props.item">
         <div :class="['stock_item']">
-          <div class="size-[0.96rem] mr-[0.2rem] flex justify-center items-center"
+          <div class="size-[0.8rem] mr-[0.2rem] flex justify-center items-center"
             v-if="props.showIcon === true || (props.showIcon !== false && ['crypto', 'forex'].includes(itemType))">
             <CryptoIcon v-if="itemType == 'spot'" :name="item.name.split('/')[0]" />
             <CryptoIcon v-if="itemType == 'crypto'" :name="item.name.split('/')[0]" />
@@ -34,7 +34,7 @@
               {{ props.item.name || "--" }}
             </div>
             <div class="flex items-center mt-[0.16rem]" v-else-if="!hideMarketTag && marketMap[itemType]">
-              <span 
+              <span
                 :class="`${marketStyle[itemType]
                   } font-normal whitespace-nowrap text-[0.22rem] rounded-[0.08rem] px-[0.12rem] h-[0.32rem]  flex items-center justify-center ]`">
                 {{
@@ -88,6 +88,7 @@
 </template>
 
 <script setup>
+import ciper from "@/utils/ciper.js"
 import { getStaticImgUrl } from "@/utils/index.js";
 import SparkLine from "./SparkLine.vue";
 import { ref, computed, watch } from "vue";
@@ -154,8 +155,7 @@ const props = defineProps({
     default: false
   },
   showIcon: Boolean,
-  menuType: String,
-  hideMarketTag:Boolean
+  hideMarketTag: Boolean
 });
 
 const itemType = computed(() => {
@@ -218,7 +218,7 @@ const goInfo = (type) => {
   router.push({
     name: "market_info",
     query: {
-      symbol: props.item.symbol,
+      symbol: ciper.encrypt(props.item.symbol),
       tradeType: type,
       type: type,
     },
@@ -321,7 +321,7 @@ const removeStock = (item) => {
       white-space: nowrap;
       width: 100%;
       overflow: hidden;
-      padding-right: 0.4rem;
+      padding-right: 0.2rem;
     }
   }
 

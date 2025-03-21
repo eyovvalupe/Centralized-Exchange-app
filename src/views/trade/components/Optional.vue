@@ -19,6 +19,7 @@ const type = ref('trade')
 const token = computed(() => store.state.token || '')
 const loading = ref(false)
 const subs = () => { // 订阅 ws
+    console.error('-------', 14)
     store.dispatch('subList', {
         commitKey: 'setMarketWatchList',
         listKey: 'marketWatchList',

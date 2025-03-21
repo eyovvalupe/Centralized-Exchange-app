@@ -126,6 +126,7 @@ export const useNavDialog = (activeTab) => {
               store.commit("setMarketWatchList", res.data || []);
             }
             setTimeout(() => {
+              console.error('-------', 9)
               store.dispatch("subList", {
                 commitKey: "setMarketWatchList",
                 listKey: "marketWatchList",
@@ -252,73 +253,47 @@ export const useNavDialog = (activeTab) => {
     let s = searchStr.value;
 
     // if (type == "stock") {
-      store.commit("setMarketSearchList", []);
-      searchLoading.value = true;
-      searchTimeout = setTimeout(() => {
-        _stock({
-          market: stockActiveTab.value != "all" ? stockActiveTab.value : "",
-        })
-          .then((res) => {
-            let arr = (res.data || []).map((item) => {
-              const target = marketSearchList.value.find(
-                (a) => a.symbol == item.symbol
-              );
-              item.type = "stock";
-              if (target)
-                return {
-                  ...target,
-                  ...item,
-                };
-              return item;
-            });
-            store.commit("setMarketSearchList", arr);
-            store.dispatch("subList", {
-              commitKey: "setMarketSearchList",
-              listKey: "marketSearchList",
-            });
-          })
-          .finally(() => {
-            searchLoading.value = false;
+    store.commit("setMarketSearchList", []);
+    searchLoading.value = true;
+    searchTimeout = setTimeout(() => {
+      _stock({
+        market: stockActiveTab.value != "all" ? stockActiveTab.value : "",
+      })
+        .then((res) => {
+          let arr = (res.data || []).map((item) => {
+            const target = marketSearchList.value.find(
+              (a) => a.symbol == item.symbol
+            );
+            item.type = "stock";
+            if (target)
+              return {
+                ...target,
+                ...item,
+              };
+            return item;
           });
-      }, 0);
+          store.commit("setMarketSearchList", arr);
+          console.error('-------', 8)
+          store.dispatch("subList", {
+            commitKey: "setMarketSearchList",
+            listKey: "marketSearchList",
+          });
+        })
+        .finally(() => {
+          searchLoading.value = false;
+        });
+    }, 0);
     // } else if (type == "contract") {
-      searchLoading.value = true;
-      store.commit("setFuturesSearchList", []);
-      searchTimeout = setTimeout(() => {
-        _futures({
-          type: "",
-        })
-          .then((res) => {
-            if (searchStr.value == s) {
-              let arr = (res.data || []).map((item) => {
-                const target = futuresSearchList.value.find(
-                  (a) => a.symbol == item.symbol
-                );
-                if (target)
-                  return {
-                    ...target,
-                    ...item,
-                  };
-                return item;
-              });
-              store.commit("setFuturesSearchList", arr);
-              store.dispatch("subList", {
-                commitKey: "setFuturesSearchList",
-                listKey: "futuresSearchList",
-              });
-            }
-          })
-          .finally(() => {
-            searchLoading.value = false;
-          });
-      }, 0);
-    // } else if (type == "ai") {
-      searchLoading.value = true;
-      searchTimeout = setTimeout(() => {
-        _aiquant({})
-          .then((res) => {
+    searchLoading.value = true;
+    store.commit("setFuturesSearchList", []);
+    searchTimeout = setTimeout(() => {
+      _futures({
+        type: "",
+      })
+        .then((res) => {
+          if (searchStr.value == s) {
             let arr = (res.data || []).map((item) => {
-              const target = aiquantSearchList.value.find(
+              const target = futuresSearchList.value.find(
                 (a) => a.symbol == item.symbol
               );
               if (target)
@@ -328,28 +303,57 @@ export const useNavDialog = (activeTab) => {
                 };
               return item;
             });
-            store.commit("setAiquantSearchList", arr);
+            store.commit("setFuturesSearchList", arr);
+            console.error('-------', 7)
             store.dispatch("subList", {
-              commitKey: "setAiquantSearchList",
-              listKey: "aiquantSearchList",
+              commitKey: "setFuturesSearchList",
+              listKey: "futuresSearchList",
             });
-          })
-          .finally(() => {
-            searchLoading.value = false;
+          }
+        })
+        .finally(() => {
+          searchLoading.value = false;
+        });
+    }, 0);
+    // } else if (type == "ai") {
+    searchLoading.value = true;
+    searchTimeout = setTimeout(() => {
+      _aiquant({})
+        .then((res) => {
+          let arr = (res.data || []).map((item) => {
+            const target = aiquantSearchList.value.find(
+              (a) => a.symbol == item.symbol
+            );
+            if (target)
+              return {
+                ...target,
+                ...item,
+              };
+            return item;
           });
-      }, 0);
+          store.commit("setAiquantSearchList", arr);
+          console.error('-------', 6)
+          store.dispatch("subList", {
+            commitKey: "setAiquantSearchList",
+            listKey: "aiquantSearchList",
+          });
+        })
+        .finally(() => {
+          searchLoading.value = false;
+        });
+    }, 0);
     // }
   };
 
   const searchItem = () => {
     searchResultList.value = searchStr.value && totalList.value.length
       ? totalList.value.filter(
-          (item) =>
-            item.name.includes(searchStr.value) ||
-            item.name.includes(searchStr.value.toUpperCase()) ||
-            item.symbol.includes(searchStr.value) ||
-            item.name.includes(searchStr.value.toUpperCase())
-        )
+        (item) =>
+          item.name.includes(searchStr.value) ||
+          item.name.includes(searchStr.value.toUpperCase()) ||
+          item.symbol.includes(searchStr.value) ||
+          item.name.includes(searchStr.value.toUpperCase())
+      )
       : [];
   };
 

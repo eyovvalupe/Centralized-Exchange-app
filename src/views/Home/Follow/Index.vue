@@ -21,11 +21,11 @@
         <FollowInfo v-if="showInfo" @back="showInfo = false" style="width: 100%;height: 100%;" />
     </Popup>
 
-     <!-- 跟单弹窗 -->
-     <BottomPopup v-model:show="showPlus" :title="t('copy.title')" position="bottom" round closeable teleport="body">
+    <!-- 跟单弹窗 -->
+    <BottomPopup v-model:show="showPlus" :title="t('copy.title')" position="bottom" round closeable teleport="body">
         <FollowSubmit v-if="showPlus" @success="onSuccess" :item="info" :mode="'follow'" />
     </BottomPopup>
-    
+
 </template>
 
 <script setup>
@@ -38,7 +38,7 @@ import FollowSubmit from "../components/FollowSubmit.vue"
 import { _copyMyList, _copyList } from '@/api/api'
 import { ref, computed, onMounted, onBeforeUnmount, watch } from "vue"
 import store from "@/store";
-import { Popup,  showToast } from "vant"
+import { Popup, showToast } from "vant"
 import FollowInfo from "../Follow/FollowInfo.vue"
 import { useI18n } from "vue-i18n";
 const { t } = useI18n()
@@ -71,7 +71,7 @@ const onFollow = (item) => {
 }
 
 
-const onSuccess = ()=>{
+const onSuccess = () => {
     showPlus.value = false
     showInfo.value = true
 }
@@ -90,20 +90,20 @@ const getMoreData = () => {
     _copyList({
         page: page.value
     })
-    .then((res) => {
-        res.data = res.data || [];
-        followList.value = page.value == 1 ? res.data : followList.value.concat(res.data)
-        page.value++
-        
-        if (!res.data.length) {
-            finish.value = true;
-        }
-    })
-    .finally(() => {
-        setTimeout(() => {
-            loading.value = false;
-        }, 300)
-    });
+        .then((res) => {
+            res.data = res.data || [];
+            followList.value = page.value == 1 ? res.data : followList.value.concat(res.data)
+            page.value++
+
+            if (!res.data.length) {
+                finish.value = true;
+            }
+        })
+        .finally(() => {
+            setTimeout(() => {
+                loading.value = false;
+            }, 300)
+        });
 }
 
 
@@ -112,20 +112,20 @@ const totalHeight = window.innerHeight || document.documentElement.clientHeight;
 const scrolHandle = () => {
     const rect = moreDom.getBoundingClientRect();
     console.log(666)
-    if (rect.top <= totalHeight) {
+    if (rect && rect.top <= totalHeight) {
         // 加载更多
         getMoreData();
     }
 };
-const init = ()=>{
+const init = () => {
     page.value = 1
     getMoreData()
     if (token.value) {
         store.dispatch('updateMyFollowList')
     }
 }
-watch(()=>store.state.token,(v)=>{
-    if(v){
+watch(() => store.state.token, (v) => {
+    if (v) {
         init()
     }
 })

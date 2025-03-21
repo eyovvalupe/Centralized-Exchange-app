@@ -549,6 +549,7 @@
 </template>
 
 <script setup>
+import ciper from "@/utils/ciper.js"
 import { getStaticImgUrl } from '@/utils/index.js';
 import { Button, showToast, Popup, ActionSheet, Picker } from 'vant';
 import { ref, computed, onMounted, onBeforeUnmount } from 'vue';
@@ -656,42 +657,8 @@ const goDialogSearch = (market) => {
               };
             return item;
           });
-          // switch (props.type) {
-          //   case 'constract':
-          //     store.commit("setContractList", arr);
-          //     break
-          //   case 'foreign':
-          //     store.commit("setMarketForeignList", arr);
-          //     break
-          //   case 'commodities':
-          //     store.commit("setMarketCommoditiesList", arr);
-          //     break
-          // }
-
-          // setTimeout(() => {
-          //   switch (props.type) {
-          //     case 'constract':
-          //       store.dispatch("subList", {
-          //         commitKey: "setContractList",
-          //         listKey: "contractList",
-          //       });
-          //       break
-          //     case 'foreign':
-          //       store.dispatch("subList", {
-          //         commitKey: "setMarketForeignList",
-          //         listKey: "marketForeignList",
-          //       });
-          //       break
-          //     case 'commodities':
-          //       store.dispatch("subList", {
-          //         commitKey: "setMarketCommoditiesList",
-          //         listKey: "marketCommoditiesList",
-          //       });
-          //       break
-          //   }
-
-          // }, 100);
           store.commit('setFuturesSearchList', arr);
+          console.error('-------', 10)
           store.dispatch('subList', {
             commitKey: 'setFuturesSearchList',
             listKey: 'futuresSearchList',
@@ -1208,21 +1175,30 @@ const initParam = () => {
 
 const setCurrStockFunc = (item) => {
   switch (props.type) {
-    case 'constract':
-      sessionStorage.setItem('currConstract', JSON.stringify(item));
-      store.commit('setCurrConstract', item);
+    case "spot":
+      sessionStorage.setItem("currSpot", JSON.stringify(item));
+      store.commit("setCurrSpot", item);
       break;
-    case 'foreign':
-      store.commit('setCurrForeign', item);
-      sessionStorage.setItem('currForeign', JSON.stringify(item));
+    case 'crypto':
+    case "constract":
+      sessionStorage.setItem("currConstract", JSON.stringify(item))
+      store.commit('setCurrConstract', item)
+      break
+    case "ai":
+      sessionStorage.setItem("currAi", JSON.stringify(item))
+      store.commit('setCurrAi', item)
+      break
+    case 'forex': // 外汇
+    case "foreign":
+      store.commit("setCurrForeign", item);
+      sessionStorage.setItem("currForeign", JSON.stringify(item));
       break;
-    case 'commodities':
-      store.commit('setCurrCommodities', item);
-      sessionStorage.setItem('currCommodities', JSON.stringify(item));
+    case 'blocktrade': // 大宗
+    case "commodities":
+      store.commit("setCurrCommodities", item);
+      sessionStorage.setItem("currCommodities", JSON.stringify(item));
       break;
   }
-  sessionStorage.setItem('currConstract', JSON.stringify(item));
-  store.commit('setCurrConstract', item);
 };
 
 const handleClick = (item) => {
@@ -1256,7 +1232,7 @@ if (props.tradeType == 2) {
   // 合约
   if (route.query.symbol) {
     handleClick({
-      symbol: route.query.symbol,
+      symbol: ciper.decrypt(route.query.symbol),
     });
   } else {
     let obj = {};

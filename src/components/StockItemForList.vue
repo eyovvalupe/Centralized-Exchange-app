@@ -106,6 +106,7 @@
 </template>
 
 <script setup>
+import ciper from "@/utils/ciper.js"
 import { getStaticImgUrl } from "@/utils/index.js"
 import SparkLine from "./SparkLine.vue";
 import { ref, computed, watch, onMounted } from "vue";
@@ -179,7 +180,7 @@ const goInfo = (type) => {
     router.push({
       name: "tradeInfo",
       query: {
-        symbol: props.item.symbol,
+        symbol: ciper.encrypt(props.item.symbol),
         type: "stock",
       },
     });
@@ -189,7 +190,7 @@ const goInfo = (type) => {
     router.push({
       name: "tradeInfo",
       query: {
-        symbol: props.item.name,
+        symbol: ciper.encrypt(props.item.name),
         type: "constract",
       },
     });

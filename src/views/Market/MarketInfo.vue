@@ -461,11 +461,24 @@ const addCollect = () => {
         if (res.code == 200) {
           store.dispatch('updateMarketWatchList');
           switch (route.query.type) {
-            case 'constract': // 合约
-              store.commit('setCurrConstract', { watchlist: 0 });
+            case "spot":
+              store.commit("setCurrSpot", { watchlist: 0 });
               break;
-            default:
-              store.commit('setCurrStockItem', { watchlist: 0 });
+            case 'crypto':
+            case "constract":
+              store.commit("setCurrConstract", { watchlist: 0 });
+              break
+            case "ai":
+              store.commit("setCurrAi", { watchlist: 0 });
+              break
+            case 'forex': // 外汇
+            case "foreign":
+              store.commit("setCurrForeign", { watchlist: 0 });
+              break;
+            case 'blocktrade': // 大宗
+            case "commodities":
+              store.commit("setCurrCommodities", { watchlist: 0 });
+              break;
           }
           showToast(t('market.market_optioanl_del_success'));
         }
@@ -651,6 +664,7 @@ const goDialogSearch = () => {
             return item;
           });
           store.commit('setFuturesSearchList', arr);
+          console.error('-------', 26)
           store.dispatch('subList', {
             commitKey: 'setFuturesSearchList',
             listKey: 'futuresSearchList',

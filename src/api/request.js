@@ -92,6 +92,7 @@ instance.interceptors.response.use(
       }
       if (custom.toast) {
         setTimeout(() => {
+          if (res.code == 1010) reurn
           showToast(res.message || '服务端异常')
         }, 600)
       }

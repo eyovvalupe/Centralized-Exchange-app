@@ -5,59 +5,31 @@
     <StockDestribute />
 
     <!-- Tabs -->
-    <Tabs
-      v-if="!pageLoading"
-      class="tabs"
-      @change="changeTab"
-      v-model:active="active"
-      :swipeable="false"
-      animated
-      :color="'var(--ex-primary-color)'"
-      shrink
-    >
+    <Tabs v-if="!pageLoading" class="tabs" @change="changeTab" v-model:active="active" :swipeable="false" animated
+      :color="'var(--ex-primary-color)'" shrink>
       <Tab :title="'活跃'">
         <StockTable :key="'vol'" :loading="loading" :list="marketVolumeList" />
-        <LoadingMore
-          :classN="'stock_soft_more0'"
-          ref="more_1"
-          class="active_more"
-          :loading="!!(marketVolumeList.length && loading)"
-          :finish="finish"
-          v-if="((finish && marketVolumeList.length) || !finish) && active == 0"
-        />
+        <LoadingMore :classN="'stock_soft_more0'" ref="more_1" class="active_more"
+          :loading="!!(marketVolumeList.length && loading)" :finish="finish"
+          v-if="((finish && marketVolumeList.length) || !finish) && active == 0" />
       </Tab>
       <Tab :title="'涨幅'">
         <StockTable :key="'up'" :loading="loading" :list="marketUpList" />
-        <LoadingMore
-          :classN="'stock_soft_more1'"
-          ref="more_2"
-          class="active_more"
-          :loading="!!(marketUpList.length && loading)"
-          :finish="finish"
-          v-if="((finish && marketUpList.length) || !finish) && active == 1"
-        />
+        <LoadingMore :classN="'stock_soft_more1'" ref="more_2" class="active_more"
+          :loading="!!(marketUpList.length && loading)" :finish="finish"
+          v-if="((finish && marketUpList.length) || !finish) && active == 1" />
       </Tab>
       <Tab :title="'跌幅'">
         <StockTable :key="'down'" :loading="loading" :list="marketDownList" />
-        <LoadingMore
-          :classN="'stock_soft_more2'"
-          ref="more_3"
-          class="active_more"
-          :loading="!!(marketDownList.length && loading)"
-          :finish="finish"
-          v-if="((finish && marketDownList.length) || !finish) && active == 2"
-        />
+        <LoadingMore :classN="'stock_soft_more2'" ref="more_3" class="active_more"
+          :loading="!!(marketDownList.length && loading)" :finish="finish"
+          v-if="((finish && marketDownList.length) || !finish) && active == 2" />
       </Tab>
     </Tabs>
 
     <!-- 类型选择弹窗 -->
     <Teleport to="body">
-      <ActionSheet
-        v-model:show="showAS"
-        :actions="actions"
-        @select="onSelect"
-        title="交易所"
-      ></ActionSheet>
+      <ActionSheet v-model:show="showAS" :actions="actions" @select="onSelect" title="交易所"></ActionSheet>
     </Teleport>
   </div>
 </template>
@@ -143,6 +115,7 @@ const marketUpList = computed(() => store.state.marketUpList || []); // 涨幅�
 const marketDownList = computed(() => store.state.marketDownList || []); // 跌幅列表
 const subs = (listKey, key) => {
   // 订阅ws
+  console.error('-------', 16)
   store.dispatch("subList", {
     commitKey: key,
     listKey: listKey,
@@ -225,7 +198,7 @@ try {
   for (let key in overview.value) {
     overview.value[key] = d[key] || 0;
   }
-} catch {}
+} catch { }
 
 
 const overviewLoading = ref(false);
@@ -265,7 +238,7 @@ let target = null;
 const scrollHandler = () => {
   if (!target) return;
   const rect = target.getBoundingClientRect();
-  if (rect.top <= totalHeight) {
+  if (rect && rect.top <= totalHeight) {
     // 加载更多
     switch (active.value) {
       case 0:
@@ -295,7 +268,7 @@ onMounted(() => {
     try {
       document.querySelector(".page").addEventListener("scroll", scrollHandler);
       target = document.querySelector(".stock_soft_more" + active.value);
-    } catch {}
+    } catch { }
   }, 500);
 });
 onBeforeUnmount(() => {
@@ -303,7 +276,6 @@ onBeforeUnmount(() => {
     document
       .querySelector(".page")
       .removeEventListener("scroll", scrollHandler);
-  } catch {}
+  } catch { }
 });
 </script>
-

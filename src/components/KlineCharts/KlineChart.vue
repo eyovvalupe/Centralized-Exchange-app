@@ -132,7 +132,7 @@ const initData = async () => { // 初始化数据
             if (dd[0] && dd[0].timezone) {
                 chart.setTimezone(dd[0].timezone)
             }
-            chart.zoomAtTimestamp(2, dd[dd.length - 1].timestamp, 300)
+            // chart.zoomAtTimestamp(2, dd[dd.length - 1].timestamp, 300)
             // 同步数据到股票详情
             // setCurrData(datas[datas.length - 1] || {})
             chart.loadMore(loadMoreData)

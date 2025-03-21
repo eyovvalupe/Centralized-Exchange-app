@@ -3,33 +3,24 @@
   <div class="page page-constract">
     <div class="coinbuy_content">
       <div class="px-[0.32rem]">
-        <HeaderTabs
-          v-model:active="activeTab"
-          type="small-card"
-          :tabs="[
-            t('trade.left_all'),
-            t('market.market_buy_fast_account_crypto'),
-            t('trade.header_forex'),
-            t('trade.header_block'),
-          ]"
-          @change="getList(true)"
-        />
+        <HeaderTabs v-model:active="activeTab" type="small-card" :tabs="[
+          t('trade.left_all'),
+          t('market.market_buy_fast_account_crypto'),
+          t('trade.header_forex'),
+          t('trade.header_block'),
+        ]" @change="getList(true)" />
       </div>
       <Loaidng :loading="loading" v-if="loading && !contractList.length" />
       <NoData v-if="!loading && !contractList.length" />
-      <div
-        class="mt-[0.2rem] rounded-[0.32rem]"
-        v-for="(item, i) in contractList"
-        :key="i"
-        @click="goInfo(item)"
-      >
-        <StockItem :item="item" showIcon :page="'market'"/>
+      <div class="mt-[0.2rem] rounded-[0.32rem]" v-for="(item, i) in contractList" :key="i" @click="goInfo(item)">
+        <StockItem :item="item" showIcon :page="'market'" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup>
+import ciper from "@/utils/ciper.js"
 import SparkLine from "@/components/SparkLine.vue";
 import { _futures } from "@/api/api";
 import { ref, computed } from "vue";
@@ -80,6 +71,7 @@ const getList = (clear = false) => {
 
       store.commit("setContractList", list || []);
       setTimeout(() => {
+        console.error('-------', 20)
         store.dispatch("subList", {
           commitKey: "setContractList",
           listKey: "contractList",
@@ -107,7 +99,7 @@ const goInfo = (item) => {
   router.push({
     name: "tradeInfo",
     query: {
-      symbol: item.name,
+      symbol: ciper.encrypt(item.name),
       type: "constract",
     },
   });
@@ -117,6 +109,7 @@ const goInfo = (item) => {
 <style lang="less" scoped>
 .page-constract {
   padding: 0.2rem 0;
+
   .tr {
     display: flex;
     align-items: center;
@@ -189,6 +182,7 @@ const goInfo = (item) => {
       padding-right: 0.4rem;
       padding-left: 0.2rem;
     }
+
     .item_percent {
       text-align: center;
       width: 1rem;
@@ -205,6 +199,6 @@ const goInfo = (item) => {
   .coinbuy_content {
     // padding: 0 0.32rem;
   }
-  
+
 }
 </style>

@@ -7,7 +7,7 @@
           style="overflow-x: hidden;" @click="goInfo(item)">
           <span class="text-[0.24rem] text-color" style="max-width: 1.98rem;">{{
             item["symbol"].length > 8 ? item["symbol"].substring(0, 8) + '...' : item["symbol"]
-            }}</span>
+          }}</span>
           <span class="stock_price">{{ item.amount }}</span>
           <div class="flex flex-row justify-center stock_detail">
             <span>{{ item.ratio > 0 ? "+" : ""
@@ -22,6 +22,7 @@
 </template>
 
 <script setup>
+import ciper from "@/utils/ciper.js"
 import { useRouter } from 'vue-router';
 
 import store from "@/store";
@@ -55,7 +56,7 @@ const goInfo = (item) => {
     router.push({
       name: "tradeInfo",
       query: {
-        symbol: item.symbol,
+        symbol: ciper.encrypt(item.symbol),
         type: "stock",
       },
     });

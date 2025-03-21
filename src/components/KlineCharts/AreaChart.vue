@@ -191,7 +191,7 @@ const initData = async () => {
                 return data
             })
             chart.applyNewData(dd) // 重设图表数据
-            chart.zoomAtTimestamp(2, dd[dd.length - 1].timestamp, 300)
+            // chart.zoomAtTimestamp(2, dd[dd.length - 1].timestamp, 300)
             subs()
             resetSize()
         } else {

@@ -49,6 +49,7 @@
 </template>
 
 <script setup>
+import ciper from "@/utils/ciper.js"
 import SparkLine from "@/components/SparkLine.vue";
 import Loading from "@/components/Loaidng.vue";
 import { ref, computed, onMounted } from "vue";
@@ -131,7 +132,7 @@ const goInfo = (item) => {
       router.push({
         name: "tradeInfo",
         query: {
-          symbol: item.symbol,
+          symbol: ciper.encrypt(item.symbol),
           type: "stock",
         },
       });
@@ -142,7 +143,7 @@ const goInfo = (item) => {
       router.push({
         name: "tradeInfo",
         query: {
-          symbol: item.name,
+          symbol: ciper.encrypt(item.name),
           type: "crypto",
         },
       });

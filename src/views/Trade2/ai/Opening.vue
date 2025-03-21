@@ -238,6 +238,7 @@
 </template>
 
 <script setup>
+import ciper from "@/utils/ciper.js"
 import { ref, computed } from "vue";
 import {
   Button,
@@ -329,7 +330,7 @@ const form1 = ref({
 
 if (props.tradeType == 3) { // 机器人
   form1.value.name = route.query.name || ""
-  form1.value.symbol = route.query.symbol || ""
+  form1.value.symbol = ciper.decrypt(route.query.symbol) || ""
 }
 
 // 缓存
@@ -378,7 +379,7 @@ const changePercent = () => {
   if (maxStockNum.value == "--" || !form1.value.volume)
     return (sliderValue.value = 0);
   let v = new Decimal(form1.value.volume);
-  form1.value.volume = v.sub(v.mod(step.value));
+  form1.value.volume = v.sub(v.mod(step.value)).toNumber();
   let p = new Decimal(form1.value.volume)
     .div(maxStockNum.value)
     .mul(100)
@@ -577,6 +578,7 @@ if (!marketAiList.value.length) {
   }).then((res) => {
     store.commit("setMarketAiList", res.data || []);
     setTimeout(() => {
+      console.error('-------', 13)
       store.dispatch("subList", {
         commitKey: "setMarketAiList",
         listKey: "marketAiList",
@@ -591,7 +593,7 @@ const init = () => {
   error2.value = false;
   form1.value = {
     name: route.query.name || "",
-    symbol: route.query.symbol || "",
+    symbol: ciper.decrypt(route.query.symbol) || "",
     grid: "",
     volume: "",
   };

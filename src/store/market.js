@@ -15,12 +15,13 @@ const pageKeys = {
     'market': [
         ...recommendArr
     ],
+    'market_info': [...recommendArr],
     'trade': [...recommendArr],
     'tradeInfo': [...recommendArr],
     'search': ['marketSearchList']
 }
 
-
+let subListTimeout = null
 
 const setCurr = (keyName, state, data) => {
     data = JSON.parse(JSON.stringify(data))
@@ -411,7 +412,7 @@ export default {
            2. 需要同时订阅多个列表数据，则把symbol字段数组组合后，传 allKeys：所有symbol。此时ws会订阅 allKeys 所有数据
            3. 在订阅了 A 列表之后，还需要订阅 B 列表，甚至 C 列表时，通过 marketWatchKeys 实现，marketWatchKeys中的key会始终订阅，不影响后来的订阅。
        */
-        subList({ commit, state }, { commitKey, listKey, allKeys,snapshot=true }) {
+        subList({ commit, state }, { commitKey, listKey, allKeys, snapshot = true }) {
             let proxyKeys = []
             if (listKey) {
                 const proxyListValue = state[listKey]
@@ -423,105 +424,109 @@ export default {
                 proxyKeys = allKeys
             }
 
-            //先从已获取过的实时数据里拿数据
-            // (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
-            //     const arr = state[ck].map(item => {
-            //         const target = state.realtimeData.find(a => a.symbol == item.symbol)
-            //         if (target) {
-            //             return {
-            //                 ...item,
-            //                 ...target,
-            //                 name: item.name || target.name
-            //             }
-            //         }
-            //         return item
-            //     })
-            //     state[ck] = arr
-            //     if (ck == 'marketWatchList') {
-            //         sessionStorage.setItem('market_watch_list', JSON.stringify(arr))
-            //     }
-            // })
-
-            const socket = startSocket(() => {
-                const keys = Array.from(new Set([
-                    ...proxyKeys,
-                    ...state.marketWatchKeys,
-                ]))
-                console.error('订阅', keys)
-                socket && socket.off('realtime')
-                socket && socket.emit('realtime', keys.join(',')) // 价格变化
-                socket && socket.on('realtime', res => {
-                    if (res.code == 200) {
-                        // if (res.data && res.data.length) {
-                        //     res.data.map(_item => {
-                        //         commit("setRealtimeItemData", _item)
-                        //     })
-                        // }
-                        // 根据不同页面，同步页面内模块的数据
-                        (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
-                            const arr = state[ck].map(item => { // 数据和观察列表里的数据融合
-                                const target = res.data.find(a => a.symbol == item.symbol)
-                                if (target) {
-                                    return {
-                                        ...item,
-                                        ...target,
-                                        name: item.name || target.name
-                                    }
-                                }
-                                return item
-                            })
-                            state[ck] = arr
-                        })
-
-                        // 同步到当前 股票
-                        const cStock = res.data.find(a => a.symbol == state.currStockItem.symbol)
-                        if (cStock) {
-                            let obj = JSON.parse(JSON.stringify(cStock))
-                            delete obj.symbol
-                            commit('setCurrStockItem', obj)
-                        }
-                        // 同步到当前 合约
-                        const cConstract = res.data.find(a => a.symbol == state.currConstact.symbol)
-                        if (cConstract) {
-                            let obj = JSON.parse(JSON.stringify(cConstract))
-                            delete obj.symbol
-                            commit('setCurrConstract', obj)
-                        }
-                        // 同步到当前 ai
-                        const cAi = res.data.find(a => a.symbol == state.currAi.symbol)
-                        if (cAi) {
-                            let obj = JSON.parse(JSON.stringify(cAi))
-                            delete obj.symbol
-                            commit('setCurrAi', obj)
-                        }
-
-                    }
-                })
-                //是否订阅快照数据，2025-03-20调整，因股票列表获取快照数据影响后端性能，snapshot 会传false
-                if(snapshot){
-                    socket && socket.off('snapshot')
-                    socket && socket.emit('snapshot', keys.join(',')) // 快照数据
-                    socket && socket.on('snapshot', res => {
+            if (subListTimeout) clearTimeout(subListTimeout);
+            subListTimeout = setTimeout(() => {
+                const socket = startSocket(() => {
+                    const keys = Array.from(new Set([
+                        ...proxyKeys,
+                        ...state.marketWatchKeys,
+                    ]))
+                    console.error('订阅', keys)
+                    socket && socket.off('realtime')
+                    socket && socket.on('realtime', res => {
                         if (res.code == 200) {
-                            let points = '';
-                            if (res.data) {
-                                points = _getSnapshotLine(res.data)
-                                // commit('setRealtimeItemData', {
-                                //     symbol: res.symbol,
-                                //     points
-                                // })
-                            }
-                            // // 根据不同页面，同步页面内模块的数据2
+                            // if (res.data && res.data.length) {
+                            //     res.data.map(_item => {
+                            //         commit("setRealtimeItemData", _item)
+                            //     })
+                            // }
+                            // 根据不同页面，同步页面内模块的数据
                             (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
-                                const target = state[ck].find(item => item.symbol == res.symbol)
-                                if (target) {
-                                    target.points = points
-                                }
+                                const arr = state[ck].map(item => { // 数据和观察列表里的数据融合
+                                    const target = res.data.find(a => a.symbol == item.symbol)
+                                    if (target) {
+                                        return {
+                                            ...item,
+                                            ...target,
+                                            name: item.name || target.name
+                                        }
+                                    }
+                                    return item
+                                })
+                                state[ck] = arr
                             })
+
+                            // 同步到当前 股票
+                            const cStock = res.data.find(a => a.symbol == state.currStockItem.symbol)
+                            if (cStock) {
+                                let obj = JSON.parse(JSON.stringify(cStock))
+                                delete obj.symbol
+                                commit('setCurrStockItem', obj)
+                            }
+                            // 同步到当前 现货
+                            const cSpot = res.data.find(a => a.symbol == state.currSpot.symbol)
+                            if (cSpot) {
+                                let obj = JSON.parse(JSON.stringify(cSpot))
+                                delete obj.symbol
+                                commit('setCurrSpot', obj)
+                            }
+                            // 同步到当前 合约
+                            const cConstract = res.data.find(a => a.symbol == state.currConstact.symbol)
+                            if (cConstract) {
+                                let obj = JSON.parse(JSON.stringify(cConstract))
+                                delete obj.symbol
+                                commit('setCurrConstract', obj)
+                            }
+                            // 同步到当前 ai
+                            const cAi = res.data.find(a => a.symbol == state.currAi.symbol)
+                            if (cAi) {
+                                let obj = JSON.parse(JSON.stringify(cAi))
+                                delete obj.symbol
+                                commit('setCurrAi', obj)
+                            }
+                            // 同步到当前 外汇
+                            const cForeign = res.data.find(a => a.symbol == state.currForeign.symbol)
+                            if (cForeign) {
+                                let obj = JSON.parse(JSON.stringify(cForeign))
+                                delete obj.symbol
+                                commit('setCurrForeign', obj)
+                            }
+                            // 同步到当前 大宗
+                            const cCommodities = res.data.find(a => a.symbol == state.currCommodities.symbol)
+                            if (cCommodities) {
+                                let obj = JSON.parse(JSON.stringify(cCommodities))
+                                delete obj.symbol
+                                commit('setCurrCommodities', obj)
+                            }
                         }
                     })
-                }
-            })
+                    socket && socket.emit('realtime', keys.join(',')) // 价格变化
+                    //是否订阅快照数据，2025-03-20调整，因股票列表获取快照数据影响后端性能，snapshot 会传false
+                    if (snapshot) {
+                        socket && socket.off('snapshot')
+                        socket && socket.on('snapshot', res => {
+                            if (res.code == 200) {
+                                let points = '';
+                                if (res.data) {
+                                    points = _getSnapshotLine(res.data)
+                                    // commit('setRealtimeItemData', {
+                                    //     symbol: res.symbol,
+                                    //     points
+                                    // })
+                                }
+                                // // 根据不同页面，同步页面内模块的数据2
+                                (pageKeys[router.currentRoute?.value?.name] || []).forEach(ck => {
+                                    const target = state[ck].find(item => item.symbol == res.symbol)
+                                    if (target) {
+                                        target.points = points
+                                    }
+                                })
+                            }
+                        })
+                        socket && socket.emit('snapshot', keys.join(',')) // 快照数据
+                    }
+                })
+            }, 500)
         },
         setMarketType({ commit, state }) {
             commit("setMarketType", state)

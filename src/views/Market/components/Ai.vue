@@ -92,6 +92,7 @@ const getList = () => {
         case "ratereturn":
           store.commit("setMarketAiHisList", list);
           setTimeout(() => {
+            console.error('-------', 24)
             store.dispatch("subList", {
               commitKey: "setMarketAiHisList",
               listKey: "marketAiHisList",
@@ -101,6 +102,7 @@ const getList = () => {
         case "ratereturn24h":
           store.commit("setMarketAi24List", list);
           setTimeout(() => {
+            console.error('-------', 23)
             store.dispatch("subList", {
               commitKey: "setMarketAi24List",
               listKey: "marketAi24List",
@@ -110,6 +112,7 @@ const getList = () => {
         case "maxgrid":
           store.commit("setMarketAiGridList", list);
           setTimeout(() => {
+            console.error('-------', 22)
             store.dispatch("subList", {
               commitKey: "setMarketAiGridList",
               listKey: "marketAiGridList",
@@ -125,6 +128,7 @@ const getList = () => {
           })
           store.commit("setMarketAiList", list);
           setTimeout(() => {
+            console.error('-------', 21)
             store.dispatch("subList", {
               commitKey: "setMarketAiList",
               listKey: "marketAiList",

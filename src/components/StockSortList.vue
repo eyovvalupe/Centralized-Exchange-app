@@ -2,53 +2,29 @@
 <template>
   <div class="market_stock_list">
     <!-- Tabs -->
-    <Tabs
-      class="tabs"
-      @change="changeTab"
-      v-model:active="active"
-      :swipeable="false"
-      animated
-      shrink
-    >
+    <Tabs class="tabs" @change="changeTab" v-model:active="active" :swipeable="false" animated shrink>
       <Tab :title="t('market.market_stock_hot')" name="volume">
         <div class="px-[0.4rem]">
           <StockTableForList :loading="loading" :list="marketVolumeList" />
-          <LoadingMore
-            :classN="'stock_soft_morevolume'"
-            class="active_more"
-            :loading="!!(marketVolumeList.length && loading)"
-            :finish="finish"
-            v-if="((finish && marketVolumeList.length) || !finish) "
-          />
+          <LoadingMore :classN="'stock_soft_morevolume'" class="active_more"
+            :loading="!!(marketVolumeList.length && loading)" :finish="finish"
+            v-if="((finish && marketVolumeList.length) || !finish)" />
         </div>
       </Tab>
       <Tab :title="t('market.market_stock_chase_long_sort')" name="up">
         <div class="px-[0.4rem]">
           <StockTableForList :loading="loading" :list="marketUpList" />
-          <LoadingMore
-            :classN="'stock_soft_moreup'"
-            class="active_more"
-            :loading="!!(marketUpList.length && loading)"
-            :finish="finish"
-            v-if="((finish && marketUpList.length) || !finish) "
-          />
+          <LoadingMore :classN="'stock_soft_moreup'" class="active_more" :loading="!!(marketUpList.length && loading)"
+            :finish="finish" v-if="((finish && marketUpList.length) || !finish)" />
         </div>
       </Tab>
       <Tab :title="t('market.market_stock_chase_short_sort')" name="down">
         <div class="px-[0.4rem]">
-          <StockTableForList
-            :key="'up'"
-            :loading="loading"
-            :list="marketDownList"
-          />
+          <StockTableForList :key="'up'" :loading="loading" :list="marketDownList" />
 
-          <LoadingMore
-            :classN="'stock_soft_moredown'"
-            class="active_more"
-            :loading="!!(marketDownList.length && loading)"
-            :finish="finish"
-            v-if="((finish && marketDownList.length) || !finish) "
-          />
+          <LoadingMore :classN="'stock_soft_moredown'" class="active_more"
+            :loading="!!(marketDownList.length && loading)" :finish="finish"
+            v-if="((finish && marketDownList.length) || !finish)" />
         </div>
       </Tab>
     </Tabs>
@@ -163,7 +139,7 @@ let target = null;
 const scrollHandler = () => {
   if (!target) return;
   const rect = target.getBoundingClientRect();
-  if (rect.top <= totalHeight) {
+  if (rect && rect.top <= totalHeight) {
     // 加载更多
     switch (active.value) {
       case 'volume':
@@ -195,7 +171,7 @@ onMounted(() => {
     try {
       document.querySelector(".stock_tab_scroller").addEventListener("scroll", scrollHandler);
       target = document.querySelector(".stock_soft_more" + active.value);
-    } catch {}
+    } catch { }
   }, 500);
 });
 onBeforeUnmount(() => {
@@ -203,7 +179,7 @@ onBeforeUnmount(() => {
     document
       .querySelector(".stock_tab_scroller")
       .removeEventListener("scroll", scrollHandler);
-  } catch {}
+  } catch { }
 });
 </script>
 
@@ -213,9 +189,11 @@ onBeforeUnmount(() => {
     .van-tabs__wrap {
       margin: 0 0 0.12rem 0 !important;
       height: 1rem !important;
+
       .van-tabs__nav {
         padding: 0 0.32rem;
         position: relative;
+
         &::after {
           content: "";
           background-color: var(--ex-bg-color3);
@@ -225,6 +203,7 @@ onBeforeUnmount(() => {
           width: 100%;
           left: 0;
         }
+
         .van-tab {
           padding-left: 0px;
           padding-right: 0.76rem;

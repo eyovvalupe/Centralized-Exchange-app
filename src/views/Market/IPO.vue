@@ -287,7 +287,7 @@ const totalHeight = window.innerHeight || document.documentElement.clientHeight;
 const scrollHandler = () => {
   if (!loadingMore) return;
   const rect = loadingMore.getBoundingClientRect();
-  if (rect.top <= totalHeight) {
+  if (rect && rect.top <= totalHeight) {
     // 加载更多
     getData();
   }

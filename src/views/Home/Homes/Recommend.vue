@@ -11,8 +11,7 @@
 
             <!-- 现货 -->
             <Tab :name="1" :title="t('common.spot')">
-                <div v-if="loaded && activeTab == 1" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    >
+                <div v-if="loaded && activeTab == 1" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']">
                     <div class="" style="padding-bottom: 0.2rem;overflow: visible;" v-if="activeTab == 1">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
                             :page="from == 'home' ? 'home' : ''" :padding="true"
@@ -24,8 +23,7 @@
             </Tab>
             <!-- 合约 -->
             <Tab :name="2" :title="$t('加密货币合约')">
-                <div v-if="loaded && activeTab == 2" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    >
+                <div v-if="loaded && activeTab == 2" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']">
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 2">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
                             :page="from == 'home' ? 'home' : ''" :padding="true"
@@ -37,8 +35,7 @@
             </Tab>
             <!-- 交易机器人 -->
             <Tab :name="3" :title="$t('common.option')">
-                <div v-if="loaded && activeTab == 3" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    >
+                <div v-if="loaded && activeTab == 3" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']">
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 3">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
                             :page="from == 'home' ? 'home' : ''" :padding="true"
@@ -50,8 +47,7 @@
             </Tab>
             <!-- 外汇 -->
             <Tab :name="7" :title="'外汇'">
-                <div v-if="loaded && activeTab == 7" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    >
+                <div v-if="loaded && activeTab == 7" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']">
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 7">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
                             :page="from == 'home' ? 'home' : ''" :padding="true"
@@ -63,14 +59,13 @@
             </Tab>
             <!-- 大宗交易 -->
             <Tab :name="8" :title="'大宗交易'">
-                <div v-if="loaded && activeTab == 8" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']"
-                    >
+                <div v-if="loaded && activeTab == 8" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']">
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 8">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
                             :page="from == 'home' ? 'home' : ''" :padding="true"
                             :class="[props.from == 'home' ? 'wow fadeInUp' : '']" :data-wow-delay="(0.03 * i) + 's'"
                             :showIcon="false" :item="item" v-for="(item, i) in filterList(showList)" :key="'c_' + i"
-                            menuType="commodities" hideMarketTag  marketType="crypto" page="home" />
+                            menuType="commodities" hideMarketTag marketType="crypto" page="home" />
                     </div>
                 </div>
             </Tab>
@@ -218,6 +213,7 @@ const showList = computed(() => {
 // 订阅
 const subs = () => {
     setTimeout(() => {
+        console.error('-------', 27)
         store.dispatch("subList", {
             allKeys: showList.value.map(item => item.symbol)
         });
@@ -280,27 +276,6 @@ const handleData = (res, more, tab) => {
             break;
     }
 
-    // 这里如果当前没有item的值 就设置下
-    if (!item.symbol) {
-        const obj = arr[0];
-        switch (activeTab.value) {
-            case 1:
-                store.commit('setCurrSpot', obj || {});
-                break;
-            case 2:
-                store.commit('setCurrConstract', obj || {});
-                break;
-            case 3:
-                store.commit('setCurrAi', obj || {});
-                break;
-            case 7:
-                store.commit('setCurrForeign', obj || {});
-                break;
-            case 8:
-                store.commit('setCurrCommodities', obj || {});
-                break;
-        }
-    }
     subs()
 }
 const initTabList = (more) => {
@@ -393,7 +368,7 @@ let moreDom = null;
 const totalHeight = window.innerHeight || document.documentElement.clientHeight;
 const scrolHandle = () => {
     const rect = moreDom.getBoundingClientRect();
-    if (rect.top <= totalHeight) {
+    if (rect && rect.top <= totalHeight) {
         // 加载更多
         loadMore()
     }

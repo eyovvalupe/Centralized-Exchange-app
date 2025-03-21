@@ -106,6 +106,7 @@ const loading = ref(true);
 const token = computed(() => store.state.token || "");
 const subs = () => {
   // 订阅 ws
+  console.error('-------', 19)
   store.dispatch("subList", {
     commitKey: "setMarketWatchList",
     listKey: "marketWatchList",
@@ -190,6 +191,7 @@ const openRecommendList = () => {
           });
           store.commit("setMarketSrockRecommendList", arr || []);
           setTimeout(() => {
+            console.error('-------', 18)
             store.dispatch("subList", {
               commitKey: "setMarketSrockRecommendList",
               listKey: "marketSrockRecommendList",
@@ -208,6 +210,7 @@ const openRecommendList = () => {
 
           store.commit("setMarketContractRecommendList", arr2 || []);
           setTimeout(() => {
+            console.error('-------', 17)
             store.dispatch("subList", {
               commitKey: "setMarketContractRecommendList",
               listKey: "marketContractRecommendList",

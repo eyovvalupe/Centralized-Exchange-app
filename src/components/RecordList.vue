@@ -181,7 +181,7 @@ const scrollHandle = (event) => {
     // 更新上一次滚动位置
     lastTop.value = scrollTop;
     const rect = moreDom.getBoundingClientRect()
-    if (rect.top <= totalHeight) {
+    if (rect && rect.top <= totalHeight) {
         // 加载更多
         getData()
     }

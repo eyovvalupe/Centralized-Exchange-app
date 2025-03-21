@@ -91,6 +91,7 @@
 </template>
 
 <script setup>
+import ciper from "@/utils/ciper.js"
 import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
 import store from "@/store";
@@ -138,7 +139,7 @@ const goTrade = () => {
     query: {
       // to: "ai",
       // name: props.item.name,
-      symbol: props.item.symbol,
+      symbol: ciper.encrypt(props.item.symbol),
       type: 'ai',
       tradeType: 'ai'
     },

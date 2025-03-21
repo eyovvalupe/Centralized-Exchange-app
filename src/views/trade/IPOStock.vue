@@ -179,7 +179,7 @@ const totalHeight = window.innerHeight || document.documentElement.clientHeight;
 const scrollHandler = () => {
   if (!loadingMore) return
   const rect = loadingMore.getBoundingClientRect()
-  if (rect.top <= totalHeight) {
+  if (rect && rect.top <= totalHeight) {
     // 加载更多
     getData()
   }
@@ -190,13 +190,13 @@ onMounted(() => {
     loadingMore = document.querySelector('.loading_more')
     try {
       document.querySelector(props.scrollDom).addEventListener('scroll', scrollHandler)
-    } catch {}
+    } catch { }
   }, 500)
 })
 onBeforeUnmount(() => {
   try {
     document.querySelector('.page').removeEventListener('scroll', scrollHandler)
-  } catch {}
+  } catch { }
 })
 
 defineExpose({

@@ -57,14 +57,14 @@
       <Loading v-show="!searchList.length && loading" />
       <NoData v-if="!searchList.length && !loading" />
 
-      <div class="item" v-for="(item, i) in searchList" :key="i" @click="goItem(item)">
+      <div class="item" v-for="(item, i) in searchList" :key="i" @click="checkGoTrade(item)">
         <div @click.stop="collect(item)">
           <div class="size-[0.32rem]">
             <img v-if="item.watchlist == 1" v-lazy="getStaticImgUrl('/static/img/market/star.svg')" alt="">
             <img v-else v-lazy="getStaticImgUrl('/static/img/market/unstar.svg')" alt="">
           </div>
         </div>
-        
+
         <div class="info">
           <div class="title flex items-center gap-1">
             {{ item.type == "stock" ? item.symbol || "--" : item.name || "--" }}
@@ -201,11 +201,12 @@ const getData = () => {
         list: res.data || [],
       });
       setTimeout(() => {
+        console.error('-------', 25)
         store.dispatch("subList", {
-            commitKey: "setMarketSearchList",
-            listKey: "marketSearchList",
+          commitKey: "setMarketSearchList",
+          listKey: "marketSearchList",
         });
-    }, 300)
+      }, 300)
     })
     .finally(() => {
       loading.value = false;
@@ -247,40 +248,6 @@ onMounted(() => {
   }, 500);
 });
 
-// 查看详情
-const goItem = (item) => {
-  var prevList = [...marketSearchTextList.value];
-  var flag = false;
-  prevList.map((list) => {
-    if (list.toUpperCase() == item.symbol.toUpperCase()) flag = true;
-  });
-
-  if (item.type == "stock") {
-    var newList = flag ? prevList : [...prevList, item.symbol];
-    store.commit("setMarketSearchTextList", newList);
-    store.commit("setCurrStockItem", item);
-    setTimeout(() => {
-      router.push({
-        name: "market_info",
-        query: {
-          symbol: item.symbol,
-          type: "stock",
-        },
-      });
-    }, 100);
-  } else if (item.type == "crypto") {
-    var newList = flag ? prevList : [...prevList, item.name];
-    store.commit("setMarketSearchTextList", newList);
-    store.commit("setCurrConstract", item);
-    router.push({
-      name: "market_info",
-      query: {
-        symbol: item.name,
-        type: "constract",
-      },
-    });
-  }
-};
 
 // 收藏
 const collectLoading = ref(false);
@@ -475,7 +442,7 @@ Promise.all([import("@/views/Market/MarketInfo.vue")]);
 
   .td_r {
     text-align: right;
-    flex:2;
+    flex: 2;
   }
 }
 </style>

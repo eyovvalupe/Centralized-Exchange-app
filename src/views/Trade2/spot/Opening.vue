@@ -114,10 +114,6 @@ const currencyAmount = computed(() => {
 })
 
 const activeType = ref(1); // 1-买涨 2-买跌
-// url参数处理
-// if (route.query.symbol) {
-//   activeType.value = route.query.type || 1;
-// }
 const activeTab = ref(0); // 0-市价 1-限价 2-止盈止损
 
 
