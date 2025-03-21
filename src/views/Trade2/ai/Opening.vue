@@ -506,8 +506,8 @@ const getRange = () => {
   let rs = "--";
   try {
     const arr = rangereturn.split(" - ");
-    const start = new Decimal(form1.value.volume).mul(Number(arr[0])).div(100);
-    const end = new Decimal(form1.value.volume).mul(Number(arr[1])).div(100);
+    const start = new Decimal(form1.value.volume).mul(form1.value.grid).mul(Number(arr[0])).div(100);
+    const end = new Decimal(form1.value.volume).mul(form1.value.grid).mul(Number(arr[1])).div(100);
     rs = `${start} - ${end}`;
   } catch { }
 
