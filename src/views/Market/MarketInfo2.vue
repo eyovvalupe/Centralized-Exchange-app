@@ -285,21 +285,16 @@ const showJumpDialog = ref(false)
 const gotrade = () => {
   if (isDisabled.value) return showToast('不可交易')
   if (route.query.check == '1') {
-    const arr = []
+    let arr = []
     for (let key in tradeKeyMap) {
       if (item.value[tradeKeyMap[key]]) {
         arr.push(key)
       }
     }
+    arr = Array.from(new Set(arr))
     if (!arr.length) return showToast('不可交易')
     if (arr.length == 1) {
-      router.push({
-        name: 'tradeInfo',
-        query: {
-          symbol: route.query.symbol,
-          tradeType: arr[0]
-        }
-      })
+      clickJumpItem(arr[0])
     } else { // 打开选择框
       jumpArr.value = arr
       showJumpDialog.value = true
@@ -313,6 +308,29 @@ const gotrade = () => {
 }
 const clickJumpItem = (tt) => {
   showJumpDialog.value = false
+  switch (tt) {
+    case "constract":
+    case "crypto":
+      store.commit('setCurrConstract', item.value || {});
+      break;
+    case "spot":
+      store.commit('setCurrSpot', item.value || {});
+      break;
+    case "foreign":
+    case "forex":
+      store.commit('setCurrForeign', item.value || {});
+      break;
+    case "commodities":
+    case "blocktrade":
+      store.commit('setCurrCommodities', item.value || {});
+      break;
+    case 'ai': // ai
+      store.commit('setCurrAi', item.value || {});
+      break;
+    case "stock": //股票
+      store.commit('setCurrStockItem', item.value || {});
+      break
+  }
   router.push({
     name: 'tradeInfo',
     query: {
@@ -665,8 +683,7 @@ const addCollect = () => {
 
     .disabled {
       background-color: var(--ex-bg-white1);
-      color: var(--ex-white);
-      opacity: 0.9;
+      color: var(--ex-text-color3);
     }
   }
 
@@ -761,9 +778,13 @@ const addCollect = () => {
         color: var(--ex-text-color2);
         font-size: 0.22rem;
         font-weight: 400;
-        line-height: 0.36rem;
         width: 50%;
-        margin-top: 0.18rem;
+        height: 0.54rem;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        word-break: break-all;
 
         .num {
           margin-left: 0.1rem;
