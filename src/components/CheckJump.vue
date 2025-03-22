@@ -39,6 +39,56 @@ const tradeTypeMap = {
 const arr = ref([])
 const target = ref({})
 const check = item => {
+    let type = ''
+    switch (item.type) {
+        case "stock":
+            type = 'stock'
+            sessionStorage.setItem("currStockItem", JSON.stringify(item));
+            store.commit("setCurrStockItem", item);
+            break
+        case "spot":
+            type = 'spot'
+            sessionStorage.setItem("currSpot", JSON.stringify(item));
+            store.commit("setCurrSpot", item);
+            break;
+        case 'crypto':
+        case "constract":
+            type = 'constract'
+            sessionStorage.setItem("currConstract", JSON.stringify(item))
+            store.commit('setCurrConstract', item)
+            break
+        case "ai":
+            type = 'ai'
+            sessionStorage.setItem("currAi", JSON.stringify(item))
+            store.commit('setCurrAi', item)
+            break
+        case 'forex': // 外汇
+        case "foreign":
+            type = 'foreign'
+            store.commit("setCurrForeign", item);
+            sessionStorage.setItem("currForeign", JSON.stringify(item));
+            break;
+        case 'blocktrade': // 大宗
+        case "commodities":
+            type = 'commodities'
+            store.commit("setCurrCommodities", item);
+            sessionStorage.setItem("currCommodities", JSON.stringify(item));
+            break;
+    }
+    if (type) {
+        router.push({
+            name: 'market_info',
+            query: {
+                symbol: ciper.encrypt(item.symbol),
+                tradeType: type,
+                check: 1
+            }
+        })
+    } else {
+        console.error('未知类型', item)
+    }
+    if (item) return
+    // 这个逻辑放到进入相亲页之后了
     showLoadingToast({
         duration: 0,
         loadingType: "circular",
