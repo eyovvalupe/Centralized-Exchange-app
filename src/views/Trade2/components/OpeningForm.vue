@@ -182,11 +182,10 @@
 
     <!-- 按钮 -->
     <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1"
-      class="submit ripple-btn" :color="activeType == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'" round>
+      class="submit ripple-btn" :color="stockTab == 1 || stockTab == 2 || stockTab == 4 && activeType == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'" round>
       <span style="color:var(--ex-white);">{{
-        activeType == 1
-          ? t("trade.stock_open_long")
-          : t("trade.stock_open_short")
+        stockTab == 1 ? t('交易') : stockTab == 2
+          ? t("融资") : stockTab == 3 ? t("融卷") : stockTab == 4 && activeType == 1 ? t('配资') : t('做空')
       }}</span></Button>
 
     <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box">
