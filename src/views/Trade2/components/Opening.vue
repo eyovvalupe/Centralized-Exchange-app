@@ -27,7 +27,8 @@
                 <span class="type_tab_text">做空</span>
               </div>
             </div>
-            <Tabs key="form" class="van-tabs--sub_line van-tabs--sub_bg" :style="{ width: stockTab == 4 ? '3.3rem !important' : '' }" animated @change="(e) => (activeTab = e)"
+            <Tabs key="form" class="van-tabs--sub_line van-tabs--sub_bg"
+              :style="{ width: stockTab == 4 ? '3.3rem !important' : '' }" animated @change="(e) => (activeTab = e)"
               v-model="activeTab" :swipeable="false" :color="'var(--ex-primary-color)'" shrink>
               <Tab :title="t('trade.stock_market_price')" name="0">
               </Tab>
@@ -39,19 +40,22 @@
           </div>
           <div class="w-full" v-if="activeTab == 0">
             <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
-              v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType" :stockTab="stockTab"/>
+              v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType"
+              :stockTab="stockTab" />
           </div>
           <div class="w-full" v-if="activeTab == 1">
             <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
-              v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :activeTab="activeTab" :activeType="activeType" :stockTab="stockTab" />
+              v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :activeTab="activeTab" :activeType="activeType"
+              :stockTab="stockTab" />
           </div>
           <div class="w-full" v-if="activeTab == 2">
             <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
-              v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :activeTab="activeTab" :activeType="activeType" :stockTab="stockTab" />
+              v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :activeTab="activeTab" :activeType="activeType"
+              :stockTab="stockTab" />
           </div>
         </div>
 
-        <div class="account-box" v-if="token">
+        <div class="account-box">
           <div class="title">股票账户</div>
           <div class="info">
             <div>{{ $t('market.market_faster_available') }}</div>
@@ -88,7 +92,7 @@
 
 <script setup>
 import { ref, onMounted, computed } from "vue";
-import { Tab, Tabs, ActionSheet } from "vant";
+import { Tab, Tabs, ActionSheet, showToast } from "vant";
 import { _search, _basic, _stocksPara, _stocksBuy } from "@/api/api";
 import { useRoute } from "vue-router";
 import OpeningForm from "./OpeningForm.vue";
@@ -97,7 +101,18 @@ import router from "@/router";
 import store from "@/store/index.js"
 
 const token = computed(() => store.state.token)
-const jump = name => router.push({ name })
+const jump = name => {
+  if (token.value) {
+    if (name == 'transfer') {
+      store.commit('setToType', 'stock')
+      store.commit('setToCurrency', stockWallet.value)
+    }
+    router.push({ name })
+  } else {
+    if (name == 'topUpCrypto') showToast('请先登录再去充值')
+    if (name == 'transfer') showToast('请先登录再去划转')
+  }
+}
 
 const props = defineProps({
   tradeType: {
@@ -126,6 +141,13 @@ const stockWalletAmount = computed(() => {
   if (activeTab.value == 0 && OpeningForm0Ref.value) return OpeningForm0Ref.value.stockWalletAmount
   if (activeTab.value == 1 && OpeningForm1Ref.value) return OpeningForm1Ref.value.stockWalletAmount
   if (activeTab.value == 2 && OpeningForm2Ref.value) return OpeningForm2Ref.value.stockWalletAmount
+  return 0
+})
+
+const stockWallet = computed(() => {
+  if (activeTab.value == 0 && OpeningForm0Ref.value) return OpeningForm0Ref.value.stockWallet
+  if (activeTab.value == 1 && OpeningForm1Ref.value) return OpeningForm1Ref.value.stockWallet
+  if (activeTab.value == 2 && OpeningForm2Ref.value) return OpeningForm2Ref.value.stockWallet
   return 0
 })
 

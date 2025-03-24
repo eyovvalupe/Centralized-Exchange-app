@@ -291,6 +291,7 @@ const submit = () => {
           store.dispatch("updateUserInfo");
           store.dispatch("updateAssets");
           store.dispatch("updateWallet");
+          store.dispatch('updateStockWallet');
 
           if (props.successFunc) return props.successFunc();
           // if (route.query.reurl) {

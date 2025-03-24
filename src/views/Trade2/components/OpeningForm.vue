@@ -51,24 +51,24 @@
 
       <!-- 价格 -->
       <div class="item_box">
+        <div class="item_box_left" @click="showPriceTypeDialog = true">
+          <div class="item" style="justify-content: space-between">
+            <span>
+              {{
+                priceMode == 1
+                  ? t("trade.stock_opening_price_market")
+                  : t("trade.stock_opening_price_limit")
+              }}
+            </span>
+            <div class="more_icon">
+              <img :src="getStaticImgUrl('/static/img/common/more.svg')" alt="↓" />
+            </div>
+          </div>
+        </div>
         <div class="item_box_right">
           <FormItem custom disabled v-if="priceMode == 1">
             <span style="color: var(--ex-text-color4)">
               {{ t("trade.stock_opening_price_latest") }}</span>
-
-            <template #right-con>
-              <!-- 市价/限价 -->
-              <div class="pricetype-modes">
-                <div class="pricetype-mode tab_ani" @click="priceMode = 1"
-                  :class="{ 'pricetype-mode-active': priceMode == 1 }">
-                  {{
-                    t("trade.stock_opening_price_market") }}</div>
-                <div class="pricetype-mode tab_ani" @click="priceMode = 2"
-                  :class="{ 'pricetype-mode-active': priceMode == 2 }">
-                  {{
-                    t("trade.stock_opening_price_limit") }}</div>
-              </div>
-            </template>
           </FormItem>
 
           <FormItem :placeholder="t('trade.stock_opening_price')" v-model="form1.price" input-type="number"
@@ -82,17 +82,6 @@
                 { label: '+1%', value: 1 },
               ]
               " v-else @percentTagClick="percentTagClick">
-            <template #right-con>
-              <!-- 市价/限价 -->
-              <div class="pricetype-modes">
-                <div class="pricetype-mode" @click="priceMode = 1" :class="{ 'pricetype-mode-active': priceMode == 1 }">
-                  {{
-                    t("trade.stock_opening_price_market") }}</div>
-                <div class="pricetype-mode" @click="priceMode = 2" :class="{ 'pricetype-mode-active': priceMode == 2 }">
-                  {{
-                    t("trade.stock_opening_price_limit") }}</div>
-              </div>
-            </template>
           </FormItem>
         </div>
 
@@ -203,14 +192,9 @@
     <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box">
       <div class="flex justify-between mb-[0.32rem]">
         <div
-          class="w-[3.22rem] h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn ripple-primary"
+          class="w-full h-[1.12rem]  rounded-[0.4rem] flex items-center justify-center text-[0.36rem] font-[600] btn ripple-btn"
           @click="store.commit('setIsLoginOpen', true)">
-          {{ t("trade.stock_opening_token_login") }}
-        </div>
-        <div
-          class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn btn2 ripple-primary"
-          @click="jump('register')">
-          {{ t("trade.stock_opening_token_register") }}
+          {{ t("trade.stock_opening_token_login") + '/' + t("trade.stock_opening_token_register") }}
         </div>
       </div>
       <!-- <div
@@ -390,19 +374,39 @@
   </BottomPopup>
 
   <!-- 限价模式选择 -->
-  <ActionSheet teleport="body" v-model:show="showPriceTypeDialog" :actions="priceModeList"
-    @select="onSelectForm1PriceType" :title="t('trade.stock_opening_amount_limit_mode')">
-  </ActionSheet>
+  <BottomPopup :title="t('trade.stock_opening_amount_limit_mode')" round position="bottom" closeable teleport="body"
+    v-model:show="showPriceTypeDialog">
+    <div class="w-full flex flex-col pt-[0.6rem] items-center h-[3.6rem]">
+      <div class="transition w-[6.8rem] h-[1rem] flex items-center justify-center rounded-[0.32rem]"
+        :class="form1.price_type == 'market' ? 'bg-white2' : ''"
+        @click="form1.price = ''; priceMode = 1; form1.price_type = 'market';">市价</div>
+      <div class="transition w-[6.8rem] h-[1rem] flex items-center justify-center rounded-[0.32rem]"
+        :class="form1.price_type == 'limit' ? 'bg-white2' : ''" @click="priceMode = 2; form1.price_type = 'limit';">限价
+      </div>
+    </div>
+  </BottomPopup>
 
   <!-- 保证金模式选择 -->
-  <ActionSheet teleport="body" v-model:show="showModeTypeDialog" :actions="modeList" @select="onSelectForm1ModeType"
-    :title="t('trade.stock_opening_amount_mode')">
-  </ActionSheet>
+  <BottomPopup :title="t('trade.stock_opening_amount_mode')" round position="bottom" closeable teleport="body"
+    v-model:show="showModeTypeDialog">
+    <div class="w-full flex flex-col pt-[0.6rem] items-center h-[3.6rem]">
+      <div class="transition w-[6.8rem] h-[1rem] flex items-center justify-center rounded-[0.32rem]"
+        :class="form1.leverType == 'cross' ? 'bg-white2' : ''" @click="form1.leverType = 'cross';">全仓</div>
+      <div class="transition w-[6.8rem] h-[1rem] flex items-center justify-center rounded-[0.32rem]"
+        :class="form1.leverType == 'isolated' ? 'bg-white2' : ''" @click="form1.leverType = 'isolated';">逐仓</div>
+    </div>
+  </BottomPopup>
 
   <!-- 杠杆选择 -->
-  <ActionSheet teleport="body" v-model:show="showLeverTypeDialog" :actions="leversActions" @select="onSelectLeverType"
-    :title="t('trade.stock_opening_lever')">
-  </ActionSheet>
+  <BottomPopup :title="t('trade.stock_opening_lever')" round position="bottom" closeable teleport="body"
+    v-model:show="showLeverTypeDialog">
+    <div class="px-[0.4rem] pb-[1.2rem] flex flex-wrap gap-[0.2rem]">
+      <div v-for="lever in levers"
+        class="h-[0.8rem] rounded-[0.32rem] border-[0.02rem] flex items-center justify-center ripple-primary"
+        :class="form1.lever == lever ? 'border-primary text-primary' : ''" @click="form1.lever = lever"
+        style="width: calc((100% - 0.4rem) / 3);">{{ lever }}X</div>
+    </div>
+  </BottomPopup>
 
   <!-- 跳转选择 -->
   <ActionSheet teleport="body" v-model:show="showJumpTypeDialog" :actions="jumpModeList" @select="onSelectJumpModeType"
@@ -436,119 +440,12 @@
   </BottomPopup>
 
   <!-- 余额提示 -->
-  <Popup round v-model:show="showAmountDialog" closeable teleport="body">
-    <div style="width: 6.4rem">
-      <!-- 标题 -->
-      <div style="
-          text-align: center;
-          font-size: 0.32rem;
-          height: 1rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          border: 1px solid var(--ex-border-color);
-        ">
-        {{ t("assets.wallet_available") }}
-      </div>
-
-      <!-- 内容 -->
-      <div style="
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          text-align: center;
-          background: var(--ex-bg-color2);
-          border: 1px solid var(--ex-border-color);
-          border-radius: 0.32rem;
-          line-height: 0.4rem;
-          margin-top: 0.32rem;
-          overflow: hidden;
-          position: relative;
-          margin: 0.32rem 0.4rem;
-        ">
-        <div style="
-            color: var(--ex-text-color);
-            font-size: 0.28rem;
-            font-weight: 400;
-            padding: 0 0.32rem;
-            height: 1.4rem;
-            background-color: var(--ex-bg-color);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-          ">
-          {{ t("assets.wallet_header_stock") }}
-        </div>
-        <div style="
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            flex: 1;
-          ">
-          <div style="
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              margin-bottom: 0.08rem;
-            ">
-            <div v-if="paramCurrency" style="
-                width: 0.32rem;
-                height: 0.32rem;
-                display: flex;
-                position: relative;
-                top: -0.02rem;
-              ">
-              <CryptoIcon :name="paramCurrency.toUpperCase()" />
-            </div>
-
-            <span style="
-                font-size: 0.28rem;
-                margin-left: 0.12rem;
-                color: var(--ex-text-color);
-                font-weight: 400;
-              ">{{ paramCurrency }}</span>
-          </div>
-          <b style="font-size: 0.4rem; color: var(--ex-primary-color); font-weight: bold">{{
-            stockWalletAmount
-          }}</b>
-        </div>
-      </div>
-
-      <!--  按钮 -->
-      <div style="
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          padding: 0 0.4rem;
-          font-size: 0.28rem;
-          margin: 0.64rem 0 0.4rem 0;
-        ">
-        <div class="ripple-btn" @click="router.push({ name: 'transfer' })" style="
-            height: 0.8rem;
-            width: 48%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.64rem;
-            border: 1px solid var(--ex-primary-color);
-            color: var(--ex-primary-color);
-          ">
-          {{ t("trade.stock_opening_btn_transfer") }}
-        </div>
-        <div @click="router.push({ name: 'topUpCrypto' })" class="bg-primary text-color--bg-primary ripple-btn" style="
-            height: 0.8rem;
-            width: 48%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0.64rem;
-          ">
-          {{ t("trade.stock_opening_btn_recharge") }}
-        </div>
-      </div>
-    </div>
-  </Popup>
+  <BottomPopup :title="t('可用余额')" round :show="showAmountDialog" closeable @closed="showAmountDialog = false">
+    <NotEnoughBalance :alert="false" :type="'stock'" :balance="stockWalletAmount" :currency="paramCurrency" />
+  </BottomPopup>
+  <BottomPopup :title="t('充值/划转')" round :show="showNotEnoughBalance" closeable @closed="showNotEnoughBalance = false">
+    <NotEnoughBalance :alert="true" :type="'stock'" :balance="stockWalletAmount" :currency="paramCurrency" />
+  </BottomPopup>
 </template>
 
 <script setup>
@@ -569,6 +466,7 @@ import FormItem from "@/components/Form/FormItem.vue";
 import { useI18n } from "vue-i18n";
 import BottomPopup from "@/components/BottomPopup.vue";
 import eventBus from "@/utils/eventBus.js"
+import NotEnoughBalance from "./NotEnoughBalance.vue";
 
 const props = defineProps({
   activeTab: null, // 0-市价 1-限价 2-止盈止损
@@ -594,7 +492,7 @@ const goLogin = () => {
 const showPassword = ref(false);
 
 const safeRef = ref();
-
+const showNotEnoughBalance = ref(false);
 //搜索
 const marketSearchList = computed(() => store.state.marketSearchList || []);
 const showSearchDialog = ref();
@@ -780,6 +678,15 @@ const stockWalletAmount = computed(() => {
   return 0;
 });
 
+const stockWallet = computed(() => {
+  // 钱包余额
+  const target = wallet.value.find(
+    (item) => item.currency == paramCurrency.value
+  );
+  if (target) return target;
+  return {};
+});
+
 const maxStockNum = computed(() => {
   // 最大可买 可卖
   if (currStock.value.price) {
@@ -959,6 +866,7 @@ const submit1 = () => {
     return showToast(
       `${t("trade.stock_opening_err_min_balance")}：${min.value}`
     );
+  if (form1.value.volume > maxStockNum.value) return showNotEnoughBalance.value = true;
   // 限价校验
   if (props.activeTab == 1) {
     if (!form1.value.price)
@@ -1258,6 +1166,7 @@ const choose = (item) => {
 defineExpose({
   choose,
   openSearchDialog,
+  stockWallet,
   stockWalletAmount,
   paramCurrency,
 });
@@ -1397,7 +1306,7 @@ defineExpose({
         width: 0.32rem;
         height: 0.32rem;
         margin-left: 0.08rem;
-        transform: rotate(-90deg);
+        // transform: rotate(-90deg);
       }
 
       .more_icon2 {
@@ -1413,7 +1322,7 @@ defineExpose({
     }
 
     .item_box_left {
-      width: 2.2rem;
+      width: 1.56rem;
       margin-right: 0.2rem;
       display: flex;
       flex-direction: column;
@@ -1484,8 +1393,8 @@ defineExpose({
 
   .unlogin-box {
     .btn {
-      background-color: var(--ex-white);
-      color: var(--ex-bg-color);
+      background-color: var(--ex-bg-white1);
+      color: var(--ex-white);
     }
 
     .btn2 {

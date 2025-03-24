@@ -176,6 +176,7 @@ const store = createStore({
         commit('setMyCopyData', []);
         commit('setNotifiJoinList', []);
         commit('setReferralInfo', {});
+        commit('setStockWallet', [])
       }, 100);
       // commit('setMarketSearch', {
       //   search: '',
