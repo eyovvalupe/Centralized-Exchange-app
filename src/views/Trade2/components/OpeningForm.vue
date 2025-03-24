@@ -858,7 +858,7 @@ const inputStop = (key) => {
 };
 
 const submit1 = () => {
-  // if (!currStock.value.trade) return showToast(t('trade.stock_opening_closed'));
+  if (!currStock.value.trade) return showToast(t('trade.stock_opening_closed'));
   if (!currStock.value.symbol)
     return showToast(t("trade.stock_opening_err_stock"));
   if (!form1.value.volume || form1.value.volume < min.value)
