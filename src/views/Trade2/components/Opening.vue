@@ -39,15 +39,15 @@
           </div>
           <div class="w-full" v-if="activeTab == 0">
             <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
-              v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType" />
+              v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType" :stockTab="stockTab"/>
           </div>
           <div class="w-full" v-if="activeTab == 1">
             <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
-              v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :activeTab="activeTab" :activeType="activeType" />
+              v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :activeTab="activeTab" :activeType="activeType" :stockTab="stockTab" />
           </div>
           <div class="w-full" v-if="activeTab == 2">
             <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
-              v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :activeTab="activeTab" :activeType="activeType" />
+              v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :activeTab="activeTab" :activeType="activeType" :stockTab="stockTab" />
           </div>
         </div>
 
@@ -58,14 +58,14 @@
             <div>
               <span style="font-size: 0.32rem;color:var(--ex-primary-color);margin-right: 0.08rem;">{{ stockWalletAmount
                 || '0' }}</span>
-              <span style="color:var(--ex-white)">USDT</span>
+              <span style="color:var(--ex-white)">{{ paramCurrency }}</span>
             </div>
           </div>
           <div class="info">
             <div>{{ $t('保证金') }}</div>
             <div>
               <span style="font-size: 0.32rem;color:var(--ex-primary-color);margin-right: 0.08rem;">--</span>
-              <span style="color:var(--ex-white)">USDT</span>
+              <span style="color:var(--ex-white)">{{ paramCurrency }}</span>
             </div>
           </div>
           <div class="info">
@@ -126,6 +126,13 @@ const stockWalletAmount = computed(() => {
   if (activeTab.value == 0 && OpeningForm0Ref.value) return OpeningForm0Ref.value.stockWalletAmount
   if (activeTab.value == 1 && OpeningForm1Ref.value) return OpeningForm1Ref.value.stockWalletAmount
   if (activeTab.value == 2 && OpeningForm2Ref.value) return OpeningForm2Ref.value.stockWalletAmount
+  return 0
+})
+
+const paramCurrency = computed(() => {
+  if (activeTab.value == 0 && OpeningForm0Ref.value) return OpeningForm0Ref.value.paramCurrency
+  if (activeTab.value == 1 && OpeningForm1Ref.value) return OpeningForm1Ref.value.paramCurrency
+  if (activeTab.value == 2 && OpeningForm2Ref.value) return OpeningForm2Ref.value.paramCurrency
   return 0
 })
 

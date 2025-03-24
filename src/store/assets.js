@@ -5,6 +5,7 @@ export default {
   state: {
     assets: {}, // 总资产
     wallet: [], // 现金钱包
+    stockWallet: [], //股票账户
     elseWallet:[], //其他账户
     elseWalletMap: { // 其他账户信息
       stock:[],
@@ -38,6 +39,9 @@ export default {
     
   },
   mutations: {
+    setStockWallet(state, data) {
+      state.stockWallet = data
+    },
     setFromType(state, data) {
       state.fromType = data
     },
@@ -160,6 +164,17 @@ export default {
         }
       })
       
+    },
+    updateStockWallet({ commit }) {
+      _balance({
+        account: "stock",
+      }) // 股票账户
+        .then((res) => {
+          if (res && res.code == 200 && res.data) {
+            console.log(res.data)
+            commit("setStockWallet", res.data || []);
+          }
+        });
     },
     updateCurrency({ commit }) {
      

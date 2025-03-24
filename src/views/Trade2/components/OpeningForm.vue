@@ -33,10 +33,10 @@
 
 
       <!-- 简单模式 -->
-      <FormItem :placeholder="activeType == 1
+      <FormItem :placeholder="stockTab == 1 || stockTab == 2 || stockTab == 4 && activeType == 1
         ? t('trade.stock_opening_take')
         : t('trade.stock_opening_stop')
-        " class="mb-[0.2rem]" v-model="form1.stop_loss_price" input-type="number" :percent-tags="props.activeType == 1
+        " class="mb-[0.2rem]" v-model="form1.stop_loss_price" input-type="number" :percent-tags="stockTab == 1 || stockTab == 2 || stockTab == 4 && activeType == 1
           ? [
             { label: '-20%', value: 20 },
             { label: '-15%', value: 15 },
@@ -72,7 +72,7 @@
           </FormItem>
 
           <FormItem :placeholder="t('trade.stock_opening_price')" v-model="form1.price" input-type="number"
-            :percent-tags="props.activeType == 1
+            :percent-tags="stockTab == 1 || stockTab == 2 || stockTab == 4 && activeType == 1
               ? [
                 { label: '-3%', value: 3 },
                 { label: '-1%', value: 1 },
@@ -102,7 +102,7 @@
 
     <!-- 价格 -->
     <FormItem class="mb-[0.2rem]" input-type="number" :placeholder="t('trade.stock_opening_price_title')"
-      :tip="t('trade.stock_opening_price_tip')" v-model="form1.price" :percent-tags="props.activeType == 1
+      :tip="t('trade.stock_opening_price_tip')" v-model="form1.price" :percent-tags="stockTab == 1 || stockTab == 2 || stockTab == 4 && activeType == 1
         ? [
           { label: '-3%', value: 3 },
           { label: '-2%', value: 2 },
@@ -129,7 +129,7 @@
 
 
     <!-- 保证金模式 -->
-    <div class="item_box">
+    <div class="item_box" v-if="stockTab != 1">
       <div class="item_box_right" @click="showModeTypeDialog = true">
         <div class="item justify-between">
           <div class="tip-title">{{ t('trade.stock_opening_amount_mode') }}</div>
@@ -577,6 +577,10 @@ const props = defineProps({
     type: [String, Number],
     default: "",
   },
+  stockTab: {
+    type: Number,
+    default: 0,
+  }
 });
 
 const { t } = useI18n();
@@ -766,7 +770,7 @@ const modeList = computed(() => {
   return list;
 });
 
-const wallet = computed(() => store.state.wallet || []);
+const wallet = computed(() => store.state.stockWallet || []);
 const stockWalletAmount = computed(() => {
   // 钱包余额
   const target = wallet.value.find(
@@ -948,7 +952,7 @@ const inputStop = (key) => {
 };
 
 const submit1 = () => {
-  if (!currStock.value.trade) return showToast(t('trade.stock_opening_closed'));
+  // if (!currStock.value.trade) return showToast(t('trade.stock_opening_closed'));
   if (!currStock.value.symbol)
     return showToast(t("trade.stock_opening_err_stock"));
   if (!form1.value.volume || form1.value.volume < min.value)
@@ -981,10 +985,10 @@ const submit1 = () => {
   // 打开确认弹窗
   params.value = {
     symbol: currStock.value.symbol,
-    offset: props.activeType == 1 ? "long" : "short",
+    offset: props.stockTab == 1 || props.stockTab == 2 || props.stockTab == 4 && props.activeType == 1 ? "long" : "short",
     volume: Number(form1.value.volume),
-    lever_type: form1.value.leverType,
-    lever: form1.value.lever,
+    lever_type: props.stockTab == 1 ? 'isolated' : form1.value.leverType,
+    lever: props.stockTab == 1 ? 1 : form1.value.lever,
     price_type: form1.value.price_type,
     price: form1.value.price_type == "market" ? "" : form1.value.price || "",
     stop_profit_type: form1.value.stop_profit_type,
@@ -1255,6 +1259,7 @@ defineExpose({
   choose,
   openSearchDialog,
   stockWalletAmount,
+  paramCurrency,
 });
 </script>
 

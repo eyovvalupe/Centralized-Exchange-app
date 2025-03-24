@@ -174,6 +174,7 @@ if (token.value) {
   store.dispatch('updateNotifiList');
   store.dispatch('updateNotifiJoinList');
   store.dispatch('updateReferralInfo');
+  store.dispatch('updateStockWallet');
 }
 store.dispatch('updateCurrency'); // 获取币种等配置信息
 store.dispatch('updateNotifiList');
