@@ -183,6 +183,10 @@ defineExpose({
   choose,
   openSearch,
 });
+
+onMounted(() => {
+  if (token.value) store.dispatch('updateStockWallet');
+})
 </script>
 
 <style lang="less" scoped>
