@@ -1028,6 +1028,12 @@ onDeactivated(() => {
               }
             }
           }
+
+          .van-tabs__line {
+            width: 0.4rem;
+            height: 0.06rem;
+            background-color: var(--ex-primary-color);
+          }
         }
       }
 

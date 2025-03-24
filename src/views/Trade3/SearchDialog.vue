@@ -18,7 +18,7 @@
 
                 <div class="lists search_dialog_list" v-if="showSearchCon">
                     <StockTable :key="props.activeTab" :showIcon="[1, 2, 5].includes(props.activeTab)" theme="classic"
-                        :handleClick="handleClick" :type="route.query.tradeType" :loading="false" :list="showList" />
+                        :handleClick="handleClick" :type="route.query.tradeType" :loading="false" :list="showList" :from="item.type"/>
 
                     <LoadingMore :style="{ 'margin-bottom': finish ? '0.4rem' : '1.6rem' }" :loading="searchLoading2"
                         :finish="finish" v-if="(finish && showList.length) || !finish" />

@@ -1,7 +1,7 @@
 <!-- 开仓 -->
 <template>
 
-  <div>
+  <div class="opening_page">
     <!-- 股票分类 -->
     <div class="stock-tabs">
       <div class="stock-tab" :class="{ 'stock-tab-active': stockTab == 1 }" @click="changeTab(1)">交易</div>
@@ -10,49 +10,45 @@
       <div class="stock-tab" :class="{ 'stock-tab-active': stockTab == 4 }" @click="changeTab(4)">盘前</div>
     </div>
 
-
     <div class="opening">
-
-      <!-- 盘前 -->
-      <div class="type_tabs" v-if="stockTab == 4">
-        <div @click="activeType = 1" class="type_tab" :class="{ active_type_tab: activeType == 1 }">
-          <span class="type_tab_text">配资</span>
-        </div>
-        <div @click="activeType = 2" class="type_tab"
-          :class="{ active_type_tab: activeType == 2, active_type_tab2: activeType == 2 }">
-          <span class="type_tab_text">做空</span>
-        </div>
-      </div>
-      <div class="type_tabs" v-else>
-        <div @click="activeType = 1" class="type_tab tab_ani" :class="{ active_type_tab: activeType == 1 }">
-          <span class="type_tab_text">{{ t('trade.stock_open_long_tab') }}</span>
-        </div>
-        <div @click="activeType = 2" class="type_tab tab_ani"
-          :class="{ 'active_type_tab active_type_tab2': activeType == 2 }">
-          <span class="type_tab_text">{{ t('trade.stock_open_short_tab') }}</span>
-        </div>
-      </div>
-
       <!-- Tabs -->
       <div class="open_tab_box" :class="{ 'trade-dialog': props.from == 'trade' }">
 
         <div
           style="border-radius: 0.32rem;background-color: var(--ex-bg-color3);padding: 0 0.16rem 0.4rem 0.16rem;border-bottom:1px solid var(--ex-bg-white2);">
-          <Tabs key="form" class="van-tabs--sub_line van-tabs--sub_bg" animated @change="(e) => (activeTab = e)"
-            v-model="activeTab" :swipeable="false" :color="'var(--ex-primary-color)'" shrink>
-            <Tab :title="t('trade.stock_market_price')" name="0">
-              <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
-                v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType" />
-            </Tab>
-            <Tab :title="t('trade.stock_limit_price')" name="1">
-              <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
-                v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :activeTab="activeTab" :activeType="activeType" />
-            </Tab>
-            <Tab :title="t('trade.stock_take_stop')" name="2">
-              <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
-                v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :activeTab="activeTab" :activeType="activeType" />
-            </Tab>
-          </Tabs>
+          <div class="flex w-full items-end justify-between">
+            <!-- 盘前 -->
+            <div class="type_tabs" v-if="stockTab == 4">
+              <div @click="activeType = 1" class="type_tab" :class="{ active_type_tab: activeType == 1 }">
+                <span class="type_tab_text">配资</span>
+              </div>
+              <div @click="activeType = 2" class="type_tab"
+                :class="{ active_type_tab: activeType == 2, active_type_tab2: activeType == 2 }">
+                <span class="type_tab_text">做空</span>
+              </div>
+            </div>
+            <Tabs key="form" class="van-tabs--sub_line van-tabs--sub_bg" :style="{ width: stockTab == 4 ? '3.3rem !important' : '' }" animated @change="(e) => (activeTab = e)"
+              v-model="activeTab" :swipeable="false" :color="'var(--ex-primary-color)'" shrink>
+              <Tab :title="t('trade.stock_market_price')" name="0">
+              </Tab>
+              <Tab :title="t('trade.stock_limit_price')" name="1">
+              </Tab>
+              <Tab :title="t('trade.stock_take_stop')" name="2">
+              </Tab>
+            </Tabs>
+          </div>
+          <div class="w-full" v-if="activeTab == 0">
+            <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
+              v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType" />
+          </div>
+          <div class="w-full" v-if="activeTab == 1">
+            <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
+              v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :activeTab="activeTab" :activeType="activeType" />
+          </div>
+          <div class="w-full" v-if="activeTab == 2">
+            <OpeningForm :tradeType="props.tradeType" @showNavDialog="showNavDialog" @success="onSuccess"
+              v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :activeTab="activeTab" :activeType="activeType" />
+          </div>
         </div>
 
         <div class="account-box" v-if="token">
@@ -161,129 +157,138 @@ defineExpose({
 </script>
 
 <style lang="less" scoped>
-.stock-tabs {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: var(--ex-bg-white1);
-  margin: 0.4rem 0.28rem 0.2rem 0.28rem;
-  height: 0.68rem;
-  border-radius: 0.2rem;
-
-  .stock-tab {
-    height: 100%;
-    flex: 1;
+.opening_page {
+  .stock-tabs {
     display: flex;
     align-items: center;
     justify-content: center;
-    color: var(--ex-text-color3);
-    border-radius: 0.2rem;
-  }
-
-  .stock-tab-active {
-    background-color: var(--ex-primary-color);
-    color: var(--ex-white);
-  }
-}
-
-.opening {
-  padding: 0 0 0.32rem 0;
-
-  .open_tab_box {
-    border-radius: 0 0 0.32rem 0.32rem;
-
-    :deep(.van-tabs__wrap) {
-      padding-left: 3.4rem;
-    }
-
-    :deep(.van-tabs__nav) {
-      background-color: var(--ex-none);
-      position: relative;
-
-      &::after {
-        content: '';
-        width: 100%;
-        height: 1px;
-        background-color: rgba(255, 255, 255, 0.06);
-        bottom: 0.3rem;
-        left: 0;
-        position: absolute;
-      }
-    }
-
-    .account-box {
-      border-radius: 0.32rem;
-      background-color: var(--ex-bg-color3);
-      padding: 0.36rem 0.32rem;
-      margin-top: 0.1rem;
-
-      .title {
-        font-size: 0.32rem;
-        color: var(--white);
-        margin-bottom: 0.4rem;
-      }
-
-      .info {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        color: var(--ex-placeholder-color);
-        margin-bottom: 0.4rem;
-      }
-
-      .btns {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        margin-top: 0.52rem;
-
-        .btn {
-          width: 3rem;
-          height: 0.68rem;
-          border-radius: 1rem;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: var(--ex-white);
-          font-size: 0.28rem;
-          background-color: var(--ex-bg-white1);
-        }
-      }
-    }
-  }
-
-  .type_tabs {
-    margin-top: 0.24rem;
-    display: flex;
-    align-items: center;
-    height: 0.68rem;
-    border-radius: 1rem;
     background-color: var(--ex-bg-white1);
-    width: 3rem;
-    position: absolute;
-    z-index: 9999;
-    left: 0.28rem;
-    top: 1.24rem;
+    margin: 0.4rem 0.28rem 0.32rem 0.28rem;
+    height: 0.68rem;
+    border-radius: 0.2rem;
 
-    .type_tab {
+    .stock-tab {
+      height: 100%;
       flex: 1;
-      font-size: 0.32rem;
       display: flex;
       align-items: center;
       justify-content: center;
       color: var(--ex-text-color3);
-      transition: all ease-in .1s;
-      height: 100%;
-      border-radius: 1rem;
+      border-radius: 0.2rem;
     }
 
-    .active_type_tab {
+    .stock-tab-active {
       background-color: var(--ex-primary-color);
       color: var(--ex-white);
     }
+  }
 
-    .active_type_tab2 {
-      background-color: var(--ex-down-color);
+  .opening {
+    padding: 0 0 0.32rem 0;
+
+    .open_tab_box {
+      border-radius: 0 0 0.32rem 0.32rem;
+
+      .account-box {
+        border-radius: 0.32rem;
+        background-color: var(--ex-bg-color3);
+        padding: 0.36rem 0.32rem;
+        margin-top: 0.1rem;
+
+        .title {
+          font-size: 0.32rem;
+          color: var(--white);
+          margin-bottom: 0.4rem;
+        }
+
+        .info {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          color: var(--ex-placeholder-color);
+          margin-bottom: 0.4rem;
+        }
+
+        .btns {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-top: 0.52rem;
+
+          .btn {
+            width: 3rem;
+            height: 0.68rem;
+            border-radius: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--ex-white);
+            font-size: 0.28rem;
+            background-color: var(--ex-bg-white1);
+          }
+        }
+      }
+    }
+
+    .type_tabs {
+      display: flex;
+      align-items: center;
+      height: 0.68rem;
+      border-radius: 1rem;
+      background-color: var(--ex-bg-white1);
+      width: 2.72rem;
+
+      .type_tab {
+        flex: 1;
+        font-size: 0.32rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: var(--ex-text-color3);
+        transition: all ease-in .1s;
+        height: 100%;
+        border-radius: 1rem;
+      }
+
+      .active_type_tab {
+        background-color: var(--ex-primary-color);
+        color: var(--ex-white);
+      }
+
+      .active_type_tab2 {
+        background-color: var(--ex-down-color);
+      }
+    }
+
+    :deep(.van-tabs--sub_line) {
+      width: 100%;
+      height: 0.54rem;
+
+      .van-tabs__wrap {
+        width: 100%;
+        height: 0.54rem !important;
+        border-bottom: 0.02rem solid var(--ex-bg-white2);
+
+        .van-tabs__nav {
+          position: relative;
+          width: 100%;
+          padding: 0 !important;
+          height: 0.54rem;
+          align-items: start;
+          background: none !important;
+
+          .van-tab {
+            line-height: 0.32rem;
+          }
+        }
+
+        .van-tabs__line {
+          bottom: 0 !important;
+          width: 0.34rem !important;
+          height: 0.04rem !important;
+          background-color: var(--ex-white) !important;
+        }
+      }
     }
   }
 }

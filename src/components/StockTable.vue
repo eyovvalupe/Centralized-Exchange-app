@@ -9,7 +9,7 @@
       " :key="item.symbol" v-show="props.marketType == 'all' || props.marketType == item.type">
       <StockItem :marketType="props.marketType" :theme="theme" :handleClick="props.handleClick"
         :deleteItem="props.deleteItem" :showSparkLine="showSparkLine" :type="props.type" @remove="remove"
-        :scrollDom="props.scrollDom" :item="item" :page="props.page" :showIcon="props.showIcon" />
+        :scrollDom="props.scrollDom" :item=" from ? {...item, type: from} : item" :page="props.page" :showIcon="props.showIcon"/>
     </div>
     <NoData style="margin-top: 1rem;" v-if="!props.loading && !props.list.length" />
   </div>
@@ -71,7 +71,11 @@ const props = defineProps({
     type: String,
     default: "",
   },
-  showIcon: Boolean
+  showIcon: Boolean,
+  from: {
+    type: String,
+    default: ''
+  }
 });
 
 const remove = (item) => {
