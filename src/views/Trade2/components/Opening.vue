@@ -245,11 +245,12 @@ onMounted(() => {
         .btns {
           display: flex;
           align-items: center;
-          justify-content: space-between;
+          justify-content: center;
           margin-top: 0.52rem;
+          gap: 0.4rem;
 
           .btn {
-            width: 3rem;
+            flex: 1;
             height: 0.68rem;
             border-radius: 1rem;
             display: flex;
