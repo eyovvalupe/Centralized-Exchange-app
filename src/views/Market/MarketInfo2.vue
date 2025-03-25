@@ -106,7 +106,7 @@
         :color="'var(--ex-primary-color)'" v-model:active="activeTab" animated shrink>
         <Tab :name="2" :title="$t('market.market_item_detail')">
           <div class="market-box">
-            <Chart ref="chartRef" v-if="activeTab == 2 && !chartLoading" :type="'constract'" />
+            <Chart ref="chartRef" v-if="activeTab == 2 && !chartLoading" :type="tradeType" />
           </div>
         </Tab>
         <Tab :name="3" :title="$t('market.market_item_order')">
@@ -262,7 +262,7 @@ import { formatTimestamp } from '@/utils/time';
 
 
 const props = defineProps({
-  type: {
+  tradeType: {
     type: String,
     default: "",
   },
@@ -343,7 +343,7 @@ const clickJumpItem = (tt) => {
 
 const activeTab = ref(2)
 const showInfo = ref(false);
-const type = computed(() => route.query.tradeType || props.type)
+const type = computed(() => props.tradeType || route.query.tradeType)
 
 // 股票信息
 const item = computed(() => {

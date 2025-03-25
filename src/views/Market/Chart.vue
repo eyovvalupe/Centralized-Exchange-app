@@ -101,7 +101,7 @@ import { useRoute } from "vue-router"
 
 const route = useRoute()
 const props = defineProps({
-  type: {
+  tradeType: {
     type: String,
     default: "",
   },
@@ -114,7 +114,7 @@ const props = defineProps({
     default: "",
   }
 });
-const periodType = computed(() => props.type);
+const periodType = computed(() => props.tradeType || route.query.tradeType);
 const emits = defineEmits(['switch'])
 
 const zipo = ref(false) // 折叠状态

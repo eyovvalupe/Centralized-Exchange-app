@@ -61,7 +61,7 @@
                 </div>
               </div>
             </div>
-            <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']" v-if="!showInfoDialog">
+            <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']" v-if="!showInfoDialog && !openInfoStatus">
               <Chart @switch="(e) => (hideChart = e)" :type="'stock'" :mini="true" />
             </div>
             <!-- 内容1 -->
@@ -117,7 +117,7 @@
                 </div>
               </div>
             </div>
-            <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']" v-if="!showInfoDialog">
+            <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']" v-if="!showInfoDialog && !openInfoStatus">
               <Chart @switch="(e) => (hideChart = e)" :type="'constract'" :mini="true" />
             </div>
             <!-- 内容1 -->
@@ -145,13 +145,13 @@
                 <Tab :title="t('trade.trade_orders_current')" :name="44">
                   <div style="height: 0.2rem"></div>
                   <div class="dialog-market-bg" v-if="activeTab2 == 44">
-                    <PositionsSpot :type="'constract'" />
+                    <PositionsSpot :tradeType="'spot'" />
                   </div>
                 </Tab>
                 <Tab :title="t('trade.trade_order_history')" :name="55">
                   <div style="height: 0.2rem"></div>
                   <div class="dialog-market-bg" v-if="activeTab2 == 55">
-                    <InquireSpot :scrollDom="'.dialog-market-box'" :type="'constract'" ref="InquireRef" />
+                    <InquireSpot :scrollDom="'.dialog-market-box'" :tradeType="'spot'" ref="InquireRef" />
                   </div>
                 </Tab>
               </Tabs>
@@ -202,24 +202,24 @@
                 <Tab :name="22" :title="$t('market.market_item_order')" v-if="item.type == 'crypto'">
                   <div style="height: 0.08rem"></div>
                   <div class="market-box">
-                    <OrderingSpot :tradeType="'crypto'" v-if="activeTab2 == 22" :key="'o'" type="nomal" />
+                    <OrderingSpot :tradeType="'constract'" v-if="activeTab2 == 22" :key="'o'" type="nomal" />
                   </div>
                 </Tab>
                 <Tab :name="33" :title="$t('market.market_item_news')" v-if="item.type == 'crypto'">
                   <div class="market-box">
-                    <OrderingSpot :tradeType="'crypto'" v-if="activeTab2 == 33" :key="'n'" type="news" />
+                    <OrderingSpot :tradeType="'constract'" v-if="activeTab2 == 33" :key="'n'" type="news" />
                   </div>
                 </Tab>
                 <Tab :title="t('trade.trade_orders_current')" :name="44">
                   <div style="height: 0.2rem"></div>
                   <div class="dialog-market-bg" v-if="activeTab2 == 44">
-                    <PositionsContract :type="'constract'" />
+                    <PositionsContract :tradeType="'constract'" />
                   </div>
                 </Tab>
                 <Tab :title="t('trade.trade_order_history')" :name="55">
                   <div style="height: 0.2rem"></div>
                   <div class="dialog-market-bg" v-if="activeTab2 == 55">
-                    <InquireContract :scrollDom="'.dialog-market-box'" :type="'constract'" ref="InquireRef" />
+                    <InquireContract :scrollDom="'.dialog-market-box'" :tradeType="'constract'" ref="InquireRef" />
                   </div>
                 </Tab>
               </Tabs>
@@ -252,7 +252,7 @@
                 </div>
               </div>
             </div>
-            <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']" v-if="!showInfoDialog">
+            <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']" v-if="!showInfoDialog && !openInfoStatus">
               <Chart @switch="(e) => (hideChart = e)" :type="'ai'" :mini="true" />
             </div>
             <!-- 内容1 -->
@@ -270,7 +270,7 @@
                 <Tab :title="t('trade.trade_orders_current')" :name="44">
                   <div style="height: 0.2rem"></div>
                   <div class="dialog-market-bg" v-if="activeTab2 == 44">
-                    <PositionsAi />
+                    <PositionsAi  />
                   </div>
                 </Tab>
                 <Tab :title="t('trade.trade_order_history')" :name="55">
@@ -327,13 +327,13 @@
                 <Tab :title="t('trade.trade_orders_current')" :name="44">
                   <div style="height: 0.2rem"></div>
                   <div class="dialog-market-bg" v-if="activeTab2 == 44">
-                    <PositionsContract :type="'constract'" />
+                    <PositionsContract :tradeType="'foreign'" />
                   </div>
                 </Tab>
                 <Tab :title="t('trade.trade_order_history')" :name="55">
                   <div style="height: 0.2rem"></div>
                   <div class="dialog-market-bg" v-if="activeTab2 == 55">
-                    <InquireContract :scrollDom="'.dialog-market-box'" :type="'constract'" ref="InquireRef" />
+                    <InquireContract :scrollDom="'.dialog-market-box'" :tradeType="'foreign'" ref="InquireRef" />
                   </div>
                 </Tab>
               </Tabs>
@@ -384,13 +384,13 @@
                 <Tab :title="t('trade.trade_orders_current')" :name="44">
                   <div style="height: 0.2rem"></div>
                   <div class="dialog-market-bg" v-if="activeTab2 == 44">
-                    <PositionsContract :type="'constract'" />
+                    <PositionsContract :tradeType="'commodities'" />
                   </div>
                 </Tab>
                 <Tab :title="t('trade.trade_order_history')" :name="55">
                   <div style="height: 0.2rem"></div>
                   <div class="dialog-market-bg" v-if="activeTab2 == 55">
-                    <InquireContract :scrollDom="'.dialog-market-box'" :type="'constract'" ref="InquireRef" />
+                    <InquireContract :scrollDom="'.dialog-market-box'" :tradeType="'commodities'" ref="InquireRef" />
                   </div>
                 </Tab>
               </Tabs>

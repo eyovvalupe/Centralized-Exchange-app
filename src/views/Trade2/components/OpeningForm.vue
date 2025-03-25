@@ -858,14 +858,14 @@ const inputStop = (key) => {
 };
 
 const submit1 = () => {
-  if (!currStock.value.trade) return showToast(t('trade.stock_opening_closed'));
+  // if (!currStock.value.trade) return showToast(t('trade.stock_opening_closed'));
   if (!currStock.value.symbol)
     return showToast(t("trade.stock_opening_err_stock"));
   if (!form1.value.volume || form1.value.volume < min.value)
     return showToast(
       `${t("trade.stock_opening_err_min_balance")}：${min.value}`
     );
-  if (form1.value.volume > maxStockNum.value) return showNotEnoughBalance.value = true;
+  // if (form1.value.volume > maxStockNum.value) return showNotEnoughBalance.value = true;
   // 限价校验
   if (props.activeTab == 1) {
     if (!form1.value.price)
@@ -1010,9 +1010,9 @@ const paramHandle = (data) => {
   sliderValue.value = 0;
   if (data.lever) {
     levers.value = data.lever.split(",");
-    if (activeType.value != 1 && levers.value[0]) {
+    if (props.activeType != 1 && levers.value[0]) {
       form1.value.lever = levers.value[0];
-    } else if (activeType.value == 1 && levers.value[0]) {
+    } else if (props.activeType == 1 && levers.value[0]) {
       form1.value.lever = 1;
     }
   }
