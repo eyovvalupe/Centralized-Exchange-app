@@ -43,10 +43,24 @@
         <div class="info">
           <div>{{ $t('market.market_faster_available') }}</div>
           <div>
-            <span style="font-size: 0.32rem;color:var(--ex-primary-color)">{{ stockWalletAmount || '0' }}</span>
+            <span style="font-size: 0.32rem;color:var(--ex-primary-color);margin-right:0.08rem">{{ stockWalletAmount || '0' }}</span>
             <span style="color:var(--ex-white)">USDT</span>
           </div>
         </div>
+        <div class="info">
+          <div>保证金</div>
+          <div>
+            <span style="font-size: 0.32rem;color:var(--ex-primary-color);margin-right:0.08rem">--</span>
+            <span style="color:var(--ex-white)">USDT</span>
+          </div>
+        </div>
+        <div class="info">
+          <div>保证金风险率</div>
+          <div>
+            <span style="color:var(--ex-white)">--</span>
+          </div>
+        </div>
+
 
         <div class="btns">
           <div class="btn ripple-primary" @click="jump('topUpCrypto')">{{ $t('home.recharge') }}</div>
@@ -165,6 +179,7 @@ defineExpose({
         align-items: center;
         justify-content: space-between;
         color: var(--ex-placeholder-color);
+        height: 0.6rem;
       }
 
       .btns {

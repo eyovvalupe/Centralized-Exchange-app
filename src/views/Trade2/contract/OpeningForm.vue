@@ -155,10 +155,10 @@
         <img v-lazy="getStaticImgUrl(`/static/img/common/warning.svg`)" />
       </div>
       <div class="item_box_right">
-        <FormItem :hasScroll="true" :placeholder="t('trade.contract_lots_amount')" @blur="volumeF = false"
+        <FormItem :hasScroll="true" :placeholder="'数量'" @blur="volumeF = false"
           @focus="volumeFocus" v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
           @btnClick="putAll" @change="changePercent" :max="maxStockNum" tip-align="right"
-          :tip="maxStockNum >= 1 ? '≤' + maxStockNum : ''" input-type="digit">
+          :tip="maxStockNum >= 1 ? '≤' + maxStockNum + '张' : ''" input-type="digit">
           <!-- <template #lt>
             <div style="display: flex;align-items: center;height: 0.48rem;" v-if="amountper && paramCurrency">
               <div style="width: 0.24rem;height: 0.24rem;margin-right: 0.1rem;">
@@ -199,7 +199,10 @@
       }}</span>
     </Button>
 
-    <div v-if="!token" style="margin-top: 0.6rem" class="unlogin-box">
+    <Button size="large" round style="background-color: var(--ex-bg-white1);" v-if="!token" class="submit ripple-btn"  @click="store.commit('setIsLoginOpen', true), emits('success')">
+        <span>{{ t('trade.stock_opening_token_login') }}</span>
+      </Button>
+    <!-- <div v-if="!token" style="margin-top: 0.6rem" class="unlogin-box">
       <div class="flex justify-between mb-[0.32rem]">
         <div class="w-[3.22rem] h-[0.8rem] rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn"
           @click="store.commit('setIsLoginOpen', true), emits('success')">
@@ -210,11 +213,11 @@
           {{ t('trade.stock_opening_token_register') }}
         </div>
       </div>
-      <!-- <div class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn" @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
+      <div class="w-full h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn" @click="() => router.push({ name: 'register', query: { guest: 'guest' } })
         ">
         {{ t("trade.contract_create_guest_btn") }}
-      </div> -->
-    </div>
+      </div>
+    </div> -->
   </div>
 
   <!-- 开仓确认弹窗 -->
@@ -658,7 +661,6 @@ const goDialogSearch = (market) => {
             return item;
           });
           store.commit('setFuturesSearchList', arr);
-          console.error('-------', 10)
           store.dispatch('subList', {
             commitKey: 'setFuturesSearchList',
             listKey: 'futuresSearchList',
@@ -1149,11 +1151,12 @@ const paramHandle = (data) => {
     }
   }
 
-  if (!currStock.value.pip || !Number(currStock.value.pip)) {
-    step.value = 1;
-  } else {
-    step.value = Number(currStock.value.pip);
-  }
+  // 合约为张  只能是整数
+  // if (!currStock.value.pip || !Number(currStock.value.pip)) {
+  //   step.value = 1;
+  // } else {
+  //   step.value = Number(currStock.value.pip);
+  // }
 };
 
 const initParam = () => {

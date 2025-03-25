@@ -74,12 +74,12 @@
               showBtn && btnPlaceholder && !inputFocus && btnShowMode == 'focus'
             ">{{ btnPlaceholder }}</span>
 
-            <span @click="emit('btnClick')" v-if="(showBtn && btnShowMode == 'focus') || props.hasScroll" :style="{
+            <span @click="emit('btnClick')" v-if="(showBtn && btnShowMode == 'focus')" :style="{
               opacity: (inputFocus) ? '1' : '0',
               visibility: (inputFocus) ? '' : 'hidden',
             }" class="put_all">{{ btnText ? btnText : t('trade.stock_position_all') }}</span>
 
-            <span @click="emit('btnClick')" v-else-if="from != 'withdraw' && (showBtn || props.hasScroll)"
+            <span @click="emit('btnClick')" v-else-if="from != 'withdraw' && (showBtn)"
               class="put_all">{{
                 btnText ? btnText : t('trade.stock_position_all')
               }}</span>

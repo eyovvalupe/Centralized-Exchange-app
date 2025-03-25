@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div style="padding-bottom: 0.32rem;">
     <Top :title="title" :backFunc="backFunc" />
 
     <div class="scroller">
@@ -41,9 +41,9 @@
                   }}
                 </span>
               </div>
-              <div class="stock-info__trend" @click="openStockModel(currStock)">
+              <!-- <div class="stock-info__trend" @click="openStockModel(currStock)">
                 <img v-lazy="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
-              </div>
+              </div> -->
             </div>
             <div class="stock-info__order_no">
               <!-- <span>{{ currStock.order_no || "--" }}</span>
