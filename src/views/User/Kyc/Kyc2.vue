@@ -222,7 +222,7 @@
     </div>
 
     <Button v-if="kycInfo.status == 'none' || kycInfo.status == 'failure'" :color="'var(--ex-primary-color)'"
-      @click="submit" :loading="loading" :disabled="disabled" round class="submit ripple-btn" type="primary"><span
+      @click="verifyStatus" :loading="loading" round class="submit ripple-btn" type="primary"><span
         style="color: var(--ex-white);">{{ $t("kyc.second_btn") }}</span></Button>
   </div>
 </template>
@@ -230,7 +230,7 @@
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js"
 import Top from "@/components/Top.vue";
-import { Uploader, Button, showToast, Tabs, Tab } from "vant";
+import { Uploader, Button, showToast, Tabs, Tab, showConfirmDialog } from "vant";
 import { ref, computed } from "vue";
 import { UPLOAD_ADDRESS, UPLOAD_TOKEN } from "@/config.js";
 import { _fetchWithTimeout } from "@/api/upload";
@@ -303,6 +303,19 @@ const jump = (name, query) => {
   });
 };
 
+const verifyStatus = () => {
+  if (!files.value.front.url || !files.value.back.url || !files.value.hand.url) {
+    showConfirmDialog({
+      title: t('身份证上传提示'),
+      message: t('您为上传身份证，继续提交？'),
+      confirmButtonText: t('提交'),
+      cancelButtonText: t('取消'),
+    }).then(() => submit());
+    return;
+  }
+  submit();
+}
+
 const submit = () => {
   if (loading.value) return;
   loading.value = true;
@@ -319,14 +332,16 @@ const submit = () => {
         //   }, 300);
         //   nextStep();
         // } else {
-        router.replace({
-          name: "submit",
-        });
+        setTimeout(() => {
+          loading.value = false;
+          router.replace({
+            name: "submit",
+          });
+        }, 1000);
         // }
       }
     })
     .finally(() => {
-      loading.value = false;
     });
 };
 

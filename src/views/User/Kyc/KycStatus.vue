@@ -20,14 +20,14 @@
       <!-- v-if="kycInfo.status == 'review'" -->
 
       <!-- 成功 -->
-      <template v-if="kycInfo.status == 'success'">
+      <!-- <template v-if="kycInfo.status == 'success'">
         <div class="success_icon">
           <img v-lazy="getStaticImgUrl('/static/img/assets/status_success.svg')" alt="success" />
         </div>
         <div class="text-[0.36rem] text-color mt-[0.24rem] mb-[0.4rem]">
           {{ $t("kyc.status_success") }}
         </div>
-      </template>
+      </template> -->
       <!-- 详情 -->
       <template v-if="kycInfo.status == 'review'">
         <div class="rotating review_icon">
@@ -52,10 +52,16 @@
           {{ kycInfo.remarks || "--" }}
         </div>
       </template>
-      <div class="bg-color3 rounded-[0.32rem] w-full h-[6.72rem] pt-[0.32rem] mb-[0.8rem] px-[0.2rem] mb-[0.12rem]">
-        <div class="px-[0.32rem] mb-[0.3rem]">
-          <div class="text-[0.36rem] mb-[0.32rem] leading-[0.5rem]">
-            {{ props.kycInfo ? props.kycInfo.name : "--" }}
+      <div class="bg-color3 rounded-[0.32rem] w-full pt-[0.32rem] mb-[0.8rem] mb-[0.12rem]">
+        <div class="px-[0.32rem] mb-[0.3rem] px-[0.2rem]">
+          <div class="flex items-center mb-[0.32rem]">
+            <div class="text-[0.36rem] leading-[0.5rem] mr-[0.2rem]">
+              {{ props.kycInfo ? props.kycInfo.name : "--" }}
+            </div>
+            <div v-if="kycInfo.status == 'success'" class="size-[0.28rem] mr-[0.12rem] relative top-[-0.03rem]">
+              <img v-lazy="getStaticImgUrl('/static/img/assets/status_success.svg')" alt="success" />
+            </div>
+            <div v-if="kycInfo.status == 'success'" class="text-[0.24rem] text-primary leading-[0.5rem]">{{ $t("kyc.status_success") }}</div>
           </div>
           <div class="text-[0.3rem] mb-[0.2rem] leading-[0.4rem]">
             <span class="text-color3 mr-[0.2rem]">{{
@@ -71,16 +77,33 @@
           </div>
         </div>
         <div
-          class="w-full bg-color rounded-[0.32rem] border-[0.02rem] border-color h-[4.14rem] flex flex-wrap justify-between p-[0.2rem]">
-          <div
+          class="w-full bg-white2 rounded-[0.32rem] border-[0.02rem] border-color h-[4.14rem] flex flex-wrap justify-between p-[0.2rem]">
+          <div v-if="kycInfo.idimg_1"
             class="w-[2.94rem] h-[1.82rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem] mb-[0.1rem]">
             <img :src="kycInfo.idimg_1" style="object-fit: fill !important" alt="img" />
           </div>
-          <div class="w-[2.94rem] h-[1.82rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem]">
+          <div v-if="kycInfo.idimg_2"
+            class="w-[2.94rem] h-[1.82rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem]">
             <img :src="kycInfo.idimg_2" style="object-fit: fill !important" alt="img" />
           </div>
-          <div class="w-[2.94rem] h-[1.82rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem]">
+          <div v-if="kycInfo.idimg_3"
+            class="w-[2.94rem] h-[1.82rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem]">
             <img :src="kycInfo.idimg_3" style="object-fit: fill !important" alt="img" />
+          </div>
+          <div v-if="!kycInfo.idimg_1"
+            class="w-[2.94rem] h-[1.82rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem] mb-[0.1rem]">
+            <img :src="getStaticImgUrl('static/img/user/default_front.png')" style="object-fit: fill !important"
+              alt="img" />
+          </div>
+          <div v-if="!kycInfo.idimg_2"
+            class="w-[2.94rem] h-[1.82rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem]">
+            <img :src="getStaticImgUrl('static/img/user/default_back.png')" style="object-fit: fill !important"
+              alt="img" />
+          </div>
+          <div v-if="!kycInfo.idimg_3"
+            class="w-[2.94rem] h-[1.82rem] overflow-hidden border-[0.02rem] border-color rounded-[0.32rem]">
+            <img :src="getStaticImgUrl('static/img/user/default_hand.png')" style="object-fit: fill !important"
+              alt="img" />
           </div>
         </div>
       </div>

@@ -214,7 +214,7 @@
       }, 400);
       return false;
     }
-    if (props.from != 'kyc' && userInfo.value.kycl2 != 2) {
+    if (!['kyc', 'safety'].includes(props.from) && userInfo.value.kycl2 != 2) {
       setTimeout(() => {
         showConfirmDialog({
           title: '实名认证',
