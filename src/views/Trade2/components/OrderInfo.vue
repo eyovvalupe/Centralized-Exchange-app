@@ -16,11 +16,11 @@
           <div style="flex: 1">
             <div class="stock-info__head">
               <div class="stock-info__hl flex items-center">
-                <span class="stock-info__symbol" v-if="type == 'contract'">{{
-                  currStock.name || '--'
+                <span class="stock-info__symbol" v-if="type == 'stock'">{{
+                  currStock.symbol || '--'
                 }}</span>
                 <span class="stock-info__symbol" v-else>{{
-                  currStock.symbol || '--'
+                  currStock.name || '--'
                 }}</span>
                 <span class="stock-info__status">
                   <!-- {{ statusMap[currStock.status] || "--" }} -->
@@ -41,9 +41,9 @@
                   }}
                 </span>
               </div>
-              <!-- <div class="stock-info__trend" @click="openStockModel(currStock)">
+              <div class="stock-info__trend" @click="openStockModel(currStock)">
                 <img v-lazy="getStaticImgUrl('/static/img/trade/blue-stock.svg')" />
-              </div> -->
+              </div>
             </div>
             <div class="stock-info__order_no">
               <!-- <span>{{ currStock.order_no || "--" }}</span>
