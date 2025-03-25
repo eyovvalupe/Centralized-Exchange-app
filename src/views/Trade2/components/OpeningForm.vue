@@ -1010,8 +1010,10 @@ const paramHandle = (data) => {
   sliderValue.value = 0;
   if (data.lever) {
     levers.value = data.lever.split(",");
-    if (levers.value[0]) {
+    if (activeType.value != 1 && levers.value[0]) {
       form1.value.lever = levers.value[0];
+    } else if (activeType.value == 1 && levers.value[0]) {
+      form1.value.lever = 1;
     }
   }
 };
