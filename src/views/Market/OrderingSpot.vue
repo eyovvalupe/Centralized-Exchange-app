@@ -244,7 +244,7 @@ const reset = () => {
     if (!listBox.value) return
     const h = Math.floor(listBox.value.clientHeight / 20)
     if (currNav.value != 1 || props.type == 'infinite') {
-        max.value = h
+        max.value = h - 1
     } else {
         max.value = Math.floor(h / 2)
     }
