@@ -60,7 +60,7 @@
           <HeaderTabs
             type="green-card"
             v-model:active="activeFinanceTab"
-            :tabs="[t('copy.title'), t('finance.defi_borrow'), t('finance.portfolio_title'), t('IPO')]"
+            :tabs="[t('copy.copy_tab_tab1'), t('finance.borrow_crypto'), t('finance.staking_crypto'), t('IPO')]"
             @change="changeActiveTab1(activeFinanceTab)"
           />
           <div class="trade_order_tab finance-tab" v-if="activeFinanceTab == 0">

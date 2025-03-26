@@ -550,7 +550,7 @@ export default {
     left_mine: 'Favorites',
     left_stock: 'Stock',
     left_contract: 'Futures',
-    left_bot: 'Trading Bot',
+    left_bot: 'Trading Bots',
     left_forex: 'Forex',
     left_all: 'All',
 
