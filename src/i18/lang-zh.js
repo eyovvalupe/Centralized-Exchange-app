@@ -795,6 +795,7 @@ export default {
 
     buy_order: "买币订单",
     finance_order: "理财订单",
+
   },
   inviteFriends: {
     invite: '推荐朋友',
@@ -1149,4 +1150,16 @@ export default {
     btn_see_all: '查看全部',
     btn_cancel: '取消',
   },
+  menu: {
+    stock_trading: "股票交易",
+    spot_trading: "币币交易",
+    crypto_trading: "加密货币合约交易",
+    ai_trading: "交易机器人交易",
+    forex_trading: "外汇交易",
+    blocktrade_trading: "大宗商品交易",
+    my_assets: "我的资产",
+    assets_center: "资产中心",
+    google: "谷歌认证",
+    safety: "安全设置",
+  }
 };

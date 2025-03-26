@@ -43,7 +43,7 @@
                       : item.name == 'finance'
                       ? t('home.finance')
                       : item.name == 'assets'
-                      ? t('assets.assets_center')
+                      ? t('menu.assets_center')
                       : item.name == 'order'
                       ? t('assets.header_order')
                       : item.name == 'user'
@@ -118,45 +118,45 @@
                     : subItem == 'commodities'
                     ? t('assets.over_view_trade')
                     : subItem == 'stockTrade'
-                    ? t('股票交易')
+                    ? t('menu.stock_trading')
                     : subItem == 'spotTrade'
-                    ? t('币币交易')
+                    ? t('menu.spot_trading')
                     : subItem == 'futuresTrade'
-                    ? t('加密货币合约交易')
+                    ? t('menu.crypto_trading')
                     : subItem == 'aiTrade'
-                    ? t('交易机器人交易')
+                    ? t('menu.ai_trading')
                     : subItem == 'forexTrade'
-                    ? t('外汇交易')
+                    ? t('menu.forex_trading')
                     : subItem == 'commoditiesTrade'
-                    ? t('大宗商品交易')
+                    ? t('menu.blocktrade_trading')
                     : subItem == 'copy'
-                    ? t('跟单')
+                    ? t('copy.title')
                     : subItem == 'borrow'
-                    ? t('DeFi借币')
+                    ? t('finance.defi_borrow')
                     : subItem == 'stake'
-                    ? t('质押挖矿')
+                    ? t('finance.portfolio_title')
                     : subItem == 'ipo'
                     ? t('IPO')
                     : subItem == 'assets'
-                    ? t('我的资产')
+                    ? t('menu.my_assets')
                     : subItem == 'deposit'
-                    ? t('充值')
+                    ? t('home.recharge')
                     : subItem == 'withdraw'
-                    ? t('提现')
+                    ? t('assets.withdraw')
                     : subItem == 'transfer'
-                    ? t('划转')
+                    ? t('assets.transfer')
                     : subItem == 'record'
-                    ? t('资金记录')
+                    ? t('assets.financialRecords')
                     : subItem == 'user'
-                    ? t('用户')
+                    ? t('inviteFriends.user')
                     : subItem == 'account'
-                    ? t('收款账户')
+                    ? t('withdraw.receiptAccount')
                     : subItem == 'kyc'
-                    ? t('身份认证')
+                    ? t('kyc.page_title')
                     : subItem == 'google'
-                    ? t('谷歌认证')
+                    ? t('menu.google')
                     : subItem == 'safety'
-                    ? t('安全设置')
+                    ? t('menu.safety')
                     : ''
                 }}
               </div>

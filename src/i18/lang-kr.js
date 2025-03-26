@@ -1148,4 +1148,16 @@ export default {
     btn_see_all: '모두보기',
     btn_cancel: '취소',
   },
+  menu: {
+    stock_trading: "주식 거래",
+    spot_trading: "코인 거래",
+    crypto_trading: "암호화폐 계약 거래",
+    ai_trading: "Bot 거래",
+    forex_trading: "외환 거래",
+    blocktrade_trading: "상품 거래",
+    my_assets: "내 자산",
+    assets_center: "자산 센터",
+    google: "구글 인증",
+    safety: "보안 설정",
+  }
 };

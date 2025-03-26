@@ -1151,4 +1151,16 @@ export default {
     btn_see_all: 'すべて見る',
     btn_cancel: 'キャンセル',
   },
+  menu: {
+    stock_trading: "株式取引",
+    spot_trading: "暗号通貨取引",
+    crypto_trading: "暗号通貨契約取引",
+    ai_trading: "Bot取引",
+    forex_trading: "外国為替取引",
+    blocktrade_trading: "外国為替取引",
+    my_assets: "私の資産",
+    assets_center: "資産センター",
+    google: "Google認証",
+    safety: "セキュリティ設定",
+  }
 };

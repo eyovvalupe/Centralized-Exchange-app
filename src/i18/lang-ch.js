@@ -1145,4 +1145,16 @@ export default {
     btn_see_all: '查看全部',
     btn_cancel: '取消',
   },
+  menu: {
+    stock_trading: "股票交易",
+    spot_trading: "幣幣交易",
+    crypto_trading: "加密貨幣合約交易",
+    ai_trading: "交易機器人交易",
+    forex_trading: "外匯交易",
+    blocktrade_trading: "大宗商品交易",
+    my_assets: "我的資產",
+    assets_center: "資產中心",
+    google: "谷歌認證",
+    safety: "安全設置",
+  }
 };

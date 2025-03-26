@@ -20,7 +20,7 @@
     <Tabs v-model:active="activeTab" type="custom-card-assets" @change="changeActiveTab(activeTab, true)" class="mt-[0.32rem]"
       v-if="headActiveTab == 0">
       <Tab :title="t('assets.header_total')" />
-      <Tab :title="t('assets.wallet_cash_value')" />
+      <Tab :title="t('assets.wallet_header_cash')" />
       <Tab :title="t('assets.wallet_header_stock')" />
       <Tab :title="t('assets.wallet_header_contract')" />
     </Tabs>
