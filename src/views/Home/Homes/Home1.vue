@@ -27,7 +27,7 @@
             </div>
             <div class="box top">
                 <div>{{ t('home.secure') }} | {{ t('home.convinient') }} | {{ t('home.reliable') }}</div>
-                <div class="title"><span style="color: #F19009;">{{ t('home.landing_con1') }}{{ t('home.landing_con2') }}</span><br />{{ t('home.landing_con3') }}</div>
+                <div class="title"><span style="color: #F19009;">{{ t('home.landing_con1') }}{{ t('home.landing_con2') }}</span>{{ t('home.landing_con3') }}</div>
                 <div>{{ t('home.landing_con4') }}</div>
             </div>
             <div v-if="!token" class="ripple-btn login-btn" @click="jump('user', true)">{{ t('trade.stock_opening_token_login') }}/{{ t('trade.stock_opening_token_register') }}</div>
