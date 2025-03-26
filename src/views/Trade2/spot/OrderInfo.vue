@@ -46,7 +46,7 @@
           <div class="info_item">
             <div class="name">{{ t("trade.stock_opening_price") }}</div>
             <div class="val_box">
-              <div class="tag" truncate>
+              <div class="tag">
                 {{
                   currSpot.price_type == 'market' ? t('trade.stock_market_price') :
                     currSpot.price_type == 'limit' ? t('trade.stock_limit_price') :
@@ -64,31 +64,31 @@
               }}
             </div>
             <div class="val_box">
-              <div class="text truncate">{{ currSpot.volume || "--" }} {{ currSpot.name ? currSpot.name.split('/')[0] : '' }}</div>
+              <div class="text">{{ currSpot.volume || "--" }} {{ currSpot.name ? currSpot.name.split('/')[0] : '' }}</div>
             </div>
           </div>
           
           <div class="info_item">
             <div class="name">{{ t("交易额") }}</div>
             <div class="val_box">
-              <div class="text truncate">{{ orderAmount || "--" }} USDT</div>
+              <div class="text">{{ orderAmount || "--" }} USDT</div>
             </div>
           </div>
           
           <div class="info_item">
             <div class="name">{{ t("trade.stock_opening_fee") }}</div>
             <div class="val_box">
-              <div class="text truncate">{{ currSpot.fee || "0" }} USDT</div>
+              <div class="text">{{ currSpot.fee || "0" }} USDT</div>
             </div>
           </div>
           
           <div class="info_item">
             <div class="name">{{ t("trade.ipo_detail_order_no") }}</div>
             <div class="val_box">
-              <div class="text truncate">
+              <div class="text">
                 {{ currSpot.order_no || "--" }}
               </div>
-              <div class="stock-info__copy_icon" @click="copy(currSpot.order_no)">
+              <div class="stock-info__copy_icon flex-shrink-0" @click="copy(currSpot.order_no)">
                 <img :src="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
               </div>
             </div>
@@ -96,7 +96,7 @@
           <div class="info_item">
             <div class="name">{{ t("委托时间") }}</div>
             <div class="val_box">
-              <div class="text truncate">{{ currSpot.date || "--" }}</div>
+              <div class="text">{{ currSpot.date || "--" }}</div>
             </div>
           </div>
         
@@ -251,7 +251,7 @@ const copy = (text) => {
     align-items: center;
     justify-content: space-between;
     margin: 0.32rem 0 0 0;
-    height: 0.44rem;
+    min-height: 0.44rem;
 
     .name {
       color: var(--ex-text-color3);
@@ -265,7 +265,9 @@ const copy = (text) => {
       justify-content: flex-end;
       font-size: 0.28rem;
       color: var(--ex-text-color);
-      max-width:4rem;
+      max-width: 4.4rem;
+      text-align: right;
+      word-wrap: break-word;
 
       .tag {
         color: var(--ex-text-color);

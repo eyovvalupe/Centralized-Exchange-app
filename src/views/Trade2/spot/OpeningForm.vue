@@ -162,6 +162,10 @@
     </div>
   </BottomPopup>
   
+  <BottomPopup :title="t('充值/划转')" round :show="showNotEnoughBalance" closeable @closed="showNotEnoughBalance = false">
+    <NotEnoughBalance :alert="true" :type="'spot'" :balance="params.offset == 'buy' ? stockWalletAmount : currencyAmount" :currency="params.offset == 'buy' ? paramCurrency : currName.split('/')[0]" />
+  </BottomPopup>
+
 </template>
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js";
@@ -180,6 +184,7 @@ import FormItem from "@/components/Form/FormItem.vue";
 import { useI18n } from "vue-i18n";
 import BottomPopup from "@/components/BottomPopup.vue";
 import eventBus from "@/utils/eventBus.js"
+import NotEnoughBalance from "../components/NotEnoughBalance.vue";
 
 const props = defineProps({
   activeTab: null, // 0-市价 1-限价
@@ -194,7 +199,7 @@ const props = defineProps({
   },
 });
 
-
+const showNotEnoughBalance = ref(false)
 const { t } = useI18n();
 const showPassword = ref(false);
 const paramCurrency = ref("USDT"); // 交易使用的货币
@@ -577,11 +582,7 @@ const submitForm = (s) => {
     })
     .catch(err => {
       if (err.code == 1010) { // 余额不足
-        eventBus.emit('insufficient', {
-          type: 'spot',
-          currency: paramCurrency.value,
-          amount: stockWalletAmount.value,
-        })
+        showNotEnoughBalance.value = true
       }
     })
     .finally(() => {
@@ -852,7 +853,7 @@ defineExpose({
       font-size: 0.28rem;
       font-weight: 500;
       text-align: right;
-      max-width: 4rem;
+      max-width: 4.4rem;
       .tag {
         height: 0.44rem;
         color: var(--ex-text-color);
