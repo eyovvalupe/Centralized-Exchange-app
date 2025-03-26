@@ -11,7 +11,7 @@
     <NoData v-if="!loading && !contractInquireList.length" />
 
     <SwipeCell ref="items" v-for="(item, i) in contractInquireList" :key="i" disabled>
-      <div class="tr mask-btn" @click="OpeningForm(item)">
+      <div class="tr mask-btn" :class="{ order: from == 'order' }" @click="OpeningForm(item)">
         <div class="td td-5">
           <div class="name">{{ item.name }}</div>
           <div class="flex items-center pt-[0.16rem] gap-[0.08rem]">
@@ -28,17 +28,17 @@
             <div class="status-color status" :class="'status-' + item.status">
               {{
                 item.status == "none"
-                  ? t("trade.stock_position_status_none")
+                  ? t("委托中")
                   : item.status == "lock"
                     ? t("trade.stock_position_status_lock")
                     : item.status == "open"
                       ? t("trade.stock_position_status_open")
                       : item.status == "done"
-                        ? t("trade.stock_position_status_done")
+                        ? t("已完成")
                         : item.status == "fail"
                           ? t("trade.stock_position_status_fail")
                           : item.status == "cancel"
-                            ? t("trade.stock_position_status_cancel")
+                            ? t("已撤单")
                             : "--"
               }}
             </div>
@@ -59,7 +59,7 @@
 
   <!-- 订单详情 -->
   <Popup v-model:show="showInfo" position="right" style="width: 100%; height: 100%" teleport="body">
-    <OrderInfo :tradeType="'spot'" :curr-stock="currStock" @back="showInfo = false" />
+    <OrderInfo :tradeType="'spot'" :currSpot="currStock" @back="showInfo = false" />
   </Popup>
 
   <UnLogin @loginfinish="loginfinish" v-show="!token" />
@@ -73,16 +73,11 @@ import NoData from "@/components/NoData.vue";
 import LoadingMore from "@/components/LoadingMore.vue";
 import { _spotList } from "@/api/api";
 import UnLogin from "@/components/UnLogin.vue";
-import OrderInfo from "../components/OrderInfo.vue";
-import Decimal from "decimal.js";
+import OrderInfo from "./OrderInfo.vue";
 import { useI18n } from "vue-i18n";
 
 const props = defineProps({
   tradeType: {
-    type: String,
-    default: "",
-  },
-  type: {
     type: String,
     default: ''
   },
@@ -93,6 +88,10 @@ const props = defineProps({
   scrollDom: { // 滚动的父级
     type: String,
     default: '.page'
+  },
+  from: {
+    type: String,
+    default: ''
   }
 })
 
@@ -108,41 +107,6 @@ const contractInquireList = computed(
   () => store.state.contractInquireList || []
 );
 const token = computed(() => store.state.token);
-
-const statusMap = ref({
-  // 仓位状态
-  none: "开仓",
-  lock: "锁定",
-  open: "持仓",
-  done: "平仓",
-  fail: "失败",
-  cancel: "已取消",
-});
-const offsetMap = ref({
-  // 涨跌状态
-  long: "买涨",
-  short: "买跌",
-});
-const leverTypeap = ref({
-  // 仓位
-  cross: "全仓",
-  isolated: "逐仓",
-});
-const priceTypeMap = ref({
-  // 价格类型
-  market: "市价",
-  limit: "限价",
-});
-const stopMap = ref({
-  // 止损类型
-  price: "价格",
-  amount: "金额",
-  ratio: "百分比",
-});
-const getRatio = (num) => {
-  if (!num) return "--";
-  return new Decimal(num) + "%";
-};
 
 const page = ref(0);
 const loading = ref(false);
@@ -193,7 +157,6 @@ const getList = () => {
 const showInfo = ref(false);
 const currStock = ref({});
 const OpeningForm = (item) => {
-  store.commit('setOpenInfoStatus', true)
   currStock.value = item;
   showInfo.value = true;
 };
@@ -212,8 +175,10 @@ onMounted(() => {
     init()
   }
   setTimeout(() => {
+    if (!token.value) return
     try {
       moreDom = document.querySelector(".loading_more");
+      if (!moreDom) return
       document
         .querySelector(props.scrollDom)
         .addEventListener("scroll", scrolHandle);

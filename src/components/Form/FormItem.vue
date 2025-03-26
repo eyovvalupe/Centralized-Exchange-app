@@ -263,7 +263,7 @@ const inputBlur = () => {
   }, 30);
 };
 
-const onInput = (e) => {
+const onInput = () => {
   if(props.inputType == 'digit'){
     let val = handlerVal(inputVal.value,0)
     //加一层判断，因为input type=number的情况数字输入小数点的时候会返回空，如果也进行重新赋值处理会导致错误

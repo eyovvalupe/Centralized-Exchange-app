@@ -33,7 +33,7 @@
       :placeholder="`${t('market.market_marketinfo_value')}`" :tip="''"
       v-model="form1.amount" :digits="2" @input="changeAmount">
       <template #right-con>
-        {{currName.split('/')[1]}}
+        USDT
       </template>
     </FormItem>
 
@@ -41,7 +41,7 @@
     <div class="item_box">
       <div class="item_box_right">
         <FormItem :hasScroll="true" :placeholder="t('trade.stock_position_amount')" v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
-          @btnClick="putAll" @input="changePercent" :tip="'≤' + maxStockNum + ' ' + currName.split('/')[0]" tip-align="right"
+          @btnClick="putAll" @input="changePercent" :tip="maxStockNum > 0 ? '≤' + maxStockNum + ' ' + currName.split('/')[0] : ''" tip-align="right"
           input-type="number">
           
           <template #scroll>
@@ -55,7 +55,7 @@
 
     <!-- 按钮 -->
     <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1"
-      class="submit ripple-btn" :color="props.activeType == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'"
+      class="submit ripple-btn" :color="props.activeType == 1 ? 'var(--ex-up-color)' : 'var(--ex-down-color)'"
       round>
       <span style="color: var(--ex-white);">{{
         props.activeType == 1
@@ -64,17 +64,9 @@
       }}</span>
     </Button>
 
-    <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box">
-      <div class="flex justify-between mb-[0.32rem]">
-        <div class="w-[3.22rem] h-[0.8rem]   rounded-[0.4rem] flex items-center justify-center text-[0.3rem] btn"
-          @click="store.commit('setIsLoginOpen', true)">
-          {{ t("trade.stock_opening_token_login") }}
-        </div>
-        <div class="w-[3.22rem] h-[0.8rem]  rounded-[0.4rem] flex items-center justify-center  text-[0.3rem] btn btn2"
-          @click="jump('register')">
-          {{ t("trade.stock_opening_token_register") }}
-        </div>
-      </div>
+    <div v-if="!token" style="margin-top: 0.4rem;">
+      <Button :color="'rgba(255, 255, 255, 0.10)'" @click="store.commit('setIsLoginOpen', true)" size="large" round>
+        <span class="font-[600] text-color">登录/注册</span></Button>
     </div>
   </div>
 
@@ -85,18 +77,18 @@
     </div>
     <div class="stock_submit_box">
 
-      <div style="border-radius: 0.32rem;background-color: var(--ex-bg-white2);padding:0.12rem;margin-bottom: 0.32rem;">
+      <div class="bg-white2 mb-[0.2rem] mx-[0.32rem] p-[1px] rounded-[0.32rem]">
         <!-- 股票 -->
-        <div style="line-height: 0.36rem;text-align: left;padding: 0.2rem 0 0.2rem 0.16rem;">
-          <div style="font-size: 0.32rem;margin-bottom: 0.1rem;">
-            {{ t("common.spot") }}
+        <div class="h-[1.06rem] flex items-center gap-[0.16rem] px-[0.28rem]">
+          <div class="size-[0.4rem]">
+            <CryptoIcon :name="currStock.name.split('/')[0]" />
           </div>
-          <div style="color: var(--ex-text-color3); font-size: 0.24rem">
+          <div class="text-[0.32rem] font-[600]">
             {{ currStock.name }}
           </div>
         </div>
-
-        <div style="border-radius: 0.32rem;background-color: var(--ex-bg-color3);padding: 0 0.28rem">
+        <div class="flex flex-col gap-[0.32rem] rounded-[0.32rem] bg-color9 px-[0.4rem] py-[0.28rem]">
+          
           <div class="item">
             <div class="item_name">{{ t("trade.stock_open") }}</div>
             <div class="item_val">
@@ -119,59 +111,58 @@
                     : t("trade.stock_opening_price_limit")
                 }}
               </div>
-              <div class="lever" v-if="params.price">{{ params.price }}</div>
+              <div class="ml-[0.08rem]" v-if="params.price">{{ params.price }} USDT</div>
+            </div>
+          </div>
+          <div class="item">
+            <div class="item_name">
+              {{ t("交易额") }}
+            </div>
+            <div class="item_val">
+              {{ orderAmount }} USDT
             </div>
           </div>
           <div class="item">
             <div class="item_name">{{ t("trade.stock_opening_amount") }}</div>
-            <div class="item_val">{{ params.volume }}</div>
-          </div>
-
-          <div class="item">
-            <div class="item_name">
-              {{ t("trade.contract_opening_order_value") }}
-            </div>
-            <div class="item_val">
-              {{ orderAmount }}
-            </div>
+            <div class="item_val">{{ params.volume }} {{ currName.split('/')[0] }}</div>
           </div>
         </div>
-
-        <div class="money_box">
-          <!-- 支付 -->
-          <div class="amount" v-if="props.activeType == 1">
-            {{ t("trade.stock_opening_pay") }} <strong>{{ payAmount }}</strong>
-          </div>
-          <!-- 收到 -->
-          <div class="amount" v-if="props.activeType == 2">
-            {{ $t('market.market_buy_optional_estreceive') }} <strong>{{ getAmount }}</strong>
-          </div>
-          <div class="fee">
-            <!-- {{ t("trade.stock_opening_upfront") }} <span>{{ payOrigin }}</span> + -->
-            {{ t("trade.stock_opening_fee") }} <span>{{ payFee }}</span>
-          </div>
+        
+      </div>
+      <div class="money_box">
+        <!-- 支付 -->
+        <div class="amount" v-if="props.activeType == 1">
+          {{ t("trade.stock_opening_pay") }} <strong>{{ payAmount }}</strong>
         </div>
-
+        <!-- 收到 -->
+        <div class="amount" v-if="props.activeType == 2">
+          {{ $t('market.market_buy_optional_estreceive') }} <strong>{{ getAmount }}</strong>
+        </div>
+        <div class="fee">
+          {{ t("交易额") }} <span>{{ orderAmount }}</span> {{ props.activeType == 1 ? '+' : '-' }}
+          {{ t("trade.stock_opening_fee") }} <span>{{ payFee }}</span>
+        </div>
       </div>
-
-      <div class="subtitle">{{ t("trade.stock_opening_trade_pw") }}</div>
-      <div class="item pass_ipt">
-        <input style="width: 100%; height: 100%" v-model="safePass"
-          :placeholder="t('trade.stock_opening_trade_pw_placeholder')" :type="showPassword ? 'text' : 'password'"
-          class="ipt" />
-        <img v-if="!showPassword" v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')"
-          @click="showPassword = true" alt="off" />
-        <img v-else v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
-          @click="showPassword = false" />
+      <div class="h-[1px] bg-white2 my-[0.4rem]"></div>
+      <div class="px-[0.32rem]">
+        <div class="subtitle">{{ t("trade.stock_opening_trade_pw") }}</div>
+        <div class="item pass_ipt">
+          <input style="width: 100%; height: 100%" v-model="safePass"
+            :placeholder="t('trade.stock_opening_trade_pw_placeholder')" :type="showPassword ? 'text' : 'password'"
+            class="ipt" />
+          <img v-if="!showPassword" v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')"
+            @click="showPassword = true" alt="off" />
+          <img v-else v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="open"
+            @click="showPassword = false" />
+        </div>
+        <Button :loading="submitLoading" @click="submitFormDialog" size="large" class="submit ripple-btn"
+          color="var(--ex-primary-color)" round><span style="color: var(--ex-white);">{{ t("trade.stock_open")
+          }}</span></Button>
       </div>
-      <Button :loading="submitLoading" @click="submitFormDialog" size="large" class="submit ripple-btn"
-        color="var(--ex-primary-color)" round><span style="color: var(--ex-white);">{{ t("trade.stock_open")
-        }}</span></Button>
     </div>
   </BottomPopup>
   
 </template>
-
 <script setup>
 import { getStaticImgUrl } from "@/utils/index.js";
 import {
@@ -183,7 +174,7 @@ import { _futures, _basic, _spotPara, _spotBuy } from "@/api/api";
 import store from "@/store";
 import Decimal from "decimal.js";
 import { useRoute } from "vue-router";
-import router from "@/router";
+import CryptoIcon from '@/components/CryptoIcon.vue'
 import SlideContainer from "@/components/SlideContainer.vue";
 import FormItem from "@/components/Form/FormItem.vue";
 import { useI18n } from "vue-i18n";
@@ -397,6 +388,7 @@ watch(()=>maxStockNum.value,()=>{
 })
 const changeAmount = () => {
   if (!form1.value.amount) return form1.value.volume = ''
+  form1.value.amount = Number(form1.value.amount || 0).toFixed(3).slice(0,-1)
   setTimeout(() => {
     if (props.activeTab == 1) { // 限价
       if (!form1.value.price) return form1.value.volume = ''
@@ -407,7 +399,21 @@ const changeAmount = () => {
     updatePercent()
   })
 }
+const paramHandle = (data) => {
+  configLoading.value = false;
+  form1.value.volume = "";
+  if(props.activeTab == 1){
+      setNowPrice()
+  }else{
+    form1.value.price = "";
+  }
+  sliderValue.value = 0;
+  if (data.fee) {
+    openFee.value = data.fee || 0;
+    closeFee.value = data.fee || 0;
+  }
 
+};
 const getParam = () => {
   configLoading.value = true;
   _spotPara({
@@ -422,23 +428,10 @@ const getParam = () => {
       configLoading.value = false;
     });
 };
-const paramHandle = (data) => {
-  configLoading.value = false;
-  form1.value.volume = "";
-  form1.value.price = "";
-  sliderValue.value = 0;
-  if (data.fee) {
-    openFee.value = data.fee || 0;
-    closeFee.value = data.fee || 0;
-  }
 
-};
 
 const initParam = () => {
   if (currStock.value.symbol) {
-    if(props.activeTab == 1){
-      setNowPrice()
-    }
     getParam()
   } else {
     form1.value.price = "";
@@ -650,25 +643,19 @@ defineExpose({
 }
 
 .form {
-  // padding: 0.28rem;
   position: relative;
   border-radius: 0.32rem;
   background-color: var(--ex-bg-color3);
-  margin-top: 0.24rem;
+  margin-top: 0.32rem;
 
   .subtitle {
     color: var(--ex-text-color);
-    font-size: 0.28rem;
-    margin-bottom: 0.12rem;
-    line-height: 0.36rem;
+    font-size: 0.32rem;
+    margin-bottom: 0.24rem;
+    line-height: 0.32rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
-
-    .stock_icon {
-      width: 0.36rem;
-      height: 0.36rem;
-    }
   }
 
   :deep(.form-item-title) {
@@ -704,10 +691,6 @@ defineExpose({
         flex-wrap: wrap;
         justify-content: space-between;
 
-        .stock_icon {
-          width: 0.32rem;
-          height: 0.32rem;
-        }
       }
 
       .info {
@@ -848,15 +831,13 @@ defineExpose({
 }
 
 .stock_submit_box {
-  padding: 0.4rem 0.32rem 0.6rem 0.32rem;
+  padding: 0.4rem 0 0.8rem 0;
 
   .item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0.36rem 0 0.2rem 0;
-    // border-bottom: 1px solid var(--ex-border-color);
-
+    line-height: 0.44rem;
     .item_name {
       color: var(--ex-text-color3);
       font-size: 0.28rem;
@@ -870,16 +851,17 @@ defineExpose({
       color: var(--ex-text-color);
       font-size: 0.28rem;
       font-weight: 500;
-
+      text-align: right;
+      max-width: 4rem;
       .tag {
         height: 0.44rem;
-        color: var(--ex-primary-color);
-        background-color: var(--ex-bg-color3);
+        color: var(--ex-text-color);
+        background-color: var(--ex-bg-white2);
         line-height: 0.44rem;
-        padding: 0 0.3rem;
+        padding: 0 0.16rem;
         border-radius: 0.4rem;
         margin-left: 0.2rem;
-        font-size: 0.24rem;
+        font-size: 0.28rem;
       }
 
       .red_tag {
@@ -908,16 +890,15 @@ defineExpose({
   }
 
   .pass_ipt {
-    margin-bottom: 0.58rem;
+    margin-bottom: 0.4rem;
     border-radius: 0.32rem;
-    border: 1px solid var(--ex-border-color2);
     padding: 0 0.24rem;
     height: 1.12rem;
     padding: 0.16rem 0.32rem;
     box-sizing: border-box;
     position: relative;
     background-color: var(--ex-bg-white1);
-
+    border: 1px solid transparent;
     img {
       width: 0.4rem;
       height: 0.4rem;
@@ -934,11 +915,11 @@ defineExpose({
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: var(--ex-bg-color3);
+    background-color: var(--ex-bg-white2);
     border-radius: 0.32rem;
     height: 1.4rem;
     text-align: center;
-    margin-top: 0.2rem;
+    margin: 0.2rem 0.32rem 0 0.32rem;
     position: relative;
 
 
