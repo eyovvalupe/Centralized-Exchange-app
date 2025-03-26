@@ -382,6 +382,8 @@ export default {
     order_current_position: '현재 보유 중',
     order_history: '내역 조회',
     assets_center: '자산 센터',
+    order_one_click: '코인 구매',
+
   },
   withdraw: {
     withdraw: '출금',

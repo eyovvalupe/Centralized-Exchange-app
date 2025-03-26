@@ -1,7 +1,6 @@
 <!-- 开仓表单 -->
 <template>
   <div class="form">
-
     <!-- 搜索 -->
     <!-- <div class="item_box" :class="{ 'item_box_big': currStock.symbol }" @click="openSearchDialog">
       <div class="item">
@@ -399,7 +398,7 @@
   <!-- 杠杆选择 -->
   <BottomPopup :title="t('trade.stock_opening_lever')" round position="bottom" closeable teleport="body"
     v-model:show="showLeverTypeDialog">
-    <div class="px-[0.4rem] pb-[1.2rem] flex flex-wrap gap-[0.2rem]">
+    <div class="px-[0.4rem] pb-[1.2rem] flex flex-wrap gap-[0.2rem] pt-[0.6rem]">
       <div v-for="lever in levers"
         class="h-[0.8rem] rounded-[0.32rem] border-[0.02rem] flex items-center justify-center ripple-primary"
         :class="form1.lever == lever ? 'border-primary text-primary' : ''" @click="form1.lever = lever"
@@ -1133,6 +1132,15 @@ const submitForm = (s) => {
         emits("success");
         form1.value.volume = "";
         sliderValue.value = 0;
+      }
+    })
+    .catch(err => {
+      if (err.code == 1010) { //余额不足
+        eventBus.emit('insufficient', {
+          type: 'stock',
+          currency: paramCurrency.value,
+          amount: stockWalletAmount.value
+        })
       }
     })
     .finally(() => {

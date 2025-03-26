@@ -382,6 +382,8 @@ export default {
     order_current_position: '目前持倉',
     order_history: '歷史查詢',
     assets_center: '資產中心',
+    order_one_click: '一鍵買幣',
+
   },
   topUpCrypto: {
     recharge: '儲值',

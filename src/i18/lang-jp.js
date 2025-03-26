@@ -381,6 +381,8 @@ export default {
     order_current_position: '現在のポジション',
     order_history: '履歴照会',
     assets_center: '資産センター',
+    order_one_click: 'コイン購入',
+
   },
   withdraw: {
     withdraw: '出金',

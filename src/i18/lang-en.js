@@ -347,6 +347,8 @@ export default {
     order_current_position: 'Positions',
     order_history: 'History',
     assets_center: 'Overview',
+    order_one_click: 'Buy crypto',
+
   },
   topUpCrypto: {
     recharge: 'Deposit Funds',
@@ -521,7 +523,7 @@ export default {
     reliable: 'Reliable',
     landing_con1: 'Tens of Millions of Users',
     landing_con2: ' have joined',
-    landing_con3: ' LORNA',
+    landing_con3: ' SuxEx',
     landing_con4: 'Experience Infinite Possibilities',
     landing_more: 'More',
   },
@@ -1073,7 +1075,7 @@ export default {
     staking_crypto: 'Staking',
   },
   copy: {
-    title: 'Follow Orders',
+    title: 'Copy Trading',
     copy_option: 'Optios',
     copy_trade: 'Copy',
     total_revenue: 'Total Revenue',
@@ -1148,6 +1150,7 @@ export default {
     copy_paid_date: 'Settlement Time',
     copy_start_date: 'Start Time',
     copy_finish_date: 'End Time',
+
   },
   notifi: {
     notifi_center: 'Notification Center',
