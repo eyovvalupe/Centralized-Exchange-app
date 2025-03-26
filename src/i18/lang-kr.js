@@ -789,6 +789,9 @@ export default {
     trade_price: '체결 가격',
     pending_order: '주문 중',
     canceled_order: '취소됨',
+
+    buy_order: "코인 구매 주문",
+    finance_order: "투자 주문",
   },
   inviteFriends: {
     invite: '친구 초대',

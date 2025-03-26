@@ -790,6 +790,8 @@ export default {
     trade_price: '取引価格',
     pending_order: '注文中',
     canceled_order: 'キャンセル済み',
+    buy_order: "コイン購入注文",
+    finance_order: "投資注文",
   },
   inviteFriends: {
     invite: '友達を招待',

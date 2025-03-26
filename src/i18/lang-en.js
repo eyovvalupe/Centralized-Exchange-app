@@ -782,7 +782,7 @@ export default {
     trade_order_history: 'History',
     left_search_result: 'Result',
     spot_trade_available: 'Available',
-    trade_orders_title: 'Trading Orders',
+    trade_orders_title: 'Trading',
     trade_orders_current: 'Open Orders',
     trade_orders_status: 'Status',
     trade_deal_price: 'Price',
@@ -800,6 +800,8 @@ export default {
     trade_price: 'Transaction Price',
     pending_order: 'Pending',
     canceled_order: 'Canceled',
+    buy_order: "Buy Crypto",
+    finance_order: "Finance",
   },
   inviteFriends: {
     invite: 'Invite',

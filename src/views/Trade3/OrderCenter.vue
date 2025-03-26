@@ -8,12 +8,12 @@
       shrink
       @change="(e) => onChange(e)"
     >
-      <Tab :title="'买币订单'" :name="0">
+      <Tab :title="t('trade.buy_order')" :name="0">
         <div class="trade_order_tab trade_order_tab2">
             <List from="trade" :type="'modal'" />
         </div>
       </Tab>
-      <Tab :title="'交易订单'" :name="1">
+      <Tab :title="t('trade.trade_orders_title')" :name="1">
         <div
           class="order_tabs"
           @touchstart.stop=""
@@ -25,8 +25,8 @@
             v-model:active="activeTab"
             :tabs="[
               t('assets.order_title_stock'),
-              t('币币'),
-              t('加密货币合约'),
+              t('common.spot'),
+              t('trade.crypto_exchange'),
               t('trade.left_bot'),
               // t('assets.order_title_ipo'),
             ]"
@@ -50,7 +50,7 @@
           </div>
         </div>
       </Tab>
-      <Tab :title="'理财订单'" :name="2">
+      <Tab :title="t('trade.finance_order')" :name="2">
         <div
           class="order_tabs"
           @touchstart.stop=""
@@ -60,7 +60,7 @@
           <HeaderTabs
             type="line"
             v-model:active="activeFinanceTab"
-            :tabs="[t('跟单'), t('DeFi借币'), t('质押挖矿'), t('IPO')]"
+            :tabs="[t('copy.title'), t('finance.defi_borrow'), t('finance.portfolio_title'), t('IPO')]"
             @change="changeActiveTab1(activeFinanceTab)"
           />
           <div class="trade_order_tab" v-if="activeFinanceTab == 0">

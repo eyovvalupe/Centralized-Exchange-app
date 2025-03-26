@@ -792,6 +792,9 @@ export default {
     trade_price: '成交单价',
     pending_order: '委托中',
     canceled_order: '已撤单',
+
+    buy_order: "买币订单",
+    finance_order: "理财订单",
   },
   inviteFriends: {
     invite: '推荐朋友',
