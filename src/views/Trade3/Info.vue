@@ -482,6 +482,7 @@ import Finance from '@/views/Finance/Index.vue';
 import OrderCenter from './OrderCenter.vue';
 import SearchDialog from "./SearchDialog.vue"
 
+
 const props = defineProps({
   type: {
     type: String,
@@ -812,8 +813,6 @@ const addCollect = (tab) => {
       });
   }
 };
-
-
 
 // 侧边弹框
 const showNavDialog = ref(false);
