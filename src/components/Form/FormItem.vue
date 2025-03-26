@@ -19,13 +19,13 @@
       <div style="flex: 1;display: flex" class="form-item-con">
         <div class="item" :class="{
           disabled_item: disabled,
-          item_focus: from != 'transfer' ? inputFocus : '', '!h-[1.28rem]': height
-          // item_focus2: inputFocus && !tip,
+          item_focus: from != 'transfer' ? inputFocus : '', '!h-[1.28rem]': height,
+          item_status: inputVal,
         }"
           :style="{ background, paddingBottom: props.hasBot ? '2.6rem' : '', paddingTop: (props.hasLT || props.hasRT) ? '0.5rem' : '', borderColor: errStatus ? 'var(--ex-error-color)' : '' }">
           <!-- 左侧提示 -->
           <span class="ipt_tip ipt_tip--left" :class="from == 'withdraw' ? '!text-[0.28rem] top-[0.5rem]' : ''"
-            v-show="inputFocus">{{ placeholder }}</span>
+            v-show="inputFocus || inputVal">{{ placeholder }}</span>
           <!-- 右侧提示 -->
           <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip"
             v-show="inputFocus || props.hasScroll">{{ tip }}</span>
@@ -361,13 +361,14 @@ const percentTagClick = (percent) => {
 
 
   .disabled_item {
-    // background-color: var(--ex-bg-color2);
+    background-color: rgba(255,255,255,0.2);
     flex: 1;
   }
 
-  .item_focus {
+  .item_focus,
+  .item_status {
     height: 1.12rem;
-    border: 1px solid var(--ex-primary-color) !important;
+    
 
     .ipt_tip {
       font-size: 0.2rem;
@@ -383,7 +384,9 @@ const percentTagClick = (percent) => {
       transform: scale(0.8);
     }
   }
-
+  .item_focus {
+    border: 1px solid var(--ex-primary-color) !important;
+  }
   .percent_tag {
     color: var(--ex-primary-color);
     margin-left: 0.08rem;
