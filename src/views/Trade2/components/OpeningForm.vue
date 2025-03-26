@@ -184,8 +184,8 @@
     <Button v-if="token" :loading="configLoading || submitLoading" size="large" @click="submit1"
       class="submit ripple-btn" :color="stockTab == 1 || stockTab == 2 || stockTab == 4 && activeType == 1 ? 'var(--ex-primary-color)' : 'var(--ex-down-color)'" round>
       <span style="color:var(--ex-white);">{{
-        stockTab == 1 ? t('交易') : stockTab == 2
-          ? t("融资") : stockTab == 3 ? t("融卷") : stockTab == 4 && activeType == 1 ? t('配资') : t('做空')
+        stockTab == 1 ? t('market.market_marketinfo_trade') : stockTab == 2
+          ? t("trade.margin_long") : stockTab == 3 ? t("trade.margin_short") : stockTab == 4 && activeType == 1 ? t('trade.ipo_sub_leveraged') : t('trade.short_sell')
       }}</span></Button>
 
     <div v-if="!token" style="margin-top: 0.6rem;" class="unlogin-box">
@@ -229,7 +229,7 @@
             ">
             <span class="mr-[0.12rem]">{{ currStock.symbol }}</span>
             <div class="text-[0.22rem] h-[0.3rem] w-max px-[0.1rem] rounded-[0.08rem] tag-crypto flex items-center">
-              股票
+              {{ t('common.stock') }}
             </div>
           </div>
         </div>
@@ -378,9 +378,9 @@
     <div class="w-full flex flex-col pt-[0.6rem] items-center h-[3.6rem]">
       <div class="transition w-[6.8rem] h-[1rem] flex items-center justify-center rounded-[0.32rem]"
         :class="form1.price_type == 'market' ? 'bg-white2' : ''"
-        @click="form1.price = ''; priceMode = 1; form1.price_type = 'market';">市价</div>
+        @click="form1.price = ''; priceMode = 1; form1.price_type = 'market';">{{ t('trade.stock_market_price') }}</div>
       <div class="transition w-[6.8rem] h-[1rem] flex items-center justify-center rounded-[0.32rem]"
-        :class="form1.price_type == 'limit' ? 'bg-white2' : ''" @click="priceMode = 2; form1.price_type = 'limit';">限价
+        :class="form1.price_type == 'limit' ? 'bg-white2' : ''" @click="priceMode = 2; form1.price_type = 'limit';">{{ t('trade.stock_limit_price') }}
       </div>
     </div>
   </BottomPopup>
@@ -390,9 +390,9 @@
     v-model:show="showModeTypeDialog">
     <div class="w-full flex flex-col pt-[0.6rem] items-center h-[3.6rem]">
       <div class="transition w-[6.8rem] h-[1rem] flex items-center justify-center rounded-[0.32rem]"
-        :class="form1.leverType == 'cross' ? 'bg-white2' : ''" @click="form1.leverType = 'cross';">全仓</div>
+        :class="form1.leverType == 'cross' ? 'bg-white2' : ''" @click="form1.leverType = 'cross';">{{ t('trade.stock_opening_position_mode_cross') }}</div>
       <div class="transition w-[6.8rem] h-[1rem] flex items-center justify-center rounded-[0.32rem]"
-        :class="form1.leverType == 'isolated' ? 'bg-white2' : ''" @click="form1.leverType = 'isolated';">逐仓</div>
+        :class="form1.leverType == 'isolated' ? 'bg-white2' : ''" @click="form1.leverType = 'isolated';">{{ t('trade.stock_opening_position_mode_isolated') }}</div>
     </div>
   </BottomPopup>
 
@@ -1018,6 +1018,11 @@ const paramHandle = (data) => {
   }
 };
 
+watch(() => props.stockTab, (val) => {
+  if (val == 1) form1.value.lever = 1
+  else form1.value.lever = levers.value.length ? levers.value[0] : 1
+})
+
 const initParam = () => {
   if (currStock.value.symbol) {
     getParam();
@@ -1323,7 +1328,7 @@ defineExpose({
     }
 
     .item_box_left {
-      width: 1.56rem;
+      width: max-content;
       margin-right: 0.2rem;
       display: flex;
       flex-direction: column;

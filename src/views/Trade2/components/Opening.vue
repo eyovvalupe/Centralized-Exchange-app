@@ -4,10 +4,10 @@
   <div class="opening_page">
     <!-- 股票分类 -->
     <div class="stock-tabs">
-      <div class="stock-tab" :class="{ 'stock-tab-active': stockTab == 1 }" @click="changeTab(1)">交易</div>
-      <div class="stock-tab" :class="{ 'stock-tab-active': stockTab == 2 }" @click="changeTab(2)">融资</div>
-      <div class="stock-tab" :class="{ 'stock-tab-active': stockTab == 3 }" @click="changeTab(3)">融卷</div>
-      <div class="stock-tab" :class="{ 'stock-tab-active': stockTab == 4 }" @click="changeTab(4)">盘前</div>
+      <div class="stock-tab" :class="{ 'stock-tab-active': stockTab == 1 }" @click="changeTab(1)">{{ $t('trade.ai_opening_trade') }}</div>
+      <div class="stock-tab" :class="{ 'stock-tab-active': stockTab == 2 }" @click="changeTab(2)">{{ $t('trade.margin_long') }}</div>
+      <div class="stock-tab" :class="{ 'stock-tab-active': stockTab == 3 }" @click="changeTab(3)">{{ $t('trade.margin_short') }}</div>
+      <div class="stock-tab" :class="{ 'stock-tab-active': stockTab == 4 }" @click="changeTab(4)">{{ $t('trade.pre_market') }}</div>
     </div>
 
     <div class="opening">
@@ -20,11 +20,11 @@
             <!-- 盘前 -->
             <div class="type_tabs" v-if="stockTab == 4">
               <div @click="activeType = 1" class="type_tab" :class="{ active_type_tab: activeType == 1 }">
-                <span class="type_tab_text">配资</span>
+                <span class="type_tab_text">{{ $t('trade.ipo_sub_leveraged') }}</span>
               </div>
               <div @click="activeType = 2" class="type_tab"
                 :class="{ active_type_tab: activeType == 2, active_type_tab2: activeType == 2 }">
-                <span class="type_tab_text">做空</span>
+                <span class="type_tab_text text-center">{{ $t('trade.short_sell') }}</span>
               </div>
             </div>
             <Tabs key="form" class="van-tabs--sub_line van-tabs--sub_bg"
@@ -56,7 +56,7 @@
         </div>
 
         <div class="account-box">
-          <div class="title">股票账户</div>
+          <div class="title">{{ $t('assets.wallet_header_stock') }}</div>
           <div class="info">
             <div>{{ $t('market.market_faster_available') }}</div>
             <div>
@@ -66,14 +66,14 @@
             </div>
           </div>
           <div class="info">
-            <div>{{ $t('保证金') }}</div>
+            <div>{{ $t('trade.stock_opening_upfront') }}</div>
             <div>
               <span style="font-size: 0.32rem;color:var(--ex-primary-color);margin-right: 0.08rem;">--</span>
               <span style="color:var(--ex-white)">{{ paramCurrency }}</span>
             </div>
           </div>
           <div class="info">
-            <div>{{ $t('保证金风险率') }}</div>
+            <div>{{ $t('trade.margin_risk') }}</div>
             <div>
               <span style="font-size: 0.32rem;color:var(--ex-primary-color);margin-right: 0.08rem;">--</span>
               <span style="color:var(--ex-white)">%</span>
