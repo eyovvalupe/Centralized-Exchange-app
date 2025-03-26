@@ -7,7 +7,7 @@
       ? 'current_item_effect'
       : ''
       " :key="item.symbol" v-show="props.marketType == 'all' || props.marketType == item.type">
-      <StockItem :marketType="props.marketType" :theme="theme" :handleClick="props.handleClick"
+      <StockItem :marketType="props.marketType" :theme="theme" :handleClick="props.handleClick" :hideMarketTag="props.hideMarketTag"
         :deleteItem="props.deleteItem" :showSparkLine="showSparkLine" :type="props.type" @remove="remove"
         :scrollDom="props.scrollDom" :item=" from ? {...item, type: from} : item" :page="props.page" :showIcon="props.showIcon"/>
     </div>
@@ -72,6 +72,7 @@ const props = defineProps({
     default: "",
   },
   showIcon: Boolean,
+  hideMarketTag: Boolean,
   from: {
     type: String,
     default: ''

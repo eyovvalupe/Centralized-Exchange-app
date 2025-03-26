@@ -15,9 +15,8 @@
                     <input v-model.trim="searchDialogStr" @keyup="initTabList" type="text" class="ipt"
                         style="width: 100%" :placeholder="t('trade.stock_opening_search')" />
                 </div>
-
                 <div class="lists search_dialog_list" v-if="showSearchCon">
-                    <StockTable :key="props.activeTab" :showIcon="[1, 2, 5].includes(props.activeTab)" theme="classic"
+                    <StockTable :hideMarketTag="true" :key="props.activeTab" :showIcon="[1, 2, 5].includes(props.activeTab)" theme="classic"
                         :handleClick="handleClick" :type="route.query.tradeType" :loading="false" :list="showList" :from="item.type"/>
 
                     <LoadingMore :style="{ 'margin-bottom': finish ? '0.4rem' : '1.6rem' }" :loading="searchLoading2"
