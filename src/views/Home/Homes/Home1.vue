@@ -26,11 +26,11 @@
                 </div>
             </div>
             <div class="box top">
-                <div>安全 | 便捷 | 严格</div>
-                <div class="title"><span style="color: #F19009;">千万用户都在用的</span><br />交易所</div>
-                <div>体验无限可能</div>
+                <div>{{ t('home.secure') }} | {{ t('home.convinient') }} | {{ t('home.reliable') }}</div>
+                <div class="title"><span style="color: #F19009;">{{ t('home.landing_con1') }}{{ t('home.landing_con2') }}</span><br />{{ t('home.landing_con3') }}</div>
+                <div>{{ t('home.landing_con4') }}</div>
             </div>
-            <div v-if="!token" class="ripple-btn login-btn" @click="jump('user', true)">登录/注册</div>
+            <div v-if="!token" class="ripple-btn login-btn" @click="jump('user', true)">{{ t('trade.stock_opening_token_login') }}/{{ t('trade.stock_opening_token_register') }}</div>
             <div v-else style="height: 0.4rem;"></div>
 
             <!-- 导航 -->
@@ -149,14 +149,14 @@
                 <div class="notice-icon">
                     <img v-lazy="getStaticImgUrl('/static/home2/notice-primary.svg')" alt="">
                 </div>
-                <div class="notice-con">公告内容公告内容公告内容公告内容公告内容公告内容公告内容公告内容公告内容</div>
+                <div class="notice-con">NotificationNotificationNotificationNotificationNotificationNotificationNotification</div>
                 <div class="date">10/16 16:10</div>
             </div>
 
             <!-- 跟单 -->
             <div class="box" id="follow-box" v-show="followList.length">
                 <div class="recommend-title" v-if="pageLoaded">
-                    <div class="wow slideInRight" style="flex: 1;" data-wow-duration="0.6s">跟单</div>
+                    <div class="wow slideInRight" style="flex: 1;" data-wow-duration="0.6s">{{ t('copy.title') }}</div>
                 </div>
 
                 <div class="swiper-row" v-if="pageLoaded">
@@ -178,7 +178,7 @@
             <!-- 质押挖矿 -->
             <div class="box" id="bor-box">
                 <div class="recommend-title" v-if="pageLoaded">
-                    <div class="wow slideInRight" style="flex: 1;" data-wow-duration="0.6s">质押挖矿</div>
+                    <div class="wow slideInRight" style="flex: 1;" data-wow-duration="0.6s">{{ t('finance.portfolio_title') }}</div>
                 </div>
 
                 <div class="swiper-row" v-if="pageLoaded">

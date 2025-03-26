@@ -4,7 +4,7 @@
 
       <!-- 作为完整页面的菜单 -->
       <HeaderTabs type="normal" @change="changeTab" :from="'tradeInfo'" v-model:active="headActiveTab"
-        :tabs="[t('自选'), t('买币'), t('行情')]">
+        :tabs="[t('trade.left_mine'), t('market.market_header_buy'), t('market.market_item_detail')]">
         <template #after>
           <div class="flex items-center gap-[0.16rem] mr-[0.34rem]">
             <div class="size-[0.72rem] bg-white1 rounded-full ripple-btn flex items-center justify-center transition"

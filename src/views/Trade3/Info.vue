@@ -1,7 +1,7 @@
 <!-- 交易页 -->
 <template>
   <!-- 头部 -->
-  <HeaderTabs type="normal" @change="changeTab" v-model:active="headActiveTab" :tabs="[t('交易'), t('理财')]">
+  <HeaderTabs type="normal" @change="changeTab" v-model:active="headActiveTab" :tabs="[t('home.trade'), t('home.finance')]">
     <template #after>
       <div class="flex items-center gap-[0.16rem] mr-[0.34rem]">
         <div class="size-[0.72rem] bg-white1 rounded-full ripple-btn flex items-center justify-center transition"
@@ -30,7 +30,7 @@
       <Tabs @change="changeTab2" :key="'main'" class="van-tabs--top" :sticky="true" :color="'var(--ex-primary-color)'"
         v-model:active="activeTab" animated shrink>
         <!-- 股票 -->
-        <Tab :name="4" :title="'股票'">
+        <Tab :name="4" :title="t('common.stock')">
           <div class="dialog-market-box" v-if="activeTab == 4 && !chartLoading">
             <div class="top-box">
               <!-- 标题 -->
@@ -160,7 +160,7 @@
           </div>
         </Tab>
         <!-- 加密货币 -->
-        <Tab :name="2" :title="'加密货币合约'">
+        <Tab :name="2" :title="t('trade.crypto_exchange')">
           <div class="dialog-market-box" v-if="activeTab == 2 && !chartLoading">
             <div class="top-box">
               <!-- 标题 -->
@@ -285,7 +285,7 @@
           </div>
         </Tab>
         <!-- 外汇 -->
-        <Tab :name="5" :title="'外汇'">
+        <Tab :name="5" :title="t('assets.over_view_forex')">
           <div class="dialog-market-box" v-if="activeTab == 5 && !chartLoading">
             <div class="top-box">
               <!-- 标题 -->
@@ -342,7 +342,7 @@
           </div>
         </Tab>
         <!-- 大宗商品 -->
-        <Tab :name="6" :title="'大宗商品'">
+        <Tab :name="6" :title="t('assets.over_view_trade')">
           <div class="dialog-market-box" v-if="activeTab == 6 && !chartLoading">
             <div class="top-box">
               <!-- 标题 -->

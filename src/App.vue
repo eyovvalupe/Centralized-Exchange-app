@@ -16,13 +16,13 @@
             <SkeletonAvatar class="avatar" style="margin-right: 0" />
           </div>
           <div class="box top">
-            <div>安全 | 便捷 | 严格</div>
+            <div>{{ t('home.secure') }} | {{ t('home.convinient') }} | {{ t('home.reliable') }}</div>
             <div class="title">
-              <span style="color: #f19009">千万用户都在用的</span><br />交易所
+              <span style="color: #f19009">{{ t('home.landing_con1') }}{{ t('home.landing_con2') }}</span><br />{{ t('home.landing_con3') }}
             </div>
-            <div>体验无限可能</div>
+            <div>{{ t('home.landing_con4') }}</div>
           </div>
-          <div v-if="!token" class="login-btn">登录/注册</div>
+          <div v-if="!token" class="login-btn">{{ t('trade.stock_opening_token_login') }}/{{ t('trade.stock_opening_token_register') }}</div>
           <div v-else style="height: 1.2rem"></div>
 
           <div class="box dirs">

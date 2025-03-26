@@ -5,7 +5,7 @@
             :type="from == 'trade' ? '' : ' sub'" :color="'var(--ex-primary-color)'" @change="tabChange"
             v-model:active="activeTab" :animated="from != 'home'" shrink>
             <!-- 股票 -->
-            <Tab :name="6" :title="'股票'">
+            <Tab :name="6" :title="t('common.stock')">
                 <StockList :handleClick="props.innerPage ? handleClick : null" v-if="loaded && activeTab == 6" />
             </Tab>
 
@@ -22,7 +22,7 @@
                 </div>
             </Tab>
             <!-- 合约 -->
-            <Tab :name="2" :title="$t('加密货币合约')">
+            <Tab :name="2" :title="$t('trade.crypto_exchange')">
                 <div v-if="loaded && activeTab == 2" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']">
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 2">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
@@ -46,7 +46,7 @@
                 </div>
             </Tab>
             <!-- 外汇 -->
-            <Tab :name="7" :title="'外汇'">
+            <Tab :name="7" :title="$t('market.market_header_forex')">
                 <div v-if="loaded && activeTab == 7" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']">
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 7">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
@@ -58,7 +58,7 @@
                 </div>
             </Tab>
             <!-- 大宗交易 -->
-            <Tab :name="8" :title="'大宗交易'">
+            <Tab :name="8" :title="$t('assets.over_view_trade')">
                 <div v-if="loaded && activeTab == 8" :class="['home-tab-box-' + props.from, 'mt-[0.24rem]']">
                     <div style="padding-bottom: 0.2rem;" v-if="activeTab == 8">
                         <StockItem :handleClick="props.innerPage ? handleClick : null"
@@ -95,7 +95,6 @@ import router from "@/router";
 import StockList from "../components/StockList.vue"
 import LoadingMore from "@/components/LoadingMore.vue";
 import { useRoute } from "vue-router"
-
 
 const route = useRoute()
 const emits = defineEmits(['handleClick'])
