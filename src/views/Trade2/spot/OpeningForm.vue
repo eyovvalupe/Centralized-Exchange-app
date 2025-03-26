@@ -852,7 +852,7 @@ defineExpose({
       font-size: 0.28rem;
       font-weight: 500;
       text-align: right;
-      max-width: 4rem;
+      max-width: 4.4rem;
       .tag {
         height: 0.44rem;
         color: var(--ex-text-color);
