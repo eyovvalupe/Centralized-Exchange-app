@@ -6,22 +6,22 @@
                     <img v-lazy="getStaticImgUrl('static/img/trade/alert.svg')" alt="" />
                 </div>
             </div>
-            <div class="text-[0.32rem] text-color leading-[0.48rem]">您的账户<span
-                    class="text-error">余额不足</span>，请先充值/划转再继续交易</div>
+            <div class="text-[0.32rem] text-color leading-[0.48rem]">{{ t('common.insufficient_con1') }}<span
+                    class="text-error">{{ t('common.insufficient_con2') }}</span>{{ t('common.insufficient_con3') }}</div>
         </div>
-        <div class="text-[0.32rem] text-color mb-[0.4rem]">{{ type == 'stock' ? t('股票账户') : '' }}</div>
+        <div class="text-[0.32rem] text-color mb-[0.4rem]">{{ type == 'stock' ? t('assets.wallet_header_stock') : '' }}</div>
         <div class="flex justify-between mb-[0.52rem]">
-            <div class="text-[0.28rem] text-color2">{{ t('可用余额') }}</div>
+            <div class="text-[0.28rem] text-color2">{{ t('market.market_faster_available') }}</div>
             <div class="text-[0.28rem] text-color2"><span class="text-primary">{{ balance }}</span>&nbsp;{{ currency }}
             </div>
         </div>
         <div class="flex justify-center gap-[0.4rem]">
             <div @click="jump('transfer', type)"
                 class="flex-1 h-[0.8rem] rounded-[0.4rem] border-primary border-[0.02rem] flex items-center justify-center text-[0.28rem] font-[600] text-primary ripple-primary">
-                {{ t('划转') }}</div>
+                {{ t('assets.recharge') }}</div>
             <div @click="jump('topUpCrypto')"
                 class="flex-1 h-[0.8rem] rounded-[0.4rem] border-primary border-[0.02rem] flex items-center justify-center text-[0.28rem] font-[600] text-primary ripple-primary">
-                {{ t('充值') }}</div>
+                {{ t('assets.transfer') }}</div>
         </div>
     </div>
 </template>

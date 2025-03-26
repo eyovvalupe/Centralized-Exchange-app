@@ -787,6 +787,9 @@ export default {
     trade_price: '成交單價',
     pending_order: '委託中',
     canceled_order: '已撤單',
+
+    buy_order: "買幣訂單",
+    finance_order: "理財訂單",
   },
   inviteFriends: {
     invite: '推薦朋友',

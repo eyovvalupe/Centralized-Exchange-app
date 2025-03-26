@@ -155,10 +155,10 @@
         <img v-lazy="getStaticImgUrl(`/static/img/common/warning.svg`)" />
       </div>
       <div class="item_box_right">
-        <FormItem :hasScroll="true" :placeholder="'数量'" @blur="volumeF = false"
+        <FormItem :hasScroll="true" :placeholder="t('market.market_buy_list_amount')" @blur="volumeF = false"
           @focus="volumeFocus" v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
           @btnClick="putAll" @change="changePercent" :max="maxStockNum" tip-align="right"
-          :tip="maxStockNum >= 1 ? '≤' + maxStockNum + '张' : ''" input-type="digit">
+          :tip="maxStockNum >= 1 ? '≤' + maxStockNum + t('trade.contract_one_lot') : ''" input-type="digit">
           <!-- <template #lt>
             <div style="display: flex;align-items: center;height: 0.48rem;" v-if="amountper && paramCurrency">
               <div style="width: 0.24rem;height: 0.24rem;margin-right: 0.1rem;">

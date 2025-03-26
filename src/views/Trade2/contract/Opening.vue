@@ -48,14 +48,14 @@
           </div>
         </div>
         <div class="info">
-          <div>保证金</div>
+          <div>{{ $t('trade.stock_opening_upfront') }}</div>
           <div>
             <span style="font-size: 0.32rem;color:var(--ex-primary-color);margin-right:0.08rem">--</span>
             <span style="color:var(--ex-white)">USDT</span>
           </div>
         </div>
         <div class="info">
-          <div>保证金风险率</div>
+          <div>{{ $t('trade.margin_risk') }}</div>
           <div>
             <span style="color:var(--ex-white)">--</span>
           </div>
