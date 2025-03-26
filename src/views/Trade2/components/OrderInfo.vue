@@ -16,7 +16,7 @@
           <div style="flex: 1">
             <div class="stock-info__head">
               <div class="stock-info__hl flex items-center">
-                <span class="stock-info__symbol" v-if="type == 'stock'">{{
+                <span class="stock-info__symbol" v-if="tradeType == 'stock'">{{
                   currStock.symbol || '--'
                 }}</span>
                 <span class="stock-info__symbol" v-else>{{
@@ -46,21 +46,21 @@
               </div>
             </div>
             <div class="stock-info__order_no">
-              <!-- <span>{{ currStock.order_no || "--" }}</span>
+              <span>{{ currStock.order_no || "--" }}</span>
               <div class="stock-info__copy_icon" @click="copy(currStock.order_no)">
                 <img v-lazy="getStaticImgUrl('/static/img/common/copy.svg')" alt="copy" />
-              </div> -->
-              <div class="text-[0.22rem] h-[0.3rem] w-max px-[0.1rem] rounded-[0.08rem] tag-crypto flex items-center">
+              </div>
+              <!-- <div class="text-[0.22rem] h-[0.3rem] w-max px-[0.1rem] rounded-[0.08rem] tag-crypto flex items-center">
                 {{
                   type == 'contract'
                     ? t('market.market_optional_contract')
                     : '--'
                 }}
-              </div>
+              </div> -->
             </div>
           </div>
         </div>
-        <div class="info_boxs" v-if="props.type == 'spot'">
+        <div class="info_boxs" v-if="tradeType == 'spot'">
           <div class="info_box">
             <div class="amount" :class="[currStock.offset == 'buy' ? 'up' : 'down']">
               <div>
@@ -80,9 +80,9 @@
             <div class="amount">{{ currStock.unsold_volume || '--' }}</div>
             <div class="text-center">
               {{
-                type == 'stock'
+                tradeType == 'stock'
                   ? t('trade.order_info_available_stock')
-                  : type == 'contract'
+                  : tradeType == 'contract'
                     ? t('trade.order_info_available_contract')
                     : ''
               }}
@@ -111,7 +111,7 @@
         </div>
 
         <div class="order_info_box">
-          <div class="info_item" v-if="props.type == 'spot'">
+          <div class="info_item" v-if="tradeType == 'spot'">
             <div class="name">{{ t('trade.stock_open') }}</div>
             <div class="val_box">
               <div class="tag" :class="'tag_' + currStock.offset">
@@ -172,7 +172,7 @@
             <!-- <div class="name">开仓{{ type == "contract" ? "张数" : "数量" }}</div> -->
             <div class="name">
               {{
-                type == 'contract'
+                tradeType == 'contract'
                   ? t('trade.order_info_open_qty_contract')
                   : t('trade.order_info_open_qty_other')
               }}
@@ -183,7 +183,7 @@
               </div>
             </div>
           </div>
-          <div class="info_item" v-if="props.type != 'spot'">
+          <div class="info_item" v-if="tradeType != 'spot'">
             <div class="name">{{ t('trade.stock_take_stop') }}</div>
             <div>
               <div class="val_box" style="margin-bottom: 0.1rem" v-if="currStock.stop_profit">
@@ -242,13 +242,13 @@
             </div>
           </div>
 
-          <div class="info_item" v-if="!finalStatus && props.type != 'spot'">
+          <div class="info_item" v-if="!finalStatus && tradeType != 'spot'">
             <div class="name">{{ t('trade.stock_opening_upfront') }}</div>
             <div class="val_box">
               <div class="text">{{ currStock.margin || '0' }}</div>
             </div>
           </div>
-          <div class="info_item" v-if="!finalStatus && props.type != 'spot'">
+          <div class="info_item" v-if="!finalStatus && tradeType != 'spot'">
             <div class="name">{{ t('trade.contract_position_profit') }}</div>
             <div class="val_box">
               <div class="text">{{ currStock.profit || '0' }}</div>
@@ -270,7 +270,7 @@
       </div>
     </div>
 
-    <div v-if="props.type == 'spot'" class="btns">
+    <div v-if="tradeType == 'spot'" class="btns">
       <div class="btn btn4 ripple-primary" @click="emit('cancel', currStock)"
         v-if="['open', 'none'].includes(currStock.status)">
         <div class="btn_icon">
@@ -321,10 +321,9 @@
 
     <!-- 行情弹窗 -->
     <BottomPopup round v-model:show="showStockModel" position="bottom" closeable teleport="body">
-      <div class="page_trade_info" style="max-height: calc(var(--vh) * 90);overflow-y: auto;"
-        v-if="showStockModel && openInfoStatus">
+      <div class="page_trade_info" style="max-height: calc(var(--vh) * 90);overflow-y: auto;" v-if="showStockModel">
         <div style="height: 0.32rem;"></div>
-        <MarketInfo2 :innerPage="true" />
+        <MarketInfo2 :tradeType="tradeType" :innerPage="true" />
       </div>
     </BottomPopup>
   </div>
@@ -334,11 +333,10 @@
 import { getStaticImgUrl } from '@/utils/index.js';
 import { ref, computed, watch } from 'vue';
 import { _copyTxt } from '@/utils/index';
-import { showToast, Popup } from 'vant';
+import { showToast } from 'vant';
 import store from '@/store';
 import Top from '@/components/Top.vue';
 import Decimal from 'decimal.js';
-import StockPopup from '../../trade/StockPopup.vue';
 import { useI18n } from 'vue-i18n';
 import BottomPopup from '@/components/BottomPopup.vue';
 import MarketInfo2 from '../../Market/MarketInfo2.vue';
@@ -346,7 +344,7 @@ import MarketInfo2 from '../../Market/MarketInfo2.vue';
 const { t } = useI18n();
 const emit = defineEmits(['update', 'sell', 'cancel', 'back']);
 const props = defineProps({
-  type: {
+  tradeType: {
     type: String,
     default: 'stock', //stock 股票  contract 合约  foreign 外汇   commodities 大宗交易
   },
@@ -357,13 +355,12 @@ const props = defineProps({
     },
   },
 });
-const openInfoStatus = computed(() => store.state.openInfoStatus)
 const title = computed(() => {
-  if (props.type == 'spot') return '现货订单';
-  if (props.type == 'stock') return t('trade.order_info_title_stock');
-  if (props.type == 'contract') return t('trade.order_info_title_contract');
-  if (props.type == 'foreign') return '外汇订单';
-  if (props.type == 'commodities') return '大宗交易订单';
+  if (props.tradeType == 'spot') return '现货订单';
+  if (props.tradeType == 'stock') return t('trade.order_info_title_stock');
+  if (props.tradeType == 'contract') return t('trade.order_info_title_contract');
+  if (props.tradeType == 'foreign') return '外汇订单';
+  if (props.tradeType == 'commodities') return '大宗交易订单';
   return '订单';
 });
 const backFunc = () => {
@@ -374,11 +371,39 @@ const getRatio = (num) => {
   return new Decimal(num) + '%';
 };
 
+
+
 const showStockModel = ref(false);
 const openStockModel = (currStock) => {
-  store.commit('setCurrConstract', currStock);
+  switch (props.tradeType) {
+    case 'stock':
+      store.commit('setCurrStockItem', currStock);
+      break;
+      case "spot":
+      store.commit('setCurrSpot', currStock);
+      break;
+    case "constract":
+    case "crypto":
+      store.commit('setCurrConstract', currStock);
+      break;
+    case "foreign":
+    case "forex":
+      store.commit('setCurrForeign', currStock);
+      break;
+    case "commodities":
+    case "blocktrade":
+      store.commit('setCurrCommodities', currStock);
+      break;
+  }
   showStockModel.value = true;
 };
+
+watch(showStockModel, (val) => {
+  if (!val) {
+    store.commit('setOpenInfoStatus', false);
+  }
+})
+
 const statusMap = ref({
   // 仓位状态
   none: '开仓',
@@ -422,11 +447,6 @@ const copy = (text) => {
   showToast(t('trade.order_info_copy'));
 };
 
-watch(showStockModel, (val) => {
-  if (!val) {
-    store.commit('setOpenInfoStatus', false);
-  }
-})
 </script>
 
 <style lang="less" scoped>

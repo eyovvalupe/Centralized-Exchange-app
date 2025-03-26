@@ -19,20 +19,15 @@
         <Tabs animated key="form" class="van-tabs--sub_line van-tabs--sub_bg" @change="(e) => (activeTab = e)"
           v-model="activeTab" :swipeable="false" :color="'var(--ex-primary-color)'">
           <Tab :title="t('trade.stock_market_price')" name="0">
-            <OpeningForm :tradeType="props.tradeType" :type="props.type" @showNavDialog="showNavDialog"
+            <OpeningForm :tradeType="props.tradeType" :type="props.type" 
               v-if="activeTab == 0" ref="OpeningForm0Ref" :key="0" :activeTab="activeTab" :activeType="activeType"
               @success="emits('success')" />
           </Tab>
           <Tab :title="t('trade.stock_limit_price')" name="1">
-            <OpeningForm :tradeType="props.tradeType" :type="props.type" @showNavDialog="showNavDialog"
+            <OpeningForm :tradeType="props.tradeType" :type="props.type" 
               v-if="activeTab == 1" ref="OpeningForm1Ref" :key="1" :activeTab="activeTab" :activeType="activeType"
               @success="emits('success')" />
           </Tab>
-          <!-- <Tab :title="t('trade.stock_take_stop')" name="2">
-          <OpeningForm :tradeType="props.tradeType" :type="props.type" @showNavDialog="showNavDialog"
-            v-if="activeTab == 2" ref="OpeningForm2Ref" :key="2" :activeTab="activeTab" :activeType="activeType"
-            @success="emits('success')" />
-        </Tab> -->
         </Tabs>
       </div>
 
@@ -70,7 +65,6 @@ import { _search, _basic, _stocksPara, _stocksBuy } from "@/api/api";
 import { useRoute } from "vue-router";
 import OpeningForm from "./OpeningForm.vue";
 import { useI18n } from "vue-i18n";
-import { getStaticImgUrl } from "@/utils/index.js"
 import router from "@/router";
 import store from "@/store";
 

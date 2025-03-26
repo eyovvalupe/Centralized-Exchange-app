@@ -19,13 +19,13 @@
       <div style="flex: 1;display: flex" class="form-item-con">
         <div class="item" :class="{
           disabled_item: disabled,
-          item_focus: from != 'transfer' ? inputFocus : '', '!h-[1.28rem]': height
-          // item_focus2: inputFocus && !tip,
+          item_focus: from != 'transfer' ? inputFocus : '', '!h-[1.28rem]': height,
+          item_status: inputVal,
         }"
           :style="{ background, paddingBottom: props.hasBot ? '2.6rem' : '', paddingTop: (props.hasLT || props.hasRT) ? '0.5rem' : '', borderColor: errStatus ? 'var(--ex-error-color)' : '' }">
           <!-- 左侧提示 -->
           <span class="ipt_tip ipt_tip--left" :class="from == 'withdraw' ? '!text-[0.28rem] top-[0.5rem]' : ''"
-            v-show="inputFocus">{{ placeholder }}</span>
+            v-show="inputFocus || inputVal">{{ placeholder }}</span>
           <!-- 右侧提示 -->
           <span class="ipt_tip" :class="{ 'ipt_tip--right': tipAlign == 'right' }" v-if="tip"
             v-show="inputFocus || props.hasScroll">{{ tip }}</span>
@@ -48,8 +48,7 @@
             emit('focus');
             " @blur="
               inputBlur();
-            " :type="inputType == 'digit' ? 'number' : inputType == 'password' && showPassword ? 'text' : inputType"
-              @keydown="validateKeydown" class="ipt" :class="from == 'withdraw' && inputFocus ? 'top-[0.1rem]' : ''"
+            " :type="inputType == 'digit' || inputType == 'number' ? 'number' : inputType == 'password' && showPassword ? 'text' : inputType" class="ipt" :class="from == 'withdraw' && inputFocus ? 'top-[0.1rem]' : ''"
               @input="onInput" :placeholder="inputFocus ? '' : placeholder" />
 
             <!-- 密码图标 -->
@@ -216,6 +215,10 @@ const props = defineProps({
   errStatus: {
     type: Boolean,
     default: false
+  },
+  digits:{
+    type:Number,
+    default:-1 //-1 不限制小数位 > 0 限制小数位
   }
 });
 const inputFocus = ref(false);
@@ -231,17 +234,27 @@ watch(
   }
 );
 
-const reg = /^\d$/;
-const reg2 = /^[\d\.]$/;
+function handlerVal(value, _digits = -1) {
+  let reg = /\d+\.?\d{0,}/
+  if(_digits == 0){
+    reg = /\d+/
+  }else if(_digits > 0){
+    reg = new RegExp(`\\d+\\.?\\d{0,${_digits}}`)
+  }
+  const val = (value || '').toString().match(reg) || []
+  return val[0] || ''
+}
 const inputBlur = () => {
   if (props.inputType == "digit" || props.inputType == "number") {
-    inputVal.value = inputVal.value
-      ? parseFloat(inputVal.value).toString()
-      : "";
-    if (inputVal.value <= "0" && !props.allowZero) {
+    const val = Number(inputVal.value || '0')
+    if (val <= 0 && !props.allowZero) {
       inputVal.value = "";
     }
+    if(inputVal.value && props.inputType == "number" && props.digits > 0){
+      inputVal.value = Number(inputVal.value).toFixed(props.digits + 1).slice(0,-1)
+    }
   }
+  console.log('blur')
   emit("update:modelValue", inputVal.value);
   emit("change", inputVal.value);
   emit("blur");
@@ -250,15 +263,19 @@ const inputBlur = () => {
   }, 30);
 };
 
-const validateKeydown = (e) => {
-  if (props.inputType == "digit" && e.key != "Backspace") {
-    if (!reg.test(e.key)) {
-      e.preventDefault();
+const onInput = (e) => {
+  if(props.inputType == 'digit'){
+    let val = handlerVal(inputVal.value,0)
+    //加一层判断，因为input type=number的情况数字输入小数点的时候会返回空，如果也进行重新赋值处理会导致错误
+    if(val != inputVal.value){
+      inputVal.value = val
+    }
+  }else if(props.inputType == 'number'){
+    let val = handlerVal(inputVal.value,props.digits)
+    if(val != inputVal.value){
+      inputVal.value = val
     }
   }
-};
-
-const onInput = () => {
   // if (
   //   (props.inputType == "digit" || props.inputType == "number") &&
   //   inputVal.value > props.max
@@ -361,13 +378,14 @@ const percentTagClick = (percent) => {
 
 
   .disabled_item {
-    // background-color: var(--ex-bg-color2);
+    background-color: rgba(255,255,255,0.2);
     flex: 1;
   }
 
-  .item_focus {
+  .item_focus,
+  .item_status {
     height: 1.12rem;
-    border: 1px solid var(--ex-primary-color) !important;
+    
 
     .ipt_tip {
       font-size: 0.2rem;
@@ -383,7 +401,9 @@ const percentTagClick = (percent) => {
       transform: scale(0.8);
     }
   }
-
+  .item_focus {
+    border: 1px solid var(--ex-primary-color) !important;
+  }
   .percent_tag {
     color: var(--ex-primary-color);
     margin-left: 0.08rem;

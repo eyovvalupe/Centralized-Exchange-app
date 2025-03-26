@@ -59,7 +59,7 @@
 
   <!-- 订单详情 -->
   <Popup v-model:show="showInfo" position="right" style="width: 100%; height: 100%" teleport="body">
-    <OrderInfo type="spot" :curr-stock="currStock" @back="showInfo = false" />
+    <OrderInfo :tradeType="'spot'" :curr-stock="currStock" @back="showInfo = false" />
   </Popup>
 
   <UnLogin @loginfinish="loginfinish" v-show="!token" />
@@ -78,6 +78,10 @@ import Decimal from "decimal.js";
 import { useI18n } from "vue-i18n";
 
 const props = defineProps({
+  tradeType: {
+    type: String,
+    default: "",
+  },
   type: {
     type: String,
     default: ''
@@ -189,6 +193,7 @@ const getList = () => {
 const showInfo = ref(false);
 const currStock = ref({});
 const OpeningForm = (item) => {
+  store.commit('setOpenInfoStatus', true)
   currStock.value = item;
   showInfo.value = true;
 };

@@ -65,7 +65,7 @@
 
     <!-- 订单详情 -->
     <Popup v-model:show="showInfo" position="right" style="width: 100%; height: 100%" teleport="body">
-      <OrderInfo type="contract" :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel"
+      <OrderInfo :tradeType="tradeType" :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel"
         @back="showInfo = false" />
     </Popup>
 
@@ -236,6 +236,10 @@ import Loaidng from "@/components/Loaidng.vue"
 import BottomPopup from "@/components/BottomPopup.vue"
 
 const props = defineProps({
+  tradeType: {
+    type: String,
+    default: "constract",
+  },
   type: {
     type: String,
     default: ''

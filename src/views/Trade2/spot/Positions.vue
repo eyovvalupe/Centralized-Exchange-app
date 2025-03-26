@@ -53,7 +53,7 @@
 
     <!-- 订单详情 -->
     <Popup v-model:show="showInfo" position="right" style="width: 100%; height: 100%" teleport="body">
-      <OrderInfo type="spot" :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel"
+      <OrderInfo :tradeType="'spot'" :curr-stock="currStock" @update="update" @sell="sell" @cancel="cancel"
         @back="showInfo = false" />
     </Popup>
 
@@ -224,6 +224,10 @@ import Loaidng from "@/components/Loaidng.vue"
 import BottomPopup from "@/components/BottomPopup.vue"
 
 const props = defineProps({
+  tradeType: {
+    type: String,
+    default: "",
+  },
   type: {
     type: String,
     default: ''
@@ -339,15 +343,12 @@ watch(
   }
 );
 
-const getRatio = (num) => {
-  if (!num) return "--";
-  return new Decimal(num) + "%";
-};
 
 // 详情
 const showInfo = ref(false);
 const currStock = ref({});
 const OpeningForm = (item) => {
+  store.commit('setOpenInfoStatus', true)
   currStock.value = item;
   showInfo.value = true;
 };
