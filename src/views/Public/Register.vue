@@ -397,16 +397,18 @@ const submit = async () => {
         // 弹出验证码
         if (verifcode.value) {
           // 如果输入了验证码，旧提示验证码错误
-          showToast(err.message);
+          showToast(t("register.verify_code_msg"));
         }
         setTimeout(() => {
           verifCodeRef.value.open();
         }, 1000);
-      } else if (err.code == "400") {
+      } else if (err.code == "1101") {
         if (err.message == "User already exist")
           showToast(t("register.user_already_exist"));
+      } else if (err.code == '1102') {
+        showToast(t("register.invite_code_error"));
       } else {
-        showToast(err.message || t("login.network_error"));
+        showToast(t("login.network_error"));
       }
     })
     .finally(() => {

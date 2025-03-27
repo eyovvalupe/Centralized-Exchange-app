@@ -30,7 +30,7 @@
                 <div class="title"><span style="color: #F19009;">{{ t('home.landing_con1') }}{{ t('home.landing_con2') }}</span>{{ t('home.landing_con3') }}</div>
                 <div>{{ t('home.landing_con4') }}</div>
             </div>
-            <div v-if="!token" class="ripple-btn login-btn" @click="jump('user', true)">{{ t('trade.stock_opening_token_login') }}/{{ t('trade.stock_opening_token_register') }}</div>
+            <div v-if="!token" class="ripple-btn login-btn" @click="jump('login', true)">{{ t('trade.stock_opening_token_login') }}/{{ t('trade.stock_opening_token_register') }}</div>
             <div v-else style="height: 0.4rem;"></div>
 
             <!-- 导航 -->
@@ -380,18 +380,27 @@ onMounted(() => {
 
 
 
-watch(() => (route.path), (val) => {
-    if (val == '/') {
-        const canExecute = canExecuteToday();
-        if (token.value && canExecute) getNotifiData();
-    };
-})
+
+// const activeNotifiStatus = ref(false);
 
 watch(() => (token.value), (val) => {
-    if (val && canExecuteToday()) {
-        getNotifiData();
+    if (val) {
+        setTimeout(() => {
+            getNotifiData();
+        }, 1000);
     }
 })
+
+// watch(() => (route.path), (val) => {
+//     if (val == '/') {
+//         const canExecute = canExecuteToday();
+//         if (token.value && (activeNotifiStatus.value || canExecute)) {
+//             getNotifiData();
+//             activeNotifiStatus.value = false;
+//         }
+//     };
+// })
+
 
 const getNotifiData = () => {
     _notifiPopup().then(res => {
