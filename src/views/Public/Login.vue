@@ -409,7 +409,7 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .page-login {
-  padding-top: 1rem;
+  padding-top: 1.12rem;
   margin: auto;
 
   :deep(span.van-tab__text) {
@@ -510,7 +510,7 @@ onMounted(() => {
   }
 
   :deep(.van-tabs__nav.van-tabs__nav--card.van-tabs__nav--shrink.van-tabs__nav--complete) {
-    margin: 0 0.6rem;
+    margin: 0 0.32rem;
   }
 
   .top {
@@ -549,7 +549,7 @@ onMounted(() => {
   }
 
   .title_box {
-    padding: 0.3rem 0.6rem 0.8rem 0.6rem;
+    padding: 0.8rem 0.32rem;
 
     .title {
       // height: 0.78rem;
@@ -566,7 +566,7 @@ onMounted(() => {
   }
 
   .form {
-    padding: 0 0.6rem;
+    padding: 0 0.32rem;
 
     .form_title {
       color: var(--ex-text-color);
@@ -655,17 +655,16 @@ onMounted(() => {
   }
 
   .fogot {
-    color: var(--ex-primary-color);
+    color: var(--ex-text-color);
     font-weight: 400;
-    padding-left: 0.6rem;
-    margin: 0.32rem 0 0.8rem 0;
+    margin: 0.32rem 0 0.8rem 0.32rem;
   }
 
   .submit_box {
     display: flex;
     width: 100%;
     height: 1.1rem;
-    padding-inline: 0.6rem;
+    padding-inline: 0.32rem;
     justify-content: center;
     align-items: center;
 
@@ -679,7 +678,7 @@ onMounted(() => {
       font-style: normal;
       font-weight: 500;
       line-height: 100%;
-      border-radius: 0.4rem;
+      border-radius: 0.6rem;
       /* 18px */
     }
   }
