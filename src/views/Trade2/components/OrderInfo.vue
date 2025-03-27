@@ -375,6 +375,7 @@ const getRatio = (num) => {
 
 const showStockModel = ref(false);
 const openStockModel = (currStock) => {
+  store.commit('setOpenInfoStatus', true)
   switch (props.tradeType) {
     case 'stock':
       store.commit('setCurrStockItem', currStock);
