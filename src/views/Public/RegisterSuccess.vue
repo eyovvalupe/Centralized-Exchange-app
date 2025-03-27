@@ -135,17 +135,17 @@ const goChat = () => {
   .title {
     color: var(--ex-text-color);
     font-weight: 400;
-    font-size: 0.3rem;
+    font-size: 0.32rem;
     line-height: 0.42rem;
     margin-bottom: 0.68rem;
   }
 
   .submit {
     width: max-content;
-    height: 0.9rem;
-    padding: 0 0.36rem;
+    width: 4.5rem;
+    height: 0.92rem;
     margin-bottom: 0.6rem;
-    font-size: 0.32rem;
+    font-size: 0.3rem;
     font-weight: 400;
     color: var(--ex-white);
   }
