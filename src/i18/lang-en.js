@@ -108,6 +108,7 @@ export default {
     enter_verify_code: 'Enter verify code',
     verify_code_error: 'Errors in getting verify code, please do manually',
     invite_code_error: 'Invitation code is incorrect',
+    verify_code_msg: "Please enter the image verification code"
   },
   password_level: {
     weak: 'Weak',

@@ -108,6 +108,7 @@ export default {
     enter_verify_code: '输入验证码',
     verify_code_error: '获取验证码异常，请手动刷新',
     invite_code_error: '邀请码错误',
+    verify_code_msg: "请输入图片验证码",
   },
   password_level: {
     weak: '弱',

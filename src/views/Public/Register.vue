@@ -397,7 +397,7 @@ const submit = async () => {
         // 弹出验证码
         if (verifcode.value) {
           // 如果输入了验证码，旧提示验证码错误
-          showToast(err.message);
+          showToast(t("register.verify_code_msg"));
         }
         setTimeout(() => {
           verifCodeRef.value.open();

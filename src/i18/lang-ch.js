@@ -144,6 +144,7 @@ export default {
     enter_verify_code: '輸入驗證碼',
     verify_code_error: '獲取驗證碼異常，請手動刷新',
     invite_code_error: '邀請碼錯誤',
+    verify_code_msg: "請輸入圖片驗證碼"
   },
   password_level: {
     weak: '弱',

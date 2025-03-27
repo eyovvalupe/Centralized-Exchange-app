@@ -109,6 +109,7 @@ export default {
     verify_code_error:
       '確認コードの取得に失敗しました。手動でリフレッシュしてください',
     invite_code_error: '招待コードが間違っています',
+    verify_code_msg: "画像認証コードを入力してください"
   },
   password_level: {
     weak: '弱い',

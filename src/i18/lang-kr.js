@@ -108,6 +108,7 @@ export default {
     enter_verify_code: '인증 코드를 입력하세요',
     verify_code_error: '인증 코드 받기 오류, 수동으로 새로 고침 해주세요',
     invite_code_error: '초대 코드가 잘못되었습니다',
+    verify_code_msg: "이미지 인증 코드를 입력해주세요"
   },
   password_level: {
     weak: '약함',
