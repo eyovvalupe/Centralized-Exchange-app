@@ -408,6 +408,7 @@ const goSell = (s) => {
       if (res && res.code == 200) {
         showToast(t("trade.stock_position_success"));
         store.dispatch("updateWallet");
+        showInfo.value = false;
         showSell.value = false;
       }
     })
@@ -466,6 +467,7 @@ const goUpdate = (s) => {
       if (res && res.code == 200) {
         showToast(t("trade.stock_position_success"));
         store.dispatch("updateWallet");
+        showInfo.value = false;
         showUpdate.value = false;
       }
     })
