@@ -107,8 +107,7 @@
       <!-- 协议 -->
       <label class="register_doc">
         <div :class="checked ? 'checked_icon_blue' : 'unchecked_icon'" class="mr-[0.2rem]" @click="checked = !checked">
-          <img v-if="checked" v-lazy="getStaticImgUrl('/static/img/user/checked_white.svg')" alt="">
-          <img v-else v-lazy="getStaticImgUrl('/static/img/user/uncheck_primary.svg')" alt="">
+          <img v-if="checked" v-lazy="getStaticImgUrl('/static/img/common/check.svg')" alt="">
         </div>
         {{ $t("register.agree_con1")
         }}<span>{{ $t("register.agree_con2") }}</span>{{ $t("register.agree_con3")
@@ -208,7 +207,7 @@ import Top from "@/components/Top.vue";
 import BottomPopup from "@/components/BottomPopup.vue";
 
 // 区号控制
-const step = ref(1);
+const step = ref(2);
 const { t } = useI18n();
 const activeTab = ref(0);
 const defaultCode = "+244";
@@ -490,11 +489,11 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .page-register {
-  padding-top: 1.12rem;
+  padding-top: 1.32rem;
   height: 100%;
 
   :deep(.van-tabs__nav.van-tabs__nav--card.van-tabs__nav--shrink.van-tabs__nav--complete) {
-    margin: 0 0.6rem;
+    margin: 0 0.32rem;
   }
 
   :deep(button.van-button.van-button--primary.van-button--normal.van-button--round.submit) {
@@ -612,7 +611,7 @@ onMounted(() => {
   }
 
   .title_box {
-    padding: 0.12rem 0.6rem 0.4rem 0.6rem;
+    padding: 0.12rem 0.6rem 0.6rem 0.6rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -658,7 +657,7 @@ onMounted(() => {
   }
 
   .form {
-    padding: 0 0.6rem;
+    padding: 0 0.32rem;
 
     .eye-hidden-icon {
       width: 0.4rem;
@@ -760,7 +759,7 @@ onMounted(() => {
   }
 
   .register_doc {
-    padding-left: 0.6rem;
+    padding-left: 0.32rem;
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -774,22 +773,21 @@ onMounted(() => {
     .checked_icon_blue {
       width: 0.32rem;
       height: 0.32rem;
-      border: 0.02rem solid var(--ex-border-color2);
-      background-size: contain;
+      border: 0.02rem solid var(--ex-primary-color);
       border-radius: 0.08rem;
-      background-repeat: no-repeat;
+      background-color: transparent;
     }
 
     .unchecked_icon {
       width: 0.32rem;
       height: 0.32rem;
       background-color: transparent;
-      border: 0.02rem solid var(--ex-border-color2);
+      border: 0.02rem solid rgba(255, 255, 255, 0.30);
       border-radius: 0.08rem;
     }
 
     .register_doc_check {
-      margin-right: 0.24rem;
+      margin-right: 0.16rem;
     }
 
     >span {
@@ -798,7 +796,7 @@ onMounted(() => {
   }
 
   .submit_box {
-    padding: 0 0.6rem;
+    padding: 0 0.32rem;
     margin-bottom: 0.6rem;
 
     :deep(.van-button__content) {
