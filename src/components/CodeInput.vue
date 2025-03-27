@@ -1,7 +1,7 @@
 <template>
   <div class="password-input">
     <div class="flex items-center justify-between mb-[0.32rem]" v-if="props.from != 'register'">
-      <span class="text-[0.32rem] text-color mr-[0.2rem]">Google Verification Code</span>
+      <span class="text-[0.32rem] text-color mr-[0.2rem]">{{ t('google_auth.google_code') }}</span>
       <div class="clear_icon" style="cursor: pointer" @click="clean">
         <img v-lazy="getStaticImgUrl('/static/img/common/clean.svg')" alt="">
       </div>

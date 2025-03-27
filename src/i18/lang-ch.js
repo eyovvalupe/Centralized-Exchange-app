@@ -143,6 +143,8 @@ export default {
     not_clear: '看不清，換一張',
     enter_verify_code: '輸入驗證碼',
     verify_code_error: '獲取驗證碼異常，請手動刷新',
+    invite_code_error: '邀請碼錯誤',
+    verify_code_msg: "請輸入圖片驗證碼"
   },
   password_level: {
     weak: '弱',
@@ -246,6 +248,9 @@ export default {
     google_input_con: '請輸入6位數代碼',
     google_input_btn_cancel: '取消',
     google_input_btn_confirm: '確認',
+    google_notice: '请备份您的密钥，以防丢失',
+    google_code: '谷歌验证码',
+    google_error: '谷歌验证码错误',
   },
   service: {
     page_title: '網路客服',
@@ -383,7 +388,6 @@ export default {
     order_history: '歷史查詢',
     assets_center: '資產中心',
     order_one_click: '一鍵買幣',
-
   },
   topUpCrypto: {
     recharge: '儲值',
@@ -790,8 +794,8 @@ export default {
     pending_order: '委託中',
     canceled_order: '已撤單',
 
-    buy_order: "買幣訂單",
-    finance_order: "理財訂單",
+    buy_order: '買幣訂單',
+    finance_order: '理財訂單',
   },
   inviteFriends: {
     invite: '推薦朋友',
@@ -1146,15 +1150,15 @@ export default {
     btn_cancel: '取消',
   },
   menu: {
-    stock_trading: "股票交易",
-    spot_trading: "幣幣交易",
-    crypto_trading: "加密貨幣合約交易",
-    ai_trading: "交易機器人交易",
-    forex_trading: "外匯交易",
-    blocktrade_trading: "大宗商品交易",
-    my_assets: "我的資產",
-    assets_center: "資產中心",
-    google: "谷歌認證",
-    safety: "安全設置",
-  }
+    stock_trading: '股票交易',
+    spot_trading: '幣幣交易',
+    crypto_trading: '加密貨幣合約交易',
+    ai_trading: '交易機器人交易',
+    forex_trading: '外匯交易',
+    blocktrade_trading: '大宗商品交易',
+    my_assets: '我的資產',
+    assets_center: '資產中心',
+    google: '谷歌認證',
+    safety: '安全設置',
+  },
 };

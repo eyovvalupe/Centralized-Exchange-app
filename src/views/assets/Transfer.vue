@@ -64,6 +64,7 @@
             type="text"
             class="out_box text-[0.32rem] w-full"
             :placeholder="$t('trade.stock_position_amount')"
+            @input="changeAmount('from')"
             @focus="errStatus = false"
           />
           <div class="absolute text-white text-[0.28rem] right-[0.28rem]">
@@ -127,11 +128,12 @@
           :style="{ borderColor: errStatus ? 'var(--ex-error-color)' : '' }"
         >
           <input
-            v-model="form.amount"
+            v-model="toAmount"
             type="text"
             class="out_box text-[0.32rem] w-full"
             :placeholder="$t('trade.stock_position_amount')"
             @focus="errStatus = false"
+            @input="changeAmount('to')"
           />
           <div class="absolute text-white text-[0.28rem] right-[0.28rem]">
             {{ form.toCurrency ? form.toCurrency.name : '--' }}
@@ -500,6 +502,7 @@
         .then((res) => {
           if (res.code == 200) {
             rate.value = res.data.exchange_rate;
+            changeAmount('from')
           }
         })
         .finally(() => {
@@ -507,6 +510,7 @@
         });
     } else {
       rate.value = 1;
+      changeAmount('from')
       setTimeout(() => {
         rateLoading.value = false;
       }, 100);
@@ -528,12 +532,12 @@
     if (val == 'to') {
       form.value.amount = Number(
         parseFloat(toAmount.value) / parseFloat(rate.value),
-      );
+      ) || '';
     }
     if (val == 'from') {
       toAmount.value = Number(
         parseFloat(form.value.amount) * parseFloat(rate.value),
-      );
+      ) || '';
     }
   };
 
