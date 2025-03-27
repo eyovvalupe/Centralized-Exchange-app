@@ -156,8 +156,7 @@ onMounted(() => {
   width: 100%;
   height: 1.12rem;
   font-size: 0.36rem;
-  /* background-color: var(--ex-primary-color); */
-  border-radius: 0.4rem;
+  border-radius: 0.6rem;
   color: var(--ex-text-color--bg-primary);
 }
 

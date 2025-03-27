@@ -27,29 +27,29 @@
         <span style="font-size: 0.28rem; font-weight: 400;">{{ props.type == "email" ?
           t('register.email') : t('register.phone') }}</span>
       </div>
-      <div class="flex flex-row justify-between mb-[0.6rem]">
-        <span class="text-[0.32rem] text-color2 !font-normal">{{ $t('register.code_con2') }}</span>
+      <div class="flex flex-row justify-between items-center mb-[0.6rem]">
+        <span class="text-[0.32rem] text-color !font-normal">{{ $t('register.code_con2') }}</span>
         <div class="timer_container" @click="send">
           {{ s ? s + "s" : t('register.code_again') }}
         </div>
       </div>
     </div>
-    <div class="w-full px-[0.6rem] mb-[0.6rem]">
+    <div class="w-full px-[0.32rem] mb-[0.4rem]">
       <CodeInput :from="'register'" @submit="(code) => console.log(code)" />
     </div>
-    <div class="jump" @click="close"><span>{{ $t("register.code_jump") }}</span></div>
+    <div class="jump"><span @click="close">{{ $t("register.code_jump") }}</span></div>
     <BottomPopup round closeable v-model:show="confirmRef" position="bottom" teleport="body">
       <div class="w-full h-[4rem] flex flex-col items-center">
-        <div class="text-[0.36rem] mb-[0.56rem]">{{ t("register.code_jump") }}</div>
+        <div class="text-[0.36rem] mb-[0.64rem]">{{ t("register.code_jump") }}</div>
         <div class="text-[0.32rem] mb-[1rem]">
           {{ t('register.code_jump_title') }}
         </div>
         <div class="w-full flex justify-between px-[0.4rem]">
           <div
-            class="w-[3.16rem] h-[0.8rem] rounded-[1.3rem] bg-white text-black flex items-center justify-center text-[0.32rem] ripple-primary"
+            class="w-[3.16rem] h-[0.8rem] rounded-[1.3rem] bg-white1 text-color flex items-center justify-center text-[0.32rem] font-[600] ripple-primary"
             @click="confirmRef = false">{{ t('google_auth.google_input_btn_cancel') }}</div>
           <div
-            class="w-[3.16rem] h-[0.8rem] rounded-[1.3rem] bg-primary text-black flex items-center justify-center text-[0.32rem] ripple-btn"
+            class="w-[3.16rem] h-[0.8rem] rounded-[1.3rem] bg-primary text-color flex items-center justify-center text-[0.32rem] font-[600] ripple-btn"
             @click="next">{{ t('google_auth.google_input_btn_confirm') }}</div>
         </div>
       </div>
@@ -259,12 +259,15 @@ onMounted(() => {
 .jump {
   display: flex;
   justify-content: center;
-  color: var(--ex-primary-color);
+  color: var(--ex-text-color);
   font-size: 0.32rem;
+  span{
+    padding: 0.2rem;
+  }
 }
 
 .title {
-  padding: 0.48rem 0.6rem 0.24rem 0.6rem;
+  padding: 0.48rem 0.32rem 0.24rem 0.32rem;
   font-weight: 600;
   color: var(--ex-text-color);
   font-size: 0.4rem;
@@ -273,7 +276,7 @@ onMounted(() => {
 }
 
 .info {
-  padding: 0 0.6rem;
+  padding: 0 0.32rem;
   line-height: 0.5rem;
   color: var(--ex-text-color5);
 
@@ -318,15 +321,14 @@ onMounted(() => {
 }
 
 .timer_container {
-  width: 1.56rem;
-  height: 0.6rem;
+  width: 2.08rem;
+  height: 0.8rem;
   display: flex;
   justify-content: center;
   align-items: center;
   background-color: var(--ex-border-color2);
   border-radius: 1rem;
   color: var(--ex-primary-color);
-  font-size: 0.28rem;
-  line-height: 0.372rem;
+  font-size: 0.3rem;
 }
 </style>
