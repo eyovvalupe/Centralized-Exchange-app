@@ -17,60 +17,62 @@
       </template>
     </Top>
 
-    <!-- 标题 -->
-    <div class="title_box">
-      <div class="title">{{ t('forget_pw.title') }}</div>
-    </div>
+    <div v-if="step == 1">
+        <!-- 标题 -->
+      <div class="title_box">
+        <div class="title">{{ t('forget_pw.title') }}</div>
+      </div>
 
-    <!-- 表单 -->
-    <div class="form relative">
-      <!-- <div class="form_title">{{ t('forget_pw.email_phone') }}</div> -->
-      <div class="form_item margin_item transition" :style="{borderColor: idError ? 'var(--ex-error-color)' : ''}">
-        <input maxlength="20" v-model.trim="form.username" :placeholder="t('forget_pw.user_name')" type="text"
-          class="item_input" @focus="idError = false"/>
-        <div class="form_item_clear" v-show="form.username" @click="form.username = null">
-          <div class="size-[0.25rem]">
-            <img v-lazy="getStaticImgUrl('static/img/common/mini_close.svg')" alt="" />
+      <!-- 表单 -->
+      <div class="form relative">
+        <!-- <div class="form_title">{{ t('forget_pw.email_phone') }}</div> -->
+        <div class="form_item margin_item transition" :style="{borderColor: idError ? 'var(--ex-error-color)' : ''}">
+          <input maxlength="20" v-model.trim="form.username" :placeholder="t('邮箱/手机号')" type="text"
+            class="item_input" @focus="idError = false"/>
+          <div class="form_item_clear" v-show="form.username" @click="form.username = null">
+            <div class="size-[0.25rem]">
+              <img v-lazy="getStaticImgUrl('static/img/common/mini_close.svg')" alt="" />
+            </div>
+          </div>
+        </div>
+
+        <!-- <div class="form_title">{{ t('change_login_pw.new_pw') }}</div> -->
+        <div class="form_item mb-[0.05rem] transition" :style="{borderColor: newError ? 'var(--ex-error-color)' : ''}">
+          <input maxlength="20" v-model.trim="form.password" :type="showPass ? 'text' : 'password'"
+            :placeholder="t('change_login_pw.new_pw_placeholder')" class="item_input" @input="checkPasswordStrength" @focus="newError = false"/>
+          <div class="form_item_icon" @click="toggleShowPass">
+            <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'">
+              <img v-if="showPass" v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
+              <img v-else v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
+            </div>
+          </div>
+        </div>
+        <PasswordLevel class="form_passCheck" :password="form.password" :from="'forgot'" />
+
+        <div class="mb-[0.32rem]"></div>
+        <!-- <div class="form_title">{{ t('change_login_pw.confirm_pw') }}</div> -->
+        <div class="form_item transition" :style="{borderColor: confirmError ? 'var(--ex-error-color)' : ''}">
+          <input maxlength="20" v-model.trim="form.confirmPassword" :type="showConfirmPass ? 'text' : 'password'"
+            :placeholder="t('change_login_pw.confirm_pw_placeholder')" class="item_input" @focus="confirmError = false"/>
+          <div class="form_item_icon" @click="toggleShowConfirmPass">
+            <div :class="showConfirmPass ? 'eye-show-icon' : 'eye-hidden-icon'">
+              <img v-if="showConfirmPass" v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
+              <img v-else v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- <div class="form_title">{{ t('change_login_pw.new_pw') }}</div> -->
-      <div class="form_item mb-[0.05rem] transition" :style="{borderColor: newError ? 'var(--ex-error-color)' : ''}">
-        <input maxlength="20" v-model.trim="form.password" :type="showPass ? 'text' : 'password'"
-          :placeholder="t('change_login_pw.new_pw_placeholder')" class="item_input" @input="checkPasswordStrength" @focus="newError = false"/>
-        <div class="form_item_icon" @click="toggleShowPass">
-          <div :class="showPass ? 'eye-show-icon' : 'eye-hidden-icon'">
-            <img v-if="showPass" v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
-            <img v-else v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
-          </div>
-        </div>
+      <!-- 按钮 -->
+      <div class="submit_box" @click="submit">
+        <Button :loading="loading" round color="var(--ex-primary-color)" class="submit"
+          type="primary"><span style="color: var(--ex-white);">{{ t('forget_pw.get_back') }}</span></Button>
       </div>
-      <PasswordLevel class="form_passCheck" :password="form.password" :from="'forgot'" />
-
-      <div class="mb-[0.32rem]"></div>
-      <!-- <div class="form_title">{{ t('change_login_pw.confirm_pw') }}</div> -->
-      <div class="form_item transition" :style="{borderColor: confirmError ? 'var(--ex-error-color)' : ''}">
-        <input maxlength="20" v-model.trim="form.confirmPassword" :type="showConfirmPass ? 'text' : 'password'"
-          :placeholder="t('change_login_pw.confirm_pw_placeholder')" class="item_input" @focus="confirmError = false"/>
-        <div class="form_item_icon" @click="toggleShowConfirmPass">
-          <div :class="showConfirmPass ? 'eye-show-icon' : 'eye-hidden-icon'">
-            <img v-if="showConfirmPass" v-lazy="getStaticImgUrl('/static/img/common/open_eye.svg')" alt="">
-            <img v-else v-lazy="getStaticImgUrl('/static/img/common/close_eye.svg')" alt="">
-          </div>
-        </div>
-      </div>
+      <div class="tologin" @click="router.push({ name: 'login' })">{{ t('register.go_login') }}</div>
     </div>
+    
+    <RegisterCodeCheck v-else-if="step == 2" />
 
-    <!-- 按钮 -->
-    <div class="submit_box" @click="submit">
-      <Button :loading="loading" round color="var(--ex-primary-color)" class="submit"
-        type="primary"><span style="color: var(--ex-white);">{{ t('forget_pw.get_back') }}</span></Button>
-    </div>
-    <div class="tologin" @click="router.push({ name: 'login' })">{{ t('register.go_login') }}</div>
-
-    <!-- 谷歌 -->
-    <GoogleVerfCode @submit="submitForm" ref="ggRef" />
   </div>
 </template>
 
@@ -82,6 +84,7 @@ import router from "@/router";
 import { _forgetpw } from "@/api/api";
 import GoogleVerfCode from "@/components/GoogleVerfCode.vue";
 import store from "@/store";
+import RegisterCodeCheck from "@/components/RegisterCodeCheck.vue";
 import PasswordLevel from "@/components/PasswordLevel.vue";
 import { useRoute } from "vue-router";
 import ForgotSuccess from "./ForgotSuccess.vue";
@@ -89,6 +92,7 @@ import { useI18n } from "vue-i18n";
 import Top from "@/components/Top.vue";
 
 const { t } = useI18n();
+const step = ref(1)
 const props = defineProps({
   backFunc: {
     type: Function,
@@ -211,7 +215,7 @@ const submitForm = (code) => {
 
 <style lang="less" scoped>
 .page-fogot {
-  padding-top: 1.12rem;
+  padding-top: 0.88rem;
 
   .top_icon_container {
     position: fixed;
@@ -271,7 +275,7 @@ const submitForm = (code) => {
   }
 
   .title_box {
-    padding: 0.32rem 0.6rem 0.84rem 0.6rem;
+    padding: 0.4rem 0.32rem 0.8rem 0.32rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -298,7 +302,7 @@ const submitForm = (code) => {
   }
 
   .form {
-    padding: 0 0.6rem;
+    padding: 0 0.32rem;
 
     .form_title {
       color: var(--ex-text-color);
@@ -371,15 +375,15 @@ const submitForm = (code) => {
   }
 
   .submit_box {
-    padding: 0 0.6rem;
-    margin-top: 0.6rem;
+    padding: 0 0.32rem;
+    margin-top: 0.8rem;
     margin-bottom: 0.6rem;
 
     .submit {
       width: 100%;
       height: 1.12rem;
       font-size: 0.36rem;
-      border-radius: 0.4rem;
+      border-radius: 0.6rem;
     }
   }
 
