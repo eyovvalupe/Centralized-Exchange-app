@@ -107,6 +107,7 @@ export default {
     not_clear: 'Not clear, change to another',
     enter_verify_code: 'Enter verify code',
     verify_code_error: 'Errors in getting verify code, please do manually',
+    invite_code_error: 'Invitation code is incorrect',
   },
   password_level: {
     weak: 'Weak',
@@ -213,6 +214,9 @@ export default {
     google_input_con: 'Enter 6-digit code',
     google_input_btn_cancel: 'Cancel',
     google_input_btn_confirm: 'Confirm',
+    google_notice: 'Please back up your key in case you lose it',
+    google_code: 'Google Verification Code',
+    google_error: 'Google Verification Code Error',
   },
   service: {
     page_title: 'Customer Service',
@@ -348,7 +352,6 @@ export default {
     order_history: 'History',
     assets_center: 'Overview',
     order_one_click: 'Buy crypto',
-
   },
   topUpCrypto: {
     recharge: 'Deposit Funds',
@@ -802,8 +805,8 @@ export default {
     trade_price: 'Transaction Price',
     pending_order: 'Pending',
     canceled_order: 'Canceled',
-    buy_order: "Buy Crypto",
-    finance_order: "Finance",
+    buy_order: 'Buy Crypto',
+    finance_order: 'Finance',
   },
   inviteFriends: {
     invite: 'Invite',
@@ -1150,7 +1153,6 @@ export default {
     copy_paid_date: 'Settlement Time',
     copy_start_date: 'Start Time',
     copy_finish_date: 'End Time',
-
   },
   notifi: {
     notifi_center: 'Notification Center',
@@ -1163,15 +1165,15 @@ export default {
     btn_cancel: 'Cancel',
   },
   menu: {
-    stock_trading: "Stock Trading",
-    spot_trading: "Spot Trading",
-    crypto_trading: "Crypto Trading",
-    ai_trading: "Bot Trading",
-    forex_trading: "Forex Trading",
-    blocktrade_trading: "OTC Desk",
-    my_assets: "My Assets",
-    assets_center: "Assets Center",
-    google: "Google Authentication",
-    safety: "Security Settings",
-  }
+    stock_trading: 'Stock Trading',
+    spot_trading: 'Spot Trading',
+    crypto_trading: 'Crypto Trading',
+    ai_trading: 'Bot Trading',
+    forex_trading: 'Forex Trading',
+    blocktrade_trading: 'OTC Desk',
+    my_assets: 'My Assets',
+    assets_center: 'Assets Center',
+    google: 'Google Authentication',
+    safety: 'Security Settings',
+  },
 };

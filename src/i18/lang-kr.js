@@ -107,6 +107,7 @@ export default {
     not_clear: '잘 보이지 않나요? 새로 고침',
     enter_verify_code: '인증 코드를 입력하세요',
     verify_code_error: '인증 코드 받기 오류, 수동으로 새로 고침 해주세요',
+    invite_code_error: '초대 코드가 잘못되었습니다',
   },
   password_level: {
     weak: '약함',
@@ -212,6 +213,9 @@ export default {
     google_input_con: '6자리 코드를 입력하세요',
     google_input_btn_cancel: '취소',
     google_input_btn_confirm: '확인',
+    google_notice: '키를 잃어버리지 않도록 백업해 두세요',
+    google_code: '구글 인증 코드',
+    google_error: '구글 인증 코드 오류',
   },
   service: {
     page_title: '고객 서비스',
@@ -383,7 +387,6 @@ export default {
     order_history: '내역 조회',
     assets_center: '자산 센터',
     order_one_click: '코인 구매',
-
   },
   withdraw: {
     withdraw: '출금',
@@ -792,8 +795,8 @@ export default {
     pending_order: '주문 중',
     canceled_order: '취소됨',
 
-    buy_order: "코인 구매 주문",
-    finance_order: "투자 주문",
+    buy_order: '코인 구매 주문',
+    finance_order: '투자 주문',
   },
   inviteFriends: {
     invite: '친구 초대',
@@ -1149,15 +1152,15 @@ export default {
     btn_cancel: '취소',
   },
   menu: {
-    stock_trading: "주식 거래",
-    spot_trading: "코인 거래",
-    crypto_trading: "암호화폐 계약 거래",
-    ai_trading: "Bot 거래",
-    forex_trading: "외환 거래",
-    blocktrade_trading: "상품 거래",
-    my_assets: "내 자산",
-    assets_center: "자산 센터",
-    google: "구글 인증",
-    safety: "보안 설정",
-  }
+    stock_trading: '주식 거래',
+    spot_trading: '코인 거래',
+    crypto_trading: '암호화폐 계약 거래',
+    ai_trading: 'Bot 거래',
+    forex_trading: '외환 거래',
+    blocktrade_trading: '상품 거래',
+    my_assets: '내 자산',
+    assets_center: '자산 센터',
+    google: '구글 인증',
+    safety: '보안 설정',
+  },
 };

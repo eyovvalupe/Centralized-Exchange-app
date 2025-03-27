@@ -107,6 +107,7 @@ export default {
     not_clear: '看不清？换一张',
     enter_verify_code: '输入验证码',
     verify_code_error: '获取验证码异常，请手动刷新',
+    invite_code_error: '邀请码错误',
   },
   password_level: {
     weak: '弱',
@@ -210,6 +211,9 @@ export default {
     google_input_con: '请输入6位数代码',
     google_input_btn_cancel: '取消',
     google_input_btn_confirm: '确认',
+    google_notice: "请备份您的密钥，以防丢失",
+    google_code: "谷歌验证码",
+    google_error: "谷歌验证码错误",
   },
   service: {
     page_title: '在线客服',

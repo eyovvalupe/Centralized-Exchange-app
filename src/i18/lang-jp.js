@@ -108,6 +108,7 @@ export default {
     enter_verify_code: '確認コードを入力',
     verify_code_error:
       '確認コードの取得に失敗しました。手動でリフレッシュしてください',
+    invite_code_error: '招待コードが間違っています',
   },
   password_level: {
     weak: '弱い',
@@ -212,6 +213,9 @@ export default {
     google_input_con: '6桁のコードを入力してください',
     google_input_btn_cancel: 'キャンセル',
     google_input_btn_confirm: '確認',
+    google_notice: 'キーを失くさないようにバックアップを取ってください',
+    google_code: 'Google認証コード',
+    google_error: 'Google認証コードが間違っています',
   },
   service: {
     page_title: 'オンラインサポート',
@@ -382,7 +386,6 @@ export default {
     order_history: '履歴照会',
     assets_center: '資産センター',
     order_one_click: 'コイン購入',
-
   },
   withdraw: {
     withdraw: '出金',
@@ -792,8 +795,8 @@ export default {
     trade_price: '取引価格',
     pending_order: '注文中',
     canceled_order: 'キャンセル済み',
-    buy_order: "コイン購入注文",
-    finance_order: "投資注文",
+    buy_order: 'コイン購入注文',
+    finance_order: '投資注文',
   },
   inviteFriends: {
     invite: '友達を招待',
@@ -1152,15 +1155,15 @@ export default {
     btn_cancel: 'キャンセル',
   },
   menu: {
-    stock_trading: "株式取引",
-    spot_trading: "暗号通貨取引",
-    crypto_trading: "暗号通貨契約取引",
-    ai_trading: "Bot取引",
-    forex_trading: "外国為替取引",
-    blocktrade_trading: "外国為替取引",
-    my_assets: "私の資産",
-    assets_center: "資産センター",
-    google: "Google認証",
-    safety: "セキュリティ設定",
-  }
+    stock_trading: '株式取引',
+    spot_trading: '暗号通貨取引',
+    crypto_trading: '暗号通貨契約取引',
+    ai_trading: 'Bot取引',
+    forex_trading: '外国為替取引',
+    blocktrade_trading: '外国為替取引',
+    my_assets: '私の資産',
+    assets_center: '資産センター',
+    google: 'Google認証',
+    safety: 'セキュリティ設定',
+  },
 };
