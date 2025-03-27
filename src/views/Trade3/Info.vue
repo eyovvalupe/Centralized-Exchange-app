@@ -1,7 +1,8 @@
 <!-- 交易页 -->
 <template>
   <!-- 头部 -->
-  <HeaderTabs type="normal" @change="changeTab" v-model:active="headActiveTab" :tabs="[t('home.trade'), t('home.finance')]">
+  <HeaderTabs type="normal" @change="changeTab" v-model:active="headActiveTab"
+    :tabs="[t('home.trade'), t('home.finance')]">
     <template #after>
       <div class="flex items-center gap-[0.16rem] mr-[0.34rem]">
         <div class="size-[0.72rem] bg-white1 rounded-full ripple-btn flex items-center justify-center transition"
@@ -40,7 +41,8 @@
                     <div class="title_name">
                       {{ item.symbol || "--" }}
                     </div>
-                    <div style="font-size: 0.24rem;color: var(--ex-text-color3);margin-top: 0.1rem;">
+                    <div
+                      style="font-size: 0.24rem;color: var(--ex-text-color3);margin-top: 0.1rem; text-overflow: ellipsis;white-space: nowrap; max-width: 5rem;overflow: hidden;">
                       {{ item.name }}
                     </div>
                   </div>
@@ -61,7 +63,8 @@
                 </div>
               </div>
             </div>
-            <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']" v-if="!showInfoDialog && !openInfoStatus">
+            <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']"
+              v-if="!showInfoDialog && !openInfoStatus">
               <Chart @switch="(e) => (hideChart = e)" :type="'stock'" :mini="true" />
             </div>
             <!-- 内容1 -->
@@ -117,7 +120,8 @@
                 </div>
               </div>
             </div>
-            <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']" v-if="!showInfoDialog && !openInfoStatus">
+            <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']"
+              v-if="!showInfoDialog && !openInfoStatus">
               <Chart @switch="(e) => (hideChart = e)" :type="'constract'" :mini="true" />
             </div>
             <!-- 内容1 -->
@@ -252,7 +256,8 @@
                 </div>
               </div>
             </div>
-            <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']" v-if="!showInfoDialog && !openInfoStatus">
+            <div class="charts-box" :class="[hideChart ? 'hide-charts-box' : '']"
+              v-if="!showInfoDialog && !openInfoStatus">
               <Chart @switch="(e) => (hideChart = e)" :type="'ai'" :mini="true" />
             </div>
             <!-- 内容1 -->
@@ -270,7 +275,7 @@
                 <Tab :title="t('trade.trade_orders_current')" :name="44">
                   <div style="height: 0.2rem"></div>
                   <div class="dialog-market-bg" v-if="activeTab2 == 44">
-                    <PositionsAi  />
+                    <PositionsAi />
                   </div>
                 </Tab>
                 <Tab :title="t('trade.trade_order_history')" :name="55">

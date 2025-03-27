@@ -41,7 +41,7 @@ const store = createStore({
     accountList: [], // 收款方式列表
     sessionToken: '', // 关键请求token
     isLoginOpen: false, // 登录弹窗开关
-    notifiData: JSON.parse(sessionStorage.getItem('notifiData')),
+    notifiData: {},
     notifiOpen: false,
     notifiList: [],
     notifiJoinList: [],
@@ -176,7 +176,8 @@ const store = createStore({
         commit('setMyCopyData', []);
         commit('setNotifiJoinList', []);
         commit('setReferralInfo', {});
-        commit('setStockWallet', [])
+        commit('setStockWallet', []);
+        commit('setNotifiData', {});
       }, 100);
       // commit('setMarketSearch', {
       //   search: '',
