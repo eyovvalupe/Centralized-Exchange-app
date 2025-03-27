@@ -105,7 +105,7 @@
     <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
       v-model:show="showDialog" position="bottom" teleport="body" closeable>
       <div class="register_accounr_dialog">
-        <div class="text-center my-[0.36rem] text-[0.32rem] text-color">
+        <div class="text-center mb-[0.6rem] mt-[0.06rem] text-[0.32rem] text-color">
           {{ $t("login.country_number") }}
         </div>
         <div class="item search_box">
@@ -121,9 +121,9 @@
           <!-- <List> -->
           <div v-for="item in showAreas">
             <div @click="clickItem(item)"
-              class="flex justify-between h-[1.06rem] items-center border-b-[0.02rem] border-b-color"
+              class="flex justify-between h-[1.06rem] items-center border-b-[0.02rem]" style="border-color:var(--ex-bg-white2);"
               :class="{ transfer_dialog_item_active: form.area == item.code }">
-              <div class="flex h-[1.08rem] items-center">
+              <div class="flex pt-[0.3rem] pb-[0.2rem] items-center">
                 <div style="width: 0.64rem;height: 0.64rem;" class="mr-[0.2rem]">
                   <img v-lazy="getStaticImgUrl('/static/img/user/hk.svg')" alt="">
                 </div>
@@ -714,8 +714,8 @@ onMounted(() => {
   }
 
   .search_box {
-    height: 0.84rem;
-    background-color: var(--ex-bg-color6);
+    height: 0.9rem;
+    background-color: var(--ex-bg-white1);
     border-radius: 1rem;
     padding-inline: 0.32rem;
     margin-bottom: 0.2rem;
