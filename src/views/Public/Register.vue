@@ -207,7 +207,7 @@ import Top from "@/components/Top.vue";
 import BottomPopup from "@/components/BottomPopup.vue";
 
 // 区号控制
-const step = ref(2);
+const step = ref(1);
 const { t } = useI18n();
 const activeTab = ref(0);
 const defaultCode = "+244";
