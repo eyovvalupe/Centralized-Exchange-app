@@ -17,7 +17,7 @@
         <div class="tr" @click="OpeningForm(item)">
 
           <div class="mask-btn"
-            style="margin-top: 0.2rem;background-color: var(--ex-bg-color3);border-radius: 0.4rem;display: flex;width: 100%;padding: 0.24rem;">
+            style="margin-top: 0.2rem;background-color: var(--ex-bg-white2);border-radius: 0.4rem;display: flex;width: 100%;padding: 0.24rem;">
             <div class="td td-5">
               <div class="name">{{ item.symbol }}</div>
               <div class="lever">
@@ -214,6 +214,7 @@ const scrolHandle = () => {
   }
 };
 onMounted(() => {
+  init();
   setTimeout(() => {
     try {
       moreDom = document.querySelector(".loading_more");
@@ -241,8 +242,6 @@ defineExpose({
   padding-bottom: 1.6rem;
 
   .tr {
-    padding: 0.24rem 0;
-    border-bottom: 1px solid var(--ex-bg-white2);
     display: flex;
     align-items: stretch;
   }
