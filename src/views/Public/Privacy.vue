@@ -29,7 +29,7 @@
                 not apply to websites linked to this website, nor does it apply to websites that this Platform does not
                 control.</div>
 
-            <div class="text-[0.36rem] leading-[0.6rem] mb-[0.4rem]">2. Personal Information</div>
+            <div class="text-[0.36rem] leading-[0.48rem] mb-[0.4rem]">2. Personal Information</div>
 
             <div class="text-[0.32rem] leading-[0.48rem] mb-[0.6rem] ml-[0.38rem]">The types of personal information
                 that the Platform may collect from you include:<br><br>
