@@ -105,7 +105,7 @@
     <BottomPopup :safe-area-inset-top="true" :safe-area-inset-bottom="true" class="self_van_popup"
       v-model:show="showDialog" position="bottom" teleport="body" closeable>
       <div class="register_accounr_dialog">
-        <div class="text-center my-[0.36rem] text-[0.32rem] text-color">
+        <div class="text-center mb-[0.6rem] mt-[0.06rem] text-[0.32rem] text-color">
           {{ $t("login.country_number") }}
         </div>
         <div class="item search_box">
@@ -121,9 +121,9 @@
           <!-- <List> -->
           <div v-for="item in showAreas">
             <div @click="clickItem(item)"
-              class="flex justify-between h-[1.06rem] items-center border-b-[0.02rem] border-b-color"
+              class="flex justify-between h-[1.06rem] items-center border-b-[0.02rem]" style="border-color:var(--ex-bg-white2);"
               :class="{ transfer_dialog_item_active: form.area == item.code }">
-              <div class="flex h-[1.08rem] items-center">
+              <div class="flex pt-[0.3rem] pb-[0.2rem] items-center">
                 <div style="width: 0.64rem;height: 0.64rem;" class="mr-[0.2rem]">
                   <img v-lazy="getStaticImgUrl('/static/img/user/hk.svg')" alt="">
                 </div>
@@ -406,7 +406,7 @@ onMounted(() => {
 
 <style lang="less" scoped>
 .page-login {
-  padding-top: 1rem;
+  padding-top: 1.12rem;
   margin: auto;
 
   :deep(span.van-tab__text) {
@@ -507,7 +507,7 @@ onMounted(() => {
   }
 
   :deep(.van-tabs__nav.van-tabs__nav--card.van-tabs__nav--shrink.van-tabs__nav--complete) {
-    margin: 0 0.6rem;
+    margin: 0 0.32rem;
   }
 
   .top {
@@ -546,7 +546,7 @@ onMounted(() => {
   }
 
   .title_box {
-    padding: 0.3rem 0.6rem 0.8rem 0.6rem;
+    padding: 0.8rem 0.32rem;
 
     .title {
       // height: 0.78rem;
@@ -563,7 +563,7 @@ onMounted(() => {
   }
 
   .form {
-    padding: 0 0.6rem;
+    padding: 0 0.32rem;
 
     .form_title {
       color: var(--ex-text-color);
@@ -652,17 +652,16 @@ onMounted(() => {
   }
 
   .fogot {
-    color: var(--ex-primary-color);
+    color: var(--ex-text-color);
     font-weight: 400;
-    padding-left: 0.6rem;
-    margin: 0.32rem 0 0.8rem 0;
+    margin: 0.32rem 0 0.8rem 0.32rem;
   }
 
   .submit_box {
     display: flex;
     width: 100%;
     height: 1.1rem;
-    padding-inline: 0.6rem;
+    padding-inline: 0.32rem;
     justify-content: center;
     align-items: center;
 
@@ -676,7 +675,7 @@ onMounted(() => {
       font-style: normal;
       font-weight: 500;
       line-height: 100%;
-      border-radius: 0.4rem;
+      border-radius: 0.6rem;
       /* 18px */
     }
   }
@@ -712,8 +711,8 @@ onMounted(() => {
   }
 
   .search_box {
-    height: 0.84rem;
-    background-color: var(--ex-bg-color6);
+    height: 0.9rem;
+    background-color: var(--ex-bg-white1);
     border-radius: 1rem;
     padding-inline: 0.32rem;
     margin-bottom: 0.2rem;

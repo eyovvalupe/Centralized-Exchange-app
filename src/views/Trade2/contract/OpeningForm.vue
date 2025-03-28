@@ -156,7 +156,7 @@
       </div>
       <div class="item_box_right">
         <FormItem :hasScroll="true" :placeholder="t('market.market_buy_list_amount')" @blur="volumeF = false"
-          @focus="volumeFocus" v-model="form1.volume" :show-btn="maxStockNum >= 1" btn-show-mode="focus"
+          @focus="volumeFocus" v-model="form1.volume"  btn-show-mode="focus"
           @btnClick="putAll" @change="changePercent" :max="maxStockNum" tip-align="right"
           :tip="maxStockNum >= 1 ? '≤' + maxStockNum + t('trade.contract_one_lot') : ''" input-type="digit">
           <!-- <template #lt>
@@ -790,6 +790,7 @@ const modeList = computed(() => {
 });
 
 const elseWallet = computed(() => store.state.elseWallet || []);
+
 const stockWalletAmount = computed(() => {
   // 股票账户余额
   const target = elseWallet.value.find(
@@ -997,8 +998,8 @@ const inputStop = (key) => {
 };
 
 const submit1 = () => {
-  if (!currStock.value.trade)
-    return showToast(t('trade.stock_opening_closed'));
+  // if (!currStock.value.trade)
+  //   return showToast(t('trade.stock_opening_closed'));
   if (!currStock.value.symbol)
     return showToast(t('trade.contract_opening_err_contract'));
   if (!form1.value.volume || form1.value.volume < min.value)
@@ -1314,6 +1315,15 @@ const submitForm = (s) => {
         emits('success');
       }
     })
+    .catch(err => {
+      if (err.code == 1010) { //余额不足
+        eventBus.emit('insufficient', {
+          type: 'stock',
+          currency: paramCurrency.value,
+          amount: stockWalletAmount.value
+        })
+      }
+    })
     .finally(() => {
       getSessionToken();
       setTimeout(() => {
@@ -1347,6 +1357,7 @@ defineExpose({
   // 选择某个股票
   choose: handleClick,
   stockWalletAmount,
+  paramCurrency,
 });
 </script>
 
