@@ -111,8 +111,8 @@
           <img v-else v-lazy="getStaticImgUrl('/static/img/user/uncheck_primary.svg')" alt="">
         </div>
         {{ $t("register.agree_con1")
-        }}<span>{{ $t("register.agree_con2") }}</span>{{ $t("register.agree_con3")
-        }}<span>{{ $t("register.agree_con4") }}</span>
+        }}<span @click="privacyOpen = true">{{ $t("register.agree_con2") }}</span>{{ $t("register.agree_con3")
+        }}<span @click="usageOpen = true">{{ $t("register.agree_con4") }}</span>
       </label>
 
       <!-- 按钮 -->
@@ -174,6 +174,12 @@
         </div>
       </div>
     </BottomPopup>
+    <Popup  v-model:show="usageOpen" position="right" class="w-full h-full">
+      <Usage @back="() => usageOpen = false"/>
+    </Popup>
+    <Popup  v-model:show="privacyOpen" position="right" class="w-full h-full">
+      <Privacy @back="() => privacyOpen = false"/>
+    </Popup>
   </div>
 </template>
 
@@ -206,6 +212,8 @@ import RegisterCodeCheck from "@/components/RegisterCodeCheck.vue";
 import { useI18n } from "vue-i18n";
 import Top from "@/components/Top.vue";
 import BottomPopup from "@/components/BottomPopup.vue";
+import Usage from "./Usage.vue";
+import Privacy from "./Privacy.vue";
 
 // 区号控制
 const step = ref(1);
@@ -215,6 +223,9 @@ const defaultCode = "+244";
 const showDialog = ref(false);
 const searchStr = ref("");
 const scrollRef = ref(null);
+const usageOpen = ref(false);
+const privacyOpen = ref(false);
+
 const showAreas = computed(() => {
   return areaCode.filter((item) => {
     return (
