@@ -413,7 +413,6 @@ const submit = async () => {
           verifCodeRef.value.open();
         }, 1000);
       } else if (err.code == "1101") {
-        if (err.message == "User already exist")
           showToast(t("register.user_already_exist"));
       } else if (err.code == '1102') {
         showToast(t("register.invite_code_error"));
